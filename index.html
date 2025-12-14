@@ -153,16 +153,38 @@
   </div>
 </section>
 
+
+  
 <section id="encuesta">
   <h2>Encuesta Escolar</h2>
   <div class="card">
-    <p>
-      Herramienta confidencial para estudiantes que permite analizar el clima escolar,
+    <p>Herramienta confidencial para estudiantes que permite analizar el clima escolar,
       detectar patrones de agresión y apoyar la toma de decisiones pedagógicas.
-    </p>
+      Usted ingresará a la sección de encuestas. Deberá poner su usuario y clave.</p>
+
+    <button id="btnMostrarLogin">Ingresar a la encuesta</button>
+    <button id="btnCancelarLogin" style="display:none;">Cancelar</button>
+
+    <!-- Formulario de login oculto inicialmente -->
+    <div id="loginForm" style="display:none; margin-top:20px;">
+      <label>Usuario:</label><br>
+      <input type="text" id="username"><br><br>
+      <label>Contraseña:</label><br>
+      <input type="password" id="password"><br><br>
+      <button id="btnLogin">Entrar</button>
+      <p id="loginError" style="color:red;"></p>
+    </div>
+
+    <!-- Aquí se mostrará la encuesta después de login -->
+    <div id="formEncuestaContainer" style="display:none; margin-top:20px;">
+      <!-- Aquí se insertará el formulario de encuesta -->
+    </div>
   </div>
 </section>
 
+ 
+
+  
 <section id="equipo">
   <h2>Nuestro Equipo</h2>
   <div class="card">
@@ -186,5 +208,6 @@
 
 </body>
 </html>
+
 
 
