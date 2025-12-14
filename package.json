@@ -2,8 +2,8 @@
   "name": "zeroweb",
   "private": true,
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.0",
-    "bcryptjs": "^2.4.3"
+    "@supabase/supabase-js": "^2.49.0"
   }
 }
+
 
