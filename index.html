@@ -2,78 +2,109 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>COLUMBIA – Educación y Prevención</title>
+  <title>COLUMBIA – Educational Designs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
+      font-family: 'Open Sans', Arial, sans-serif;
+      background-color: #1E2F3F;
+      color: #ffffff;
     }
+
     header {
-      background-color: #0a2a43;
-      color: white;
-      padding: 20px;
+      padding: 40px 20px;
       text-align: center;
+      background: linear-gradient(180deg, #1E2F3F, #16222D);
     }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      margin: 0;
+    }
+
+    header p {
+      color: #D6A21C;
+      letter-spacing: 2px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
     nav {
       display: flex;
       justify-content: center;
-      background-color: #2b2b2b;
+      gap: 15px;
+      padding: 15px;
+      background-color: #16222D;
     }
+
     nav a {
+      background-color: #1E2F3F;
       color: white;
-      padding: 14px 20px;
+      padding: 8px 18px;
+      border-radius: 20px;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 600;
     }
+
     nav a:hover {
-      background-color: #b38b00;
+      background-color: #D6A21C;
+      color: #16222D;
     }
+
     section {
       display: none;
-      padding: 40px;
-      max-width: 900px;
+      padding: 50px 20px;
+      max-width: 1000px;
       margin: auto;
-      background-color: white;
     }
+
     section.active {
       display: block;
     }
+
     h2 {
-      color: #0a2a43;
+      font-family: 'Playfair Display', serif;
+      color: #D6A21C;
+      font-size: 32px;
     }
-    footer {
-      background-color: #2b2b2b;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
+
+    .card {
+      background-color: #243A4B;
+      padding: 25px;
+      border-radius: 8px;
+      margin-top: 25px;
     }
+
     .button {
       display: inline-block;
-      padding: 12px 20px;
-      background-color: #b38b00;
+      background-color: #C62828;
       color: white;
-      text-decoration: none;
+      padding: 12px 22px;
       border-radius: 5px;
+      text-decoration: none;
       margin-top: 20px;
+      font-weight: 600;
     }
-    .button:hover {
-      background-color: #0a2a43;
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 13px;
+      background-color: #16222D;
+      margin-top: 50px;
     }
   </style>
+
   <script>
     function showTab(tabId) {
-      const sections = document.querySelectorAll('section');
-      sections.forEach(section => section.classList.remove('active'));
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
     }
   </script>
@@ -81,76 +112,69 @@
 <body>
 
 <header>
-  <h1>COLUMBIA</h1>
-  <p>Educación, prevención y análisis para comunidades escolares seguras</p>
+  <h1>Columbia</h1>
+  <p>EDUCATIONAL DESIGNS</p>
 </header>
 
 <nav>
-  <a href="#" onclick="showTab('home')">Home</a>
+  <a href="#" onclick="showTab('home')">INICIO</a>
   <a href="#" onclick="showTab('zero')">ZERO</a>
-  <a href="#" onclick="showTab('encuesta')">Encuesta</a>
-  <a href="#" onclick="showTab('equipo')">Equipo</a>
-  <a href="#" onclick="showTab('contacto')">Contáctenos</a>
+  <a href="#" onclick="showTab('encuesta')">ENCUESTA</a>
+  <a href="#" onclick="showTab('equipo')">EQUIPO</a>
+  <a href="#" onclick="showTab('contacto')">CONTACTO</a>
 </nav>
 
 <section id="home" class="active">
-  <h2>Bienvenidos a COLUMBIA</h2>
-  <p>
-    COLUMBIA es una organización educativa que ofrece programas online para escuelas,
-    enfocados en la prevención del bullying y la mejora del clima escolar.
-  </p>
-  <a class="button" href="#" onclick="showTab('encuesta')">Ir a la Encuesta</a>
+  <h2>Bienvenidos</h2>
+  <div class="card">
+    <p>
+      Columbia Educational Designs desarrolla programas educativos basados en experiencia,
+      cooperación, lenguaje y emociones, con foco en la prevención del bullying.
+    </p>
+  </div>
 </section>
 
 <section id="zero">
-  <h2>Programa ZERO</h2>
-  <p>
-    ZERO es nuestro programa de prevención del acoso escolar.
-    Combina educación, detección temprana y análisis de datos para apoyar
-    a docentes y comunidades educativas.
-  </p>
+  <h2>Programa Antibullying ZERO</h2>
+  <div class="card">
+    <p>
+      ZERO es un programa antibullying internacional, implementado en escuelas de Estados Unidos
+      y Latinoamérica, con resultados comprobados.
+    </p>
+    <a class="button" href="#">Programas y Certificación</a>
+  </div>
 </section>
 
 <section id="encuesta">
   <h2>Encuesta Escolar</h2>
-  <p>
-    Los estudiantes completan una encuesta confidencial que permite identificar
-    patrones de agresión, lugares críticos y oportunidades de intervención.
-  </p>
-  <p>
-    Los resultados son procesados automáticamente y presentados a los docentes
-    de forma clara y accionable.
-  </p>
+  <div class="card">
+    <p>
+      Herramienta confidencial para estudiantes que permite analizar el clima escolar,
+      detectar patrones de agresión y apoyar la toma de decisiones pedagógicas.
+    </p>
+  </div>
 </section>
 
 <section id="equipo">
   <h2>Nuestro Equipo</h2>
-  <p>
-    COLUMBIA está formado por profesionales de la educación, tecnología y psicología,
-    comprometidos con crear entornos escolares más seguros.
-  </p>
+  <div class="card">
+    <p>
+      Equipo interdisciplinario de especialistas en educación, psicología y tecnología
+      comprometidos con comunidades escolares seguras.
+    </p>
+  </div>
 </section>
 
 <section id="contacto">
   <h2>Contáctenos</h2>
-  <form>
-    <label>Nombre</label>
-    <input type="text" />
-
-    <label>Email</label>
-    <input type="email" />
-
-    <label>Mensaje</label>
-    <textarea rows="4"></textarea>
-
-    <button class="button" type="submit">Enviar</button>
-  </form>
+  <div class="card">
+    <p>Email: contacto@columbiaus.com</p>
+  </div>
 </section>
 
 <footer>
-  <p>© 2025 COLUMBIA – Todos los derechos reservados</p>
+  © 2025 Columbia Educational Designs
 </footer>
 
 </body>
 </html>
-
