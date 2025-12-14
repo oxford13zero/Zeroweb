@@ -206,8 +206,83 @@
   © 2025 Columbia Educational Designs
 </footer>
 
+<script>
+  const btnLogin = document.getElementById('btnLogin')
+  const loginError = document.getElementById('loginError')
+  const formEncuestaContainer = document.getElementById('formEncuestaContainer')
+
+  btnLogin.addEventListener('click', async () => {
+    const username = document.getElementById('username').value
+    const password = document.getElementById('password').value
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
+
+      const data = await res.json()
+
+      if(res.ok) {
+        loginError.innerText = ''
+        document.getElementById('loginSection').style.display = 'none'
+        formEncuestaContainer.style.display = 'block'
+
+        // Insertar aquí tu formulario de encuesta
+        formEncuestaContainer.innerHTML = `
+          <form id="formEncuesta">
+            <label>Pregunta 1: ¿Has visto agresión en tu escuela?</label><br>
+            <input type="radio" name="q1" value="Sí"> Sí<br>
+            <input type="radio" name="q1" value="No"> No<br><br>
+
+            <label>Pregunta 2: Lugar de la agresión:</label><br>
+            <input type="text" name="q2"><br><br>
+
+            <button type="submit">Enviar Encuesta</button>
+          </form>
+        `
+
+        // Enviar datos de la encuesta
+        const form = document.getElementById('formEncuesta')
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault()
+          const responses = [
+            form.q1.value,
+            form.q2.value
+          ]
+
+          const resInsert = await fetch('/api/guardarEncuesta', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              school_id: data.school_id,
+              student_id: 101, // aquí puedes generar un ID dinámico
+              responses
+            })
+          })
+
+          const result = await resInsert.json()
+          if(resInsert.ok) alert(result.message)
+          else alert('Error: ' + result.error)
+          form.reset()
+        })
+
+      } else {
+        loginError.innerText = data.error
+      }
+
+    } catch(err) {
+      loginError.innerText = 'Error de servidor'
+    }
+  })
+</script>
+
+
+  
 </body>
 </html>
+
 
 
 
