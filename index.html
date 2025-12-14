@@ -5,86 +5,50 @@
   <title>TECH4ZERO – Educational Designs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    body { margin: 0; font-family: 'Open Sans', Arial, sans-serif; background-color: #1E2F3F; color: #ffffff; }
+    body { margin:0; font-family:'Open Sans', Arial, sans-serif; background:#1E2F3F; color:white; }
+    header { padding:40px 20px; text-align:center; background:#16222D; }
+    header h1 { font-family:'Playfair Display', serif; font-size:48px; margin:0; }
+    header p { color:#D6A21C; margin-top:10px; letter-spacing:2px; }
 
-    header { padding: 40px 20px; text-align: center; background: linear-gradient(180deg, #1E2F3F, #16222D); }
-    header h1 { font-family: 'Playfair Display', serif; font-size: 48px; margin: 0; }
-    header p { color: #D6A21C; letter-spacing: 2px; margin-top: 10px; font-size: 14px; }
+    nav { display:flex; justify-content:center; gap:15px; padding:15px; background:#16222D; }
+    nav a { background:#1E2F3F; padding:8px 18px; border-radius:20px; text-decoration:none; color:white; font-weight:600; }
+    nav a:hover { background:#D6A21C; color:#16222D; }
 
-    nav { display: flex; justify-content: center; gap: 15px; padding: 15px; background-color: #16222D; flex-wrap: wrap; }
-    nav a { background-color: #1E2F3F; color: white; padding: 8px 18px; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: 600; }
-    nav a:hover { background-color: #D6A21C; color: #16222D; }
+    section { display:none; padding:50px 20px; max-width:1000px; margin:auto; }
+    section.active { display:block; }
 
-    section { display: none; padding: 50px 20px; max-width: 1000px; margin: auto; }
-    section.active { display: block; }
+    h2 { color:#D6A21C; font-family:'Playfair Display', serif; }
 
-    h2 { font-family: 'Playfair Display', serif; color: #D6A21C; font-size: 32px; margin-top: 0; }
+    .card { background:#243A4B; padding:25px; border-radius:8px; margin-top:25px; }
 
-    .card { background-color: #243A4B; padding: 25px; border-radius: 8px; margin-top: 25px; }
+    .formPanel { background:#1E2F3F; padding:16px; border-radius:8px; max-width:420px; border:1px solid #365468; }
 
-    footer { text-align: center; padding: 30px; font-size: 13px; background-color: #16222D; margin-top: 50px; }
-
-    /* Buttons */
-    .btnPrimary {
-      display: inline-block;
-      padding: 10px 16px;
-      font-weight: 700;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-    }
-    .btnSecondary {
-      display: inline-block;
-      padding: 10px 16px;
-      font-weight: 600;
-      border-radius: 6px;
-      border: 1px solid #D6A21C;
-      background: transparent;
-      color: #D6A21C;
-      cursor: pointer;
-    }
-
-    /* Compact panel + stacked inputs */
-    .formPanel {
-      margin-top: 18px;
-      background: #1E2F3F;
-      padding: 16px;
-      border-radius: 8px;
-      max-width: 520px;
-      border: 1px solid #365468;
-    }
-    .fieldBlock { margin-bottom: 14px; }
-    .fieldLabel { font-weight: 600; display: inline-block; margin-bottom: 6px; }
+    .fieldBlock { margin-bottom:14px; }
+    .fieldLabel { font-weight:600; }
     .textInput {
-      width: 100%;
-      max-width: 380px;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #365468;
-      background: #0f1d27;
-      color: #ffffff;
-      outline: none;
+      width:100%;
+      padding:8px;
+      border-radius:6px;
+      border:1px solid #365468;
+      background:#0f1d27;
+      color:white;
     }
-    .textInput::placeholder { color: #a9c0d3; }
 
-    .statusMsg { margin-top: 12px; font-weight: 600; min-height: 18px; }
-    .statusOk { color: #b9ffcf; }
-    .statusWarn { color: #ffdca8; }
-    .statusErr { color: #ffb4b4; }
+    .btnPrimary { padding:10px 18px; font-weight:700; border:none; border-radius:6px; cursor:pointer; }
+    .btnSecondary { padding:10px 18px; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer; }
+
+    .statusErr { color:#ffb4b4; font-weight:600; margin-top:10px; }
+
+    footer { text-align:center; padding:30px; background:#16222D; margin-top:50px; }
   </style>
 
   <script>
-    function showTab(tabId) {
+    function showTab(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-
-      if (tabId === 'datos') {
-        window.loadDatosIfNeeded?.();
-      }
+      document.getElementById(id).classList.add('active');
     }
   </script>
 </head>
@@ -98,314 +62,113 @@
 
 <nav>
   <a href="#" onclick="showTab('home')">INICIO</a>
-  <a href="#" onclick="showTab('zero')">PROGRAMA TECH4ZERO</a>
   <a href="#" onclick="showTab('encuesta')">ENCUESTA</a>
-  <a href="#" onclick="showTab('datos')">DATOS</a>
-  <a href="#" onclick="showTab('equipo')">EQUIPO</a>
-  <a href="#" onclick="showTab('contacto')">CONTACTO</a>
 </nav>
 
 <section id="home" class="active">
   <h2>Bienvenidos</h2>
-
   <div class="card">
-    <p>
-      TECH4ZERO desarrolla programas educativos basados en experiencia,
-      cooperación, lenguaje y emociones, con foco en la prevención del bullying.
-    </p>
-  </div>
-
-  <div class="card" style="margin-top:30px; text-align:center;">
-    <iframe width="560" height="315"
-      src="https://www.youtube.com/embed/iBO4YijRYbs"
-      title="Programa ZERO"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div style="margin-top:30px; text-align:center;">
-    <img src="zero.png" alt="Logo ZERO" style="max-width:220px;" />
+    Plataforma educativa para prevención del bullying.
   </div>
 </section>
 
-<section id="zero">
-  <h2>Programa Antibullying ZERO</h2>
-  <div class="card">
-    <p>
-      ZERO es un programa antibullying internacional, implementado en escuelas de Estados Unidos
-      y Latinoamérica, con resultados comprobados.
-    </p>
-  </div>
-</section>
-
+<!-- ===================== ENCUESTA ===================== -->
 <section id="encuesta">
   <h2>Encuesta Escolar</h2>
 
   <div class="card">
-    <p>
-      Para ingresar a la encuesta, deberá introducir su <b>usuario</b> y <b>contraseña</b>.
-      (Interfaz en modo demostración: todavía no valida contra base de datos.)
-    </p>
 
-    <div id="encuestaIntro" style="margin-top:14px;">
+    <!-- INTRO -->
+    <div id="encuestaIntro">
+      <p>Ingrese usuario y contraseña para acceder a la encuesta.</p>
       <button id="btnMostrarLogin" class="btnPrimary">Ingresar a la encuesta</button>
     </div>
 
-    <div id="loginPanel" class="formPanel" style="display:none;">
+    <!-- LOGIN -->
+    <div id="loginPanel" class="formPanel" style="display:none; margin-top:20px;">
       <div class="fieldBlock">
-        <label for="loginUser" class="fieldLabel">Usuario</label><br />
-        <input id="loginUser" class="textInput" type="text" placeholder="Usuario" />
+        <label class="fieldLabel">Usuario</label><br>
+        <input id="loginUser" class="textInput" type="text">
       </div>
 
       <div class="fieldBlock">
-        <label for="loginPass" class="fieldLabel">Contraseña</label><br />
-        <input id="loginPass" class="textInput" type="password" placeholder="Contraseña" />
+        <label class="fieldLabel">Contraseña</label><br>
+        <input id="loginPass" class="textInput" type="password">
       </div>
 
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnLogin" class="btnPrimary">Entrar</button>
-        <button id="btnCancelarLogin" class="btnSecondary">Cancelar</button>
-      </div>
+      <button id="btnLogin" class="btnPrimary">Entrar</button>
+      <button id="btnCancelarLogin" class="btnSecondary">Cancelar</button>
 
-      <div id="loginMsg" class="statusMsg statusErr"></div>
+      <div id="loginMsg" class="statusErr"></div>
     </div>
 
-    <div id="encuestaPlaceholder" class="formPanel" style="display:none;">
-      <p style="margin:0;"> Login exitoso (simulado). Aquí se mostrará la encuesta en el siguiente paso.</p>
+    <!-- OK -->
+    <div id="encuestaOK" class="formPanel" style="display:none; margin-top:20px;">
+      <p>Acceso concedido. Aquí comienza la encuesta.</p>
     </div>
-  </div>
-</section>
 
-<!--  TAB DATOS -->
-<section id="datos">
-  <h2>Datos</h2>
-
-  <div class="card">
-    <p>
-      Esta sección lee datos desde Supabase (tabla <b>enc_escolar</b>) para verificar conexión.
-    </p>
-
-    <div class="formPanel">
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_nombre">Nombre</label><br />
-        <input id="d_nombre" class="textInput" type="text" placeholder="Nombre" readonly />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_ap_paterno">Apellido Paterno</label><br />
-        <input id="d_ap_paterno" class="textInput" type="text" placeholder="Apellido Paterno" readonly />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_ap_materno">Apellido Materno</label><br />
-        <input id="d_ap_materno" class="textInput" type="text" placeholder="Apellido Materno" readonly />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_establecimiento">Establecimiento</label><br />
-        <input id="d_establecimiento" class="textInput" type="text" placeholder="Establecimiento" readonly />
-      </div>
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
-        <button id="btnPrev" class="btnSecondary">Retroceder</button>
-        <button id="btnNext" class="btnPrimary">Avanzar</button>
-      </div>
-
-      <div id="datosStatus" class="statusMsg statusWarn"></div>
-    </div>
-  </div>
-</section>
-
-<section id="equipo">
-  <h2>Nuestro Equipo</h2>
-  <div class="card">
-    <p>
-      Equipo interdisciplinario de especialistas en educación, psicología y tecnología
-      comprometidos con comunidades escolares seguras.
-    </p>
-  </div>
-</section>
-
-<section id="contacto">
-  <h2>Contáctenos</h2>
-  <div class="card">
-    <p>Email: contacto@tech4zero.org</p>
   </div>
 </section>
 
 <footer>
-  © 2025 TECH4ZERO – Educational Designs
+  © 2025 TECH4ZERO
 </footer>
 
 <script>
-  /* -------------------------
-     LOGIN (UI ONLY)
-  -------------------------- */
   const btnMostrarLogin = document.getElementById('btnMostrarLogin');
-  const loginPanel = document.getElementById('loginPanel');
   const btnCancelarLogin = document.getElementById('btnCancelarLogin');
   const btnLogin = document.getElementById('btnLogin');
-  const loginMsg = document.getElementById('loginMsg');
+  const loginPanel = document.getElementById('loginPanel');
   const encuestaIntro = document.getElementById('encuestaIntro');
-  const encuestaPlaceholder = document.getElementById('encuestaPlaceholder');
+  const encuestaOK = document.getElementById('encuestaOK');
+  const loginMsg = document.getElementById('loginMsg');
 
-  btnMostrarLogin.addEventListener('click', () => {
-    loginMsg.textContent = '';
-    encuestaPlaceholder.style.display = 'none';
+  btnMostrarLogin.onclick = () => {
+    encuestaIntro.style.display = 'none';
     loginPanel.style.display = 'block';
-    btnMostrarLogin.style.display = 'none';
-    document.getElementById('loginUser').focus();
-  });
+  };
 
-  btnCancelarLogin.addEventListener('click', () => {
-    loginMsg.textContent = '';
+  btnCancelarLogin.onclick = () => {
     loginPanel.style.display = 'none';
-    btnMostrarLogin.style.display = 'inline-block';
-    document.getElementById('loginUser').value = '';
-    document.getElementById('loginPass').value = '';
-  });
+    encuestaIntro.style.display = 'block';
+    loginMsg.textContent = '';
+  };
 
-  btnLogin.addEventListener('click', () => {
-    const u = document.getElementById('loginUser').value.trim();
-    const p = document.getElementById('loginPass').value.trim();
+  // ===== LOGIN REAL (BACKEND) =====
+  btnLogin.onclick = async () => {
+    const username = document.getElementById('loginUser').value.trim();
+    const password = document.getElementById('loginPass').value.trim();
 
-    if (!u || !p) {
-      loginMsg.textContent = 'Por favor ingrese usuario y contraseña.';
+    if (!username || !password) {
+      loginMsg.textContent = 'Debe ingresar usuario y contraseña.';
       return;
     }
 
-    loginMsg.textContent = '';
-    loginPanel.style.display = 'none';
-    encuestaIntro.style.display = 'none';
-    encuestaPlaceholder.style.display = 'block';
-  });
-
-  /* -------------------------
-     DATOS: leer desde Supabase REST
-     Tabla: enc_escolar
-     Columnas:
-       first_name, pat_last_name, mat_last_name, school_id
-  -------------------------- */
-
-  //  Pega tus valores aquí
-   const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aHlub2lra2JtZ3VsYnJ1ZXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODIzMDgsImV4cCI6MjA4MTI1ODMwOH0.k-jdaJ-QOu9RCTWIJ2vTZ1Eefdby70asQIq9rdTmPT4";
-
-
-  let datosIndex = 0;
-  let datosLoadedOnce = false;
-
-  const elNombre = document.getElementById('d_nombre');
-  const elApPaterno = document.getElementById('d_ap_paterno');
-  const elApMaterno = document.getElementById('d_ap_materno');
-  const elEst = document.getElementById('d_establecimiento');
-  const elStatus = document.getElementById('datosStatus');
-
-  const btnPrev = document.getElementById('btnPrev');
-  const btnNext = document.getElementById('btnNext');
-
-  function setStatus(text, type) {
-    elStatus.textContent = text || '';
-    elStatus.classList.remove('statusOk', 'statusWarn', 'statusErr');
-    elStatus.classList.add(type || 'statusWarn');
-  }
-
-  function fillFields(row) {
-    elNombre.value = row?.first_name ?? '';
-    elApPaterno.value = row?.pat_last_name ?? '';
-    elApMaterno.value = row?.mat_last_name ?? '';
-    elEst.value = row?.school_id ?? '';
-  }
-
-  async function fetchOneRow(offset) {
-    if (!SUPABASE_URL.includes("supabase.co") || SUPABASE_ANON_KEY.includes("PEGA_AQUI")) {
-      setStatus(" Falta configurar SUPABASE_ANON_KEY.", "statusErr");
-      fillFields(null);
-      return { ok: false };
-    }
-
-    // REST endpoint (schema public):
-    // /rest/v1/enc_escolar?select=...&limit=1&offset=N
-    const url =
-      `${SUPABASE_URL}/rest/v1/enc_escolar` +
-      `?select=first_name,pat_last_name,mat_last_name,school_id` +
-      `&limit=1&offset=${offset}`;
-
-    const res = await fetch(url, {
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": "Bearer " + SUPABASE_ANON_KEY,
-        "Accept": "application/json"
-      }
-    });
-
-    const text = await res.text();
-    let json;
-    try { json = text ? JSON.parse(text) : null; } catch { json = null; }
-
-    return { ok: res.ok, status: res.status, json };
-  }
-
-  async function loadCurrent() {
-    setStatus("Cargando datos...", "statusWarn");
+    loginMsg.textContent = 'Validando...';
 
     try {
-      const result = await fetchOneRow(datosIndex);
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
 
-      if (!result.ok) {
-        setStatus(` No se pudo leer enc_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
-        fillFields(null);
+      const data = await res.json();
+
+      if (!res.ok || !data.ok) {
+        loginMsg.textContent = 'Usuario o contraseña incorrecta.';
         return;
       }
 
-      const arr = Array.isArray(result.json) ? result.json : [];
-      if (arr.length === 0) {
-        if (datosIndex === 0) {
-          setStatus(" La tabla enc_escolar está vacía (no hay registros).", "statusWarn");
-        } else {
-          setStatus(" No hay más registros. Retrocede para ver anteriores.", "statusWarn");
-          datosIndex = Math.max(0, datosIndex - 1);
-        }
-        fillFields(null);
-        return;
-      }
-
-      fillFields(arr[0]);
-      setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
+      // OK
+      loginPanel.style.display = 'none';
+      encuestaOK.style.display = 'block';
 
     } catch (e) {
-      setStatus(" Error de conexión con Supabase.", "statusErr");
-      fillFields(null);
+      loginMsg.textContent = 'Error de conexión.';
     }
-  }
-
-  btnPrev.addEventListener('click', async () => {
-    datosIndex = Math.max(0, datosIndex - 1);
-    await loadCurrent();
-  });
-
-  btnNext.addEventListener('click', async () => {
-    datosIndex = datosIndex + 1;
-    await loadCurrent();
-  });
-
-  window.loadDatosIfNeeded = async () => {
-    if (datosLoadedOnce) return;
-    datosLoadedOnce = true;
-    datosIndex = 0;
-    await loadCurrent();
   };
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
