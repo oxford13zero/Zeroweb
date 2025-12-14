@@ -163,13 +163,35 @@
     </div>
 
     <!-- Panel de login (oculto al inicio) -->
-    <div id="loginPanel" style="display:none; margin-top:18px; background:#1E2F3F; padding:16px; border-radius:8px;">
-      <div style="display:flex; gap:14px; flex-wrap:wrap;">
-        <div style="flex:1; min-width:220px;">
-          <label for="loginUser" style="font-weight:600;">Usuario</label><br />
-          <input id="loginUser" type="text" placeholder="Ingrese su usuario"
-                 style="width:100%; padding:10px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
-        </div>
+    <div id="loginPanel" style="display:none; margin-top:18px; background:#1E2F3F; padding:16px; border-radius:8px; max-width:420px;">
+  
+  <div style="margin-bottom:14px;">
+    <label for="loginUser" style="font-weight:600;">Usuario</label><br />
+    <input id="loginUser" type="text" placeholder="Usuario"
+           style="width:100%; max-width:320px; padding:8px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
+  </div>
+
+  <div style="margin-bottom:14px;">
+    <label for="loginPass" style="font-weight:600;">Contraseña</label><br />
+    <input id="loginPass" type="password" placeholder="Contraseña"
+           style="width:100%; max-width:320px; padding:8px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
+  </div>
+
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    <button id="btnLogin"
+      style="padding:9px 18px; font-weight:700; border-radius:6px; border:none; cursor:pointer;">
+      Entrar
+    </button>
+
+    <button id="btnCancelarLogin"
+      style="padding:9px 18px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer;">
+      Cancelar
+    </button>
+  </div>
+
+  <p id="loginMsg" style="margin-top:12px; color:#ffb4b4; font-weight:600;"></p>
+</div>
+
 
         <div style="flex:1; min-width:220px;">
           <label for="loginPass" style="font-weight:600;">Contraseña</label><br />
@@ -271,5 +293,6 @@
   
 </body>
 </html>
+
 
 
