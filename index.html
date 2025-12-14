@@ -368,7 +368,7 @@
 
       if (!result.ok) {
         // Common: 401/403 -> RLS/policy issue
-        setStatus(`❌ No se pudo leer enc_escolar (HTTP ${result.status}). Revisa RLS/policies en Supabase.`, "statusErr");
+        setStatus(` No se pudo leer enc_escolar (HTTP ${result.status}). Revisa RLS/policies en Supabase.`, "statusErr");
         fillFields(null);
         return;
       }
@@ -415,3 +415,4 @@
 
 </body>
 </html>
+
