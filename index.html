@@ -48,7 +48,7 @@
       cursor: pointer;
     }
 
-    /* Inputs (compact, stacked) */
+    /* Compact panel + stacked inputs */
     .formPanel {
       margin-top: 18px;
       background: #1E2F3F;
@@ -71,11 +71,7 @@
     }
     .textInput::placeholder { color: #a9c0d3; }
 
-    .statusMsg {
-      margin-top: 12px;
-      font-weight: 600;
-      min-height: 18px;
-    }
+    .statusMsg { margin-top: 12px; font-weight: 600; min-height: 18px; }
     .statusOk { color: #b9ffcf; }
     .statusWarn { color: #ffdca8; }
     .statusErr { color: #ffb4b4; }
@@ -86,7 +82,6 @@
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
 
-      // When entering DATOS tab, auto-load first record (once)
       if (tabId === 'datos') {
         window.loadDatosIfNeeded?.();
       }
@@ -154,14 +149,10 @@
       (Interfaz en modo demostración: todavía no valida contra base de datos.)
     </p>
 
-    <!-- Intro button -->
     <div id="encuestaIntro" style="margin-top:14px;">
-      <button id="btnMostrarLogin" class="btnPrimary">
-        Ingresar a la encuesta
-      </button>
+      <button id="btnMostrarLogin" class="btnPrimary">Ingresar a la encuesta</button>
     </div>
 
-    <!-- Login panel (UI only) -->
     <div id="loginPanel" class="formPanel" style="display:none;">
       <div class="fieldBlock">
         <label for="loginUser" class="fieldLabel">Usuario</label><br />
@@ -181,21 +172,19 @@
       <div id="loginMsg" class="statusMsg statusErr"></div>
     </div>
 
-    <!-- Success placeholder (UI only) -->
     <div id="encuestaPlaceholder" class="formPanel" style="display:none;">
       <p style="margin:0;"> Login exitoso (simulado). Aquí se mostrará la encuesta en el siguiente paso.</p>
     </div>
   </div>
 </section>
 
-<!--  NEW TAB: DATOS -->
+<!--  TAB DATOS -->
 <section id="datos">
   <h2>Datos</h2>
 
   <div class="card">
     <p>
-      Esta sección muestra registros desde la tabla <b>enc_escolar</b> en Supabase.
-      Sirve para verificar la conexión y que podemos desplegar datos.
+      Esta sección lee datos desde Supabase (tabla <b>ENC_ESCOLAR</b>) para verificar conexión.
     </p>
 
     <div class="formPanel">
@@ -252,7 +241,7 @@
 
 <script>
   /* -------------------------
-     LOGIN (UI ONLY, no backend)
+     LOGIN (UI ONLY)
   -------------------------- */
   const btnMostrarLogin = document.getElementById('btnMostrarLogin');
   const loginPanel = document.getElementById('loginPanel');
@@ -294,18 +283,16 @@
   });
 
   /* -------------------------
-     DATOS tab: Supabase REST read
-     Table: enc_escolar
-     Columns expected:
-       - nombre
-       - apellido_paterno
-       - apellido_materno
-       - establecimiento
+     DATOS: leer desde Supabase REST
+     Tabla: ENC_ESCOLAR
+     Columnas:
+       first_name, pat_last_name, mat_last_name, school_id
   -------------------------- */
 
-  // 🔧 TODO: replace with your real values:
-  const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
+  //  Pega tus valores aquí
+   const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aHlub2lra2JtZ3VsYnJ1ZXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODIzMDgsImV4cCI6MjA4MTI1ODMwOH0.k-jdaJ-QOu9RCTWIJ2vTZ1Eefdby70asQIq9rdTmPT4";
+
 
   let datosIndex = 0;
   let datosLoadedOnce = false;
@@ -326,23 +313,24 @@
   }
 
   function fillFields(row) {
-    elNombre.value = row?.nombre ?? '';
-    elApPaterno.value = row?.apellido_paterno ?? '';
-    elApMaterno.value = row?.apellido_materno ?? '';
-    elEst.value = row?.establecimiento ?? '';
+    elNombre.value = row?.first_name ?? '';
+    elApPaterno.value = row?.pat_last_name ?? '';
+    elApMaterno.value = row?.mat_last_name ?? '';
+    elEst.value = row?.school_id ?? '';
   }
 
   async function fetchOneRow(offset) {
-    if (!SUPABASE_URL.includes("supabase.co") || SUPABASE_ANON_KEY.includes("YOUR_")) {
-      setStatus("⚠️ Falta configurar SUPABASE_URL y SUPABASE_ANON_KEY en el código.", "statusErr");
+    if (!SUPABASE_URL.includes("supabase.co") || SUPABASE_ANON_KEY.includes("PEGA_AQUI")) {
+      setStatus(" Falta configurar SUPABASE_ANON_KEY.", "statusErr");
       fillFields(null);
       return { ok: false };
     }
 
-    // Supabase REST: /rest/v1/<table>?select=...&limit=1&offset=N
+    // REST endpoint (schema public):
+    // /rest/v1/ENC_ESCOLAR?select=...&limit=1&offset=N
     const url =
-      `${SUPABASE_URL}/rest/v1/enc_escolar` +
-      `?select=nombre,apellido_paterno,apellido_materno,establecimiento` +
+      `${SUPABASE_URL}/rest/v1/ENC_ESCOLAR` +
+      `?select=first_name,pat_last_name,mat_last_name,school_id` +
       `&limit=1&offset=${offset}`;
 
     const res = await fetch(url, {
@@ -367,19 +355,17 @@
       const result = await fetchOneRow(datosIndex);
 
       if (!result.ok) {
-        // Common: 401/403 -> RLS/policy issue
-        setStatus(` No se pudo leer enc_escolar (HTTP ${result.status}). Revisa RLS/policies en Supabase.`, "statusErr");
+        setStatus(` No se pudo leer ENC_ESCOLAR (HTTP ${result.status ?? "?"}).`, "statusErr");
         fillFields(null);
         return;
       }
 
       const arr = Array.isArray(result.json) ? result.json : [];
       if (arr.length === 0) {
-        // No record at this offset
         if (datosIndex === 0) {
-          setStatus("⚠️ La tabla enc_escolar está vacía (no hay registros).", "statusWarn");
+          setStatus(" La tabla ENC_ESCOLAR está vacía (no hay registros).", "statusWarn");
         } else {
-          setStatus("⚠️ No hay más registros. Retrocede para ver anteriores.", "statusWarn");
+          setStatus(" No hay más registros. Retrocede para ver anteriores.", "statusWarn");
           datosIndex = Math.max(0, datosIndex - 1);
         }
         fillFields(null);
@@ -387,9 +373,10 @@
       }
 
       fillFields(arr[0]);
-      setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
+      setStatus(`✅ Mostrando registro #${datosIndex + 1}`, "statusOk");
+
     } catch (e) {
-      setStatus(" Error al conectar con Supabase. Revisa URL/Key y conexión.", "statusErr");
+      setStatus("❌ Error de conexión con Supabase.", "statusErr");
       fillFields(null);
     }
   }
@@ -404,7 +391,6 @@
     await loadCurrent();
   });
 
-  // Auto-load once when entering tab
   window.loadDatosIfNeeded = async () => {
     if (datosLoadedOnce) return;
     datosLoadedOnce = true;
@@ -415,5 +401,9 @@
 
 </body>
 </html>
+
+
+
+
 
 
