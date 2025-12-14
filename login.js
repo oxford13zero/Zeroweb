@@ -1,15 +1,16 @@
-// /api/login.js
 import { createClient } from '@supabase/supabase-js'
 
-// Crear cliente de Supabase con variables de entorno
+// Crear cliente de Supabase
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 )
 
 export default async function handler(req, res) {
+  // Línea de diagnóstico
+  console.log('login.js ejecutándose')
+
   try {
-    // Solo permitir POST
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Método no permitido' })
     }
@@ -20,7 +21,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Faltan username o password' })
     }
 
-    // Buscar usuario en la tabla schools
     const { data, error } = await supabase
       .from('schools')
       .select('*')
@@ -31,12 +31,10 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Usuario no encontrado' })
     }
 
-    // Comparación directa de texto plano
     if (data.password !== password) {
       return res.status(401).json({ error: 'Contraseña incorrecta' })
     }
 
-    // Retornar info básica del usuario
     return res.status(200).json({
       school_id: data.id,
       school_name: data.name
