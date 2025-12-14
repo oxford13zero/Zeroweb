@@ -2,31 +2,108 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>TECH4ZERO – Education</title>
+  <title>TECH4ZERO – Educational Designs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
-    body { margin: 0; font-family: 'Open Sans', Arial, sans-serif; background-color: #1E2F3F; color: #fff; }
-    header { padding: 40px 20px; text-align:center; background:linear-gradient(180deg,#1E2F3F,#16222D); }
-    header h1 { font-family:'Playfair Display', serif; font-size:48px; margin:0; }
-    header p { color:#D6A21C; letter-spacing:2px; margin-top:10px; font-size:14px; }
-    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; }
-    nav a { background-color:#1E2F3F; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
-    nav a:hover { background-color:#D6A21C; color:#16222D; }
-    section { display:none; padding:50px 20px; max-width:1000px; margin:auto; }
-    section.active { display:block; }
-    h2 { font-family:'Playfair Display', serif; color:#D6A21C; font-size:32px; }
-    .card { background-color:#243A4B; padding:25px; border-radius:8px; margin-top:25px; }
-    .button { display:inline-block; background-color:#C62828; color:white; padding:12px 22px; border-radius:5px; text-decoration:none; margin-top:20px; font-weight:600; }
-    footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
-    input, button { font-size:14px; padding:6px; margin-top:5px; }
+    body {
+      margin: 0;
+      font-family: 'Open Sans', Arial, sans-serif;
+      background-color: #1E2F3F;
+      color: #ffffff;
+    }
+
+    header {
+      padding: 40px 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #1E2F3F, #16222D);
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      margin: 0;
+    }
+
+    header p {
+      color: #D6A21C;
+      letter-spacing: 2px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 15px;
+      background-color: #16222D;
+    }
+
+    nav a {
+      background-color: #1E2F3F;
+      color: white;
+      padding: 8px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      background-color: #D6A21C;
+      color: #16222D;
+    }
+
+    section {
+      display: none;
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      color: #D6A21C;
+      font-size: 32px;
+    }
+
+    .card {
+      background-color: #243A4B;
+      padding: 25px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 13px;
+      background-color: #16222D;
+      margin-top: 50px;
+    }
   </style>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
 </head>
+
 <body>
 
 <header>
   <h1>TECH4ZERO</h1>
-  <p>EDUCATION & AI</p>
+  <p>EDUCATIONAL DESIGNS</p>
 </header>
 
 <nav>
@@ -40,120 +117,71 @@
 <section id="home" class="active">
   <h2>Bienvenidos</h2>
   <div class="card">
-    <p>Columbia Educational Designs desarrolla programas educativos basados en experiencia, cooperación, lenguaje y emociones, con foco en la prevención del bullying.</p>
+    <p>
+      TECH4ZERO desarrolla programas educativos basados en experiencia,
+      cooperación, lenguaje y emociones, con foco en la prevención del bullying.
+    </p>
+  </div>
+
+  <div class="card" style="margin-top:30px; text-align:center;">
+    <iframe width="560" height="315"
+      src="https://www.youtube.com/embed/iBO4YijRYbs"
+      title="Programa ZERO"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div style="margin-top:30px; text-align:center;">
+    <img src="zero.png" alt="Logo ZERO" style="max-width:220px;" />
   </div>
 </section>
 
 <section id="zero">
   <h2>Programa Antibullying ZERO</h2>
   <div class="card">
-    <p>ZERO es un programa antibullying internacional, implementado en escuelas de Estados Unidos y Latinoamérica, con resultados comprobados.</p>
+    <p>
+      ZERO es un programa antibullying internacional, implementado en escuelas de Estados Unidos
+      y Latinoamérica, con resultados comprobados.
+    </p>
   </div>
 </section>
 
 <section id="encuesta">
   <h2>Encuesta Escolar</h2>
   <div class="card">
-    <p>Usted ingresará a la sección de encuestas. Debe poner su usuario y clave.</p>
-    <div id="loginSection">
-      <label>Usuario:</label><br>
-      <input type="text" id="username"><br><br>
-      <label>Contraseña:</label><br>
-      <input type="password" id="password"><br><br>
-      <button id="btnLogin">Ingresar a la encuesta</button>
-      <p id="loginError" style="color:red;"></p>
-    </div>
-
-    <div id="formEncuestaContainer" style="display:none; margin-top:20px;"></div>
+    <p>
+      Herramienta confidencial para estudiantes que permite analizar el clima escolar,
+      detectar patrones de agresión y apoyar la toma de decisiones pedagógicas.
+    </p>
+    <p style="margin-top:15px; color:#D6A21C;">
+      Próximamente: acceso digital y procesamiento automático de resultados.
+    </p>
   </div>
 </section>
 
 <section id="equipo">
   <h2>Nuestro Equipo</h2>
   <div class="card">
-    <p>Equipo interdisciplinario de especialistas en educación, psicología y tecnología comprometidos con comunidades escolares seguras.</p>
+    <p>
+      Equipo interdisciplinario de especialistas en educación, psicología y tecnología
+      comprometidos con comunidades escolares seguras.
+    </p>
   </div>
 </section>
 
 <section id="contacto">
   <h2>Contáctenos</h2>
   <div class="card">
-    <p>Email: contacto@columbiaus.com</p>
+    <p>Email: contacto@tech4zero.org</p>
   </div>
 </section>
 
 <footer>
-  © 2025 Columbia Educational Designs
+  © 2025 TECH4ZERO – Educational Designs
 </footer>
 
-<script>
-function showTab(tabId){
-  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'))
-  document.getElementById(tabId).classList.add('active')
-}
-
-// Login + mostrar encuesta
-const btnLogin = document.getElementById('btnLogin')
-const loginError = document.getElementById('loginError')
-const formEncuestaContainer = document.getElementById('formEncuestaContainer')
-
-btnLogin.addEventListener('click', async () => {
-  const username = document.getElementById('username').value
-  const password = document.getElementById('password').value
-
-  try {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    })
-    const data = await res.json()
-
-    if(res.ok){
-      loginError.innerText = ''
-      document.getElementById('loginSection').style.display='none'
-      formEncuestaContainer.style.display='block'
-
-      formEncuestaContainer.innerHTML = `
-        <form id="formEncuesta">
-          <label>Pregunta 1: ¿Has visto agresión en tu escuela?</label><br>
-          <input type="radio" name="q1" value="Sí"> Sí<br>
-          <input type="radio" name="q1" value="No"> No<br><br>
-
-          <label>Pregunta 2: Lugar de la agresión:</label><br>
-          <input type="text" name="q2"><br><br>
-
-          <button type="submit">Enviar Encuesta</button>
-        </form>
-      `
-
-      const form = document.getElementById('formEncuesta')
-      form.addEventListener('submit', async e=>{
-        e.preventDefault()
-        const responses = [form.q1.value, form.q2.value]
-        const resInsert = await fetch('/api/guardarEncuesta', {
-          method: 'POST',
-          headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({
-            school_id: data.school_id,
-            student_id: 101, // puede ser dinámico
-            responses
-          })
-        })
-        const result = await resInsert.json()
-        if(resInsert.ok) alert(result.message)
-        else alert('Error: '+result.error)
-        form.reset()
-      })
-
-    } else {
-      loginError.innerText = data.error
-    }
-
-  } catch(err){
-    loginError.innerText='Error de servidor'
-  }
-})
-</script>
 </body>
 </html>
+
