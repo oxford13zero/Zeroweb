@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -41,6 +43,7 @@
       gap: 15px;
       padding: 15px;
       background-color: #16222D;
+      flex-wrap: wrap;
     }
 
     nav a {
@@ -73,6 +76,7 @@
       font-family: 'Playfair Display', serif;
       color: #D6A21C;
       font-size: 32px;
+      margin-top: 0;
     }
 
     .card {
@@ -88,6 +92,83 @@
       font-size: 13px;
       background-color: #16222D;
       margin-top: 50px;
+    }
+
+    /* --- Login UI styles (compact) --- */
+    .btnPrimary {
+      display: inline-block;
+      padding: 10px 16px;
+      font-weight: 700;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btnSecondary {
+      display: inline-block;
+      padding: 10px 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1px solid #D6A21C;
+      background: transparent;
+      color: #D6A21C;
+      cursor: pointer;
+    }
+
+    .loginPanel {
+      display: none;
+      margin-top: 18px;
+      background: #1E2F3F;
+      padding: 16px;
+      border-radius: 8px;
+      max-width: 420px;
+      border: 1px solid #365468;
+    }
+
+    .fieldBlock {
+      margin-bottom: 14px;
+    }
+
+    .fieldLabel {
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .textInput {
+      width: 100%;
+      max-width: 320px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #365468;
+      background: #0f1d27;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .textInput::placeholder {
+      color: #a9c0d3;
+    }
+
+    .loginMsg {
+      margin-top: 12px;
+      color: #ffb4b4;
+      font-weight: 600;
+      min-height: 18px;
+    }
+
+    .successBox {
+      display: none;
+      margin-top: 18px;
+      background: #1E2F3F;
+      border: 1px solid #2d4b61;
+      padding: 14px;
+      border-radius: 8px;
+      max-width: 520px;
+    }
+
+    .successBox p {
+      margin: 0;
     }
   </style>
 
@@ -116,6 +197,7 @@
 
 <section id="home" class="active">
   <h2>Bienvenidos</h2>
+
   <div class="card">
     <p>
       TECH4ZERO desarrolla programas educativos basados en experiencia,
@@ -150,80 +232,47 @@
 
 <section id="encuesta">
   <h2>Encuesta Escolar</h2>
+
   <div class="card">
     <p>
       Para ingresar a la encuesta, deberá introducir su <b>usuario</b> y <b>contraseña</b>.
+      (Interfaz en modo demostración: todavía no valida contra base de datos.)
     </p>
 
-    <!-- Botón principal -->
-    <div id="encuestaIntro">
-      <button id="btnMostrarLogin" style="padding:10px 16px; font-weight:600; border-radius:6px; border:none; cursor:pointer;">
+    <!-- Intro button -->
+    <div id="encuestaIntro" style="margin-top:14px;">
+      <button id="btnMostrarLogin" class="btnPrimary">
         Ingresar a la encuesta
       </button>
     </div>
 
-    <!-- Panel de login (oculto al inicio) -->
-    <div id="loginPanel" style="display:none; margin-top:18px; background:#1E2F3F; padding:16px; border-radius:8px; max-width:420px;">
-  
-  <div style="margin-bottom:14px;">
-    <label for="loginUser" style="font-weight:600;">Usuario</label><br />
-    <input id="loginUser" type="text" placeholder="Usuario"
-           style="width:100%; max-width:320px; padding:8px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
-  </div>
-
-  <div style="margin-bottom:14px;">
-    <label for="loginPass" style="font-weight:600;">Contraseña</label><br />
-    <input id="loginPass" type="password" placeholder="Contraseña"
-           style="width:100%; max-width:320px; padding:8px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
-  </div>
-
-  <div style="display:flex; gap:10px; flex-wrap:wrap;">
-    <button id="btnLogin"
-      style="padding:9px 18px; font-weight:700; border-radius:6px; border:none; cursor:pointer;">
-      Entrar
-    </button>
-
-    <button id="btnCancelarLogin"
-      style="padding:9px 18px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer;">
-      Cancelar
-    </button>
-  </div>
-
-  <p id="loginMsg" style="margin-top:12px; color:#ffb4b4; font-weight:600;"></p>
-</div>
-
-
-        <div style="flex:1; min-width:220px;">
-          <label for="loginPass" style="font-weight:600;">Contraseña</label><br />
-          <input id="loginPass" type="password" placeholder="Ingrese su contraseña"
-                 style="width:100%; padding:10px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
-        </div>
+    <!-- Login panel -->
+    <div id="loginPanel" class="loginPanel">
+      <div class="fieldBlock">
+        <label for="loginUser" class="fieldLabel">Usuario</label><br />
+        <input id="loginUser" class="textInput" type="text" placeholder="Usuario" />
       </div>
 
-      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnLogin" style="padding:10px 16px; font-weight:700; border-radius:6px; border:none; cursor:pointer;">
-          Entrar
-        </button>
-        <button id="btnCancelarLogin" style="padding:10px 16px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer;">
-          Cancelar
-        </button>
+      <div class="fieldBlock">
+        <label for="loginPass" class="fieldLabel">Contraseña</label><br />
+        <input id="loginPass" class="textInput" type="password" placeholder="Contraseña" />
       </div>
 
-      <p id="loginMsg" style="margin-top:12px; color:#ffb4b4; font-weight:600;"></p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnLogin" class="btnPrimary">Entrar</button>
+        <button id="btnCancelarLogin" class="btnSecondary">Cancelar</button>
+      </div>
+
+      <div id="loginMsg" class="loginMsg"></div>
     </div>
 
-    <!-- Placeholder: lo que vendrá después del login -->
-    <div id="encuestaPlaceholder" style="display:none; margin-top:18px;">
-      <div class="card" style="background:#243A4B;">
-        <p style="margin:0;">
-          Login exitoso (simulado). Aquí se mostrará la encuesta en el siguiente paso.
-        </p>
-      </div>
+    <!-- Success placeholder (UI only) -->
+    <div id="encuestaPlaceholder" class="successBox">
+      <p>✅ Login exitoso (simulado). Aquí se mostrará la encuesta en el siguiente paso.</p>
     </div>
 
   </div>
 </section>
-
 
 <section id="equipo">
   <h2>Nuestro Equipo</h2>
@@ -246,9 +295,8 @@
   © 2025 TECH4ZERO – Educational Designs
 </footer>
 
-
 <script>
-  // UI-only login (sin backend)
+  // UI-only login (no backend)
   const btnMostrarLogin = document.getElementById('btnMostrarLogin');
   const loginPanel = document.getElementById('loginPanel');
   const btnCancelarLogin = document.getElementById('btnCancelarLogin');
@@ -260,8 +308,10 @@
 
   btnMostrarLogin.addEventListener('click', () => {
     loginMsg.textContent = '';
+    encuestaPlaceholder.style.display = 'none';
     loginPanel.style.display = 'block';
     btnMostrarLogin.style.display = 'none';
+    document.getElementById('loginUser').focus();
   });
 
   btnCancelarLogin.addEventListener('click', () => {
@@ -276,13 +326,13 @@
     const u = document.getElementById('loginUser').value.trim();
     const p = document.getElementById('loginPass').value.trim();
 
-    // Validación mínima (solo UI)
+    // Minimal UI validation only
     if (!u || !p) {
       loginMsg.textContent = 'Por favor ingrese usuario y contraseña.';
       return;
     }
 
-    // “Login” simulado: solo muestra el siguiente bloque
+    // Simulated success
     loginMsg.textContent = '';
     loginPanel.style.display = 'none';
     encuestaIntro.style.display = 'none';
@@ -290,9 +340,5 @@
   });
 </script>
 
-  
 </body>
 </html>
-
-
-
