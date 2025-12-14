@@ -152,14 +152,56 @@
   <h2>Encuesta Escolar</h2>
   <div class="card">
     <p>
-      Herramienta confidencial para estudiantes que permite analizar el clima escolar,
-      detectar patrones de agresión y apoyar la toma de decisiones pedagógicas.
+      Para ingresar a la encuesta, deberá introducir su <b>usuario</b> y <b>contraseña</b>.
     </p>
-    <p style="margin-top:15px; color:#D6A21C;">
-      Próximamente: acceso digital y procesamiento automático de resultados.
-    </p>
+
+    <!-- Botón principal -->
+    <div id="encuestaIntro">
+      <button id="btnMostrarLogin" style="padding:10px 16px; font-weight:600; border-radius:6px; border:none; cursor:pointer;">
+        Ingresar a la encuesta
+      </button>
+    </div>
+
+    <!-- Panel de login (oculto al inicio) -->
+    <div id="loginPanel" style="display:none; margin-top:18px; background:#1E2F3F; padding:16px; border-radius:8px;">
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:220px;">
+          <label for="loginUser" style="font-weight:600;">Usuario</label><br />
+          <input id="loginUser" type="text" placeholder="Ingrese su usuario"
+                 style="width:100%; padding:10px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
+        </div>
+
+        <div style="flex:1; min-width:220px;">
+          <label for="loginPass" style="font-weight:600;">Contraseña</label><br />
+          <input id="loginPass" type="password" placeholder="Ingrese su contraseña"
+                 style="width:100%; padding:10px; border-radius:6px; border:1px solid #365468; margin-top:6px;" />
+        </div>
+      </div>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnLogin" style="padding:10px 16px; font-weight:700; border-radius:6px; border:none; cursor:pointer;">
+          Entrar
+        </button>
+        <button id="btnCancelarLogin" style="padding:10px 16px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer;">
+          Cancelar
+        </button>
+      </div>
+
+      <p id="loginMsg" style="margin-top:12px; color:#ffb4b4; font-weight:600;"></p>
+    </div>
+
+    <!-- Placeholder: lo que vendrá después del login -->
+    <div id="encuestaPlaceholder" style="display:none; margin-top:18px;">
+      <div class="card" style="background:#243A4B;">
+        <p style="margin:0;">
+          Login exitoso (simulado). Aquí se mostrará la encuesta en el siguiente paso.
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
+
 
 <section id="equipo">
   <h2>Nuestro Equipo</h2>
@@ -182,6 +224,52 @@
   © 2025 TECH4ZERO – Educational Designs
 </footer>
 
+
+<script>
+  // UI-only login (sin backend)
+  const btnMostrarLogin = document.getElementById('btnMostrarLogin');
+  const loginPanel = document.getElementById('loginPanel');
+  const btnCancelarLogin = document.getElementById('btnCancelarLogin');
+  const btnLogin = document.getElementById('btnLogin');
+  const loginMsg = document.getElementById('loginMsg');
+
+  const encuestaIntro = document.getElementById('encuestaIntro');
+  const encuestaPlaceholder = document.getElementById('encuestaPlaceholder');
+
+  btnMostrarLogin.addEventListener('click', () => {
+    loginMsg.textContent = '';
+    loginPanel.style.display = 'block';
+    btnMostrarLogin.style.display = 'none';
+  });
+
+  btnCancelarLogin.addEventListener('click', () => {
+    loginMsg.textContent = '';
+    loginPanel.style.display = 'none';
+    btnMostrarLogin.style.display = 'inline-block';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+  });
+
+  btnLogin.addEventListener('click', () => {
+    const u = document.getElementById('loginUser').value.trim();
+    const p = document.getElementById('loginPass').value.trim();
+
+    // Validación mínima (solo UI)
+    if (!u || !p) {
+      loginMsg.textContent = 'Por favor ingrese usuario y contraseña.';
+      return;
+    }
+
+    // “Login” simulado: solo muestra el siguiente bloque
+    loginMsg.textContent = '';
+    loginPanel.style.display = 'none';
+    encuestaIntro.style.display = 'none';
+    encuestaPlaceholder.style.display = 'block';
+  });
+</script>
+
+  
 </body>
 </html>
+
 
