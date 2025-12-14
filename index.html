@@ -238,12 +238,30 @@
   const schoolWelcome = document.getElementById('schoolWelcome');
   const btnLogout = document.getElementById('btnLogout');
 
-  btnMostrarLogin.addEventListener('click', () => {
-    loginMsg.textContent = '';
-    loginPanel.style.display = 'block';
-    btnMostrarLogin.style.display = 'none';
-    document.getElementById('loginUser').focus();
-  });
+  btnMostrarLogin.addEventListener('click', async () => {
+  loginMsg.textContent = '';
+
+  // 1) Verificar si ya existe una sesión válida en backend
+  try {
+    const res = await fetch('/api/me');
+    const data = await res.json();
+
+    if (data && data.ok) {
+      encuestaIntro.style.display = 'none';
+      encuestaOK.style.display = 'block';
+      schoolWelcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
+      return;
+    }
+  } catch (e) {
+    // si falla, seguimos al login normal
+  }
+
+  // 2) Si no hay sesión, mostrar formulario de login
+  loginPanel.style.display = 'block';
+  btnMostrarLogin.style.display = 'none';
+  document.getElementById('loginUser').focus();
+});
+
 
   btnCancelarLogin.addEventListener('click', () => {
     loginMsg.textContent = '';
@@ -417,4 +435,5 @@
 
 </body>
 </html>
+
 
