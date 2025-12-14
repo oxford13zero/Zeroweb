@@ -1,37 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Columbia – Online Educational Programs</title>
+  <title>COLUMBIA – Educación y Prevención</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background-color: #0a2a43;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #2b2b2b;
+    }
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      background-color: #b38b00;
+    }
+    section {
+      display: none;
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+      background-color: white;
+    }
+    section.active {
+      display: block;
+    }
+    h2 {
+      color: #0a2a43;
+    }
+    footer {
+      background-color: #2b2b2b;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+    .button {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #b38b00;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .button:hover {
+      background-color: #0a2a43;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+  <script>
+    function showTab(tabId) {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
 </head>
 <body>
-  <h1>Columbia</h1>
-  <p><strong>Columbia</strong> is an educational organization that provides online programs for schools.</p>
 
-  <h2>What We Do</h2>
-  <p>
-    We offer structured online courses that include recorded lectures, readings, and assignments
-    designed to support teachers and schools.
-  </p>
+<header>
+  <h1>COLUMBIA</h1>
+  <p>Educación, prevención y análisis para comunidades escolares seguras</p>
+</header>
 
-  <h2>Student Surveys</h2>
-  <p>
-    As part of our programs, students complete confidential surveys related to school climate and bullying.
-    The results help teachers understand patterns and improve the learning environment.
-  </p>
+<nav>
+  <a href="#" onclick="showTab('home')">Home</a>
+  <a href="#" onclick="showTab('zero')">ZERO</a>
+  <a href="#" onclick="showTab('encuesta')">Encuesta</a>
+  <a href="#" onclick="showTab('equipo')">Equipo</a>
+  <a href="#" onclick="showTab('contacto')">Contáctenos</a>
+</nav>
 
-  <h2>For Teachers</h2>
+<section id="home" class="active">
+  <h2>Bienvenidos a COLUMBIA</h2>
   <p>
-    Teachers receive clear, easy-to-understand results, including summaries and visual insights,
-    to support informed decision-making.
+    COLUMBIA es una organización educativa que ofrece programas online para escuelas,
+    enfocados en la prevención del bullying y la mejora del clima escolar.
   </p>
+  <a class="button" href="#" onclick="showTab('encuesta')">Ir a la Encuesta</a>
+</section>
 
-  <h2>Contact</h2>
+<section id="zero">
+  <h2>Programa ZERO</h2>
   <p>
-    For more information, please contact us at:<br />
-    <strong>info@Columbia-education.org</strong>
+    ZERO es nuestro programa de prevención del acoso escolar.
+    Combina educación, detección temprana y análisis de datos para apoyar
+    a docentes y comunidades educativas.
   </p>
+</section>
+
+<section id="encuesta">
+  <h2>Encuesta Escolar</h2>
+  <p>
+    Los estudiantes completan una encuesta confidencial que permite identificar
+    patrones de agresión, lugares críticos y oportunidades de intervención.
+  </p>
+  <p>
+    Los resultados son procesados automáticamente y presentados a los docentes
+    de forma clara y accionable.
+  </p>
+</section>
+
+<section id="equipo">
+  <h2>Nuestro Equipo</h2>
+  <p>
+    COLUMBIA está formado por profesionales de la educación, tecnología y psicología,
+    comprometidos con crear entornos escolares más seguros.
+  </p>
+</section>
+
+<section id="contacto">
+  <h2>Contáctenos</h2>
+  <form>
+    <label>Nombre</label>
+    <input type="text" />
+
+    <label>Email</label>
+    <input type="email" />
+
+    <label>Mensaje</label>
+    <textarea rows="4"></textarea>
+
+    <button class="button" type="submit">Enviar</button>
+  </form>
+</section>
+
+<footer>
+  <p>© 2025 COLUMBIA – Todos los derechos reservados</p>
+</footer>
+
 </body>
 </html>
-
 
