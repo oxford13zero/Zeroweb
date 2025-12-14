@@ -184,7 +184,7 @@
 
   <div class="card">
     <p>
-      Esta sección lee datos desde Supabase (tabla <b>ENC_ESCOLAR</b>) para verificar conexión.
+      Esta sección lee datos desde Supabase (tabla <b>enc_escolar</b>) para verificar conexión.
     </p>
 
     <div class="formPanel">
@@ -284,7 +284,7 @@
 
   /* -------------------------
      DATOS: leer desde Supabase REST
-     Tabla: ENC_ESCOLAR
+     Tabla: enc_escolar
      Columnas:
        first_name, pat_last_name, mat_last_name, school_id
   -------------------------- */
@@ -327,9 +327,9 @@
     }
 
     // REST endpoint (schema public):
-    // /rest/v1/ENC_ESCOLAR?select=...&limit=1&offset=N
+    // /rest/v1/enc_escolar?select=...&limit=1&offset=N
     const url =
-      `${SUPABASE_URL}/rest/v1/ENC_ESCOLAR` +
+      `${SUPABASE_URL}/rest/v1/enc_escolar` +
       `?select=first_name,pat_last_name,mat_last_name,school_id` +
       `&limit=1&offset=${offset}`;
 
@@ -355,7 +355,7 @@
       const result = await fetchOneRow(datosIndex);
 
       if (!result.ok) {
-        setStatus(` No se pudo leer ENC_ESCOLAR (HTTP ${result.status ?? "?"}).`, "statusErr");
+        setStatus(` No se pudo leer enc_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
         fillFields(null);
         return;
       }
@@ -363,7 +363,7 @@
       const arr = Array.isArray(result.json) ? result.json : [];
       if (arr.length === 0) {
         if (datosIndex === 0) {
-          setStatus(" La tabla ENC_ESCOLAR está vacía (no hay registros).", "statusWarn");
+          setStatus(" La tabla enc_escolar está vacía (no hay registros).", "statusWarn");
         } else {
           setStatus(" No hay más registros. Retrocede para ver anteriores.", "statusWarn");
           datosIndex = Math.max(0, datosIndex - 1);
@@ -373,10 +373,10 @@
       }
 
       fillFields(arr[0]);
-      setStatus(`✅ Mostrando registro #${datosIndex + 1}`, "statusOk");
+      setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
 
     } catch (e) {
-      setStatus("❌ Error de conexión con Supabase.", "statusErr");
+      setStatus(" Error de conexión con Supabase.", "statusErr");
       fillFields(null);
     }
   }
@@ -401,6 +401,7 @@
 
 </body>
 </html>
+
 
 
 
