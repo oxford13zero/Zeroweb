@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,90 +9,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      font-family: 'Open Sans', Arial, sans-serif;
-      background-color: #1E2F3F;
-      color: #ffffff;
-    }
+    body { margin: 0; font-family: 'Open Sans', Arial, sans-serif; background-color: #1E2F3F; color: #ffffff; }
 
-    header {
-      padding: 40px 20px;
-      text-align: center;
-      background: linear-gradient(180deg, #1E2F3F, #16222D);
-    }
+    header { padding: 40px 20px; text-align: center; background: linear-gradient(180deg, #1E2F3F, #16222D); }
+    header h1 { font-family: 'Playfair Display', serif; font-size: 48px; margin: 0; }
+    header p { color: #D6A21C; letter-spacing: 2px; margin-top: 10px; font-size: 14px; }
 
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px;
-      margin: 0;
-    }
+    nav { display: flex; justify-content: center; gap: 15px; padding: 15px; background-color: #16222D; flex-wrap: wrap; }
+    nav a { background-color: #1E2F3F; color: white; padding: 8px 18px; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: 600; }
+    nav a:hover { background-color: #D6A21C; color: #16222D; }
 
-    header p {
-      color: #D6A21C;
-      letter-spacing: 2px;
-      margin-top: 10px;
-      font-size: 14px;
-    }
+    section { display: none; padding: 50px 20px; max-width: 1000px; margin: auto; }
+    section.active { display: block; }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      padding: 15px;
-      background-color: #16222D;
-      flex-wrap: wrap;
-    }
+    h2 { font-family: 'Playfair Display', serif; color: #D6A21C; font-size: 32px; margin-top: 0; }
 
-    nav a {
-      background-color: #1E2F3F;
-      color: white;
-      padding: 8px 18px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-    }
+    .card { background-color: #243A4B; padding: 25px; border-radius: 8px; margin-top: 25px; }
 
-    nav a:hover {
-      background-color: #D6A21C;
-      color: #16222D;
-    }
+    footer { text-align: center; padding: 30px; font-size: 13px; background-color: #16222D; margin-top: 50px; }
 
-    section {
-      display: none;
-      padding: 50px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    section.active {
-      display: block;
-    }
-
-    h2 {
-      font-family: 'Playfair Display', serif;
-      color: #D6A21C;
-      font-size: 32px;
-      margin-top: 0;
-    }
-
-    .card {
-      background-color: #243A4B;
-      padding: 25px;
-      border-radius: 8px;
-      margin-top: 25px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      font-size: 13px;
-      background-color: #16222D;
-      margin-top: 50px;
-    }
-
-    /* --- Login UI styles (compact) --- */
+    /* Buttons */
     .btnPrimary {
       display: inline-block;
       padding: 10px 16px;
@@ -103,7 +37,6 @@
       border: none;
       cursor: pointer;
     }
-
     .btnSecondary {
       display: inline-block;
       padding: 10px 16px;
@@ -115,29 +48,20 @@
       cursor: pointer;
     }
 
-    .loginPanel {
-      display: none;
+    /* Inputs (compact, stacked) */
+    .formPanel {
       margin-top: 18px;
       background: #1E2F3F;
       padding: 16px;
       border-radius: 8px;
-      max-width: 420px;
+      max-width: 520px;
       border: 1px solid #365468;
     }
-
-    .fieldBlock {
-      margin-bottom: 14px;
-    }
-
-    .fieldLabel {
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: 6px;
-    }
-
+    .fieldBlock { margin-bottom: 14px; }
+    .fieldLabel { font-weight: 600; display: inline-block; margin-bottom: 6px; }
     .textInput {
       width: 100%;
-      max-width: 320px;
+      max-width: 380px;
       padding: 8px;
       border-radius: 6px;
       border: 1px solid #365468;
@@ -145,37 +69,27 @@
       color: #ffffff;
       outline: none;
     }
+    .textInput::placeholder { color: #a9c0d3; }
 
-    .textInput::placeholder {
-      color: #a9c0d3;
-    }
-
-    .loginMsg {
+    .statusMsg {
       margin-top: 12px;
-      color: #ffb4b4;
       font-weight: 600;
       min-height: 18px;
     }
-
-    .successBox {
-      display: none;
-      margin-top: 18px;
-      background: #1E2F3F;
-      border: 1px solid #2d4b61;
-      padding: 14px;
-      border-radius: 8px;
-      max-width: 520px;
-    }
-
-    .successBox p {
-      margin: 0;
-    }
+    .statusOk { color: #b9ffcf; }
+    .statusWarn { color: #ffdca8; }
+    .statusErr { color: #ffb4b4; }
   </style>
 
   <script>
     function showTab(tabId) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
+
+      // When entering DATOS tab, auto-load first record (once)
+      if (tabId === 'datos') {
+        window.loadDatosIfNeeded?.();
+      }
     }
   </script>
 </head>
@@ -191,6 +105,7 @@
   <a href="#" onclick="showTab('home')">INICIO</a>
   <a href="#" onclick="showTab('zero')">ZERO</a>
   <a href="#" onclick="showTab('encuesta')">ENCUESTA</a>
+  <a href="#" onclick="showTab('datos')">DATOS</a>
   <a href="#" onclick="showTab('equipo')">EQUIPO</a>
   <a href="#" onclick="showTab('contacto')">CONTACTO</a>
 </nav>
@@ -246,8 +161,8 @@
       </button>
     </div>
 
-    <!-- Login panel -->
-    <div id="loginPanel" class="loginPanel">
+    <!-- Login panel (UI only) -->
+    <div id="loginPanel" class="formPanel" style="display:none;">
       <div class="fieldBlock">
         <label for="loginUser" class="fieldLabel">Usuario</label><br />
         <input id="loginUser" class="textInput" type="text" placeholder="Usuario" />
@@ -263,14 +178,54 @@
         <button id="btnCancelarLogin" class="btnSecondary">Cancelar</button>
       </div>
 
-      <div id="loginMsg" class="loginMsg"></div>
+      <div id="loginMsg" class="statusMsg statusErr"></div>
     </div>
 
     <!-- Success placeholder (UI only) -->
-    <div id="encuestaPlaceholder" class="successBox">
-      <p>✅ Login exitoso (simulado). Aquí se mostrará la encuesta en el siguiente paso.</p>
+    <div id="encuestaPlaceholder" class="formPanel" style="display:none;">
+      <p style="margin:0;"> Login exitoso (simulado). Aquí se mostrará la encuesta en el siguiente paso.</p>
     </div>
+  </div>
+</section>
 
+<!--  NEW TAB: DATOS -->
+<section id="datos">
+  <h2>Datos</h2>
+
+  <div class="card">
+    <p>
+      Esta sección muestra registros desde la tabla <b>enc_escolar</b> en Supabase.
+      Sirve para verificar la conexión y que podemos desplegar datos.
+    </p>
+
+    <div class="formPanel">
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_nombre">Nombre</label><br />
+        <input id="d_nombre" class="textInput" type="text" placeholder="Nombre" readonly />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_ap_paterno">Apellido Paterno</label><br />
+        <input id="d_ap_paterno" class="textInput" type="text" placeholder="Apellido Paterno" readonly />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_ap_materno">Apellido Materno</label><br />
+        <input id="d_ap_materno" class="textInput" type="text" placeholder="Apellido Materno" readonly />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_establecimiento">Establecimiento</label><br />
+        <input id="d_establecimiento" class="textInput" type="text" placeholder="Establecimiento" readonly />
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+        <button id="btnPrev" class="btnSecondary">Retroceder</button>
+        <button id="btnNext" class="btnPrimary">Avanzar</button>
+      </div>
+
+      <div id="datosStatus" class="statusMsg statusWarn"></div>
+    </div>
   </div>
 </section>
 
@@ -296,13 +251,14 @@
 </footer>
 
 <script>
-  // UI-only login (no backend)
+  /* -------------------------
+     LOGIN (UI ONLY, no backend)
+  -------------------------- */
   const btnMostrarLogin = document.getElementById('btnMostrarLogin');
   const loginPanel = document.getElementById('loginPanel');
   const btnCancelarLogin = document.getElementById('btnCancelarLogin');
   const btnLogin = document.getElementById('btnLogin');
   const loginMsg = document.getElementById('loginMsg');
-
   const encuestaIntro = document.getElementById('encuestaIntro');
   const encuestaPlaceholder = document.getElementById('encuestaPlaceholder');
 
@@ -326,18 +282,135 @@
     const u = document.getElementById('loginUser').value.trim();
     const p = document.getElementById('loginPass').value.trim();
 
-    // Minimal UI validation only
     if (!u || !p) {
       loginMsg.textContent = 'Por favor ingrese usuario y contraseña.';
       return;
     }
 
-    // Simulated success
     loginMsg.textContent = '';
     loginPanel.style.display = 'none';
     encuestaIntro.style.display = 'none';
     encuestaPlaceholder.style.display = 'block';
   });
+
+  /* -------------------------
+     DATOS tab: Supabase REST read
+     Table: enc_escolar
+     Columns expected:
+       - nombre
+       - apellido_paterno
+       - apellido_materno
+       - establecimiento
+  -------------------------- */
+
+  // 🔧 TODO: replace with your real values:
+  const SUPABASE_URL = "https://YOURPROJECT.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+  let datosIndex = 0;
+  let datosLoadedOnce = false;
+
+  const elNombre = document.getElementById('d_nombre');
+  const elApPaterno = document.getElementById('d_ap_paterno');
+  const elApMaterno = document.getElementById('d_ap_materno');
+  const elEst = document.getElementById('d_establecimiento');
+  const elStatus = document.getElementById('datosStatus');
+
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  function setStatus(text, type) {
+    elStatus.textContent = text || '';
+    elStatus.classList.remove('statusOk', 'statusWarn', 'statusErr');
+    elStatus.classList.add(type || 'statusWarn');
+  }
+
+  function fillFields(row) {
+    elNombre.value = row?.nombre ?? '';
+    elApPaterno.value = row?.apellido_paterno ?? '';
+    elApMaterno.value = row?.apellido_materno ?? '';
+    elEst.value = row?.establecimiento ?? '';
+  }
+
+  async function fetchOneRow(offset) {
+    if (!SUPABASE_URL.includes("supabase.co") || SUPABASE_ANON_KEY.includes("YOUR_")) {
+      setStatus("⚠️ Falta configurar SUPABASE_URL y SUPABASE_ANON_KEY en el código.", "statusErr");
+      fillFields(null);
+      return { ok: false };
+    }
+
+    // Supabase REST: /rest/v1/<table>?select=...&limit=1&offset=N
+    const url =
+      `${SUPABASE_URL}/rest/v1/enc_escolar` +
+      `?select=nombre,apellido_paterno,apellido_materno,establecimiento` +
+      `&limit=1&offset=${offset}`;
+
+    const res = await fetch(url, {
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+        "Accept": "application/json"
+      }
+    });
+
+    const text = await res.text();
+    let json;
+    try { json = text ? JSON.parse(text) : null; } catch { json = null; }
+
+    return { ok: res.ok, status: res.status, json };
+  }
+
+  async function loadCurrent() {
+    setStatus("Cargando datos...", "statusWarn");
+
+    try {
+      const result = await fetchOneRow(datosIndex);
+
+      if (!result.ok) {
+        // Common: 401/403 -> RLS/policy issue
+        setStatus(`❌ No se pudo leer enc_escolar (HTTP ${result.status}). Revisa RLS/policies en Supabase.`, "statusErr");
+        fillFields(null);
+        return;
+      }
+
+      const arr = Array.isArray(result.json) ? result.json : [];
+      if (arr.length === 0) {
+        // No record at this offset
+        if (datosIndex === 0) {
+          setStatus("⚠️ La tabla enc_escolar está vacía (no hay registros).", "statusWarn");
+        } else {
+          setStatus("⚠️ No hay más registros. Retrocede para ver anteriores.", "statusWarn");
+          datosIndex = Math.max(0, datosIndex - 1);
+        }
+        fillFields(null);
+        return;
+      }
+
+      fillFields(arr[0]);
+      setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
+    } catch (e) {
+      setStatus(" Error al conectar con Supabase. Revisa URL/Key y conexión.", "statusErr");
+      fillFields(null);
+    }
+  }
+
+  btnPrev.addEventListener('click', async () => {
+    datosIndex = Math.max(0, datosIndex - 1);
+    await loadCurrent();
+  });
+
+  btnNext.addEventListener('click', async () => {
+    datosIndex = datosIndex + 1;
+    await loadCurrent();
+  });
+
+  // Auto-load once when entering tab
+  window.loadDatosIfNeeded = async () => {
+    if (datosLoadedOnce) return;
+    datosLoadedOnce = true;
+    datosIndex = 0;
+    await loadCurrent();
+  };
 </script>
 
 </body>
