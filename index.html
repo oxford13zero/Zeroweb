@@ -170,6 +170,21 @@
     <button id="btnQNext" class="btnPrimary">Siguiente</button>
   </div>
 
+  <!-- ===== DEBUG GUARDADO (TEMP) ===== -->
+  <div style="margin-top:12px; padding:10px; border:1px solid #365468; border-radius:8px;">
+    <div style="font-weight:700; margin-bottom:6px;">Debug guardado</div>
+    <div><b>responseId:</b> <span id="dbgResponseId">(vacío)</span></div>
+    <div><b>questionId:</b> <span id="dbgQuestionId">(vacío)</span></div>
+    <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+      <button id="btnStartDebug" class="btnSecondary" type="button">1) Crear response</button>
+      <button id="btnSaveDebug" class="btnPrimary" type="button">2) Guardar respuesta</button>
+    </div>
+  </div>
+  <!-- ===== FIN DEBUG ===== -->
+
+
+
+  
   <div id="surveyMsg" class="statusMsg statusWarn"></div>
 </div>
 
@@ -529,11 +544,81 @@ document.getElementById('btnQNext').addEventListener('click', () => {
       ' Encuesta finalizada (demo)';
   }
 });
+// ================================
+// DEBUG: START RESPONSE + SAVE ANSWER
+// ================================
+window.currentResponseId = window.currentResponseId || null;
+
+function dbgRender() {
+  document.getElementById('dbgResponseId').textContent =
+    window.currentResponseId || '(vacío)';
+
+  const q = SURVEY?.questions?.[currentQuestionIndex];
+  document.getElementById('dbgQuestionId').textContent =
+    q?.id || '(vacío)';
+}
+
+// Hook para refrescar debug al cambiar pregunta
+const _origRenderCurrentQuestion = renderCurrentQuestion;
+renderCurrentQuestion = function () {
+  _origRenderCurrentQuestion();
+  dbgRender();
+};
+
+// 1) Crear response
+document.getElementById('btnStartDebug').addEventListener('click', async () => {
+  const surveyId = SURVEY?.id || 'survey_001';
+
+  const r = await fetch('/api/start-response', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ surveyId })
+  });
+
+  const j = await r.json().catch(() => ({}));
+  alert('start-response -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
+
+  window.currentResponseId = j.responseId || j.id || null;
+  dbgRender();
+});
+
+// 2) Guardar respuesta
+document.getElementById('btnSaveDebug').addEventListener('click', async () => {
+  const q = SURVEY?.questions?.[currentQuestionIndex];
+
+  let answerText = null;
+  let selectedOptionCodes = [];
+
+  if (q?.type === 'text') {
+    answerText = document.getElementById('answerText')?.value || null;
+  } else {
+    const checked = document.querySelector('input[name="answer"]:checked');
+    if (checked) selectedOptionCodes = [checked.value];
+  }
+
+  const payload = {
+    responseId: window.currentResponseId,
+    questionId: q?.id,
+    answerText,
+    selectedOptionIds: selectedOptionCodes
+  };
+
+  const r = await fetch('/api/save-answer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  const j = await r.json().catch(() => ({}));
+  alert('save-answer -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
+});
+  
 
 </script>
 
 </body>
 </html>
+
 
 
 
