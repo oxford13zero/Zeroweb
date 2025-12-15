@@ -68,7 +68,6 @@
       if (tabId === 'datos') window.loadDatosIfNeeded?.();
     }
   </script>
-  
 </head>
 
 <body>
@@ -79,12 +78,12 @@
 </header>
 
 <nav>
-  <a href="#" onclick="showTab('home')">INICIO</a>
-  <a href="#" onclick="showTab('programa')">PROGRAMA</a>
-  <a href="#" onclick="showTab('encuesta')">ENCUESTA</a>
-  <a href="#" onclick="showTab('datos')">DATOS</a>
-  <a href="#" onclick="showTab('equipo')">EQUIPO</a>
-  <a href="#" onclick="showTab('contacto')">CONTACTO</a>
+  <a href="#" onclick="showTab('home'); return false;">INICIO</a>
+  <a href="#" onclick="showTab('programa'); return false;">PROGRAMA</a>
+  <a href="#" onclick="showTab('encuesta'); return false;">ENCUESTA</a>
+  <a href="#" onclick="showTab('datos'); return false;">DATOS</a>
+  <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
+  <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
 </nav>
 
 <section id="home" class="active">
@@ -132,10 +131,7 @@
 
     <!-- Intro -->
     <div id="encuestaIntro" style="margin-top:14px;">
-      <button id="btnMostrarLogin" class="btnPrimary" onclick="alert('CLICK OK: HTML funciona')">
-  Ingresar a la encuesta
-</button>
-
+      <button id="btnMostrarLogin" class="btnPrimary" type="button">Ingresar a la encuesta</button>
     </div>
 
     <!-- Login Panel -->
@@ -151,8 +147,8 @@
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnLogin" class="btnPrimary">Entrar</button>
-        <button id="btnCancelarLogin" class="btnSecondary">Cancelar</button>
+        <button id="btnLogin" class="btnPrimary" type="button">Entrar</button>
+        <button id="btnCancelarLogin" class="btnSecondary" type="button">Cancelar</button>
       </div>
 
       <div id="loginMsg" class="statusMsg statusErr"></div>
@@ -160,37 +156,36 @@
 
     <!-- OK Panel -->
     <div id="encuestaOK" class="formPanel" style="display:none;">
-      <p id="schoolWelcome" style="margin:0 0 12px 0;"> Acceso concedido.</p>
-      <button id="btnLogout" class="btnSecondary">Salir</button>
+      <p id="schoolWelcome" style="margin:0 0 12px 0;">Acceso concedido.</p>
+      <button id="btnLogout" class="btnSecondary" type="button">Salir</button>
     </div>
-<div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
-  <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
-  <div id="qText" style="margin-bottom:12px;"></div>
-  <div id="qOptions"></div>
 
-  <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-    <button id="btnQPrev" class="btnSecondary">Anterior</button>
-    <button id="btnQNext" class="btnPrimary">Siguiente</button>
-  </div>
+    <!-- Survey Box -->
+    <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
+      <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
+      <div id="qText" style="margin-bottom:12px;"></div>
+      <div id="qOptions"></div>
 
-  <!-- ===== DEBUG GUARDADO (TEMP) ===== -->
-  <div style="margin-top:12px; padding:10px; border:1px solid #365468; border-radius:8px;">
-    <div style="font-weight:700; margin-bottom:6px;">Debug guardado</div>
-    <div><b>responseId:</b> <span id="dbgResponseId">(vacío)</span></div>
-    <div><b>questionId:</b> <span id="dbgQuestionId">(vacío)</span></div>
-    <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
-      <button id="btnStartDebug" class="btnSecondary" type="button">1) Crear response</button>
-      <button id="btnSaveDebug" class="btnPrimary" type="button">2) Guardar respuesta</button>
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button id="btnQPrev" class="btnSecondary" type="button">Anterior</button>
+        <button id="btnQNext" class="btnPrimary" type="button">Siguiente</button>
+      </div>
+
+      <!-- ===== DEBUG GUARDADO (TEMP) ===== -->
+      <div style="margin-top:12px; padding:10px; border:1px solid #365468; border-radius:8px;">
+        <div style="font-weight:700; margin-bottom:6px;">Debug guardado</div>
+        <div><b>responseId:</b> <span id="dbgResponseId">(vacío)</span></div>
+        <div><b>questionCode:</b> <span id="dbgQuestionCode">(vacío)</span></div>
+        <div><b>questionId:</b> <span id="dbgQuestionId">(vacío)</span></div>
+        <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+          <button id="btnStartDebug" class="btnSecondary" type="button">1) Crear response</button>
+          <button id="btnSaveDebug" class="btnPrimary" type="button">2) Guardar respuesta</button>
+        </div>
+      </div>
+      <!-- ===== FIN DEBUG ===== -->
+
+      <div id="surveyMsg" class="statusMsg statusWarn"></div>
     </div>
-  </div>
-  <!-- ===== FIN DEBUG ===== -->
-
-
-
-  
-  <div id="surveyMsg" class="statusMsg statusWarn"></div>
-</div>
-
   </div>
 </section>
 
@@ -224,8 +219,8 @@
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
-        <button id="btnPrev" class="btnSecondary">Retroceder</button>
-        <button id="btnNext" class="btnPrimary">Avanzar</button>
+        <button id="btnPrev" class="btnSecondary" type="button">Retroceder</button>
+        <button id="btnNext" class="btnPrimary" type="button">Avanzar</button>
       </div>
 
       <div id="datosStatus" class="statusMsg statusWarn"></div>
@@ -255,15 +250,12 @@
 </footer>
 
 <script>
-
-<script>
   // === DEBUG: mostrar errores JS sin consola ===
   window.onerror = function (msg, src, line, col) {
     alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
     const el = document.getElementById('loginMsg');
     if (el) el.textContent = `JS ERROR: ${msg}`;
   };
-
   window.onunhandledrejection = function (e) {
     const msg = (e && e.reason && (e.reason.message || String(e.reason))) || 'Unhandled promise rejection';
     alert('PROMISE ERROR: ' + msg);
@@ -271,14 +263,6 @@
     if (el) el.textContent = `PROMISE ERROR: ${msg}`;
   };
 
-  /* -------------------------
-     LOGIN (BACKEND /api/login + /api/logout)
-  -------------------------- */
-  const btnMostrarLogin = document.getElementById('btnMostrarLogin');
-  ...
-
-
-  
   /* -------------------------
      LOGIN (BACKEND /api/login + /api/logout)
   -------------------------- */
@@ -293,30 +277,32 @@
   const schoolWelcome = document.getElementById('schoolWelcome');
   const btnLogout = document.getElementById('btnLogout');
 
+  const surveyBox = document.getElementById('surveyBox');
+
   btnMostrarLogin.addEventListener('click', async () => {
-  loginMsg.textContent = '';
+    loginMsg.textContent = '';
 
-  // 1) Verificar si ya existe una sesión válida en backend
-  try {
-    const res = await fetch('/api/me');
-    const data = await res.json();
+    // 1) Verificar si ya existe una sesión válida en backend
+    try {
+      const res = await fetch('/api/me', { credentials: 'include' });
+      const data = await res.json().catch(() => ({}));
 
-    if (data && data.ok) {
-      encuestaIntro.style.display = 'none';
-      encuestaOK.style.display = 'block';
-      schoolWelcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
-      return;
+      if (data && data.ok) {
+        encuestaIntro.style.display = 'none';
+        encuestaOK.style.display = 'block';
+        schoolWelcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
+        await showSurveyUI();
+        return;
+      }
+    } catch (e) {
+      // si falla, seguimos al login normal
     }
-  } catch (e) {
-    // si falla, seguimos al login normal
-  }
 
-  // 2) Si no hay sesión, mostrar formulario de login
-  loginPanel.style.display = 'block';
-  btnMostrarLogin.style.display = 'none';
-  document.getElementById('loginUser').focus();
-});
-
+    // 2) Si no hay sesión, mostrar formulario de login
+    loginPanel.style.display = 'block';
+    btnMostrarLogin.style.display = 'none';
+    document.getElementById('loginUser').focus();
+  });
 
   btnCancelarLogin.addEventListener('click', () => {
     loginMsg.textContent = '';
@@ -339,20 +325,20 @@
       loginMsg.textContent = 'Validando...';
 
       const res = await fetch('/api/login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ username: u, password: p })
-});
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
 
-const raw = await res.text();
-let data = {};
-try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
-if (!res.ok || !data.ok) {
-  loginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
-  return;
-}
-
+      if (!res.ok || !data.ok) {
+        loginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
+        return;
+      }
 
       // Login OK
       loginMsg.textContent = '';
@@ -360,16 +346,14 @@ if (!res.ok || !data.ok) {
       encuestaIntro.style.display = 'none';
       encuestaOK.style.display = 'block';
       schoolWelcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
-      showSurveyUI();
-
-
+      await showSurveyUI();
     } catch (e) {
       loginMsg.textContent = 'Error de conexión.';
     }
   });
 
   btnLogout.addEventListener('click', async () => {
-    await fetch('/api/logout', { method: 'POST' }).catch(() => {});
+    await fetch('/api/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
     // reset UI
     encuestaOK.style.display = 'none';
     encuestaIntro.style.display = 'block';
@@ -378,17 +362,12 @@ if (!res.ok || !data.ok) {
     loginMsg.textContent = '';
     document.getElementById('loginUser').value = '';
     document.getElementById('loginPass').value = '';
+    surveyBox.style.display = 'none';
   });
 
-
-  
   /* -------------------------
      DATOS: Supabase REST read
-     Tabla: encargado_escolar
-     Columnas: first_name, pat_last_name, mat_last_name, school_id
   -------------------------- */
-
-  //  Deja tus valores reales aquí (los mismos que ya te funcionaban):
   const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aHlub2lra2JtZ3VsYnJ1ZXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODIzMDgsImV4cCI6MjA4MTI1ODMwOH0.k-jdaJ-QOu9RCTWIJ2vTZ1Eefdby70asQIq9rdTmPT4";
 
@@ -418,12 +397,6 @@ if (!res.ok || !data.ok) {
   }
 
   async function fetchOneRow(offset) {
-    if (!SUPABASE_URL.includes("supabase.co") || SUPABASE_ANON_KEY.includes("PON_TU")) {
-      setStatus(" Falta configurar SUPABASE_URL / SUPABASE_ANON_KEY.", "statusErr");
-      fillFields(null);
-      return { ok: false };
-    }
-
     const url =
       `${SUPABASE_URL}/rest/v1/encargado_escolar` +
       `?select=first_name,pat_last_name,mat_last_name,school_id` +
@@ -470,7 +443,6 @@ if (!res.ok || !data.ok) {
 
       fillFields(arr[0]);
       setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
-
     } catch (e) {
       setStatus(" Error de conexión con Supabase.", "statusErr");
       fillFields(null);
@@ -495,210 +467,171 @@ if (!res.ok || !data.ok) {
   };
 
   /* ================================
-   PASO 3 — CARGAR Y MOSTRAR SURVEY
-================================ */
+     ENCUESTA
+  ================================ */
 
-let SURVEY = null;
-let currentQuestionIndex = 0;
+  // IMPORTANTE: tu survey en BD tiene id:
+  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f";
+  // y tu start-response acepta code "SURVEY_001"
+  const SURVEY_CODE = "SURVEY_001";
+
+  let SURVEY = null;
+  let currentQuestionIndex = 0;
   let QUESTION_ID_MAP = {};
+  window.currentResponseId = null;
 
-
-// 1) Cargar el JSON del survey
-async function loadSurvey() {
-  if (SURVEY) return;
-
-  const res = await fetch('/data/survey_001.json', { cache: 'no-store' });
-  if (!res.ok) {
-    alert('No se pudo cargar el survey');
-    return;
+  function dbgRender() {
+    const q = SURVEY?.questions?.[currentQuestionIndex] || null;
+    document.getElementById('dbgResponseId').textContent = window.currentResponseId || '(vacío)';
+    document.getElementById('dbgQuestionCode').textContent = q?.code || '(vacío)';
+    document.getElementById('dbgQuestionId').textContent = (q?.code && QUESTION_ID_MAP[q.code]) ? QUESTION_ID_MAP[q.code] : '(vacío)';
   }
 
-  SURVEY = await res.json();
-}
+  async function loadSurvey() {
+    if (SURVEY) return;
+    const res = await fetch('/data/survey_001.json', { cache: 'no-store' });
+    if (!res.ok) {
+      alert('No se pudo cargar el survey');
+      return;
+    }
+    SURVEY = await res.json();
+  }
 
-// 2) Renderizar la pregunta actual
-function renderCurrentQuestion() {
-  const question = SURVEY.questions[currentQuestionIndex];
+  function renderCurrentQuestion() {
+    const question = SURVEY.questions[currentQuestionIndex];
 
-  document.getElementById('qTitle').textContent =
-    `Pregunta ${question.number} de ${SURVEY.questions.length}`;
+    document.getElementById('qTitle').textContent =
+      `Pregunta ${question.number} de ${SURVEY.questions.length}`;
 
-  document.getElementById('qText').textContent = question.text;
+    document.getElementById('qText').textContent = question.text;
 
-  const optionsDiv = document.getElementById('qOptions');
-  optionsDiv.innerHTML = '';
+    const optionsDiv = document.getElementById('qOptions');
+    optionsDiv.innerHTML = '';
 
-  if (question.type === 'text') {
-    optionsDiv.innerHTML =
-      `<input type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
-  } else {
-    question.options.forEach(opt => {
-      optionsDiv.insertAdjacentHTML(
-        'beforeend',
-        `<label style="display:block; margin-bottom:6px;">
-           <input type="radio" name="answer" value="${opt.code}">
-           ${opt.text}
-         </label>`
-      );
+    if (question.type === 'text') {
+      optionsDiv.innerHTML =
+        `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
+    } else {
+      question.options.forEach(opt => {
+        optionsDiv.insertAdjacentHTML(
+          'beforeend',
+          `<label style="display:block; margin-bottom:6px;">
+             <input type="radio" name="answer" value="${opt.code}">
+             ${opt.text}
+           </label>`
+        );
+      });
+    }
+
+    document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
+    document.getElementById('btnQNext').textContent =
+      (currentQuestionIndex === SURVEY.questions.length - 1)
+        ? 'Finalizar'
+        : 'Siguiente';
+
+    dbgRender();
+  }
+
+  async function showSurveyUI() {
+    await loadSurvey();
+
+    // cargar mapa questionCode -> questionUUID (desde backend)
+    const r = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(SURVEY_UUID)}`, {
+      credentials: 'include'
     });
-  }
 
-  document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
-  document.getElementById('btnQNext').textContent =
-    (currentQuestionIndex === SURVEY.questions.length - 1)
-      ? 'Finalizar'
-      : 'Siguiente';
-}
+    const raw = await r.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
-// 3) Mostrar el survey (se llama tras login OK)
-async function showSurveyUI() {
-  await loadSurvey();
+    if (!r.ok || !data.ok) {
+      alert('No se pudo cargar mapa de preguntas: ' + (data.error || data.raw || 'sin detalle'));
+      return;
+    }
 
-  // === CARGAR MAPA code -> question UUID ===
-  const res = await fetch(
-    `/api/questions-map?surveyId=${encodeURIComponent(SURVEY.id || 'survey_001')}`,
-    { credentials: 'include' }
-  );
-  const data = await res.json();
-  if (!data.ok) {
-    alert('No se pudo cargar mapa de preguntas');
-    return;
-  }
-  QUESTION_ID_MAP = data.map;
+    QUESTION_ID_MAP = data.map || {};
 
-  document.getElementById('surveyBox').style.display = 'block';
-  currentQuestionIndex = 0;
-  renderCurrentQuestion();
-  }
-});
-
-// 5) Botón SIGUIENTE
-document.getElementById('btnQNext').addEventListener('click', () => {
-  if (currentQuestionIndex < SURVEY.questions.length - 1) {
-    currentQuestionIndex++;
+    surveyBox.style.display = 'block';
+    currentQuestionIndex = 0;
     renderCurrentQuestion();
-  } else {
-    document.getElementById('surveyMsg').textContent =
-      ' Encuesta finalizada (demo)';
-  }
-});
-// ================================
-// DEBUG: START RESPONSE + SAVE ANSWER
-// ================================
-window.currentResponseId = window.currentResponseId || null;
-
-function dbgRender() {
-  document.getElementById('dbgResponseId').textContent =
-    window.currentResponseId || '(vacío)';
-
-  const q = SURVEY?.questions?.[currentQuestionIndex];
-  document.getElementById('dbgQuestionId').textContent =
-    q?.id || '(vacío)';
-}
-
-// Hook para refrescar debug al cambiar pregunta
-const _origRenderCurrentQuestion = renderCurrentQuestion;
-renderCurrentQuestion = function () {
-  _origRenderCurrentQuestion();
-  dbgRender();
-};
-
-// 1) Crear response
-document.getElementById('btnStartDebug').addEventListener('click', async () => {
-  const surveyId = SURVEY?.id || 'survey_001';
-
-  const r = await fetch('/api/start-response', {
-  method: 'POST',
-  credentials: 'include',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ surveyId })
-});
-
-const raw = await r.text();
-let j = {};
-try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
-
-  alert('start-response -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
-
-  window.currentResponseId = j.responseId || j.id || null;
-  dbgRender();
-});
-
-// 2) Guardar respuesta
-document.getElementById('btnSaveDebug').addEventListener('click', async () => {
-  const q = SURVEY?.questions?.[currentQuestionIndex];
-  if (!q) {
-    alert('No hay pregunta actual');
-    return;
   }
 
-  // UUID REAL desde el mapa cargado desde backend
-  const questionId = QUESTION_ID_MAP[q.code] || null;
-  if (!questionId) {
-    alert('No se pudo resolver questionId para code: ' + q.code);
-    return;
-  }
-
-  let answerText = null;
-  let selectedOptionCodes = [];
-
-  if (q.type === 'text') {
-    answerText = document.getElementById('answerText')?.value?.trim() || null;
-  } else {
-    const checked = document.querySelector('input[name="answer"]:checked');
-    if (checked) selectedOptionCodes = [checked.value];
-  }
-
-  const payload = {
-    responseId: window.currentResponseId,
-    questionId,
-    answerText,
-    selectedOptionIds: selectedOptionCodes
-  };
-
-  const r = await fetch('/api/save-answer', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+  document.getElementById('btnQPrev').addEventListener('click', () => {
+    if (!SURVEY) return;
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      renderCurrentQuestion();
+    }
   });
 
-  const raw = await r.text();
-  let j = {};
-  try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+  document.getElementById('btnQNext').addEventListener('click', () => {
+    if (!SURVEY) return;
+    if (currentQuestionIndex < SURVEY.questions.length - 1) {
+      currentQuestionIndex++;
+      renderCurrentQuestion();
+    } else {
+      document.getElementById('surveyMsg').textContent = ' Encuesta finalizada (demo)';
+    }
+  });
 
-  alert('save-answer -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
-});
+  // DEBUG: crear response
+  document.getElementById('btnStartDebug').addEventListener('click', async () => {
+    const r = await fetch('/api/start-response', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ surveyId: SURVEY_CODE })
+    });
 
+    const raw = await r.text();
+    let j = {};
+    try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 
- const r = await fetch('/api/save-answer', {
-  method: 'POST',
-  credentials: 'include',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(payload)
-});
+    alert('start-response -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
 
-const raw = await r.text();
-let j = {};
-try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+    window.currentResponseId = j.responseId || null;
+    dbgRender();
+  });
 
-  
-  alert('save-answer -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
-});
-  
+  // DEBUG: guardar respuesta
+  document.getElementById('btnSaveDebug').addEventListener('click', async () => {
+    const q = SURVEY?.questions?.[currentQuestionIndex];
+    if (!q) return alert('No hay pregunta actual');
 
+    const questionId = QUESTION_ID_MAP[q.code] || null;
+    if (!questionId) return alert('No se pudo resolver questionId para code: ' + q.code);
+
+    let answerText = null;
+    let selectedOptionCodes = [];
+
+    if (q.type === 'text') {
+      answerText = document.getElementById('answerText')?.value?.trim() || null;
+    } else {
+      const checked = document.querySelector('input[name="answer"]:checked');
+      if (checked) selectedOptionCodes = [checked.value];
+    }
+
+    const payload = {
+      responseId: window.currentResponseId,
+      questionId,
+      answerText,
+      selectedOptionIds: selectedOptionCodes
+    };
+
+    const r = await fetch('/api/save-answer', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const raw = await r.text();
+    let j = {};
+    try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
+    alert('save-answer -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
+  });
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
