@@ -168,7 +168,7 @@
 
   <div class="card">
     <p>
-      Esta sección lee datos desde Supabase (tabla <b>enc_escolar</b>) para verificar conexión.
+      Esta sección lee datos desde Supabase (tabla <b>encargado_escolar</b>) para verificar conexión.
     </p>
 
     <div class="formPanel">
@@ -322,7 +322,7 @@
 
   /* -------------------------
      DATOS: Supabase REST read
-     Tabla: enc_escolar
+     Tabla: encargado_escolar
      Columnas: first_name, pat_last_name, mat_last_name, school_id
   -------------------------- */
 
@@ -363,7 +363,7 @@
     }
 
     const url =
-      `${SUPABASE_URL}/rest/v1/enc_escolar` +
+      `${SUPABASE_URL}/rest/v1/encargado_escolar` +
       `?select=first_name,pat_last_name,mat_last_name,school_id` +
       `&limit=1&offset=${offset}`;
 
@@ -389,7 +389,7 @@
       const result = await fetchOneRow(datosIndex);
 
       if (!result.ok) {
-        setStatus(` No se pudo leer enc_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
+        setStatus(` No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
         fillFields(null);
         return;
       }
@@ -397,7 +397,7 @@
       const arr = Array.isArray(result.json) ? result.json : [];
       if (arr.length === 0) {
         if (datosIndex === 0) {
-          setStatus(" La tabla enc_escolar está vacía (no hay registros).", "statusWarn");
+          setStatus(" La tabla encargado_escolar está vacía (no hay registros).", "statusWarn");
         } else {
           setStatus(" No hay más registros. Retrocede para ver anteriores.", "statusWarn");
           datosIndex = Math.max(0, datosIndex - 1);
@@ -435,5 +435,6 @@
 
 </body>
 </html>
+
 
 
