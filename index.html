@@ -68,6 +68,7 @@
       if (tabId === 'datos') window.loadDatosIfNeeded?.();
     }
   </script>
+  
 </head>
 
 <body>
@@ -159,6 +160,18 @@
       <p id="schoolWelcome" style="margin:0 0 12px 0;"> Acceso concedido.</p>
       <button id="btnLogout" class="btnSecondary">Salir</button>
     </div>
+<div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
+  <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
+  <div id="qText" style="margin-bottom:12px;"></div>
+  <div id="qOptions"></div>
+
+  <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+    <button id="btnQPrev" class="btnSecondary">Anterior</button>
+    <button id="btnQNext" class="btnPrimary">Siguiente</button>
+  </div>
+
+  <div id="surveyMsg" class="statusMsg statusWarn"></div>
+</div>
 
   </div>
 </section>
@@ -302,6 +315,8 @@
       encuestaIntro.style.display = 'none';
       encuestaOK.style.display = 'block';
       schoolWelcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
+      showSurveyUI();
+
 
     } catch (e) {
       loginMsg.textContent = 'Error de conexión.';
@@ -320,6 +335,8 @@
     document.getElementById('loginPass').value = '';
   });
 
+
+  
   /* -------------------------
      DATOS: Supabase REST read
      Tabla: encargado_escolar
@@ -431,10 +448,93 @@
     datosIndex = 0;
     await loadCurrent();
   };
+
+  /* ================================
+   PASO 3 — CARGAR Y MOSTRAR SURVEY
+================================ */
+
+let SURVEY = null;
+let currentQuestionIndex = 0;
+
+// 1) Cargar el JSON del survey
+async function loadSurvey() {
+  if (SURVEY) return;
+
+  const res = await fetch('/data/survey_001.json', { cache: 'no-store' });
+  if (!res.ok) {
+    alert('No se pudo cargar el survey');
+    return;
+  }
+
+  SURVEY = await res.json();
+}
+
+// 2) Renderizar la pregunta actual
+function renderCurrentQuestion() {
+  const question = SURVEY.questions[currentQuestionIndex];
+
+  document.getElementById('qTitle').textContent =
+    `Pregunta ${question.number} de ${SURVEY.questions.length}`;
+
+  document.getElementById('qText').textContent = question.text;
+
+  const optionsDiv = document.getElementById('qOptions');
+  optionsDiv.innerHTML = '';
+
+  if (question.type === 'text') {
+    optionsDiv.innerHTML =
+      `<input type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
+  } else {
+    question.options.forEach(opt => {
+      optionsDiv.insertAdjacentHTML(
+        'beforeend',
+        `<label style="display:block; margin-bottom:6px;">
+           <input type="radio" name="answer" value="${opt.code}">
+           ${opt.text}
+         </label>`
+      );
+    });
+  }
+
+  document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
+  document.getElementById('btnQNext').textContent =
+    (currentQuestionIndex === SURVEY.questions.length - 1)
+      ? 'Finalizar'
+      : 'Siguiente';
+}
+
+// 3) Mostrar el survey (se llama tras login OK)
+async function showSurveyUI() {
+  await loadSurvey();
+  document.getElementById('surveyBox').style.display = 'block';
+  currentQuestionIndex = 0;
+  renderCurrentQuestion();
+}
+
+// 4) Botón ANTERIOR
+document.getElementById('btnQPrev').addEventListener('click', () => {
+  if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
+    renderCurrentQuestion();
+  }
+});
+
+// 5) Botón SIGUIENTE
+document.getElementById('btnQNext').addEventListener('click', () => {
+  if (currentQuestionIndex < SURVEY.questions.length - 1) {
+    currentQuestionIndex++;
+    renderCurrentQuestion();
+  } else {
+    document.getElementById('surveyMsg').textContent =
+      ' Encuesta finalizada (demo)';
+  }
+});
+
 </script>
 
 </body>
 </html>
+
 
 
 
