@@ -140,12 +140,12 @@
     <div id="loginPanel" class="formPanel" style="display:none;">
       <div class="fieldBlock">
         <label for="loginUser" class="fieldLabel">Usuario</label><br />
-        <input id="loginUser" class="textInput" type="text" placeholder="Usuario" />
+        <input id="loginUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
       </div>
 
       <div class="fieldBlock">
         <label for="loginPass" class="fieldLabel">Contraseña</label><br />
-        <input id="loginPass" class="textInput" type="password" placeholder="Contraseña" />
+        <input id="loginPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
@@ -790,6 +790,7 @@ if (loginPass) loginPass.value = '';
 
 </body>
 </html>
+
 
 
 
