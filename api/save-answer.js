@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     return res.status(403).json({ ok: false, error: "FORBIDDEN" });
   }
 
-  // Upsert question_answers (TU esquema: solo answer_text)
+  // Upsert question_answers (TU esquema: answer_text)
   const baseAnswer = {
     survey_response_id: responseId,
     question_id: questionId,
@@ -53,8 +53,8 @@ export default async function handler(req, res) {
 
   const answerId = ans.id;
 
-  // selectedOptionIds llega como CODES desde el UI (ej: ["A"])
-  let codes = Array.isArray(selectedOptionIds) ? selectedOptionIds.filter(Boolean) : [];
+  // selectedOptionIds llega como CODES desde UI (ej: ["2"])
+  const codes = Array.isArray(selectedOptionIds) ? selectedOptionIds.filter(Boolean) : [];
 
   // Borrar opciones previas
   await supabaseAdmin
