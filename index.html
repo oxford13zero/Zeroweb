@@ -492,14 +492,28 @@
   let QUESTION_ID_MAP = {};
   window.currentResponseId = null;
 
+  
+  
   function dbgRender() {
-    const q = SURVEY?.questions?.[currentQuestionIndex] || null;
-    document.getElementById('dbgResponseId').textContent =
-  (window.currentResponseId ? window.currentResponseId : '(vacío)');
-    document.getElementById('dbgQuestionCode').textContent = q?.code || '(vacío)';
-    document.getElementById('dbgQuestionId').textContent = (q?.code && QUESTION_ID_MAP[q.code]) ? QUESTION_ID_MAP[q.code] : '(vacío)';
-  }
+  // Si el panel debug no está en el HTML, no hacemos nada
+  if (!document.getElementById('dbgResponseId')) return;
 
+  const q = SURVEY?.questions?.[currentQuestionIndex] || null;
+
+  const elResp = document.getElementById('dbgResponseId');
+  if (elResp) elResp.textContent = window.currentResponseId || '(vacío)';
+
+  const elCode = document.getElementById('dbgQuestionCode');
+  if (elCode) elCode.textContent = q?.code || '(vacío)';
+
+  const elQid = document.getElementById('dbgQuestionId');
+  if (elQid) elQid.textContent = (q?.number && QUESTION_ID_MAP[String(q.number)]) ? QUESTION_ID_MAP[String(q.number)] : '(vacío)';
+}
+
+
+
+
+  
   async function loadSurvey() {
     if (SURVEY) return;
     const res = await fetch('/data/survey_001.json', { cache: 'no-store' });
@@ -733,6 +747,7 @@ if (_m) _m.textContent = ' Encuesta finalizada';
 
 </body>
 </html>
+
 
 
 
