@@ -658,7 +658,9 @@ if (!window.currentResponseId) {
     currentQuestionIndex++;
     renderCurrentQuestion();
   } else {
-    document.getElementById('surveyMsg').textContent = ' Encuesta finalizada';
+    const _m = document.getElementById('surveyMsg');
+if (_m) _m.textContent = ' Encuesta finalizada';
+
   }
 });
 
@@ -724,6 +726,7 @@ if (!window.currentResponseId) {
 
 </body>
 </html>
+
 
 
 
