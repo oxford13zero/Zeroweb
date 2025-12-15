@@ -156,12 +156,6 @@
       <div id="loginMsg" class="statusMsg statusErr"></div>
     </div>
 
-    <!-- OK Panel -->
-    <div id="encuestaOK" class="formPanel" style="display:none;">
-      <p id="schoolWelcome" style="margin:0 0 12px 0;">Acceso concedido.</p>
-      <button id="btnLogout" class="btnSecondary" type="button">Salir</button>
-    </div>
-
     <!-- Survey Box -->
     <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
@@ -193,6 +187,13 @@
       
       <div id="surveyMsg" class="statusMsg statusWarn"></div>
     </div>
+
+    <!-- OK Panel -->
+    <div id="encuestaOK" class="formPanel" style="display:none; opacity:0.75; max-width:420px;">
+      <p id="schoolWelcome" style="margin:0 0 12px 0;">Acceso concedido.</p>
+      <button id="btnLogout" class="btnSecondary" type="button" style="font-size:13px; padding:6px 12px;">Cerrar sesión</button>
+    </div>
+
   </div>
 </section>
 
@@ -790,10 +791,6 @@ if (loginPass) loginPass.value = '';
 
 </body>
 </html>
-
-
-
-
 
 
 
