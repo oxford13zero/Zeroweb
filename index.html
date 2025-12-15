@@ -666,7 +666,7 @@ if (!window.currentResponseId) {
 
   
   // DEBUG: crear response
-  document.getElementById('btnStartDebug').addEventListener('click', async () => {
+  document.getElementById('btnStartDebug')?.addEventListener('click', async () => {
     const r = await fetch('/api/start-response', {
       method: 'POST',
       credentials: 'include',
@@ -682,7 +682,7 @@ if (!window.currentResponseId) {
   });
 
   // DEBUG: guardar respuesta
- document.getElementById('btnSaveDebug').addEventListener('click', async () => {
+ document.getElementById('btnSaveDebug')?.addEventListener('click', async () => {
   const q = SURVEY?.questions?.[currentQuestionIndex];
   if (!q) { alert('No hay pregunta actual'); return; }
 
@@ -733,6 +733,7 @@ if (!window.currentResponseId) {
 
 </body>
 </html>
+
 
 
 
