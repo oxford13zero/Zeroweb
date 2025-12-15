@@ -174,6 +174,8 @@
       <!-- ===== DEBUG GUARDADO (TEMP) ===== -->
       <div style="margin-top:12px; padding:10px; border:1px solid #365468; border-radius:8px;">
         <div style="font-weight:700; margin-bottom:6px;">Debug guardado</div>
+        <div><b>build:</b> <span id="dbgBuild">INDEX_BUILD_2025_12_14_A</span></div>
+
         <div><b>responseId:</b> <span id="dbgResponseId">(vacío)</span></div>
         <div><b>questionCode:</b> <span id="dbgQuestionCode">(vacío)</span></div>
         <div><b>questionId:</b> <span id="dbgQuestionId">(vacío)</span></div>
@@ -628,10 +630,10 @@ alert(
   "DEBUG payload:\n" +
   JSON.stringify(
     {
-      responseId: window.currentResponseId,
+      responseId: responseId,
       questionNumber: q.number,
-      questionId,
-      answerText,
+      questionId: questionId,
+      answerText: answerText,
       selectedOptionIds: selectedOptionCodes
     },
     null,
@@ -657,6 +659,7 @@ alert(
 
 </body>
 </html>
+
 
 
 
