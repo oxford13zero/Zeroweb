@@ -312,17 +312,20 @@
       loginMsg.textContent = 'Validando...';
 
       const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: u, password: p })
-      });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ username: u, password: p })
+});
 
-      const data = await res.json().catch(() => ({}));
+const raw = await res.text();
+let data = {};
+try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
-      if (!res.ok || !data.ok) {
-        loginMsg.textContent = 'Usuario o contraseña incorrecta.';
-        return;
-      }
+if (!res.ok || !data.ok) {
+  loginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
+  return;
+}
+
 
       // Login OK
       loginMsg.textContent = '';
@@ -627,6 +630,7 @@ try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 
 </body>
 </html>
+
 
 
 
