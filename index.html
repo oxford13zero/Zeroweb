@@ -664,7 +664,7 @@ if (!window.currentResponseId) {
 
 
 
-  
+/*  
   // DEBUG: crear response
   document.getElementById('btnStartDebug')?.addEventListener('click', async () => {
     const r = await fetch('/api/start-response', {
@@ -685,46 +685,37 @@ if (!window.currentResponseId) {
  document.getElementById('btnSaveDebug')?.addEventListener('click', async () => {
   const q = SURVEY?.questions?.[currentQuestionIndex];
   if (!q) { alert('No hay pregunta actual'); return; }
-
   const responseId = window.currentResponseId;
   if (!responseId) { alert('Falta responseId. Primero: 1) Crear response'); return; }
-
   const questionId = QUESTION_ID_MAP[String(q.number)] || null;
   if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return; }
-
   let answerText = null;
   let selectedOptionCodes = [];
-
   if (q.type === 'text') {
     answerText = document.getElementById('answerText')?.value?.trim() || null;
   } else {
     const checked = document.querySelector('input[name="answer"]:checked');
     if (checked) selectedOptionCodes = [checked.value];
   }
-
   const payload = {
     responseId: responseId,
     questionId: questionId,
     answerText: answerText,
     selectedOptionIds: selectedOptionCodes
   };
-
   alert('DEBUG payload:\n' + JSON.stringify(payload, null, 2));
-
   const r = await fetch('/api/save-answer', {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
-
   const raw = await r.text();
   let j = {};
   try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
-
   alert('save-answer -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
 });
-
+*/
 
 
 
@@ -733,6 +724,7 @@ if (!window.currentResponseId) {
 
 </body>
 </html>
+
 
 
 
