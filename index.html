@@ -598,7 +598,8 @@
     const q = SURVEY?.questions?.[currentQuestionIndex];
     if (!q) return alert('No hay pregunta actual');
 
-    const questionId = QUESTION_ID_MAP[q.code] || null;
+    const questionId = QUESTION_ID_MAP[String(q.number)] || null;
+
     if (!questionId) return alert('No se pudo resolver questionId para code: ' + q.code);
 
     let answerText = null;
@@ -635,3 +636,4 @@
 
 </body>
 </html>
+
