@@ -618,7 +618,22 @@
       answerText,
       selectedOptionIds: selectedOptionCodes
     };
+alert(
+  "DEBUG payload:\n" +
+  JSON.stringify(
+    {
+      responseId: window.currentResponseId,
+      questionNumber: q.number,
+      questionId,
+      answerText,
+      selectedOptionIds: selectedOptionCodes
+    },
+    null,
+    2
+  )
+);
 
+    
     const r = await fetch('/api/save-answer', {
       method: 'POST',
       credentials: 'include',
@@ -636,4 +651,5 @@
 
 </body>
 </html>
+
 
