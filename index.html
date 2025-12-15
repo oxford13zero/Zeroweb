@@ -67,6 +67,8 @@
       document.getElementById(tabId).classList.add('active');
       if (tabId === 'datos') window.loadDatosIfNeeded?.();
     }
+
+    
   </script>
 </head>
 
@@ -74,7 +76,7 @@
 
 <header>
   <h1>TECH4ZERO</h1>
-  <p>EDUCATIONAL DESIGNS</p>
+  <p>EDUCATION+IA</p>
 </header>
 
 <nav>
@@ -548,56 +550,76 @@
 async function saveCurrentAnswerOrStop() {
   const q = SURVEY?.questions?.[currentQuestionIndex];
   if (!q) { alert('No hay pregunta actual'); return false; }
-
   const responseId = window.currentResponseId;
   if (!responseId) { alert('Primero debes hacer: 1) Crear response'); return false; }
-
   const questionId = QUESTION_ID_MAP[String(q.number)] || null;
   if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
-
   let answerText = null;
   let selectedOptionCodes = [];
-
   if (q.type === 'text') {
     answerText = document.getElementById('answerText')?.value?.trim() || null;
   } else {
     const checked = document.querySelector('input[name="answer"]:checked');
     if (checked) selectedOptionCodes = [checked.value];
   }
-
   // (opcional simple) si es requerida, no avanzar sin respuesta
   if (q.required && q.type !== 'text' && selectedOptionCodes.length === 0) {
     alert('Selecciona una opción para continuar.');
     return false;
   }
-
   const payload = {
     responseId,
     questionId,
     answerText,
     selectedOptionIds: selectedOptionCodes
   };
-
   const r = await fetch('/api/save-answer', {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
-
   const raw = await r.text();
   let j = {};
   try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
-
   if (!r.ok || !j.ok) {
     alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
     return false;
   }
-
   return true;
 }
 
+function resetEncuestaUI() {
+  // reset survey state
+  SURVEY = null;
+  currentQuestionIndex = 0;
+  QUESTION_ID_MAP = {};
+  window.currentResponseId = null;
 
+  // ocultar UI encuesta
+  const surveyBox = document.getElementById('surveyBox');
+  if (surveyBox) surveyBox.style.display = 'none';
+
+  // limpiar mensaje final
+  const m = document.getElementById('surveyMsg');
+  if (m) m.textContent = '';
+
+  // volver al estado inicial (botón ingresar)
+  const encuestaOK = document.getElementById('encuestaOK');
+  const encuestaIntro = document.getElementById('encuestaIntro');
+  const btnMostrarLogin = document.getElementById('btnMostrarLogin');
+  const loginPanel = document.getElementById('loginPanel');
+  const loginMsg = document.getElementById('loginMsg');
+
+  if (encuestaOK) encuestaOK.style.display = 'none';
+  if (loginPanel) loginPanel.style.display = 'none';
+  if (loginMsg) loginMsg.textContent = '';
+
+  if (encuestaIntro) encuestaIntro.style.display = 'block';
+  if (btnMostrarLogin) btnMostrarLogin.style.display = 'inline-block';
+}
+
+  
   
   async function showSurveyUI() {
     await loadSurvey();
@@ -667,10 +689,12 @@ if (!window.currentResponseId) {
   if (currentQuestionIndex < SURVEY.questions.length - 1) {
     currentQuestionIndex++;
     renderCurrentQuestion();
-  } else {
-    const _m = document.getElementById('surveyMsg');
-if (_m) _m.textContent = ' Encuesta finalizada';
+} else {
+  const _m = document.getElementById('surveyMsg');
+  if (_m) _m.textContent = ' Encuesta finalizada';
 
+  // volver al estado inicial del tab ENCUESTA
+  resetEncuestaUI();
   }
 });
 
@@ -736,6 +760,7 @@ if (_m) _m.textContent = ' Encuesta finalizada';
 
 </body>
 </html>
+
 
 
 
