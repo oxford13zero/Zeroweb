@@ -500,17 +500,16 @@
     SURVEY = await res.json();
   }
 
+
+
+  
   function renderCurrentQuestion() {
     const question = SURVEY.questions[currentQuestionIndex];
-
     document.getElementById('qTitle').textContent =
       `Pregunta ${question.number} de ${SURVEY.questions.length}`;
-
     document.getElementById('qText').textContent = question.text;
-
     const optionsDiv = document.getElementById('qOptions');
     optionsDiv.innerHTML = '';
-
     if (question.type === 'text') {
       optionsDiv.innerHTML =
         `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
@@ -525,16 +524,68 @@
         );
       });
     }
-
     document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
     document.getElementById('btnQNext').textContent =
       (currentQuestionIndex === SURVEY.questions.length - 1)
         ? 'Finalizar'
         : 'Siguiente';
-
     dbgRender();
   }
 
+async function saveCurrentAnswerOrStop() {
+  const q = SURVEY?.questions?.[currentQuestionIndex];
+  if (!q) { alert('No hay pregunta actual'); return false; }
+
+  const responseId = window.currentResponseId;
+  if (!responseId) { alert('Primero debes hacer: 1) Crear response'); return false; }
+
+  const questionId = QUESTION_ID_MAP[String(q.number)] || null;
+  if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
+
+  let answerText = null;
+  let selectedOptionCodes = [];
+
+  if (q.type === 'text') {
+    answerText = document.getElementById('answerText')?.value?.trim() || null;
+  } else {
+    const checked = document.querySelector('input[name="answer"]:checked');
+    if (checked) selectedOptionCodes = [checked.value];
+  }
+
+  // (opcional simple) si es requerida, no avanzar sin respuesta
+  if (q.required && q.type !== 'text' && selectedOptionCodes.length === 0) {
+    alert('Selecciona una opción para continuar.');
+    return false;
+  }
+
+  const payload = {
+    responseId,
+    questionId,
+    answerText,
+    selectedOptionIds: selectedOptionCodes
+  };
+
+  const r = await fetch('/api/save-answer', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  const raw = await r.text();
+  let j = {};
+  try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
+  if (!r.ok || !j.ok) {
+    alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
+    return false;
+  }
+
+  return true;
+}
+
+
+  
   async function showSurveyUI() {
     await loadSurvey();
 
@@ -567,16 +618,22 @@
     }
   });
 
-  document.getElementById('btnQNext').addEventListener('click', () => {
-    if (!SURVEY) return;
-    if (currentQuestionIndex < SURVEY.questions.length - 1) {
-      currentQuestionIndex++;
-      renderCurrentQuestion();
-    } else {
-      document.getElementById('surveyMsg').textContent = ' Encuesta finalizada (demo)';
-    }
-  });
+  
+  document.getElementById('btnQNext').addEventListener('click', async () => {
+  const ok = await saveCurrentAnswerOrStop();
+  if (!ok) return;
 
+  if (currentQuestionIndex < SURVEY.questions.length - 1) {
+    currentQuestionIndex++;
+    renderCurrentQuestion();
+  } else {
+    document.getElementById('surveyMsg').textContent = ' Encuesta finalizada';
+  }
+});
+
+
+
+  
   // DEBUG: crear response
   document.getElementById('btnStartDebug').addEventListener('click', async () => {
     const r = await fetch('/api/start-response', {
@@ -645,6 +702,7 @@
 
 </body>
 </html>
+
 
 
 
