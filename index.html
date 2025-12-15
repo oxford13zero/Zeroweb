@@ -252,6 +252,30 @@
 </footer>
 
 <script>
+
+<script>
+  // === DEBUG: mostrar errores JS sin consola ===
+  window.onerror = function (msg, src, line, col) {
+    alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
+    const el = document.getElementById('loginMsg');
+    if (el) el.textContent = `JS ERROR: ${msg}`;
+  };
+
+  window.onunhandledrejection = function (e) {
+    const msg = (e && e.reason && (e.reason.message || String(e.reason))) || 'Unhandled promise rejection';
+    alert('PROMISE ERROR: ' + msg);
+    const el = document.getElementById('loginMsg');
+    if (el) el.textContent = `PROMISE ERROR: ${msg}`;
+  };
+
+  /* -------------------------
+     LOGIN (BACKEND /api/login + /api/logout)
+  -------------------------- */
+  const btnMostrarLogin = document.getElementById('btnMostrarLogin');
+  ...
+
+
+  
   /* -------------------------
      LOGIN (BACKEND /api/login + /api/logout)
   -------------------------- */
@@ -664,6 +688,7 @@ try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 
 </body>
 </html>
+
 
 
 
