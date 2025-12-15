@@ -717,6 +717,13 @@ document.getElementById('btnQNext').addEventListener('click', async () => {
   QUESTION_ID_MAP = {};
   currentQuestionIndex = 0;
 
+// limpiar usuario y contraseña
+const loginUser = document.getElementById('loginUser');
+const loginPass = document.getElementById('loginPass');
+if (loginUser) loginUser.value = '';
+if (loginPass) loginPass.value = '';
+
+  
   return;
 });
 
@@ -783,6 +790,7 @@ document.getElementById('btnQNext').addEventListener('click', async () => {
 
 </body>
 </html>
+
 
 
 
