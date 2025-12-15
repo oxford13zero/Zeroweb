@@ -600,12 +600,23 @@ try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 // 2) Guardar respuesta
 document.getElementById('btnSaveDebug').addEventListener('click', async () => {
   const q = SURVEY?.questions?.[currentQuestionIndex];
+  if (!q) {
+    alert('No hay pregunta actual');
+    return;
+  }
+
+  // UUID REAL desde el mapa cargado desde backend
+  const questionId = QUESTION_ID_MAP[q.code] || null;
+  if (!questionId) {
+    alert('No se pudo resolver questionId para code: ' + q.code);
+    return;
+  }
 
   let answerText = null;
   let selectedOptionCodes = [];
 
-  if (q?.type === 'text') {
-    answerText = document.getElementById('answerText')?.value || null;
+  if (q.type === 'text') {
+    answerText = document.getElementById('answerText')?.value?.trim() || null;
   } else {
     const checked = document.querySelector('input[name="answer"]:checked');
     if (checked) selectedOptionCodes = [checked.value];
@@ -613,10 +624,25 @@ document.getElementById('btnSaveDebug').addEventListener('click', async () => {
 
   const payload = {
     responseId: window.currentResponseId,
-    questionId: q?.id,
+    questionId,
     answerText,
     selectedOptionIds: selectedOptionCodes
   };
+
+  const r = await fetch('/api/save-answer', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  const raw = await r.text();
+  let j = {};
+  try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
+  alert('save-answer -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
+});
+
 
  const r = await fetch('/api/save-answer', {
   method: 'POST',
@@ -638,6 +664,7 @@ try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 
 </body>
 </html>
+
 
 
 
