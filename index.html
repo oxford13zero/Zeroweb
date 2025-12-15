@@ -473,6 +473,8 @@ if (!res.ok || !data.ok) {
 
 let SURVEY = null;
 let currentQuestionIndex = 0;
+  let QUESTION_ID_MAP = {};
+
 
 // 1) Cargar el JSON del survey
 async function loadSurvey() {
@@ -524,16 +526,22 @@ function renderCurrentQuestion() {
 // 3) Mostrar el survey (se llama tras login OK)
 async function showSurveyUI() {
   await loadSurvey();
+
+  // === CARGAR MAPA code -> question UUID ===
+  const res = await fetch(
+    `/api/questions-map?surveyId=${encodeURIComponent(SURVEY.id || 'survey_001')}`,
+    { credentials: 'include' }
+  );
+  const data = await res.json();
+  if (!data.ok) {
+    alert('No se pudo cargar mapa de preguntas');
+    return;
+  }
+  QUESTION_ID_MAP = data.map;
+
   document.getElementById('surveyBox').style.display = 'block';
   currentQuestionIndex = 0;
   renderCurrentQuestion();
-}
-
-// 4) Botón ANTERIOR
-document.getElementById('btnQPrev').addEventListener('click', () => {
-  if (currentQuestionIndex > 0) {
-    currentQuestionIndex--;
-    renderCurrentQuestion();
   }
 });
 
@@ -630,6 +638,7 @@ try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 
 </body>
 </html>
+
 
 
 
