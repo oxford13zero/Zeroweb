@@ -482,7 +482,8 @@
 
   function dbgRender() {
     const q = SURVEY?.questions?.[currentQuestionIndex] || null;
-    document.getElementById('dbgResponseId').textContent = window.currentResponseId || '(vacío)';
+    document.getElementById('dbgResponseId').textContent =
+  (window.currentResponseId ? window.currentResponseId : '(vacío)');
     document.getElementById('dbgQuestionCode').textContent = q?.code || '(vacío)';
     document.getElementById('dbgQuestionId').textContent = (q?.code && QUESTION_ID_MAP[q.code]) ? QUESTION_ID_MAP[q.code] : '(vacío)';
   }
@@ -582,19 +583,19 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ surveyId: SURVEY_CODE })
     });
-
     const raw = await r.text();
     let j = {};
     try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
-
     alert('start-response -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
-
     window.currentResponseId = j.responseId || null;
     dbgRender();
   });
 
   // DEBUG: guardar respuesta
   document.getElementById('btnSaveDebug').addEventListener('click', async () => {
+      const responseId = window.currentResponseId;
+  if (!responseId) { alert('Falta responseId. Primero haga click en: 1) Crear response'); return; }
+
     const q = SURVEY?.questions?.[currentQuestionIndex];
     if (!q) return alert('No hay pregunta actual');
 
@@ -612,12 +613,17 @@
       if (checked) selectedOptionCodes = [checked.value];
     }
 
-    const payload = {
-      responseId: window.currentResponseId,
-      questionId,
-      answerText,
-      selectedOptionIds: selectedOptionCodes
-    };
+const payload = {
+  responseId: responseId,
+  questionId,
+  answerText,
+  selectedOptionIds: selectedOptionCodes
+};
+
+
+
+
+    
 alert(
   "DEBUG payload:\n" +
   JSON.stringify(
@@ -651,5 +657,6 @@ alert(
 
 </body>
 </html>
+
 
 
