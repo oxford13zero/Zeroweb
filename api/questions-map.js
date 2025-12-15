@@ -7,31 +7,23 @@ export default async function handler(req, res) {
   if (!auth?.ok) return;
 
   const { surveyId } = req.query;
-  if (!surveyId) {
-    return res.status(400).json({ ok: false, error: "MISSING_SURVEY_ID" });
-  }
+  if (!surveyId) return res.status(400).json({ ok: false, error: "MISSING_SURVEY_ID" });
 
-  // Obtener preguntas del survey
+  // Map: position -> question_id
   const { data, error } = await supabaseAdmin
     .from("survey_questions")
-    .select(`
-      questions (
-        id,
-        code
-      )
-    `)
-    .eq("survey_id", surveyId);
+    .select("position, question_id")
+    .eq("survey_id", surveyId)
+    .order("position", { ascending: true });
 
-  if (error) {
-    return res.status(500).json({ ok: false, error: error.message });
-  }
+  if (error) return res.status(500).json({ ok: false, error: error.message });
 
   const map = {};
   for (const row of data || []) {
-    if (row.questions?.code) {
-      map[row.questions.code] = row.questions.id;
-    }
+    map[String(row.position)] = row.question_id;
   }
 
   return res.status(200).json({ ok: true, map });
 }
+
+
