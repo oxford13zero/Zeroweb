@@ -180,7 +180,11 @@
         <div><b>questionCode:</b> <span id="dbgQuestionCode">(vacío)</span></div>
         <div><b>questionId:</b> <span id="dbgQuestionId">(vacío)</span></div>
         <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
-          <button id="btnStartDebug" class="btnSecondary" type="button">1) Crear response</button>
+         
+         <button id="btnStartDebug" class="btnSecondary" type="button" style="display:none;">1) Crear response</button>
+
+
+          
           <button id="btnSaveDebug" class="btnPrimary" type="button">2) Guardar respuesta</button>
         </div>
       </div>
@@ -605,6 +609,34 @@ async function saveCurrentAnswerOrStop() {
 
     QUESTION_ID_MAP = data.map || {};
 
+
+// Crear response automáticamente si no existe
+if (!window.currentResponseId) {
+  const r2 = await fetch('/api/start-response', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ surveyId: 'SURVEY_001' })
+  });
+
+  const raw2 = await r2.text();
+  let j2 = {};
+  try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
+
+  if (!r2.ok || !j2.ok) {
+    alert(
+      'No se pudo iniciar la encuesta (HTTP ' +
+      r2.status +
+      '):\n' +
+      JSON.stringify(j2, null, 2)
+    );
+    return;
+  }
+
+  window.currentResponseId = j2.responseId;
+}
+
+    
     surveyBox.style.display = 'block';
     currentQuestionIndex = 0;
     renderCurrentQuestion();
@@ -702,6 +734,7 @@ async function saveCurrentAnswerOrStop() {
 
 </body>
 </html>
+
 
 
 
