@@ -1,0 +1,435 @@
+{
+  "survey": {
+    "id": "d43cddec-0693-4d03-a6f4-31b73e44b31f",
+    "code": "SURVEY_001",
+    "title": "Encuesta Escolar",
+    "version": 1
+  },
+  "questions": [
+    {
+      "number": 1,
+      "question_id": "f3d8728c-8d2c-4a40-9a67-f245ffd0ea64",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces has agredido a otros estudiantes?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 2,
+      "question_id": "da4b2d1e-2b2e-47b0-a4a1-3b58aa1df2ed",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces has molestado con sobrenombres hirientes a otros estudiantes?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 3,
+      "question_id": "cb14f658-62c6-4a42-9994-b5753391c469",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces has ignorado de manera hiriente a otros estudiantes, no invitándoles a jugar o no dejando que se unan a tu grupo, excluyéndolos a propósito?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 4,
+      "question_id": "a1f75c2f-0f86-4a57-a12e-1a319fd8d26e",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces has agredido a otro estudiante, con golpes, puntapiés o empujones?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 5,
+      "question_id": "d16695f7-87e1-45bd-a0b0-590386c992e8",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces has sido agredido por otros estudiantes?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 6,
+      "question_id": "ebd6f40b-0f22-4c6b-8d47-0ea8dc6e77b1",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces te han molestado con sobrenombres hirientes?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 7,
+      "question_id": "36d61069-7a08-4335-a4c8-58a5ac1caee2",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces te han ignorado de manera hiriente otros estudiantes, no invitándote a jugar o no dejándote que te unas a su grupo, excluyéndote a propósito?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 8,
+      "question_id": "b2a7a3ea-17a1-48c9-95d4-fc61079e0ce2",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces has sido agredido por otros estudiantes, con golpes, puntapiés o empujones?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 9,
+      "question_id": "c2cd7e12-6a87-4c3c-b3fd-7bd8d5027bc2",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces has sido agredido por adultos en la escuela/colegio?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 10,
+      "question_id": "85c3aebc-ff6e-414c-9ab1-1f6f0f6c53e8",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces te han agredido a través de mensajes de texto de celular?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 11,
+      "question_id": "3080a1e2-3f7b-43ff-8d73-56a1df8b63bb",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces te han agredido a través de mensajería instantánea?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 12,
+      "question_id": "a8bf6c48-a0ce-44c5-81b2-c1d376f4bd15",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces te han agredido a través de fotos o videos en Internet?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 13,
+      "question_id": "a11b49f9-6b0b-4a71-bc62-5d1a1b8f7b7b",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces te han agredido a través de fotos en Internet?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+    {
+      "number": 14,
+      "question_id": "bf2d0aa6-25f6-4bf6-bad2-0c4d0e1a8a12",
+      "type": "single_choice",
+      "text": "De lo que va del año, ¿cuántas veces te han agredido a través de videos en Internet?",
+      "options": [
+        { "code": "1", "text": "Nunca" },
+        { "code": "2", "text": "Sólo 1-2 veces al mes" },
+        { "code": "3", "text": "Casi cada semana" },
+        { "code": "4", "text": "Casi cada día" }
+      ]
+    },
+
+    {
+      "number": 15,
+      "question_id": "ed9d6de6-7efc-4f4a-8a66-44b4fd68d6f0",
+      "type": "single_choice",
+      "text": "Si yo fuera agredido, le contaría a uno o más de mis amigos.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 16,
+      "question_id": "c215fd5f-9dc4-4ef4-9b2b-55bdc7715223",
+      "type": "single_choice",
+      "text": "Si yo fuera agredido, le contaría a uno o más adultos en la escuela.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 17,
+      "question_id": "f977b190-5b4e-4f59-8bd0-6a27d889d3f3",
+      "type": "single_choice",
+      "text": "Si yo fuera agredido, le contaría a mis padres.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 18,
+      "question_id": "63a9e0a4-74dd-4f1a-b7a0-54d11df2d2aa",
+      "type": "single_choice",
+      "text": "Si yo fuera agredido, le contaría a otros.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 19,
+      "question_id": "c17a79b6-4a38-45a2-9e11-3d8f31e6f8c0",
+      "type": "single_choice",
+      "text": "Si yo fuera agredido, no le contaría a nadie.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 20,
+      "question_id": "8bcfbca4-2f2f-4a8f-9d63-5b2090a3083b",
+      "type": "single_choice",
+      "text": "Si yo fuera agredido, no sé a quién contarle.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+
+    {
+      "number": 21,
+      "question_id": "05ad23b9-4f67-4f8f-b0e1-19b4cb4c6f31",
+      "type": "single_choice",
+      "text": "Si sé de alguien que es agredido en la escuela, le contaría a uno o más de mis amigos.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 22,
+      "question_id": "0e8d0f3d-1ab5-4e1d-9d92-b0f2e4bbbd16",
+      "type": "single_choice",
+      "text": "Si sé de alguien que es agredido en la escuela, le contaría a uno o más adultos en la escuela.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 23,
+      "question_id": "d4dd7f2b-c7f8-4cdb-a52a-7f90d9b5b0be",
+      "type": "single_choice",
+      "text": "Si sé de alguien que es agredido en la escuela, le contaría a mis padres.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 24,
+      "question_id": "b420b106-5f8f-4a12-87c5-95a77f4fb9d5",
+      "type": "single_choice",
+      "text": "Si sé de alguien que es agredido en la escuela, le contaría a otros.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 25,
+      "question_id": "4fb7f0fd-bc3a-44b2-91d8-1a4d5f2ce7d0",
+      "type": "single_choice",
+      "text": "Si sé de alguien que es agredido en la escuela, no le contaría a nadie.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 26,
+      "question_id": "7bdb9a70-3de7-49a1-bf5f-2c8d12b9b9b3",
+      "type": "single_choice",
+      "text": "Si sé de alguien que es agredido en la escuela, no sé a quién contarle.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+
+    {
+      "number": 27,
+      "question_id": "28dfd9dd-8b3a-4b0b-a0cf-36a2d4b23ee5",
+      "type": "single_choice",
+      "text": "Me gusta venir a la escuela.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" },
+        { "code": "3", "text": "A veces" }
+      ]
+    },
+    {
+      "number": 28,
+      "question_id": "a2c7a6b4-1db5-4a2b-b8a2-6d7c8fbe16c0",
+      "type": "single_choice",
+      "text": "Mi escuela es un buen lugar donde estar.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" },
+        { "code": "3", "text": "A veces" }
+      ]
+    },
+    {
+      "number": 29,
+      "question_id": "fecc6416-39ee-4b42-a1c7-4f91f019ed8f",
+      "type": "single_choice",
+      "text": "Yo me siento seguro(a) en mi escuela.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" },
+        { "code": "3", "text": "A veces" }
+      ]
+    },
+    {
+      "number": 30,
+      "question_id": "88f7b690-0a1d-4d33-a0f2-78e1b0d5d8aa",
+      "type": "single_choice",
+      "text": "Yo me siento seguro(a) en el camino a mi escuela.",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" },
+        { "code": "3", "text": "A veces" }
+      ]
+    },
+
+    {
+      "number": 31,
+      "question_id": "1b5f4f28-8f41-4ed7-9bfa-07d927b2d1b4",
+      "type": "text",
+      "text": "¿Cuál es tu edad?",
+      "options": []
+    },
+    {
+      "number": 32,
+      "question_id": "c0a89b93-2b39-4e4c-9f10-8f58dbf8d0c7",
+      "type": "text",
+      "text": "¿Cuál es tu género?",
+      "options": []
+    },
+    {
+      "number": 33,
+      "question_id": "6b5b3cdd-5e6d-4c02-a6c4-63d7b3c52e30",
+      "type": "text",
+      "text": "¿En qué grado estás?",
+      "options": []
+    },
+    {
+      "number": 34,
+      "question_id": "7c5d8e66-1d8d-4f0c-8a4f-8a6b6b5c4c11",
+      "type": "text",
+      "text": "¿Cuánto tiempo llevas en esta escuela?",
+      "options": []
+    },
+
+    {
+      "number": 35,
+      "question_id": "0e0c67b3-4e4e-49e5-a053-2e9ad0ce7f4f",
+      "type": "single_choice",
+      "text": "¿Has recibido orientación o capacitación sobre convivencia escolar?",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 36,
+      "question_id": "4b3ccf70-83c8-4f4c-9f5c-6b5b7a9e9b00",
+      "type": "single_choice",
+      "text": "¿Conoces las normas de disciplina de tu escuela?",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 37,
+      "question_id": "6efb55fa-6bc2-404f-a8a2-7688c5d0f8f2",
+      "type": "single_choice",
+      "text": "¿Crees que las normas de disciplina son justas?",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 38,
+      "question_id": "bd8a5b5b-0b22-4b5b-8a2f-51f4c9f0d2f8",
+      "type": "single_choice",
+      "text": "¿Crees que los profesores tratan a todos los estudiantes de manera equitativa?",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 39,
+      "question_id": "f5f3e0a1-7b71-4f43-a5a0-9a1f9dca8f0b",
+      "type": "single_choice",
+      "text": "¿Tienes un adulto en la escuela en quien confías?",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    },
+    {
+      "number": 40,
+      "question_id": "b9626b0a-0c4d-4f65-9b13-7d4e8c1a1a3f",
+      "type": "single_choice",
+      "text": "¿Crees que tu escuela hace lo suficiente para prevenir el acoso escolar?",
+      "options": [
+        { "code": "1", "text": "Sí" },
+        { "code": "2", "text": "No" }
+      ]
+    }
+  ]
+}
