@@ -495,20 +495,9 @@
   
   
   function dbgRender() {
-  // Si el panel debug no está en el HTML, no hacemos nada
-  if (!document.getElementById('dbgResponseId')) return;
-
-  const q = SURVEY?.questions?.[currentQuestionIndex] || null;
-
-  const elResp = document.getElementById('dbgResponseId');
-  if (elResp) elResp.textContent = window.currentResponseId || '(vacío)';
-
-  const elCode = document.getElementById('dbgQuestionCode');
-  if (elCode) elCode.textContent = q?.code || '(vacío)';
-
-  const elQid = document.getElementById('dbgQuestionId');
-  if (elQid) elQid.textContent = (q?.number && QUESTION_ID_MAP[String(q.number)]) ? QUESTION_ID_MAP[String(q.number)] : '(vacío)';
+  return; // debug deshabilitado
 }
+
 
 
 
@@ -747,6 +736,7 @@ if (_m) _m.textContent = ' Encuesta finalizada';
 
 </body>
 </html>
+
 
 
 
