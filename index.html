@@ -668,8 +668,30 @@ if (!window.currentResponseId) {
   window.currentResponseId = j2.responseId;
 }
 
-    
+    // ===== UI: preguntas arriba + panel acceso discreto =====
+try {
+  // 1) mover surveyBox arriba de encuestaOK (aunque el HTML esté abajo)
+  if (encuestaOK && surveyBox && encuestaOK.parentNode) {
+    encuestaOK.parentNode.insertBefore(surveyBox, encuestaOK);
+  }
+
+  // 2) hacer el panel "Acceso concedido" discreto
+  if (encuestaOK) {
+    encuestaOK.style.opacity = '0.75';
+    encuestaOK.style.maxWidth = '420px';
+  }
+
+  // 3) botón salir menos llamativo
+  if (btnLogout) {
+    btnLogout.textContent = 'Cerrar sesión';
+    btnLogout.style.fontSize = '13px';
+    btnLogout.style.padding = '6px 12px';
+  }
+} catch (e) {}
+
     surveyBox.style.display = 'block';
+
+    
     currentQuestionIndex = 0;
     renderCurrentQuestion();
   }
@@ -791,6 +813,7 @@ if (loginPass) loginPass.value = '';
 
 </body>
 </html>
+
 
 
 
