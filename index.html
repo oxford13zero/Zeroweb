@@ -570,12 +570,16 @@ document.getElementById('btnStartDebug').addEventListener('click', async () => {
   const surveyId = SURVEY?.id || 'survey_001';
 
   const r = await fetch('/api/start-response', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ surveyId })
-  });
+  method: 'POST',
+  credentials: 'include',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ surveyId })
+});
 
-  const j = await r.json().catch(() => ({}));
+const raw = await r.text();
+let j = {};
+try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
   alert('start-response -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
 
   window.currentResponseId = j.responseId || j.id || null;
@@ -603,13 +607,18 @@ document.getElementById('btnSaveDebug').addEventListener('click', async () => {
     selectedOptionIds: selectedOptionCodes
   };
 
-  const r = await fetch('/api/save-answer', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+ const r = await fetch('/api/save-answer', {
+  method: 'POST',
+  credentials: 'include',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload)
+});
 
-  const j = await r.json().catch(() => ({}));
+const raw = await r.text();
+let j = {};
+try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
+  
   alert('save-answer -> HTTP ' + r.status + '\n' + JSON.stringify(j, null, 2));
 });
   
@@ -618,6 +627,7 @@ document.getElementById('btnSaveDebug').addEventListener('click', async () => {
 
 </body>
 </html>
+
 
 
 
