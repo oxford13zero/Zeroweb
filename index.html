@@ -682,21 +682,44 @@ if (!window.currentResponseId) {
   });
 
   
-  document.getElementById('btnQNext').addEventListener('click', async () => {
+document.getElementById('btnQNext').addEventListener('click', async () => {
   const ok = await saveCurrentAnswerOrStop();
   if (!ok) return;
 
   if (currentQuestionIndex < SURVEY.questions.length - 1) {
     currentQuestionIndex++;
     renderCurrentQuestion();
-} else {
-  const _m = document.getElementById('surveyMsg');
-  if (_m) _m.textContent = ' Encuesta finalizada';
-
-  // volver al estado inicial del tab ENCUESTA
-  resetEncuestaUI();
+    return;
   }
+
+  // ===== ÚLTIMA PREGUNTA: volver al estado inicial =====
+  const m = document.getElementById('surveyMsg');
+  if (m) m.textContent = '';
+
+  const surveyBox = document.getElementById('surveyBox');
+  if (surveyBox) surveyBox.style.display = 'none';
+
+  const encuestaOK = document.getElementById('encuestaOK');
+  if (encuestaOK) encuestaOK.style.display = 'none';
+
+  const loginPanel = document.getElementById('loginPanel');
+  if (loginPanel) loginPanel.style.display = 'none';
+
+  const encuestaIntro = document.getElementById('encuestaIntro');
+  if (encuestaIntro) encuestaIntro.style.display = 'block';
+
+  const btnMostrarLogin = document.getElementById('btnMostrarLogin');
+  if (btnMostrarLogin) btnMostrarLogin.style.display = 'inline-block';
+
+  // reset variables
+  window.currentResponseId = null;
+  SURVEY = null;
+  QUESTION_ID_MAP = {};
+  currentQuestionIndex = 0;
+
+  return;
 });
+
 
 
 
@@ -760,6 +783,7 @@ if (!window.currentResponseId) {
 
 </body>
 </html>
+
 
 
 
