@@ -331,11 +331,9 @@
   btnMostrarLogin?.addEventListener('click', async () => {
     loginMsg.textContent = '';
 
-    // 1) Verificar si ya existe una sesión válida en backend
     try {
       const res = await fetch('/api/me', { credentials: 'include' });
       const data = await res.json().catch(() => ({}));
-
       if (data && data.ok) {
         encuestaIntro.style.display = 'none';
         encuestaOK.style.display = 'block';
@@ -345,7 +343,6 @@
       }
     } catch (e) {}
 
-    // 2) Si no hay sesión, mostrar formulario de login
     loginPanel.style.display = 'block';
     btnMostrarLogin.style.display = 'none';
     document.getElementById('loginUser')?.focus();
@@ -387,7 +384,6 @@
         return;
       }
 
-      // Login OK
       loginMsg.textContent = '';
       loginPanel.style.display = 'none';
       encuestaIntro.style.display = 'none';
@@ -401,7 +397,6 @@
 
   btnLogout?.addEventListener('click', async () => {
     await fetch('/api/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
-    // reset UI
     encuestaOK.style.display = 'none';
     encuestaIntro.style.display = 'block';
     btnMostrarLogin.style.display = 'inline-block';
@@ -526,9 +521,10 @@
   window.currentResponseId = null;
 
   // === PREGUNTAS ESPECIALES (combobox) ===
-  const QID_EDAD  = "1b5f4f28-8f41-4ed7-9bfa-07d927b2d1b4";
-  const QID_GRADO = "6b5b3cdd-5e6d-4c02-a6c4-63d7b3c52e30";
-  const QID_GENERO= "c0a89b93-2b39-4e4c-9f10-8f58dbf8d0c7";
+  const QID_EDAD   = "1b5f4f28-8f41-4ed7-9bfa-07d927b2d1b4";
+  const QID_GRADO  = "6b5b3cdd-5e6d-4c02-a6c4-63d7b3c52e30";
+  const QID_GENERO = "c0a89b93-2b39-4e4c-9f10-8f58dbf8d0c7";
+  const QID_TIEMPO = "7c5d8e66-1d8d-4f0c-8a4f-8a6b6b5c4c11";
 
   function getCurrentQuestionId(questionNumber) {
     return QUESTION_ID_MAP[String(questionNumber)] || null;
@@ -536,8 +532,29 @@
   function isEdadQ(qid)   { return qid === QID_EDAD; }
   function isGradoQ(qid)  { return qid === QID_GRADO; }
   function isGeneroQ(qid) { return qid === QID_GENERO; }
+  function isTiempoQ(qid) { return qid === QID_TIEMPO; }
 
-  function dbgRender() { return; } // debug deshabilitado
+  // Cache de opciones por questionId (UUID)
+  const OPTIONS_CACHE = {}; // { [questionId]: [{id, option_text, option_code, position...}] }
+
+  async function getOptionsForQuestion(questionId) {
+    if (!questionId) return [];
+    if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
+
+    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`, {
+      credentials: "include"
+    });
+    const raw = await res.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+    if (!res.ok || !data.ok) {
+      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "sin detalle"}`);
+    }
+
+    OPTIONS_CACHE[questionId] = Array.isArray(data.options) ? data.options : [];
+    return OPTIONS_CACHE[questionId];
+  }
 
   async function loadSurvey() {
     if (SURVEY) return;
@@ -560,37 +577,36 @@
 
     const qid = getCurrentQuestionId(question.number);
 
-    // === SOLO estas 3 preguntas: combobox ===
-    if (qid && (isEdadQ(qid) || isGradoQ(qid) || isGeneroQ(qid))) {
+    // === 4 preguntas tipo combobox (edad, grado, género, tiempo) ===
+    if (qid && (isEdadQ(qid) || isGradoQ(qid) || isGeneroQ(qid) || isTiempoQ(qid))) {
+      let label = "Selecciona una opción";
+      if (isEdadQ(qid)) label = "Selecciona tu edad";
+      if (isGradoQ(qid)) label = "Selecciona tu grado";
+      if (isGeneroQ(qid)) label = "Selecciona tu género";
+      if (isTiempoQ(qid)) label = "¿Cuánto tiempo llevas en esta escuela?";
 
-      if (isEdadQ(qid)) {
-        let html = `<label class="fieldLabel" for="answerSelect">Selecciona tu edad</label><br/>`;
-        html += `<select id="answerSelect" class="textInput">
-                  <option value="">-- Selecciona --</option>`;
-        for (let i = 6; i <= 20; i++) html += `<option value="${i}">${i}</option>`;
-        html += `</select>`;
-        optionsDiv.innerHTML = html;
+      optionsDiv.innerHTML = `
+        <label class="fieldLabel" for="answerSelect">${label}</label><br/>
+        <select id="answerSelect" class="textInput">
+          <option value="">Cargando...</option>
+        </select>
+      `;
 
-      } else if (isGradoQ(qid)) {
-        let html = `<label class="fieldLabel" for="answerSelect">Selecciona tu grado</label><br/>`;
-        html += `<select id="answerSelect" class="textInput">
-                  <option value="">-- Selecciona --</option>`;
-        for (let i = 1; i <= 13; i++) html += `<option value="${i}">${i}</option>`;
-        html += `</select>`;
-        optionsDiv.innerHTML = html;
+      (async () => {
+        try {
+          const opts = await getOptionsForQuestion(qid);
+          const sel = document.getElementById("answerSelect");
+          if (!sel) return;
 
-      } else if (isGeneroQ(qid)) {
-        optionsDiv.innerHTML = `
-          <label class="fieldLabel" for="answerSelect">Selecciona tu género</label><br/>
-          <select id="answerSelect" class="textInput">
-            <option value="">-- Selecciona --</option>
-            <option value="M">Masculino</option>
-            <option value="F">Femenino</option>
-            <option value="O">Otro</option>
-            <option value="N">No quiero responder</option>
-          </select>
-        `;
-      }
+          sel.innerHTML = `<option value="">-- Selecciona --</option>` +
+            opts.map(o => {
+              const txt = (o.option_text ?? o.option_code ?? "").toString();
+              return `<option value="${o.id}">${txt}</option>`; // value=UUID option_id
+            }).join("");
+        } catch (e) {
+          optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
+        }
+      })();
 
     } else if (question.type === 'text') {
       optionsDiv.innerHTML =
@@ -610,7 +626,6 @@
     document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
     document.getElementById('btnQNext').textContent =
       (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
-    dbgRender();
   }
 
   async function saveCurrentAnswerOrStop() {
@@ -618,41 +633,41 @@
     if (!q) { alert('No hay pregunta actual'); return false; }
 
     const responseId = window.currentResponseId;
-    if (!responseId) { alert('Primero debes hacer: 1) Crear response'); return false; }
+    if (!responseId) { alert('Falta responseId (inicia sesión e ingresa a la encuesta).'); return false; }
 
     const questionId = QUESTION_ID_MAP[String(q.number)] || null;
     if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
 
     let answerText = null;
-    let selectedOptionCodes = [];
+    let selectedOptionIds = [];
 
-    // especiales combobox
-    if (questionId && (isEdadQ(questionId) || isGradoQ(questionId) || isGeneroQ(questionId))) {
+    // combobox: guardamos SIEMPRE en answer_selected_options con option_id UUID real
+    if (questionId && (isEdadQ(questionId) || isGradoQ(questionId) || isGeneroQ(questionId) || isTiempoQ(questionId))) {
       const v = document.getElementById('answerSelect')?.value || "";
-      if (v) selectedOptionCodes = [v];
+      if (v) selectedOptionIds = [v]; // <-- UUID option_id
       answerText = null;
     }
     else if (q.type === 'text') {
       answerText = document.getElementById('answerText')?.value?.trim() || null;
     } else {
       const checked = document.querySelector('input[name="answer"]:checked');
-      if (checked) selectedOptionCodes = [checked.value];
+      if (checked) selectedOptionIds = [checked.value]; // para radios tu backend decide si es code o id
     }
 
-    if (q.required && selectedOptionCodes.length === 0 && q.type !== 'text') {
-      alert('Selecciona una opción para continuar.');
-      return false;
-    }
-    if (q.required && (isEdadQ(questionId) || isGradoQ(questionId) || isGeneroQ(questionId)) && selectedOptionCodes.length === 0) {
-      alert('Selecciona una opción para continuar.');
-      return false;
+    // validación mínima
+    if (q.required) {
+      if (q.type === 'text') {
+        if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
+      } else {
+        if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
+      }
     }
 
     const payload = {
       responseId,
       questionId,
       answerText,
-      selectedOptionIds: selectedOptionCodes
+      selectedOptionIds
     };
 
     const r = await fetch('/api/save-answer', {
@@ -691,7 +706,6 @@
 
     QUESTION_ID_MAP = data.map || {};
 
-    // Crear response automáticamente si no existe
     if (!window.currentResponseId) {
       const r2 = await fetch('/api/start-response', {
         method: 'POST',
@@ -712,7 +726,6 @@
       window.currentResponseId = j2.responseId;
     }
 
-    // UI
     try {
       if (encuestaOK && surveyBox && encuestaOK.parentNode) {
         encuestaOK.parentNode.insertBefore(surveyBox, encuestaOK);
@@ -751,9 +764,8 @@
       return;
     }
 
-    // última pregunta: reset UI
-    const surveyBox = document.getElementById('surveyBox');
-    if (surveyBox) surveyBox.style.display = 'none';
+    const surveyBoxEl = document.getElementById('surveyBox');
+    if (surveyBoxEl) surveyBoxEl.style.display = 'none';
     if (encuestaOK) encuestaOK.style.display = 'none';
     if (loginPanel) loginPanel.style.display = 'none';
     if (encuestaIntro) encuestaIntro.style.display = 'block';
