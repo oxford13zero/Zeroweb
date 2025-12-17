@@ -764,6 +764,31 @@
       return;
     }
 
+      // ✅ FINALIZAR encuesta: marcar response como submitted
+  try {
+    const r3 = await fetch('/api/submit-response', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ responseId: window.currentResponseId })
+    });
+
+    const raw3 = await r3.text();
+    let j3 = {};
+    try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
+
+    if (!r3.ok || !j3.ok) {
+      alert(
+        'No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' +
+        JSON.stringify(j3, null, 2)
+      );
+      return; // NO cerrar UI si no quedó submitted
+    }
+  } catch (e) {
+    alert('Error de conexión al finalizar la encuesta.');
+    return;
+  }
+
     const surveyBoxEl = document.getElementById('surveyBox');
     if (surveyBoxEl) surveyBoxEl.style.display = 'none';
     if (encuestaOK) encuestaOK.style.display = 'none';
@@ -885,3 +910,4 @@
 
 </body>
 </html>
+
