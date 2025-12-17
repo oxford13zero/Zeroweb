@@ -1042,11 +1042,130 @@ if (loginPass) loginPass.value = '';
 </script>
 
 
-  
+  // ==========================
+// RESULTADOS (login independiente)
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
+
+  const btn = document.getElementById("btnMostrarLoginResultados");
+  const intro = document.getElementById("resultadosIntro");
+  const loginPanel = document.getElementById("loginPanelResultados");
+
+  const btnCancel = document.getElementById("btnCancelarLoginResultados");
+  const btnLogin = document.getElementById("btnLoginResultados");
+  const msg = document.getElementById("loginMsgResultados");
+
+  const okPanel = document.getElementById("resultadosOK");
+  const welcome = document.getElementById("schoolWelcomeResultados");
+  const btnLogout = document.getElementById("btnLogoutResultados");
+
+  const box = document.getElementById("resultadosBox");
+
+  // Si el botón no existe, no hay nada que inicializar
+  if (!btn) return;
+
+  async function showResultadosUI() {
+    if (box) box.style.display = "block"; // placeholder por ahora
+  }
+
+  btn.addEventListener("click", async () => {
+    if (msg) msg.textContent = "";
+
+    // 1) intentar ver si hay sesión de resultados
+    try {
+      const res = await fetch("/api/results-me", { credentials: "include" });
+      const data = await res.json().catch(() => ({}));
+
+      if (data && data.ok) {
+        if (intro) intro.style.display = "none";
+        if (okPanel) okPanel.style.display = "block";
+        if (welcome) welcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
+        await showResultadosUI();
+        return;
+      }
+    } catch (e) {
+      // si falla, seguimos a login normal
+    }
+
+    // 2) mostrar login
+    if (loginPanel) loginPanel.style.display = "block";
+    btn.style.display = "none";
+    document.getElementById("loginUserResultados")?.focus();
+  });
+
+  btnCancel?.addEventListener("click", () => {
+    if (msg) msg.textContent = "";
+    if (loginPanel) loginPanel.style.display = "none";
+    btn.style.display = "inline-block";
+    const u = document.getElementById("loginUserResultados");
+    const p = document.getElementById("loginPassResultados");
+    if (u) u.value = "";
+    if (p) p.value = "";
+  });
+
+  btnLogin?.addEventListener("click", async () => {
+    const u = document.getElementById("loginUserResultados")?.value?.trim();
+    const p = document.getElementById("loginPassResultados")?.value?.trim();
+
+    if (!u || !p) {
+      if (msg) msg.textContent = "Por favor ingrese usuario y contraseña.";
+      return;
+    }
+
+    try {
+      if (msg) msg.textContent = "Validando...";
+
+      const res = await fetch("/api/results-login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: u, password: p })
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        if (msg) msg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || "sin detalle"}`;
+        return;
+      }
+
+      if (msg) msg.textContent = "";
+      if (loginPanel) loginPanel.style.display = "none";
+      if (intro) intro.style.display = "none";
+      if (okPanel) okPanel.style.display = "block";
+      if (welcome) welcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
+      await showResultadosUI();
+
+    } catch (e) {
+      if (msg) msg.textContent = "Error de conexión.";
+    }
+  });
+
+  btnLogout?.addEventListener("click", async () => {
+    await fetch("/api/results-logout", { method: "POST", credentials: "include" }).catch(() => {});
+
+    if (okPanel) okPanel.style.display = "none";
+    if (intro) intro.style.display = "block";
+    btn.style.display = "inline-block";
+    if (loginPanel) loginPanel.style.display = "none";
+    if (msg) msg.textContent = "";
+    if (box) box.style.display = "none";
+
+    const u = document.getElementById("loginUserResultados");
+    const p = document.getElementById("loginPassResultados");
+    if (u) u.value = "";
+    if (p) p.value = "";
+  });
+
+});
+
 </script>
 
 </body>
 </html>
+
 
 
 
