@@ -452,13 +452,12 @@
     }
   });
 
-btnIngresarEncuesta?.addEventListener('click', async () => {
-  // Aquí recién se ingresa a la encuesta (UI preguntas)
-  if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-  if (encuestaOK) encuestaOK.style.display = 'none'; // OCULTAR panel con botones
-  await showSurveyUI();
-});
-
+  btnIngresarEncuesta?.addEventListener('click', async () => {
+    // Aquí recién se ingresa a la encuesta (UI preguntas)
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    if (encuestaOK) encuestaOK.style.display = 'none'; // OCULTAR panel con botones
+    await showSurveyUI();
+  });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
     // Mostrar warning
@@ -653,6 +652,8 @@ btnIngresarEncuesta?.addEventListener('click', async () => {
   }
 
   function renderCurrentQuestion() {
+    if (encuestaOK) encuestaOK.style.display = 'none'; // NUEVO: asegurar que no se vean botones durante la encuesta
+
     const question = SURVEY.questions[currentQuestionIndex];
     document.getElementById('qTitle').textContent =
       `Pregunta ${question.number} de ${SURVEY.questions.length}`;
@@ -997,4 +998,3 @@ btnIngresarEncuesta?.addEventListener('click', async () => {
 
 </body>
 </html>
-
