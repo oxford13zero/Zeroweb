@@ -91,7 +91,7 @@ export default async function handler(req, res) {
   let optionIds = [];
 
   if (allUuids) {
-    // ✅ Caso nuevo: index.html manda option_id (UUID real)
+    // Caso nuevo: index.html manda option_id (UUID real)
     // Validamos que esos option_ids existan y pertenezcan a la pregunta
     const { data: opts, error: optErr } = await supabaseAdmin
       .from("question_options")
@@ -109,7 +109,7 @@ export default async function handler(req, res) {
     const valid = (opts || []).filter((o) => o.question_id === questionId);
     optionIds = valid.map((o) => o.id);
   } else {
-    // ✅ Caso antiguo: UI manda codes, hay que mapear option_code -> id
+    // Caso antiguo: UI manda codes, hay que mapear option_code -> id
     const { data: opts, error: optErr } = await supabaseAdmin
       .from("question_options")
       .select("id, option_code")
@@ -164,3 +164,4 @@ export default async function handler(req, res) {
     mode: allUuids ? "uuid_option_ids" : "option_codes",
   });
 }
+
