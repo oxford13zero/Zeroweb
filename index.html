@@ -383,6 +383,7 @@
 
   function showPostLoginActions(schoolName) {
     hideEncuestaAllPanels();
+    window.currentSchoolName = schoolName || '';
     if (encuestaOK) encuestaOK.style.display = 'block';
     if (schoolWelcome) schoolWelcome.textContent = `Acceso concedido. Escuela: ${schoolName || ''}`.trim();
   }
@@ -895,6 +896,9 @@
     const loginPass = document.getElementById('loginPass');
     if (loginUser) loginUser.value = '';
     if (loginPass) loginPass.value = '';
+    // Mostrar pantalla nueva (2 botones) SIN revalidar sesión (ya está logueado)
+    showPostLoginActions(window.currentSchoolName || '');
+
 
     // Mostrar pantalla nueva (2 botones) si la sesión sigue vigente
     try {
@@ -1014,4 +1018,5 @@
 
 </body>
 </html>
+
 
