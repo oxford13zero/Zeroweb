@@ -29,8 +29,27 @@
     footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
 
     /* Buttons */
-    .btnPrimary { padding:10px 16px; font-weight:700; border-radius:6px; border:none; cursor:pointer; }
-    .btnSecondary { padding:10px 16px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer; }
+    .btnPrimary {
+      padding: 12px 18px;
+      font-weight: 800;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #D6A21C;
+      color: #16222D;
+    }
+    .btnPrimary:hover { filter: brightness(1.05); }
+
+    .btnSecondary {
+      padding: 10px 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid #D6A21C;
+      background: transparent;
+      color: #D6A21C;
+      cursor: pointer;
+    }
+    .btnSecondary:hover { background: rgba(214,162,28,0.12); }
 
     /* Compact panel + stacked inputs */
     .formPanel {
@@ -59,6 +78,34 @@
     .statusOk { color:#b9ffcf; }
     .statusWarn { color:#ffdca8; }
     .statusErr { color:#ffb4b4; }
+
+    /* Modal */
+    .modalOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 18px;
+    }
+    .modalCard {
+      width: 100%;
+      max-width: 640px;
+      background: #243A4B;
+      border: 1px solid #365468;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .modalTitle {
+      font-family:'Playfair Display', serif;
+      color:#D6A21C;
+      font-size: 22px;
+      margin: 0 0 10px 0;
+    }
+    .modalBody { color: #ffffff; line-height: 1.4; }
   </style>
 
   <script>
@@ -169,10 +216,25 @@
       <div id="surveyMsg" class="statusMsg statusWarn"></div>
     </div>
 
-    <!-- OK Panel -->
-    <div id="encuestaOK" class="formPanel" style="display:none; opacity:0.75; max-width:420px;">
+    <!-- OK Panel (post-login actions) -->
+    <div id="encuestaOK" class="formPanel" style="display:none; opacity:0.95; max-width:520px;">
       <p id="schoolWelcome" style="margin:0 0 12px 0;">Acceso concedido.</p>
-      <button id="btnLogout" class="btnSecondary" type="button" style="font-size:13px; padding:6px 12px;">Cerrar sesión</button>
+
+      <div id="encuestaActions" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+        <button id="btnIngresarEncuestaPostLogin" class="btnPrimary" type="button">
+          Ingresar a la encuesta
+        </button>
+
+        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">
+          Solicitar análisis de la encuesta
+        </button>
+      </div>
+
+      <div style="margin-top:14px;">
+        <button id="btnLogout" class="btnSecondary" type="button" style="font-size:13px; padding:6px 12px;">
+          Cerrar sesión
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -294,6 +356,24 @@
   © 2025 TECH4ZERO – Educational Designs
 </footer>
 
+<!-- Modal: Solicitar análisis -->
+<div id="modalAnalisis" class="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalAnalisisTitle">
+  <div class="modalCard">
+    <div class="modalTitle" id="modalAnalisisTitle">Advertencia</div>
+
+    <div class="modalBody">
+      El sistema realizará un análisis estadístico detallado del ambiente escolar con las encuestas introducidas en el sistema para su escuela, pero no podrá adicionar nuevas encuestas.
+      <br><br>
+      ¿Desea continuar?
+    </div>
+
+    <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px; flex-wrap:wrap;">
+      <button id="btnContinuarAnalisis" class="btnPrimary" type="button">Continuar</button>
+      <button id="btnCancelarAnalisis" class="btnSecondary" type="button">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <script>
   // === DEBUG: mostrar errores JS sin consola ===
   window.onerror = function (msg, src, line, col) {
@@ -326,6 +406,13 @@
   const schoolWelcome = document.getElementById('schoolWelcome');
   const btnLogout = document.getElementById('btnLogout');
 
+  const btnIngresarEncuestaPostLogin = document.getElementById('btnIngresarEncuestaPostLogin');
+  const btnSolicitarAnalisis = document.getElementById('btnSolicitarAnalisis');
+
+  const modalAnalisis = document.getElementById('modalAnalisis');
+  const btnContinuarAnalisis = document.getElementById('btnContinuarAnalisis');
+  const btnCancelarAnalisis = document.getElementById('btnCancelarAnalisis');
+
   const surveyBox = document.getElementById('surveyBox');
 
   btnMostrarLogin?.addEventListener('click', async () => {
@@ -338,7 +425,7 @@
         encuestaIntro.style.display = 'none';
         encuestaOK.style.display = 'block';
         schoolWelcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
-        await showSurveyUI();
+        // NO iniciar encuesta automáticamente
         return;
       }
     } catch (e) {}
@@ -389,7 +476,7 @@
       encuestaIntro.style.display = 'none';
       encuestaOK.style.display = 'block';
       schoolWelcome.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
-      await showSurveyUI();
+      // NO iniciar encuesta automáticamente
     } catch (e) {
       loginMsg.textContent = 'Error de conexión.';
     }
@@ -405,6 +492,52 @@
     document.getElementById('loginUser').value = '';
     document.getElementById('loginPass').value = '';
     surveyBox.style.display = 'none';
+
+    // reset encuesta
+    window.currentResponseId = null;
+    SURVEY = null;
+    QUESTION_ID_MAP = {};
+    currentQuestionIndex = 0;
+  });
+
+  function openModalAnalisis() {
+    if (!modalAnalisis) return;
+    modalAnalisis.style.display = 'flex';
+  }
+
+  function closeModalAnalisis() {
+    if (!modalAnalisis) return;
+    modalAnalisis.style.display = 'none';
+  }
+
+  // Ingresar a la encuesta (primario)
+  btnIngresarEncuestaPostLogin?.addEventListener('click', async () => {
+    await showSurveyUI();
+  });
+
+  // Solicitar análisis (secundario)
+  btnSolicitarAnalisis?.addEventListener('click', () => {
+    openModalAnalisis();
+  });
+
+  // Cancelar (volver a tab encuesta)
+  btnCancelarAnalisis?.addEventListener('click', () => {
+    closeModalAnalisis();
+    showTab('encuesta');
+  });
+
+  // Continuar (POR AHORA vuelve igual al tab encuesta)
+  btnContinuarAnalisis?.addEventListener('click', () => {
+    closeModalAnalisis();
+    showTab('encuesta');
+  });
+
+  // Cerrar modal si se clickea fuera de la tarjeta
+  modalAnalisis?.addEventListener('click', (e) => {
+    if (e.target === modalAnalisis) {
+      closeModalAnalisis();
+      showTab('encuesta');
+    }
   });
 
   /* -------------------------
@@ -731,8 +864,8 @@
         encuestaOK.parentNode.insertBefore(surveyBox, encuestaOK);
       }
       if (encuestaOK) {
-        encuestaOK.style.opacity = '0.75';
-        encuestaOK.style.maxWidth = '420px';
+        encuestaOK.style.opacity = '0.95';
+        encuestaOK.style.maxWidth = '520px';
       }
       if (btnLogout) {
         btnLogout.textContent = 'Cerrar sesión';
@@ -764,30 +897,30 @@
       return;
     }
 
-      // ✅ FINALIZAR encuesta: marcar response como submitted
-  try {
-    const r3 = await fetch('/api/submit-response', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ responseId: window.currentResponseId })
-    });
+    // ✅ FINALIZAR encuesta: marcar response como submitted
+    try {
+      const r3 = await fetch('/api/submit-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ responseId: window.currentResponseId })
+      });
 
-    const raw3 = await r3.text();
-    let j3 = {};
-    try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
+      const raw3 = await r3.text();
+      let j3 = {};
+      try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
 
-    if (!r3.ok || !j3.ok) {
-      alert(
-        'No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' +
-        JSON.stringify(j3, null, 2)
-      );
-      return; // NO cerrar UI si no quedó submitted
+      if (!r3.ok || !j3.ok) {
+        alert(
+          'No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' +
+          JSON.stringify(j3, null, 2)
+        );
+        return; // NO cerrar UI si no quedó submitted
+      }
+    } catch (e) {
+      alert('Error de conexión al finalizar la encuesta.');
+      return;
     }
-  } catch (e) {
-    alert('Error de conexión al finalizar la encuesta.');
-    return;
-  }
 
     const surveyBoxEl = document.getElementById('surveyBox');
     if (surveyBoxEl) surveyBoxEl.style.display = 'none';
@@ -905,9 +1038,7 @@
     document.getElementById('loginUserResultados').value = '';
     document.getElementById('loginPassResultados').value = '';
   });
-
 </script>
 
 </body>
 </html>
-
