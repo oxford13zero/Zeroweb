@@ -381,13 +381,11 @@
 
   function showPostLoginActions(schoolName) {
     hideEncuestaAllPanels();
-    window.currentSchoolName = (schoolName || '');  // ✅ NUEVO: cache del nombre de escuela en esta pestaña
     if (encuestaOK) encuestaOK.style.display = 'block';
     if (schoolWelcome) schoolWelcome.textContent = `Acceso concedido. Escuela: ${schoolName || ''}`.trim();
   }
 
   window.initEncuestaTab = async () => {
-    // Siempre: primero credenciales. Si ya hay sesión, mostramos acciones.
     try {
       const res = await fetch('/api/me', { credentials: 'include' });
       const data = await res.json().catch(() => ({}));
@@ -401,7 +399,6 @@
   };
 
   btnMostrarLogin?.addEventListener('click', async () => {
-    // Ahora: primero login (o acciones si ya hay sesión)
     await window.initEncuestaTab?.();
   });
 
@@ -409,7 +406,6 @@
     loginMsg.textContent = '';
     loginPanel.style.display = 'none';
 
-    // Volver a pantalla del tab Encuesta (intro con botón)
     if (encuestaIntro) encuestaIntro.style.display = 'block';
     if (btnMostrarLogin) btnMostrarLogin.style.display = 'inline-block';
 
@@ -454,32 +450,27 @@
   });
 
   btnIngresarEncuesta?.addEventListener('click', async () => {
-    // Aquí recién se ingresa a la encuesta (UI preguntas)
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    if (encuestaOK) encuestaOK.style.display = 'none'; // OCULTAR panel con botones
+    if (encuestaOK) encuestaOK.style.display = 'none';
     await showSurveyUI();
   });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
-    // Mostrar warning
     hideEncuestaAllPanels();
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'block';
   });
 
   btnAnalisisCancelar?.addEventListener('click', async () => {
-    // Cancelar: vuelve al tab Encuesta (acciones si hay sesión / login si no)
     await window.initEncuestaTab?.();
   });
 
   btnAnalisisContinuar?.addEventListener('click', async () => {
-    // Continuar: POR AHORA vuelve al tab Encuesta
     await window.initEncuestaTab?.();
   });
 
   btnLogout?.addEventListener('click', async () => {
     await fetch('/api/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
 
-    // Reset UI
     if (surveyBox) surveyBox.style.display = 'none';
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
     if (encuestaOK) encuestaOK.style.display = 'none';
@@ -491,7 +482,6 @@
     if (loginMsg) loginMsg.textContent = '';
     document.getElementById('loginUser').value = '';
     document.getElementById('loginPass').value = '';
-    window.currentSchoolName = '';
   });
 
   /* -------------------------
@@ -622,7 +612,7 @@
   function isTiempoQ(qid) { return qid === QID_TIEMPO; }
 
   // Cache de opciones por questionId (UUID)
-  const OPTIONS_CACHE = {}; // { [questionId]: [{id, option_text, option_code, position...}] }
+  const OPTIONS_CACHE = {};
 
   async function getOptionsForQuestion(questionId) {
     if (!questionId) return [];
@@ -654,6 +644,8 @@
   }
 
   function renderCurrentQuestion() {
+    if (encuestaOK) encuestaOK.style.display = 'none'; // ✅ ensure buttons never show during survey
+
     const question = SURVEY.questions[currentQuestionIndex];
     document.getElementById('qTitle').textContent =
       `Pregunta ${question.number} de ${SURVEY.questions.length}`;
@@ -664,17 +656,16 @@
 
     const qid = getCurrentQuestionId(question.number);
 
-    // === 4 preguntas tipo combobox (edad, grado, género, tiempo) ===
     if (qid && (isEdadQ(qid) || isGradoQ(qid) || isGeneroQ(qid) || isTiempoQ(qid))) {
       let label = "Selecciona una opción";
       if (isEdadQ(qid)) label = "Selecciona tu edad";
       if (isGradoQ(qid)) label = "Selecciona tu grado";
       if (isGeneroQ(qid)) label = "Selecciona tu género";
-      if (isTiempoQ(qid)) label = ""; // ✅ FIX: no duplicar el texto, ya está en qText
+      if (isTiempoQ(qid)) label = "¿Cuánto tiempo llevas en esta escuela?";
 
       optionsDiv.innerHTML = `
-        ${label ? `<label class="fieldLabel" for="answerSelect">${label}</label><br/>` : ``}
-        <select id="answerSelect" class="textInput" ${label ? '' : 'aria-label="Selecciona una opción"'}>
+        <label class="fieldLabel" for="answerSelect">${label}</label><br/>
+        <select id="answerSelect" class="textInput">
           <option value="">Cargando...</option>
         </select>
       `;
@@ -683,12 +674,12 @@
         try {
           const opts = await getOptionsForQuestion(qid);
           const sel = document.getElementById("answerSelect");
-          if (! (!sel) return;
+          if (!sel) return;
 
           sel.innerHTML = `<option value="">-- Selecciona --</option>` +
             opts.map(o => {
               const txt = (o.option_text ?? o.option_code ?? "").toString();
-              return `<option value="${o.id}">${txt}</option>`; // value=UUID option_id
+              return `<option value="${o.id}">${txt}</option>`;
             }).join("");
         } catch (e) {
           optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
@@ -728,20 +719,18 @@
     let answerText = null;
     let selectedOptionIds = [];
 
-    // combobox: guardamos SIEMPRE en answer_selected_options con option_id UUID real
     if (questionId && (isEdadQ(questionId) || isGradoQ(questionId) || isGeneroQ(questionId) || isTiempoQ(questionId))) {
       const v = document.getElementById('answerSelect')?.value || "";
-      if (v) selectedOptionIds = [v]; // <-- UUID option_id
+      if (v) selectedOptionIds = [v];
       answerText = null;
     }
     else if (q.type === 'text') {
       answerText = document.getElementById('answerText')?.value?.trim() || null;
     } else {
       const checked = document.querySelector('input[name="answer"]:checked');
-      if (checked) selectedOptionIds = [checked.value]; // para radios tu backend decide si es code o id
+      if (checked) selectedOptionIds = [checked.value];
     }
 
-    // validación mínima
     if (q.required) {
       if (q.type === 'text') {
         if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
@@ -828,7 +817,12 @@
       }
     } catch (e) {}
 
-    if (encuestaOK) encuestaOK.style.display = 'none'; // HIDE ACTION BUTTONS
+    if (encuestaOK) encuestaOK.style.display = 'none';
+    if (encuestaIntro) encuestaIntro.style.display = 'none';
+    if (btnMostrarLogin) btnMostrarLogin.style.display = 'none';
+    if (loginPanel) loginPanel.style.display = 'none';
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+
     surveyBox.style.display = 'block';
     currentQuestionIndex = 0;
     renderCurrentQuestion();
@@ -870,21 +864,26 @@
           'No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' +
           JSON.stringify(j3, null, 2)
         );
-        return; // NO cerrar UI si no quedó submitted
+        return;
       }
     } catch (e) {
       alert('Error de conexión al finalizar la encuesta.');
       return;
     }
 
+    // ✅ NUEVO COMPORTAMIENTO POST-FINALIZAR:
+    // - NO volver al "encuestaIntro" antiguo
+    // - Volver al panel nuevo con 2 botones (encuestaOK)
+
+    // Ocultar UI de encuesta
     const surveyBoxEl = document.getElementById('surveyBox');
     if (surveyBoxEl) surveyBoxEl.style.display = 'none';
-    if (encuestaOK) encuestaOK.style.display = 'none';
     if (loginPanel) loginPanel.style.display = 'none';
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
     if (encuestaIntro) encuestaIntro.style.display = 'none';
     if (btnMostrarLogin) btnMostrarLogin.style.display = 'none';
-    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
 
+    // Reset estado de encuesta (pero NO cerrar sesión)
     window.currentResponseId = null;
     SURVEY = null;
     QUESTION_ID_MAP = {};
@@ -895,8 +894,19 @@
     if (loginUser) loginUser.value = '';
     if (loginPass) loginPass.value = '';
 
-    // ✅ FIX: el usuario ya está logueado -> volver directo a pantalla con 2 botones
-    showPostLoginActions(window.currentSchoolName || '');
+    // Mostrar pantalla nueva (2 botones) si la sesión sigue vigente
+    try {
+      const meRes = await fetch('/api/me', { credentials: 'include' });
+      const meData = await meRes.json().catch(() => ({}));
+      if (meData && meData.ok) {
+        showPostLoginActions(meData.school_name);
+      } else {
+        // Si por alguna razón la sesión expiró, volver a login
+        showLoginPanelOnly();
+      }
+    } catch (e) {
+      showLoginPanelOnly();
+    }
   });
 
   /* -------------------------
