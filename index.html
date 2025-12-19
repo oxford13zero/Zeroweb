@@ -661,10 +661,10 @@
 
     if (qid && (isEdadQ(qid) || isGradoQ(qid) || isGeneroQ(qid) || isTiempoQ(qid))) {
       let label = "Selecciona una opción";
-      if (isEdadQ(qid)) label = "Selecciona tu edad";
-      if (isGradoQ(qid)) label = "Selecciona tu grado";
-      if (isGeneroQ(qid)) label = "Selecciona tu género";
-      if (isTiempoQ(qid)) label = "¿Cuánto tiempo llevas en esta escuela?";
+      //if (isEdadQ(qid)) label = "Selecciona tu edad";
+     // if (isGradoQ(qid)) label = "Selecciona tu grado";
+     // if (isGeneroQ(qid)) label = "Selecciona tu género";
+      //if (isTiempoQ(qid)) label = "¿Cuánto tiempo llevas en esta escuela?";
 
       optionsDiv.innerHTML = `
         <label class="fieldLabel" for="answerSelect">${label}</label><br/>
@@ -1018,5 +1018,6 @@
 
 </body>
 </html>
+
 
 
