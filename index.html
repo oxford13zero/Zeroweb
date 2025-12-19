@@ -65,9 +65,10 @@
     function showTab(tabId) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
+
       if (tabId === 'datos') window.loadDatosIfNeeded?.();
-      if (tabId === 'encuesta') window.initEncuestaTab?.(); // NUEVO
-      if (tabId === 'resultados') window.initResultadosTab?.(); // ✅ NUEVO (solo para orden de pantallas en RESULTADOS)
+      if (tabId === 'encuesta') window.initEncuestaTab?.(); // ENCUESTA: abre login / acciones post-login
+      if (tabId === 'resultados') window.initResultadosTab?.(); // RESULTADOS: login primero, luego botón mostrar resultados
     }
   </script>
 </head>
@@ -468,8 +469,30 @@
     await window.initEncuestaTab?.();
   });
 
+  // ✅ NUEVO: Aceptar (Continuar) -> llamar backend para marcar analysis_requested_dt
   btnAnalisisContinuar?.addEventListener('click', async () => {
-    await window.initEncuestaTab?.();
+    try {
+      const res = await fetch('/api/request-analysis', {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        alert(`No se pudo solicitar el análisis (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`);
+        await window.initEncuestaTab?.();
+        return;
+      }
+
+      alert(`Análisis solicitado.\nRegistros marcados: ${data.updated_count}\nEscuela: ${data.school_id}`);
+      await window.initEncuestaTab?.();
+    } catch (e) {
+      alert('Error de conexión al solicitar el análisis.');
+      await window.initEncuestaTab?.();
+    }
   });
 
   btnLogout?.addEventListener('click', async () => {
@@ -648,7 +671,7 @@
   }
 
   function renderCurrentQuestion() {
-    if (encuestaOK) encuestaOK.style.display = 'none'; // ensure buttons never show during survey
+    if (encuestaOK) encuestaOK.style.display = 'none'; // ✅ ensure buttons never show during survey
 
     const question = SURVEY.questions[currentQuestionIndex];
     document.getElementById('qTitle').textContent =
@@ -875,10 +898,6 @@
       return;
     }
 
-    // NUEVO COMPORTAMIENTO POST-FINALIZAR:
-    // - NO volver al "encuestaIntro" antiguo
-    // - Volver al panel nuevo con 2 botones (encuestaOK)
-
     // Ocultar UI de encuesta
     const surveyBoxEl = document.getElementById('surveyBox');
     if (surveyBoxEl) surveyBoxEl.style.display = 'none';
@@ -933,7 +952,7 @@
     if (resultadosBox) resultadosBox.style.display = 'block';
   }
 
-  // Helpers defensivos (solo para orden/consistencia de pantallas)
+  // Helpers defensivos para orden/consistencia de pantallas
   function hideResultadosAll() {
     if (loginPanelResultados) loginPanelResultados.style.display = 'none';
     if (resultadosIntro) resultadosIntro.style.display = 'none';
@@ -1040,7 +1059,6 @@
     // Logout vuelve a login primero
     showResultadosLoginOnly();
   });
-
 </script>
 
 </body>
