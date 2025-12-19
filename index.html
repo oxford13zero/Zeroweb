@@ -592,12 +592,46 @@
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
   });
 
+
   btnAnalisisContinuar?.addEventListener('click', async () => {
-    if (!window.sessionState.ok) { openModal(); return; }
-    // Aquí iría tu /api/request-analysis (si ya existe en tu repo, lo conectas)
-    // Dejo esto sin cambiar tu lógica previa; si ya tienes el handler, lo pegas aquí.
-    alert('Continuar: conecta aquí tu endpoint /api/request-analysis si corresponde.');
-  });
+  try {
+    // 1. Verificar sesión real
+    const meRes = await fetch('/api/me', { credentials: 'include' });
+    const meData = await meRes.json().catch(() => ({}));
+
+    if (!meRes.ok || !meData.ok) {
+      // Sesión inválida → volver a login del tab Encuesta
+      await window.initEncuestaTab?.();
+      return;
+    }
+
+    // 2. Llamar al endpoint REAL de análisis
+    const res = await fetch('/api/request-analysis', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' }
+      // body: JSON.stringify({})  // solo si tu API lo requiere
+    });
+
+    const raw = await res.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+    if (!res.ok || !data.ok) {
+      alert(
+        'No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' +
+        (data.error || data.raw || 'sin detalle')
+      );
+      return;
+    }
+
+    // 3. Éxito → volver a pantalla post-login (2 botones)
+    showPostLoginActions(meData.school_name);
+
+  } catch (e) {
+    alert('Error de conexión al solicitar el análisis.');
+  }
+});
 
   // =========================
   // RESULTADOS (bloqueo por sesión + redirect)
@@ -1004,3 +1038,4 @@
 
 </body>
 </html>
+
