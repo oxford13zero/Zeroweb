@@ -1,82 +1,1065 @@
-import { serialize } from "cookie";
-import { createClient } from "@supabase/supabase-js";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>TECH4ZERO – Educational Designs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-);
+  <style>
+    body { margin:0; font-family:'Open Sans', Arial, sans-serif; background-color:#1E2F3F; color:#ffffff; }
 
-async function readJsonBody(req) {
-  return new Promise((resolve, reject) => {
-    let data = "";
-    req.on("data", (chunk) => (data += chunk));
-    req.on("end", () => {
-      try {
-        resolve(data ? JSON.parse(data) : {});
-      } catch (e) {
-        reject(e);
+    header { padding:40px 20px; text-align:center; background:linear-gradient(180deg, #1E2F3F, #16222D); }
+    header h1 { font-family:'Playfair Display', serif; font-size:48px; margin:0; }
+    header p { color:#D6A21C; letter-spacing:2px; margin-top:10px; font-size:14px; }
+
+    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; flex-wrap:wrap; }
+    nav a { background-color:#1E2F3F; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
+    nav a:hover { background-color:#D6A21C; color:#16222D; }
+
+    section { display:none; padding:50px 20px; max-width:1000px; margin:auto; }
+    section.active { display:block; }
+
+    h2 { font-family:'Playfair Display', serif; color:#D6A21C; font-size:32px; margin-top:0; }
+
+    .card { background-color:#243A4B; padding:25px; border-radius:8px; margin-top:25px; }
+
+    footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
+
+    /* Buttons */
+    .btnPrimary { padding:10px 16px; font-weight:700; border-radius:6px; border:none; cursor:pointer; }
+    .btnSecondary { padding:10px 16px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer; }
+
+    /* Compact panel + stacked inputs */
+    .formPanel {
+      margin-top: 18px;
+      background: #1E2F3F;
+      padding: 16px;
+      border-radius: 8px;
+      max-width: 520px;
+      border: 1px solid #365468;
+    }
+    .fieldBlock { margin-bottom: 14px; }
+    .fieldLabel { font-weight:600; display:inline-block; margin-bottom:6px; }
+    .textInput {
+      width:100%;
+      max-width:380px;
+      padding:8px;
+      border-radius:6px;
+      border:1px solid #365468;
+      background:#0f1d27;
+      color:#ffffff;
+      outline:none;
+    }
+    .textInput::placeholder { color:#a9c0d3; }
+
+    .statusMsg { margin-top:12px; font-weight:600; min-height:18px; }
+    .statusOk { color:#b9ffcf; }
+    .statusWarn { color:#ffdca8; }
+    .statusErr { color:#ffb4b4; }
+  </style>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+
+      if (tabId === 'datos') window.loadDatosIfNeeded?.();
+      if (tabId === 'encuesta') window.initEncuestaTab?.(); // ENCUESTA: abre login / acciones post-login
+      if (tabId === 'resultados') window.initResultadosTab?.(); // RESULTADOS: login primero, luego botón mostrar resultados
+    }
+  </script>
+</head>
+
+<body>
+
+<header>
+  <h1>TECH4ZERO</h1>
+  <p>EDUCATION+IA</p>
+</header>
+
+<nav>
+  <a href="#" onclick="showTab('home'); return false;">INICIO</a>
+  <a href="#" onclick="showTab('programa'); return false;">PROGRAMA</a>
+  <a href="#" onclick="showTab('encuesta'); return false;">ENCUESTA</a>
+  <a href="#" onclick="showTab('datos'); return false;">DATOS</a>
+  <a href="#" onclick="showTab('resultados'); return false;">RESULTADOS</a>
+  <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
+  <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
+</nav>
+
+<section id="home" class="active">
+  <h2>Bienvenidos</h2>
+
+  <div class="card">
+    <p>
+      TECH4ZERO desarrolla programas educativos basados en experiencia,
+      cooperación, lenguaje y emociones, con foco en la prevención del bullying.
+    </p>
+  </div>
+
+  <div class="card" style="margin-top:30px; text-align:center;">
+    <iframe width="560" height="315"
+      src="https://www.youtube.com/embed/iBO4YijRYbs"
+      title="Programa ZERO"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div style="margin-top:30px; text-align:center;">
+    <img src="zero.png" alt="Logo ZERO" style="max-width:220px;" />
+  </div>
+</section>
+
+<section id="programa">
+  <h2>Programa Antibullying TECH4ZERO</h2>
+  <div class="card">
+    <p>
+      Programa antibullying internacional, implementado en escuelas de Estados Unidos
+      y Latinoamérica, con resultados comprobados.
+    </p>
+  </div>
+</section>
+
+<section id="encuesta">
+  <h2>Encuesta Escolar</h2>
+
+  <div class="card">
+    <p>
+      Para ingresar a la encuesta, deberá introducir su <b>usuario</b> y <b>contraseña</b>.
+    </p>
+
+    <!-- Intro -->
+    <div id="encuestaIntro" style="margin-top:14px;">
+      <button id="btnMostrarLogin" class="btnPrimary" type="button">Ingresar a la encuesta</button>
+    </div>
+
+    <!-- Login Panel -->
+    <div id="loginPanel" class="formPanel" style="display:none;">
+      <div class="fieldBlock">
+        <label for="loginUser" class="fieldLabel">Usuario</label><br />
+        <input id="loginUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
+      </div>
+
+      <div class="fieldBlock">
+        <label for="loginPass" class="fieldLabel">Contraseña</label><br />
+        <input id="loginPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnLogin" class="btnPrimary" type="button">Entrar</button>
+        <button id="btnCancelarLogin" class="btnSecondary" type="button">Cancelar</button>
+      </div>
+
+      <div id="loginMsg" class="statusMsg statusErr"></div>
+    </div>
+
+    <!-- Survey Box -->
+    <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
+      <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
+      <div id="qText" style="margin-bottom:12px;"></div>
+      <div id="qOptions"></div>
+
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button id="btnQPrev" class="btnSecondary" type="button">Anterior</button>
+        <button id="btnQNext" class="btnPrimary" type="button">Siguiente</button>
+      </div>
+
+      <div id="surveyMsg" class="statusMsg statusWarn"></div>
+    </div>
+
+    <!-- OK Panel (post-login, acciones) -->
+    <div id="encuestaOK" class="formPanel" style="display:none; opacity:0.75; max-width:520px;">
+      <p id="schoolWelcome" style="margin:0 0 12px 0;">Acceso concedido.</p>
+
+      <!-- Acciones (primario + secundario) -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+        <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Ingresar a la encuesta</button>
+        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Solicitar analisis de la encuesta</button>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button id="btnLogout" class="btnSecondary" type="button" style="font-size:13px; padding:6px 12px;">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <!-- Warning Panel: Solicitar análisis -->
+    <div id="analisisWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
+      <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
+      <div style="margin-bottom:14px;">
+        El sistema realizara un analisis estadistico detallado del ambiente escolar con las encuestas introducidas en el sistema para su escuela, pero no podra adicionar nuevas encuestas.
+        <br /><br />
+        Desea continuar?
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continuar</button>
+        <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancelar</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="resultados">
+  <h2>Resultados Encuesta</h2>
+
+  <div class="card">
+    <!--
+    <p>
+      Para ver los resultados, deberá introducir su <b>usuario</b> y <b>contraseña</b>.
+    </p>
+
+    // ACA CAMBIE EL ORDEN DE INTRO CON LOGIN PANEL (RESULTADOS) -->
+
+    <!-- Login Panel (Resultados) -->
+    <div id="loginPanelResultados" class="formPanel" style="display:block;">
+      <div class="fieldBlock">
+        <label for="loginUserResultados" class="fieldLabel">Usuario</label><br />
+        <input id="loginUserResultados" class="textInput" type="text"
+               placeholder="Usuario" autocomplete="off" autocapitalize="none"
+               autocorrect="off" spellcheck="false" />
+      </div>
+
+      <div class="fieldBlock">
+        <label for="loginPassResultados" class="fieldLabel">Contraseña</label><br />
+        <input id="loginPassResultados" class="textInput" type="password"
+               placeholder="Contraseña" autocomplete="new-password" />
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnLoginResultados" class="btnPrimary" type="button">Entrar</button>
+        <button id="btnCancelarLoginResultados" class="btnSecondary" type="button">Cancelar</button>
+      </div>
+
+      <div id="loginMsgResultados" class="statusMsg statusErr"></div>
+    </div>
+
+    <!-- OK Panel (Resultados) -->
+    <div id="resultadosOK" class="formPanel" style="display:none; opacity:0.75; max-width:420px;">
+      <p id="schoolWelcomeResultados" style="margin:0 0 12px 0;">Acceso concedido.</p>
+      <button id="btnLogoutResultados" class="btnSecondary" type="button"
+              style="font-size:13px; padding:6px 12px;">
+        Cerrar sesión
+      </button>
+    </div>
+
+    <!-- Intro -->
+    <div id="resultadosIntro" style="margin-top:14px; display:none;">
+      <button id="btnMostrarLoginResultados" class="btnPrimary" type="button">
+        Mostrar resultados encuesta
+      </button>
+    </div>
+
+    <!-- Contenedor futuro para mostrar resultados -->
+    <div id="resultadosBox" class="formPanel" style="display:none; margin-top:18px;">
+      <div id="resultadosMsg" class="statusMsg statusWarn">
+        (Próximo paso: aquí mostraremos los resultados.)
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="datos">
+  <h2>Datos</h2>
+
+  <div class="card">
+    <p>
+      Esta sección lee datos desde Supabase (tabla <b>encargado_escolar</b>) para verificar conexión.
+    </p>
+
+    <div class="formPanel">
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_nombre">Nombre</label><br />
+        <input id="d_nombre" class="textInput" type="text" placeholder="Nombre" readonly />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_ap_paterno">Apellido Paterno</label><br />
+        <input id="d_ap_paterno" class="textInput" type="text" placeholder="Apellido Paterno" readonly />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_ap_materno">Apellido Materno</label><br />
+        <input id="d_ap_materno" class="textInput" type="text" placeholder="Apellido Materno" readonly />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="d_establecimiento">Establecimiento</label><br />
+        <input id="d_establecimiento" class="textInput" type="text" placeholder="Establecimiento" readonly />
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+        <button id="btnPrev" class="btnSecondary" type="button">Retroceder</button>
+        <button id="btnNext" class="btnPrimary" type="button">Avanzar</button>
+      </div>
+
+      <div id="datosStatus" class="statusMsg statusWarn"></div>
+    </div>
+  </div>
+</section>
+
+<section id="equipo">
+  <h2>Nuestro Equipo</h2>
+  <div class="card">
+    <p>
+      Equipo interdisciplinario de especialistas en educación, psicología y tecnología
+      comprometidos con comunidades escolares seguras.
+    </p>
+  </div>
+</section>
+
+<section id="contacto">
+  <h2>Contáctenos</h2>
+  <div class="card">
+    <p>Email: contacto@tech4zero.org</p>
+  </div>
+</section>
+
+<footer>
+  © 2025 TECH4ZERO – Educational Designs
+</footer>
+
+<script>
+  // === DEBUG: mostrar errores JS sin consola ===
+  window.onerror = function (msg, src, line, col) {
+    alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
+    const el = document.getElementById('loginMsg');
+    if (el) el.textContent = `JS ERROR: ${msg}`;
+  };
+
+  window.onunhandledrejection = function (e) {
+    const reason = e?.reason;
+    const msg = (reason && (reason.message || String(reason))) || 'Unhandled promise rejection';
+    const stack = reason?.stack ? ("\n\nSTACK:\n" + reason.stack) : "";
+    alert('PROMISE ERROR: ' + msg + stack);
+
+    const el = document.getElementById('loginMsg');
+    if (el) el.textContent = `PROMISE ERROR: ${msg}`;
+  };
+
+  /* -------------------------
+     LOGIN (BACKEND /api/login + /api/logout) - ENCUESTA
+  -------------------------- */
+  const btnMostrarLogin = document.getElementById('btnMostrarLogin');
+  const loginPanel = document.getElementById('loginPanel');
+  const btnCancelarLogin = document.getElementById('btnCancelarLogin');
+  const btnLogin = document.getElementById('btnLogin');
+  const loginMsg = document.getElementById('loginMsg');
+
+  const encuestaIntro = document.getElementById('encuestaIntro');
+  const encuestaOK = document.getElementById('encuestaOK');
+  const schoolWelcome = document.getElementById('schoolWelcome');
+  const btnLogout = document.getElementById('btnLogout');
+
+  const surveyBox = document.getElementById('surveyBox');
+
+  // Acciones post-login
+  const btnIngresarEncuesta = document.getElementById('btnIngresarEncuesta');
+  const btnSolicitarAnalisis = document.getElementById('btnSolicitarAnalisis');
+
+  // Warning análisis
+  const analisisWarnPanel = document.getElementById('analisisWarnPanel');
+  const btnAnalisisContinuar = document.getElementById('btnAnalisisContinuar');
+  const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
+
+  function hideEncuestaAllPanels() {
+    if (encuestaIntro) encuestaIntro.style.display = 'none';
+    if (btnMostrarLogin) btnMostrarLogin.style.display = 'none';
+    if (loginPanel) loginPanel.style.display = 'none';
+    if (encuestaOK) encuestaOK.style.display = 'none';
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    if (surveyBox) surveyBox.style.display = 'none';
+  }
+
+  function showLoginPanelOnly() {
+    hideEncuestaAllPanels();
+    if (loginMsg) loginMsg.textContent = '';
+    if (loginPanel) loginPanel.style.display = 'block';
+    document.getElementById('loginUser')?.focus();
+  }
+
+  function showPostLoginActions(schoolName) {
+    hideEncuestaAllPanels();
+    if (encuestaOK) encuestaOK.style.display = 'block';
+    if (schoolWelcome) schoolWelcome.textContent = `Acceso concedido. Escuela: ${schoolName || ''}`.trim();
+  }
+
+  window.initEncuestaTab = async () => {
+    try {
+      const res = await fetch('/api/me', { credentials: 'include' });
+      const data = await res.json().catch(() => ({}));
+      if (data && data.ok) {
+        showPostLoginActions(data.school_name);
+        return;
+      }
+    } catch (e) {}
+
+    showLoginPanelOnly();
+  };
+
+  btnMostrarLogin?.addEventListener('click', async () => {
+    await window.initEncuestaTab?.();
+  });
+
+  btnCancelarLogin?.addEventListener('click', () => {
+    loginMsg.textContent = '';
+    loginPanel.style.display = 'none';
+
+    if (encuestaIntro) encuestaIntro.style.display = 'block';
+    if (btnMostrarLogin) btnMostrarLogin.style.display = 'inline-block';
+
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+  });
+
+  btnLogin?.addEventListener('click', async () => {
+    const u = document.getElementById('loginUser').value.trim();
+    const p = document.getElementById('loginPass').value.trim();
+
+    if (!u || !p) {
+      loginMsg.textContent = 'Por favor ingrese usuario y contraseña.';
+      return;
+    }
+
+    try {
+      loginMsg.textContent = 'Validando...';
+
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        loginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
+        return;
+      }
+
+      loginMsg.textContent = '';
+      loginPanel.style.display = 'none';
+      showPostLoginActions(data.school_name);
+    } catch (e) {
+      loginMsg.textContent = 'Error de conexión.';
+    }
+  });
+
+  btnIngresarEncuesta?.addEventListener('click', async () => {
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    if (encuestaOK) encuestaOK.style.display = 'none';
+    await showSurveyUI();
+  });
+
+  btnSolicitarAnalisis?.addEventListener('click', () => {
+    hideEncuestaAllPanels();
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'block';
+  });
+
+  btnAnalisisCancelar?.addEventListener('click', async () => {
+    await window.initEncuestaTab?.();
+  });
+
+  // ✅ NUEVO: Aceptar (Continuar) -> llamar backend para marcar analysis_requested_dt
+  btnAnalisisContinuar?.addEventListener('click', async () => {
+    try {
+      const res = await fetch('/api/request-analysis', {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        alert(`No se pudo solicitar el análisis (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`);
+        await window.initEncuestaTab?.();
+        return;
+      }
+
+      alert(`Análisis solicitado.\nRegistros marcados: ${data.updated_count}\nEscuela: ${data.school_id}`);
+      await window.initEncuestaTab?.();
+    } catch (e) {
+      alert('Error de conexión al solicitar el análisis.');
+      await window.initEncuestaTab?.();
+    }
+  });
+
+  btnLogout?.addEventListener('click', async () => {
+    await fetch('/api/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+
+    if (surveyBox) surveyBox.style.display = 'none';
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    if (encuestaOK) encuestaOK.style.display = 'none';
+    if (loginPanel) loginPanel.style.display = 'none';
+
+    if (encuestaIntro) encuestaIntro.style.display = 'block';
+    if (btnMostrarLogin) btnMostrarLogin.style.display = 'inline-block';
+
+    if (loginMsg) loginMsg.textContent = '';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+  });
+
+  /* -------------------------
+     DATOS: Supabase REST read
+  -------------------------- */
+  const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aHlub2lra2JtZ3VsYnJ1ZXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODIzMDgsImV4cCI6MjA4MTI1ODMwOH0.k-jdaJ-QOu9RCTWIJ2vTZ1Eefdby70asQIq9rdTmPT4";
+
+  let datosIndex = 0;
+  let datosLoadedOnce = false;
+
+  const elNombre = document.getElementById('d_nombre');
+  const elApPaterno = document.getElementById('d_ap_paterno');
+  const elApMaterno = document.getElementById('d_ap_materno');
+  const elEst = document.getElementById('d_establecimiento');
+  const elStatus = document.getElementById('datosStatus');
+
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  function setStatus(text, type) {
+    elStatus.textContent = text || '';
+    elStatus.classList.remove('statusOk', 'statusWarn', 'statusErr');
+    elStatus.classList.add(type || 'statusWarn');
+  }
+
+  function fillFields(row) {
+    elNombre.value = row?.first_name ?? '';
+    elApPaterno.value = row?.pat_last_name ?? '';
+    elApMaterno.value = row?.mat_last_name ?? '';
+    elEst.value = row?.school_id ?? '';
+  }
+
+  async function fetchOneRow(offset) {
+    const url =
+      `${SUPABASE_URL}/rest/v1/encargado_escolar` +
+      `?select=first_name,pat_last_name,mat_last_name,school_id` +
+      `&limit=1&offset=${offset}`;
+
+    const res = await fetch(url, {
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+        "Accept": "application/json"
       }
     });
-    req.on("error", reject);
-  });
-}
 
-function setSessionCookie(res, schoolId) {
-  const cookie = serialize("t4z_session", schoolId, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
-    path: "/",              // CLAVE
-    maxAge: 60 * 60 * 24    // 1 día
-  });
+    const text = await res.text();
+    let json;
+    try { json = text ? JSON.parse(text) : null; } catch { json = null; }
 
-  res.setHeader("Set-Cookie", cookie);
-}
-
-
-
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
+    return { ok: res.ok, status: res.status, json };
   }
 
-  try {
-    const { username, password } = await readJsonBody(req);
+  async function loadCurrent() {
+    setStatus("Cargando datos...", "statusWarn");
 
-    if (!username || !password) {
-      return res.status(400).json({ ok: false, error: "MISSING_FIELDS" });
+    try {
+      const result = await fetchOneRow(datosIndex);
+
+      if (!result.ok) {
+        setStatus(` No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
+        fillFields(null);
+        return;
+      }
+
+      const arr = Array.isArray(result.json) ? result.json : [];
+      if (arr.length === 0) {
+        if (datosIndex === 0) {
+          setStatus(" La tabla encargado_escolar está vacía (no hay registros).", "statusWarn");
+        } else {
+          setStatus(" No hay más registros. Retrocede para ver anteriores.", "statusWarn");
+          datosIndex = Math.max(0, datosIndex - 1);
+        }
+        fillFields(null);
+        return;
+      }
+
+      fillFields(arr[0]);
+      setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
+    } catch (e) {
+      setStatus(" Error de conexión con Supabase.", "statusErr");
+      fillFields(null);
     }
-
-    // Busca escuela por username
-    const { data: school, error } = await supabase
-      .from("schools")
-      .select("id, name, username, password")
-      .eq("username", username)
-      .single();
-
-    if (error || !school) {
-      return res.status(401).json({ ok: false, error: "INVALID_CREDENTIALS" });
-    }
-
-    // Password en texto plano por ahora (más adelante hash)
-    if (school.password !== password) {
-      return res.status(401).json({ ok: false, error: "INVALID_CREDENTIALS" });
-    }
-
-   // Login OK → crear cookie de sesión
-setSessionCookie(res, school.id);
-
-return res.status(200).json({
-  ok: true,
-  school_id: school.id,
-  school_name: school.name
-});
-
-
-  } catch (e) {
-    console.error("login error:", e);
-    return res.status(500).json({ ok: false, error: "SERVER_ERROR" });
   }
-}
 
+  btnPrev?.addEventListener('click', async () => {
+    datosIndex = Math.max(0, datosIndex - 1);
+    await loadCurrent();
+  });
+
+  btnNext?.addEventListener('click', async () => {
+    datosIndex = datosIndex + 1;
+    await loadCurrent();
+  });
+
+  window.loadDatosIfNeeded = async () => {
+    if (datosLoadedOnce) return;
+    datosLoadedOnce = true;
+    datosIndex = 0;
+    await loadCurrent();
+  };
+
+  /* ================================
+     ENCUESTA
+  ================================ */
+
+  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f";
+  const SURVEY_CODE = "SURVEY_001";
+
+  let SURVEY = null;
+  let currentQuestionIndex = 0;
+  let QUESTION_ID_MAP = {};
+  window.currentResponseId = null;
+
+  // === PREGUNTAS ESPECIALES (combobox) ===
+  const QID_EDAD   = "1b5f4f28-8f41-4ed7-9bfa-07d927b2d1b4";
+  const QID_GRADO  = "6b5b3cdd-5e6d-4c02-a6c4-63d7b3c52e30";
+  const QID_GENERO = "c0a89b93-2b39-4e4c-9f10-8f58dbf8d0c7";
+  const QID_TIEMPO = "7c5d8e66-1d8d-4f0c-8a4f-8a6b6b5c4c11";
+
+  function getCurrentQuestionId(questionNumber) {
+    return QUESTION_ID_MAP[String(questionNumber)] || null;
+  }
+  function isEdadQ(qid)   { return qid === QID_EDAD; }
+  function isGradoQ(qid)  { return qid === QID_GRADO; }
+  function isGeneroQ(qid) { return qid === QID_GENERO; }
+  function isTiempoQ(qid) { return qid === QID_TIEMPO; }
+
+  // Cache de opciones por questionId (UUID)
+  const OPTIONS_CACHE = {};
+
+  async function getOptionsForQuestion(questionId) {
+    if (!questionId) return [];
+    if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
+
+    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`, {
+      credentials: "include"
+    });
+    const raw = await res.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+    if (!res.ok || !data.ok) {
+      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "sin detalle"}`);
+    }
+
+    OPTIONS_CACHE[questionId] = Array.isArray(data.options) ? data.options : [];
+    return OPTIONS_CACHE[questionId];
+  }
+
+  async function loadSurvey() {
+    if (SURVEY) return;
+    const res = await fetch('/data/survey_001.json', { cache: 'no-store' });
+    if (!res.ok) {
+      alert('No se pudo cargar el survey');
+      return;
+    }
+    SURVEY = await res.json();
+  }
+
+  function renderCurrentQuestion() {
+    if (encuestaOK) encuestaOK.style.display = 'none'; // ✅ ensure buttons never show during survey
+
+    const question = SURVEY.questions[currentQuestionIndex];
+    document.getElementById('qTitle').textContent =
+      `Pregunta ${question.number} de ${SURVEY.questions.length}`;
+    document.getElementById('qText').textContent = question.text;
+
+    const optionsDiv = document.getElementById('qOptions');
+    optionsDiv.innerHTML = '';
+
+    const qid = getCurrentQuestionId(question.number);
+
+    if (qid && (isEdadQ(qid) || isGradoQ(qid) || isGeneroQ(qid) || isTiempoQ(qid))) {
+      let label = "Selecciona una opción";
+      if (isEdadQ(qid)) label = "Selecciona tu edad";
+      if (isGradoQ(qid)) label = "Selecciona tu grado";
+      if (isGeneroQ(qid)) label = "Selecciona tu género";
+      if (isTiempoQ(qid)) label = "¿Cuánto tiempo llevas en esta escuela?";
+
+      optionsDiv.innerHTML = `
+        <label class="fieldLabel" for="answerSelect">${label}</label><br/>
+        <select id="answerSelect" class="textInput">
+          <option value="">Cargando...</option>
+        </select>
+      `;
+
+      (async () => {
+        try {
+          const opts = await getOptionsForQuestion(qid);
+          const sel = document.getElementById("answerSelect");
+          if (!sel) return;
+
+          sel.innerHTML = `<option value="">-- Selecciona --</option>` +
+            opts.map(o => {
+              const txt = (o.option_text ?? o.option_code ?? "").toString();
+              return `<option value="${o.id}">${txt}</option>`;
+            }).join("");
+        } catch (e) {
+          optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
+        }
+      })();
+
+    } else if (question.type === 'text') {
+      optionsDiv.innerHTML =
+        `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
+    } else {
+      question.options.forEach(opt => {
+        optionsDiv.insertAdjacentHTML(
+          'beforeend',
+          `<label style="display:block; margin-bottom:6px;">
+             <input type="radio" name="answer" value="${opt.code}">
+             ${opt.text}
+           </label>`
+        );
+      });
+    }
+
+    document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
+    document.getElementById('btnQNext').textContent =
+      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
+  }
+
+  async function saveCurrentAnswerOrStop() {
+    const q = SURVEY?.questions?.[currentQuestionIndex];
+    if (!q) { alert('No hay pregunta actual'); return false; }
+
+    const responseId = window.currentResponseId;
+    if (!responseId) { alert('Falta responseId (inicia sesión e ingresa a la encuesta).'); return false; }
+
+    const questionId = QUESTION_ID_MAP[String(q.number)] || null;
+    if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
+
+    let answerText = null;
+    let selectedOptionIds = [];
+
+    if (questionId && (isEdadQ(questionId) || isGradoQ(questionId) || isGeneroQ(questionId) || isTiempoQ(questionId))) {
+      const v = document.getElementById('answerSelect')?.value || "";
+      if (v) selectedOptionIds = [v];
+      answerText = null;
+    }
+    else if (q.type === 'text') {
+      answerText = document.getElementById('answerText')?.value?.trim() || null;
+    } else {
+      const checked = document.querySelector('input[name="answer"]:checked');
+      if (checked) selectedOptionIds = [checked.value];
+    }
+
+    if (q.required) {
+      if (q.type === 'text') {
+        if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
+      } else {
+        if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
+      }
+    }
+
+    const payload = {
+      responseId,
+      questionId,
+      answerText,
+      selectedOptionIds
+    };
+
+    const r = await fetch('/api/save-answer', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const raw = await r.text();
+    let j = {};
+    try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
+    if (!r.ok || !j.ok) {
+      alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
+      return false;
+    }
+    return true;
+  }
+
+  async function showSurveyUI() {
+    await loadSurvey();
+
+    const r = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(SURVEY_UUID)}`, {
+      credentials: 'include'
+    });
+
+    const raw = await r.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+    if (!r.ok || !data.ok) {
+      alert('No se pudo cargar mapa de preguntas: ' + (data.error || data.raw || 'sin detalle'));
+      return;
+    }
+
+    QUESTION_ID_MAP = data.map || {};
+
+    if (!window.currentResponseId) {
+      const r2 = await fetch('/api/start-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ surveyId: 'SURVEY_001' })
+      });
+
+      const raw2 = await r2.text();
+      let j2 = {};
+      try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
+
+      if (!r2.ok || !j2.ok) {
+        alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
+        return;
+      }
+
+      window.currentResponseId = j2.responseId;
+    }
+
+    try {
+      if (encuestaOK && surveyBox && encuestaOK.parentNode) {
+        encuestaOK.parentNode.insertBefore(surveyBox, encuestaOK);
+      }
+      if (encuestaOK) {
+        encuestaOK.style.opacity = '0.75';
+        encuestaOK.style.maxWidth = '520px';
+      }
+      if (btnLogout) {
+        btnLogout.textContent = 'Cerrar sesión';
+        btnLogout.style.fontSize = '13px';
+        btnLogout.style.padding = '6px 12px';
+      }
+    } catch (e) {}
+
+    if (encuestaOK) encuestaOK.style.display = 'none';
+    if (encuestaIntro) encuestaIntro.style.display = 'none';
+    if (btnMostrarLogin) btnMostrarLogin.style.display = 'none';
+    if (loginPanel) loginPanel.style.display = 'none';
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+
+    surveyBox.style.display = 'block';
+    currentQuestionIndex = 0;
+    renderCurrentQuestion();
+  }
+
+  document.getElementById('btnQPrev')?.addEventListener('click', () => {
+    if (!SURVEY) return;
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      renderCurrentQuestion();
+    }
+  });
+
+  document.getElementById('btnQNext')?.addEventListener('click', async () => {
+    const ok = await saveCurrentAnswerOrStop();
+    if (!ok) return;
+
+    if (currentQuestionIndex < SURVEY.questions.length - 1) {
+      currentQuestionIndex++;
+      renderCurrentQuestion();
+      return;
+    }
+
+    // FINALIZAR encuesta: marcar response como submitted
+    try {
+      const r3 = await fetch('/api/submit-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ responseId: window.currentResponseId })
+      });
+
+      const raw3 = await r3.text();
+      let j3 = {};
+      try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
+
+      if (!r3.ok || !j3.ok) {
+        alert(
+          'No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' +
+          JSON.stringify(j3, null, 2)
+        );
+        return;
+      }
+    } catch (e) {
+      alert('Error de conexión al finalizar la encuesta.');
+      return;
+    }
+
+    // Ocultar UI de encuesta
+    const surveyBoxEl = document.getElementById('surveyBox');
+    if (surveyBoxEl) surveyBoxEl.style.display = 'none';
+    if (loginPanel) loginPanel.style.display = 'none';
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    if (encuestaIntro) encuestaIntro.style.display = 'none';
+    if (btnMostrarLogin) btnMostrarLogin.style.display = 'none';
+
+    // Reset estado de encuesta (pero NO cerrar sesión)
+    window.currentResponseId = null;
+    SURVEY = null;
+    QUESTION_ID_MAP = {};
+    currentQuestionIndex = 0;
+
+    const loginUser = document.getElementById('loginUser');
+    const loginPass = document.getElementById('loginPass');
+    if (loginUser) loginUser.value = '';
+    if (loginPass) loginPass.value = '';
+
+    // Mostrar pantalla nueva (2 botones) si la sesión sigue vigente
+    try {
+      const meRes = await fetch('/api/me', { credentials: 'include' });
+      const meData = await meRes.json().catch(() => ({}));
+      if (meData && meData.ok) {
+        showPostLoginActions(meData.school_name);
+      } else {
+        // Si por alguna razón la sesión expiró, volver a login
+        showLoginPanelOnly();
+      }
+    } catch (e) {
+      showLoginPanelOnly();
+    }
+  });
+
+  /* -------------------------
+     RESULTADOS: Login independiente
+     /api/results-login /api/results-me /api/results-logout
+  -------------------------- */
+  const btnMostrarLoginResultados = document.getElementById('btnMostrarLoginResultados');
+  const loginPanelResultados = document.getElementById('loginPanelResultados');
+  const btnCancelarLoginResultados = document.getElementById('btnCancelarLoginResultados');
+  const btnLoginResultados = document.getElementById('btnLoginResultados');
+  const loginMsgResultados = document.getElementById('loginMsgResultados');
+
+  const resultadosIntro = document.getElementById('resultadosIntro');
+  const resultadosOK = document.getElementById('resultadosOK');
+  const schoolWelcomeResultados = document.getElementById('schoolWelcomeResultados');
+  const btnLogoutResultados = document.getElementById('btnLogoutResultados');
+  const resultadosBox = document.getElementById('resultadosBox');
+
+  async function showResultadosUI() {
+    if (resultadosBox) resultadosBox.style.display = 'block';
+  }
+
+  // Helpers defensivos para orden/consistencia de pantallas
+  function hideResultadosAll() {
+    if (loginPanelResultados) loginPanelResultados.style.display = 'none';
+    if (resultadosIntro) resultadosIntro.style.display = 'none';
+    if (btnMostrarLoginResultados) btnMostrarLoginResultados.style.display = 'none';
+    if (resultadosOK) resultadosOK.style.display = 'none';
+    if (resultadosBox) resultadosBox.style.display = 'none';
+  }
+
+  function showResultadosLoginOnly() {
+    hideResultadosAll();
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+    if (loginPanelResultados) loginPanelResultados.style.display = 'block';
+    document.getElementById('loginUserResultados')?.focus();
+  }
+
+  function showResultadosPostLogin(schoolName) {
+    hideResultadosAll();
+    if (resultadosOK) resultadosOK.style.display = 'block';
+    if (schoolWelcomeResultados) schoolWelcomeResultados.textContent = `Acceso concedido. Escuela: ${schoolName || ''}`.trim();
+    if (resultadosIntro) resultadosIntro.style.display = 'block';
+    if (btnMostrarLoginResultados) btnMostrarLoginResultados.style.display = 'inline-block';
+  }
+
+  // Se ejecuta al entrar a la pestaña RESULTADOS (vía showTab)
+  window.initResultadosTab = async () => {
+    if (!loginPanelResultados || !resultadosIntro || !resultadosOK || !btnMostrarLoginResultados) return;
+
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+
+    try {
+      const res = await fetch('/api/results-me', { credentials: 'include' });
+      const data = await res.json().catch(() => ({}));
+      if (data && data.ok) {
+        showResultadosPostLogin(data.school_name);
+        return;
+      }
+    } catch (e) {}
+
+    // Si no hay sesión, mostrar login primero
+    showResultadosLoginOnly();
+  };
+
+  // El botón ahora SOLO muestra resultados (porque ya estás logueado)
+  btnMostrarLoginResultados?.addEventListener('click', async () => {
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+    await showResultadosUI();
+  });
+
+  btnCancelarLoginResultados?.addEventListener('click', () => {
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+    const uEl = document.getElementById('loginUserResultados');
+    const pEl = document.getElementById('loginPassResultados');
+    if (uEl) uEl.value = '';
+    if (pEl) pEl.value = '';
+    showResultadosLoginOnly();
+  });
+
+  btnLoginResultados?.addEventListener('click', async () => {
+    const u = document.getElementById('loginUserResultados')?.value?.trim() || '';
+    const p = document.getElementById('loginPassResultados')?.value?.trim() || '';
+
+    if (!u || !p) {
+      if (loginMsgResultados) loginMsgResultados.textContent = 'Por favor ingrese usuario y contraseña.';
+      return;
+    }
+
+    try {
+      if (loginMsgResultados) loginMsgResultados.textContent = 'Validando...';
+
+      const res = await fetch('/api/results-login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        if (loginMsgResultados) {
+          loginMsgResultados.textContent =
+            `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
+        }
+        return;
+      }
+
+      if (loginMsgResultados) loginMsgResultados.textContent = '';
+      // Después del login, aparece el botón "Mostrar resultados encuesta"
+      showResultadosPostLogin(data.school_name);
+    } catch (e) {
+      if (loginMsgResultados) loginMsgResultados.textContent = 'Error de conexión.';
+    }
+  });
+
+  btnLogoutResultados?.addEventListener('click', async () => {
+    await fetch('/api/results-logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+    const uEl = document.getElementById('loginUserResultados');
+    const pEl = document.getElementById('loginPassResultados');
+    if (uEl) uEl.value = '';
+    if (pEl) pEl.value = '';
+    // Logout vuelve a login primero
+    showResultadosLoginOnly();
+  });
+</script>
+
+</body>
+</html>
