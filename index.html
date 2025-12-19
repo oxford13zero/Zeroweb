@@ -629,8 +629,9 @@
     showPostLoginActions(meData.school_name);
 
   } catch (e) {
-    alert('Error de conexión al solicitar el análisis.');
-  }
+  alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
+  console.error('request-analysis fetch error:', e);
+}
 });
 
   // =========================
@@ -1038,4 +1039,5 @@
 
 </body>
 </html>
+
 
