@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -65,10 +65,8 @@
     function showTab(tabId) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
-
       if (tabId === 'datos') window.loadDatosIfNeeded?.();
-      if (tabId === 'encuesta') window.initEncuestaTab?.(); // ENCUESTA: abre login / acciones post-login
-      if (tabId === 'resultados') window.initResultadosTab?.(); // RESULTADOS: login primero, luego botón mostrar resultados
+      if (tabId === 'encuesta') window.initEncuestaTab?.(); // NUEVO
     }
   </script>
 </head>
@@ -209,15 +207,9 @@
   <h2>Resultados Encuesta</h2>
 
   <div class="card">
-    <!--
-    <p>
-      Para ver los resultados, deberá introducir su <b>usuario</b> y <b>contraseña</b>.
-    </p>
-
-    // ACA CAMBIE EL ORDEN DE INTRO CON LOGIN PANEL (RESULTADOS) -->
 
     <!-- Login Panel (Resultados) -->
-    <div id="loginPanelResultados" class="formPanel" style="display:block;">
+    <div id="loginPanelResultados" class="formPanel" style="display:none;">
       <div class="fieldBlock">
         <label for="loginUserResultados" class="fieldLabel">Usuario</label><br />
         <input id="loginUserResultados" class="textInput" type="text"
@@ -247,14 +239,14 @@
         Cerrar sesión
       </button>
     </div>
-
+    
     <!-- Intro -->
-    <div id="resultadosIntro" style="margin-top:14px; display:none;">
+    <div id="resultadosIntro" style="margin-top:14px;">
       <button id="btnMostrarLoginResultados" class="btnPrimary" type="button">
         Mostrar resultados encuesta
       </button>
     </div>
-
+    
     <!-- Contenedor futuro para mostrar resultados -->
     <div id="resultadosBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="resultadosMsg" class="statusMsg statusWarn">
@@ -469,30 +461,8 @@
     await window.initEncuestaTab?.();
   });
 
-  // ✅ NUEVO: Aceptar (Continuar) -> llamar backend para marcar analysis_requested_dt
   btnAnalisisContinuar?.addEventListener('click', async () => {
-    try {
-      const res = await fetch('/api/request-analysis', {
-        method: 'POST',
-        credentials: 'include'
-      });
-
-      const raw = await res.text();
-      let data = {};
-      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
-
-      if (!res.ok || !data.ok) {
-        alert(`No se pudo solicitar el análisis (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`);
-        await window.initEncuestaTab?.();
-        return;
-      }
-
-      alert(`Análisis solicitado.\nRegistros marcados: ${data.updated_count}\nEscuela: ${data.school_id}`);
-      await window.initEncuestaTab?.();
-    } catch (e) {
-      alert('Error de conexión al solicitar el análisis.');
-      await window.initEncuestaTab?.();
-    }
+    await window.initEncuestaTab?.();
   });
 
   btnLogout?.addEventListener('click', async () => {
@@ -924,7 +894,6 @@
       if (meData && meData.ok) {
         showPostLoginActions(meData.school_name);
       } else {
-        // Si por alguna razón la sesión expiró, volver a login
         showLoginPanelOnly();
       }
     } catch (e) {
@@ -935,6 +904,7 @@
   /* -------------------------
      RESULTADOS: Login independiente
      /api/results-login /api/results-me /api/results-logout
+     + NUEVO: /api/results-latest-analysis (GET)
   -------------------------- */
   const btnMostrarLoginResultados = document.getElementById('btnMostrarLoginResultados');
   const loginPanelResultados = document.getElementById('loginPanelResultados');
@@ -952,75 +922,67 @@
     if (resultadosBox) resultadosBox.style.display = 'block';
   }
 
-  // Helpers defensivos para orden/consistencia de pantallas
-  function hideResultadosAll() {
-    if (loginPanelResultados) loginPanelResultados.style.display = 'none';
-    if (resultadosIntro) resultadosIntro.style.display = 'none';
-    if (btnMostrarLoginResultados) btnMostrarLoginResultados.style.display = 'none';
-    if (resultadosOK) resultadosOK.style.display = 'none';
-    if (resultadosBox) resultadosBox.style.display = 'none';
-  }
-
-  function showResultadosLoginOnly() {
-    hideResultadosAll();
-    if (loginMsgResultados) loginMsgResultados.textContent = '';
-    if (loginPanelResultados) loginPanelResultados.style.display = 'block';
-    document.getElementById('loginUserResultados')?.focus();
-  }
-
-  function showResultadosPostLogin(schoolName) {
-    hideResultadosAll();
-    if (resultadosOK) resultadosOK.style.display = 'block';
-    if (schoolWelcomeResultados) schoolWelcomeResultados.textContent = `Acceso concedido. Escuela: ${schoolName || ''}`.trim();
-    if (resultadosIntro) resultadosIntro.style.display = 'block';
-    if (btnMostrarLoginResultados) btnMostrarLoginResultados.style.display = 'inline-block';
-  }
-
-  // Se ejecuta al entrar a la pestaña RESULTADOS (vía showTab)
-  window.initResultadosTab = async () => {
-    if (!loginPanelResultados || !resultadosIntro || !resultadosOK || !btnMostrarLoginResultados) return;
-
-    if (loginMsgResultados) loginMsgResultados.textContent = '';
-
-    try {
-      const res = await fetch('/api/results-me', { credentials: 'include' });
-      const data = await res.json().catch(() => ({}));
-      if (data && data.ok) {
-        showResultadosPostLogin(data.school_name);
-        return;
-      }
-    } catch (e) {}
-
-    // Si no hay sesión, mostrar login primero
-    showResultadosLoginOnly();
-  };
-
-  // El botón ahora SOLO muestra resultados (porque ya estás logueado)
+  // ✅ CAMBIO: ahora el botón "Mostrar resultados encuesta" redirige a Streamlit
   btnMostrarLoginResultados?.addEventListener('click', async () => {
     if (loginMsgResultados) loginMsgResultados.textContent = '';
-    await showResultadosUI();
+
+    // 1) ¿Hay sesión activa?
+    try {
+      const meRes = await fetch('/api/results-me', { credentials: 'include' });
+      const me = await meRes.json().catch(() => ({}));
+
+      if (me && me.ok) {
+        // 2) Obtener el analysis_dt más reciente para esa escuela
+        const latestRes = await fetch('/api/results-latest-analysis', { credentials: 'include' });
+        const latest = await latestRes.json().catch(() => ({}));
+
+        if (!latestRes.ok || !latest.ok) {
+          alert(`No se pudo obtener el último análisis: ${latest.error || 'sin detalle'}`);
+          return;
+        }
+
+        if (!latest.analysis_dt) {
+          alert('Aún no hay un análisis solicitado para esta escuela.');
+          return;
+        }
+
+        // 3) Redirigir misma pestaña a Streamlit con params
+        const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
+        const url =
+          `${baseUrl}?school_id=${encodeURIComponent(latest.school_id)}&analysis_dt=${encodeURIComponent(latest.analysis_dt)}`;
+
+        window.location.href = url;
+        return;
+      }
+    } catch (e) {
+      // Si falla, caemos al login
+    }
+
+    // No hay sesión → mostrar login panel
+    loginPanelResultados.style.display = 'block';
+    btnMostrarLoginResultados.style.display = 'none';
+    document.getElementById('loginUserResultados')?.focus();
   });
 
   btnCancelarLoginResultados?.addEventListener('click', () => {
     if (loginMsgResultados) loginMsgResultados.textContent = '';
-    const uEl = document.getElementById('loginUserResultados');
-    const pEl = document.getElementById('loginPassResultados');
-    if (uEl) uEl.value = '';
-    if (pEl) pEl.value = '';
-    showResultadosLoginOnly();
+    loginPanelResultados.style.display = 'none';
+    btnMostrarLoginResultados.style.display = 'inline-block';
+    document.getElementById('loginUserResultados').value = '';
+    document.getElementById('loginPassResultados').value = '';
   });
 
   btnLoginResultados?.addEventListener('click', async () => {
-    const u = document.getElementById('loginUserResultados')?.value?.trim() || '';
-    const p = document.getElementById('loginPassResultados')?.value?.trim() || '';
+    const u = document.getElementById('loginUserResultados').value.trim();
+    const p = document.getElementById('loginPassResultados').value.trim();
 
     if (!u || !p) {
-      if (loginMsgResultados) loginMsgResultados.textContent = 'Por favor ingrese usuario y contraseña.';
+      loginMsgResultados.textContent = 'Por favor ingrese usuario y contraseña.';
       return;
     }
 
     try {
-      if (loginMsgResultados) loginMsgResultados.textContent = 'Validando...';
+      loginMsgResultados.textContent = 'Validando...';
 
       const res = await fetch('/api/results-login', {
         method: 'POST',
@@ -1034,31 +996,42 @@
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        if (loginMsgResultados) {
-          loginMsgResultados.textContent =
-            `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
-        }
+        loginMsgResultados.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
         return;
       }
 
-      if (loginMsgResultados) loginMsgResultados.textContent = '';
-      // Después del login, aparece el botón "Mostrar resultados encuesta"
-      showResultadosPostLogin(data.school_name);
+      // ✅ CAMBIO MÍNIMO: después del login NO redirigimos, dejamos el botón para que el usuario lo cliquee
+      loginMsgResultados.textContent = '';
+      loginPanelResultados.style.display = 'none';
+
+      // Mantener visible "Mostrar resultados encuesta"
+      resultadosIntro.style.display = 'block';
+      btnMostrarLoginResultados.style.display = 'inline-block';
+
+      // Mostrar OK panel
+      resultadosOK.style.display = 'block';
+      schoolWelcomeResultados.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
+
+      // No usar placeholder
+      if (resultadosBox) resultadosBox.style.display = 'none';
+
     } catch (e) {
-      if (loginMsgResultados) loginMsgResultados.textContent = 'Error de conexión.';
+      loginMsgResultados.textContent = 'Error de conexión.';
     }
   });
 
   btnLogoutResultados?.addEventListener('click', async () => {
     await fetch('/api/results-logout', { method: 'POST', credentials: 'include' }).catch(() => {});
-    if (loginMsgResultados) loginMsgResultados.textContent = '';
-    const uEl = document.getElementById('loginUserResultados');
-    const pEl = document.getElementById('loginPassResultados');
-    if (uEl) uEl.value = '';
-    if (pEl) pEl.value = '';
-    // Logout vuelve a login primero
-    showResultadosLoginOnly();
+    resultadosOK.style.display = 'none';
+    resultadosIntro.style.display = 'block';
+    btnMostrarLoginResultados.style.display = 'inline-block';
+    loginPanelResultados.style.display = 'none';
+    loginMsgResultados.textContent = '';
+    resultadosBox.style.display = 'none';
+    document.getElementById('loginUserResultados').value = '';
+    document.getElementById('loginPassResultados').value = '';
   });
+
 </script>
 
 </body>
