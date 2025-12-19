@@ -595,22 +595,20 @@
 
   btnAnalisisContinuar?.addEventListener('click', async () => {
   try {
-    // 1. Verificar sesión real
+    // 1) Verifica sesión real
     const meRes = await fetch('/api/me', { credentials: 'include' });
     const meData = await meRes.json().catch(() => ({}));
 
     if (!meRes.ok || !meData.ok) {
-      // Sesión inválida → volver a login del tab Encuesta
       await window.initEncuestaTab?.();
       return;
     }
 
-    // 2. Llamar al endpoint REAL de análisis
+    // 2) Llamar endpoint real
     const res = await fetch('/api/request-analysis', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' }
-      // body: JSON.stringify({})  // solo si tu API lo requiere
     });
 
     const raw = await res.text();
@@ -625,14 +623,15 @@
       return;
     }
 
-    // 3. Éxito → volver a pantalla post-login (2 botones)
-    showPostLoginActions(meData.school_name);
+    // 3) Volver a la pantalla correcta (2 botones) sin depender de showPostLoginActions
+    await window.initEncuestaTab?.();
 
   } catch (e) {
-  alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
-  console.error('request-analysis fetch error:', e);
-}
+    alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
+    console.error('request-analysis error:', e);
+  }
 });
+
 
   // =========================
   // RESULTADOS (bloqueo por sesión + redirect)
@@ -1039,5 +1038,6 @@
 
 </body>
 </html>
+
 
 
