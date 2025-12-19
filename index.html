@@ -66,7 +66,7 @@
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       if (tabId === 'datos') window.loadDatosIfNeeded?.();
-      if (tabId === 'encuesta') window.initEncuestaTab?.(); // ✅ NUEVO
+      if (tabId === 'encuesta') window.initEncuestaTab?.(); // NUEVO
     }
   </script>
 </head>
@@ -211,12 +211,8 @@
       Para ver los resultados, deberá introducir su <b>usuario</b> y <b>contraseña</b>.
     </p>
 
-    <!-- Intro -->
-    <div id="resultadosIntro" style="margin-top:14px;">
-      <button id="btnMostrarLoginResultados" class="btnPrimary" type="button">
-        Mostrar resultados encuesta
-      </button>
-    </div>
+    // ACA CAMBIE EL ORDEN DE INTRO CON LOGIN PANEL (RESULTADOS) 
+
 
     <!-- Login Panel (Resultados) -->
     <div id="loginPanelResultados" class="formPanel" style="display:none;">
@@ -241,6 +237,7 @@
       <div id="loginMsgResultados" class="statusMsg statusErr"></div>
     </div>
 
+
     <!-- OK Panel (Resultados) -->
     <div id="resultadosOK" class="formPanel" style="display:none; opacity:0.75; max-width:420px;">
       <p id="schoolWelcomeResultados" style="margin:0 0 12px 0;">Acceso concedido.</p>
@@ -249,6 +246,15 @@
         Cerrar sesión
       </button>
     </div>
+    
+    <!-- Intro -->
+    <div id="resultadosIntro" style="margin-top:14px;">
+      <button id="btnMostrarLoginResultados" class="btnPrimary" type="button">
+        Mostrar resultados encuesta
+      </button>
+    </div>
+    
+  
 
     <!-- Contenedor futuro para mostrar resultados -->
     <div id="resultadosBox" class="formPanel" style="display:none; margin-top:18px;">
@@ -1012,3 +1018,4 @@
 
 </body>
 </html>
+
