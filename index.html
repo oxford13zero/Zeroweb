@@ -593,7 +593,7 @@
   });
 
 
-  btnAnalisisContinuar?.addEventListener('click', async () => {
+ btnAnalisisContinuar?.addEventListener('click', async () => {
   try {
     // 1) Verifica sesión real
     const meRes = await fetch('/api/me', { credentials: 'include' });
@@ -623,7 +623,10 @@
       return;
     }
 
-    // 3) Volver a la pantalla correcta (2 botones) sin depender de showPostLoginActions
+    // Popup de confirmación
+    alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
+
+    // Volver a la pantalla correcta (2 botones)
     await window.initEncuestaTab?.();
 
   } catch (e) {
@@ -631,6 +634,7 @@
     console.error('request-analysis error:', e);
   }
 });
+
 
 
   // =========================
@@ -1038,6 +1042,7 @@
 
 </body>
 </html>
+
 
 
 
