@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -67,6 +67,7 @@
       document.getElementById(tabId).classList.add('active');
       if (tabId === 'datos') window.loadDatosIfNeeded?.();
       if (tabId === 'encuesta') window.initEncuestaTab?.(); // NUEVO
+      if (tabId === 'resultados') window.initResultadosTab?.(); // ✅ NUEVO (solo para orden de pantallas en RESULTADOS)
     }
   </script>
 </head>
@@ -214,9 +215,8 @@
 
     // ACA CAMBIE EL ORDEN DE INTRO CON LOGIN PANEL (RESULTADOS) -->
 
-
     <!-- Login Panel (Resultados) -->
-    <div id="loginPanelResultados" class="formPanel" style="display:none;">
+    <div id="loginPanelResultados" class="formPanel" style="display:block;">
       <div class="fieldBlock">
         <label for="loginUserResultados" class="fieldLabel">Usuario</label><br />
         <input id="loginUserResultados" class="textInput" type="text"
@@ -238,7 +238,6 @@
       <div id="loginMsgResultados" class="statusMsg statusErr"></div>
     </div>
 
-
     <!-- OK Panel (Resultados) -->
     <div id="resultadosOK" class="formPanel" style="display:none; opacity:0.75; max-width:420px;">
       <p id="schoolWelcomeResultados" style="margin:0 0 12px 0;">Acceso concedido.</p>
@@ -247,14 +246,14 @@
         Cerrar sesión
       </button>
     </div>
-    
+
     <!-- Intro -->
-    <div id="resultadosIntro" style="margin-top:14px;">
+    <div id="resultadosIntro" style="margin-top:14px; display:none;">
       <button id="btnMostrarLoginResultados" class="btnPrimary" type="button">
         Mostrar resultados encuesta
       </button>
     </div>
-    
+
     <!-- Contenedor futuro para mostrar resultados -->
     <div id="resultadosBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="resultadosMsg" class="statusMsg statusWarn">
@@ -649,7 +648,7 @@
   }
 
   function renderCurrentQuestion() {
-    if (encuestaOK) encuestaOK.style.display = 'none'; // ✅ ensure buttons never show during survey
+    if (encuestaOK) encuestaOK.style.display = 'none'; // ensure buttons never show during survey
 
     const question = SURVEY.questions[currentQuestionIndex];
     document.getElementById('qTitle').textContent =
@@ -876,7 +875,7 @@
       return;
     }
 
-    // ✅ NUEVO COMPORTAMIENTO POST-FINALIZAR:
+    // NUEVO COMPORTAMIENTO POST-FINALIZAR:
     // - NO volver al "encuestaIntro" antiguo
     // - Volver al panel nuevo con 2 botones (encuestaOK)
 
@@ -934,45 +933,75 @@
     if (resultadosBox) resultadosBox.style.display = 'block';
   }
 
-  btnMostrarLoginResultados?.addEventListener('click', async () => {
+  // Helpers defensivos (solo para orden/consistencia de pantallas)
+  function hideResultadosAll() {
+    if (loginPanelResultados) loginPanelResultados.style.display = 'none';
+    if (resultadosIntro) resultadosIntro.style.display = 'none';
+    if (btnMostrarLoginResultados) btnMostrarLoginResultados.style.display = 'none';
+    if (resultadosOK) resultadosOK.style.display = 'none';
+    if (resultadosBox) resultadosBox.style.display = 'none';
+  }
+
+  function showResultadosLoginOnly() {
+    hideResultadosAll();
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+    if (loginPanelResultados) loginPanelResultados.style.display = 'block';
+    document.getElementById('loginUserResultados')?.focus();
+  }
+
+  function showResultadosPostLogin(schoolName) {
+    hideResultadosAll();
+    if (resultadosOK) resultadosOK.style.display = 'block';
+    if (schoolWelcomeResultados) schoolWelcomeResultados.textContent = `Acceso concedido. Escuela: ${schoolName || ''}`.trim();
+    if (resultadosIntro) resultadosIntro.style.display = 'block';
+    if (btnMostrarLoginResultados) btnMostrarLoginResultados.style.display = 'inline-block';
+  }
+
+  // Se ejecuta al entrar a la pestaña RESULTADOS (vía showTab)
+  window.initResultadosTab = async () => {
+    if (!loginPanelResultados || !resultadosIntro || !resultadosOK || !btnMostrarLoginResultados) return;
+
     if (loginMsgResultados) loginMsgResultados.textContent = '';
 
     try {
       const res = await fetch('/api/results-me', { credentials: 'include' });
       const data = await res.json().catch(() => ({}));
       if (data && data.ok) {
-        resultadosIntro.style.display = 'none';
-        resultadosOK.style.display = 'block';
-        schoolWelcomeResultados.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
-        await showResultadosUI();
+        showResultadosPostLogin(data.school_name);
         return;
       }
     } catch (e) {}
 
-    loginPanelResultados.style.display = 'block';
-    btnMostrarLoginResultados.style.display = 'none';
-    document.getElementById('loginUserResultados')?.focus();
+    // Si no hay sesión, mostrar login primero
+    showResultadosLoginOnly();
+  };
+
+  // El botón ahora SOLO muestra resultados (porque ya estás logueado)
+  btnMostrarLoginResultados?.addEventListener('click', async () => {
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+    await showResultadosUI();
   });
 
   btnCancelarLoginResultados?.addEventListener('click', () => {
     if (loginMsgResultados) loginMsgResultados.textContent = '';
-    loginPanelResultados.style.display = 'none';
-    btnMostrarLoginResultados.style.display = 'inline-block';
-    document.getElementById('loginUserResultados').value = '';
-    document.getElementById('loginPassResultados').value = '';
+    const uEl = document.getElementById('loginUserResultados');
+    const pEl = document.getElementById('loginPassResultados');
+    if (uEl) uEl.value = '';
+    if (pEl) pEl.value = '';
+    showResultadosLoginOnly();
   });
 
   btnLoginResultados?.addEventListener('click', async () => {
-    const u = document.getElementById('loginUserResultados').value.trim();
-    const p = document.getElementById('loginPassResultados').value.trim();
+    const u = document.getElementById('loginUserResultados')?.value?.trim() || '';
+    const p = document.getElementById('loginPassResultados')?.value?.trim() || '';
 
     if (!u || !p) {
-      loginMsgResultados.textContent = 'Por favor ingrese usuario y contraseña.';
+      if (loginMsgResultados) loginMsgResultados.textContent = 'Por favor ingrese usuario y contraseña.';
       return;
     }
 
     try {
-      loginMsgResultados.textContent = 'Validando...';
+      if (loginMsgResultados) loginMsgResultados.textContent = 'Validando...';
 
       const res = await fetch('/api/results-login', {
         method: 'POST',
@@ -986,37 +1015,33 @@
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        loginMsgResultados.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
+        if (loginMsgResultados) {
+          loginMsgResultados.textContent =
+            `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
+        }
         return;
       }
 
-      loginMsgResultados.textContent = '';
-      loginPanelResultados.style.display = 'none';
-      resultadosIntro.style.display = 'none';
-      resultadosOK.style.display = 'block';
-      schoolWelcomeResultados.textContent = `Acceso concedido. Escuela: ${data.school_name}`;
-      await showResultadosUI();
+      if (loginMsgResultados) loginMsgResultados.textContent = '';
+      // Después del login, aparece el botón "Mostrar resultados encuesta"
+      showResultadosPostLogin(data.school_name);
     } catch (e) {
-      loginMsgResultados.textContent = 'Error de conexión.';
+      if (loginMsgResultados) loginMsgResultados.textContent = 'Error de conexión.';
     }
   });
 
   btnLogoutResultados?.addEventListener('click', async () => {
     await fetch('/api/results-logout', { method: 'POST', credentials: 'include' }).catch(() => {});
-    resultadosOK.style.display = 'none';
-    resultadosIntro.style.display = 'block';
-    btnMostrarLoginResultados.style.display = 'inline-block';
-    loginPanelResultados.style.display = 'none';
-    loginMsgResultados.textContent = '';
-    resultadosBox.style.display = 'none';
-    document.getElementById('loginUserResultados').value = '';
-    document.getElementById('loginPassResultados').value = '';
+    if (loginMsgResultados) loginMsgResultados.textContent = '';
+    const uEl = document.getElementById('loginUserResultados');
+    const pEl = document.getElementById('loginPassResultados');
+    if (uEl) uEl.value = '';
+    if (pEl) pEl.value = '';
+    // Logout vuelve a login primero
+    showResultadosLoginOnly();
   });
 
 </script>
 
 </body>
 </html>
-
-
-
