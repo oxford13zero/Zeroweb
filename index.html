@@ -128,9 +128,9 @@
       font-weight:700;
     }
 
-   .navAccess {
+    .navAccess {
       margin-left: 40px;
-   } 
+    }
   </style>
 
   <script>
@@ -158,7 +158,10 @@
   <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
   <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
 
-  <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button">ACCESO USUARIOS </button>
+  <!-- ✅ FIX: abre modal directo, no depende del addEventListener -->
+  <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button" onclick="window.t4zOpenModal?.();">
+    ACCESO USUARIOS
+  </button>
 </nav>
 
 <!-- BARRA GLOBAL DE SESIÓN -->
@@ -209,7 +212,6 @@
       Para ingresar a la encuesta y solicitar análisis, debe estar autenticado desde <b>ACCESO USUARIOS</b>.
     </p>
 
-    <!-- OK Panel (acciones) -->
     <div id="encuestaOK" class="formPanel" style="display:block; max-width:520px;">
       <p id="schoolWelcome" style="margin:0 0 12px 0;">Estado de sesión: No autenticado.</p>
 
@@ -223,7 +225,6 @@
       </div>
     </div>
 
-    <!-- Warning Panel: Solicitar análisis -->
     <div id="analisisWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
       <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
       <div style="margin-bottom:14px;">
@@ -238,7 +239,6 @@
       </div>
     </div>
 
-    <!-- Survey Box -->
     <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
       <div id="qText" style="margin-bottom:12px;"></div>
@@ -345,3 +345,682 @@
       <h3 class="modalTitle">Acceso Usuarios</h3>
       <button id="modalClose" class="modalClose" type="button">X</button>
     </div>
+
+    <!-- Estado cuando HAY sesión -->
+    <div id="modalSessionOn" style="display:none;">
+      <div class="statusMsg statusOk" id="modalSessionText"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+        <button id="btnCerrarSesion" class="btnSecondary" type="button">Cerrar sesión</button>
+        <button id="btnCerrarModal1" class="btnPrimary" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <!-- Form cuando NO hay sesión -->
+    <div id="modalSessionOff" style="display:none;">
+      <div class="formPanel" style="margin-top:10px; max-width:100%;">
+        <div class="fieldBlock">
+          <label for="globalUser" class="fieldLabel">Usuario</label><br />
+          <input id="globalUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
+        </div>
+
+        <div class="fieldBlock">
+          <label for="globalPass" class="fieldLabel">Contraseña</label><br />
+          <input id="globalPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnDoLogin" class="btnPrimary" type="button">Entrar</button>
+          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancelar</button>
+        </div>
+
+        <div id="globalLoginMsg" class="statusMsg statusErr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // === DEBUG: mostrar errores JS sin consola ===
+  window.onerror = function (msg, src, line, col) {
+    alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
+  };
+
+  window.onunhandledrejection = function (e) {
+    const reason = e?.reason;
+    const msg = (reason && (reason.message || String(reason))) || 'Unhandled promise rejection';
+    const stack = reason?.stack ? ("\n\nSTACK:\n" + reason.stack) : "";
+    alert('PROMISE ERROR: ' + msg + stack);
+  };
+
+  // =========================
+  // SESSION STATE GLOBAL
+  // =========================
+  window.sessionState = { ok:false, school_id:null, school_name:null };
+
+  const sessionBadge = document.getElementById('sessionBadge');
+  const btnAccesoUsuarios = document.getElementById('btnAccesoUsuarios');
+
+  const encuestaNeedLogin = document.getElementById('encuestaNeedLogin');
+  const resultadosNeedLogin = document.getElementById('resultadosNeedLogin');
+
+  const encuestaOK = document.getElementById('encuestaOK');
+
+  const schoolWelcome = document.getElementById('schoolWelcome');
+  const btnIngresarEncuesta = document.getElementById('btnIngresarEncuesta');
+  const btnSolicitarAnalisis = document.getElementById('btnSolicitarAnalisis');
+
+  const analisisWarnPanel = document.getElementById('analisisWarnPanel');
+  const btnAnalisisContinuar = document.getElementById('btnAnalisisContinuar');
+  const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
+
+  const surveyBox = document.getElementById('surveyBox');
+
+  const btnMostrarResultados = document.getElementById('btnMostrarResultados');
+
+  async function refreshSession() {
+    try {
+      const res = await fetch('/api/me', { credentials:'include' });
+      const data = await res.json().catch(() => ({}));
+      window.sessionState = {
+        ok: !!data?.ok,
+        school_id: data?.school_id || null,
+        school_name: data?.school_name || null
+      };
+    } catch (e) {
+      window.sessionState = { ok:false, school_id:null, school_name:null };
+    }
+    applySessionToUI();
+  }
+
+  function applySessionToUI() {
+    const ok = window.sessionState.ok;
+    const schoolName = window.sessionState.school_name || '';
+
+    // badge
+    if (ok) {
+      sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
+      sessionBadge.classList.remove('badgeNo');
+      sessionBadge.classList.add('badgeOk');
+    } else {
+      sessionBadge.textContent = 'No autenticado';
+      sessionBadge.classList.remove('badgeOk');
+      sessionBadge.classList.add('badgeNo');
+    }
+
+    // mensajes + botones
+    if (schoolWelcome) {
+      schoolWelcome.textContent = ok
+        ? `Estado de sesión: Autenticado. Escuela: ${schoolName}`.trim()
+        : 'Estado de sesión: No autenticado.';
+    }
+
+    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = !ok;
+    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = !ok;
+    if (btnMostrarResultados) btnMostrarResultados.disabled = !ok;
+
+    if (encuestaNeedLogin) encuestaNeedLogin.style.display = ok ? 'none' : 'block';
+    if (resultadosNeedLogin) resultadosNeedLogin.style.display = ok ? 'none' : 'block';
+
+    // Si no hay sesión, cerrar paneles sensibles
+    if (!ok) {
+      if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+      if (surveyBox) surveyBox.style.display = 'none';
+    }
+
+    // Re-habilitar interacción y botones al volver al panel post-login
+    if (ok && surveyBox && surveyBox.style.display === 'none') {
+      if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
+      if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
+      if (encuestaOK) {
+        encuestaOK.style.pointerEvents = 'auto';
+        encuestaOK.style.opacity = '';
+      }
+    }
+  }
+
+  // =========================
+  // MODAL LOGIN / LOGOUT
+  // =========================
+  const globalModal = document.getElementById('globalModal');
+  const modalClose = document.getElementById('modalClose');
+
+  const modalSessionOn = document.getElementById('modalSessionOn');
+  const modalSessionOff = document.getElementById('modalSessionOff');
+  const modalSessionText = document.getElementById('modalSessionText');
+
+  const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+  const btnCerrarModal1 = document.getElementById('btnCerrarModal1');
+  const btnCerrarModal2 = document.getElementById('btnCerrarModal2');
+
+  const globalUser = document.getElementById('globalUser');
+  const globalPass = document.getElementById('globalPass');
+  const btnDoLogin = document.getElementById('btnDoLogin');
+  const globalLoginMsg = document.getElementById('globalLoginMsg');
+
+  function openModal() {
+    const ok = window.sessionState.ok;
+    if (globalLoginMsg) globalLoginMsg.textContent = '';
+    if (globalUser) globalUser.value = '';
+    if (globalPass) globalPass.value = '';
+
+    if (ok) {
+      modalSessionOff.style.display = 'none';
+      modalSessionOn.style.display = 'block';
+      modalSessionText.textContent = `Sesión activa. Escuela: ${window.sessionState.school_name || ''}`.trim();
+    } else {
+      modalSessionOn.style.display = 'none';
+      modalSessionOff.style.display = 'block';
+      setTimeout(() => globalUser?.focus(), 50);
+    }
+
+    globalModal.style.display = 'flex';
+  }
+
+  // ✅ FIX: exponer función global para onclick del botón
+  window.t4zOpenModal = openModal;
+
+  function closeModal() {
+    globalModal.style.display = 'none';
+  }
+
+  // (puedes dejar esto igual; aunque falle, el onclick ya funciona)
+  btnAccesoUsuarios?.addEventListener('click', () => openModal());
+  modalClose?.addEventListener('click', () => closeModal());
+  btnCerrarModal1?.addEventListener('click', () => closeModal());
+  btnCerrarModal2?.addEventListener('click', () => closeModal());
+
+  globalModal?.addEventListener('click', (e) => {
+    if (e.target === globalModal) closeModal();
+  });
+
+  btnDoLogin?.addEventListener('click', async () => {
+    const u = globalUser?.value?.trim() || '';
+    const p = globalPass?.value?.trim() || '';
+
+    if (!u || !p) {
+      globalLoginMsg.textContent = 'Por favor ingrese usuario y contraseña.';
+      return;
+    }
+
+    try {
+      globalLoginMsg.textContent = 'Validando...';
+
+      const res = await fetch('/api/login', {
+        method:'POST',
+        credentials:'include',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ username:u, password:p })
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        globalLoginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
+        return;
+      }
+
+      globalLoginMsg.textContent = '';
+      closeModal();
+      await refreshSession();
+    } catch (e) {
+      globalLoginMsg.textContent = 'Error de conexión.';
+    }
+  });
+
+  btnCerrarSesion?.addEventListener('click', async () => {
+    await fetch('/api/logout', { method:'POST', credentials:'include' }).catch(() => {});
+    closeModal();
+    await refreshSession();
+  });
+
+  // =========================
+  // ACCIONES ENCUESTA
+  // =========================
+  btnIngresarEncuesta?.addEventListener('click', async () => {
+    if (!window.sessionState.ok) { openModal(); return; }
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    await showSurveyUI();
+  });
+
+  btnSolicitarAnalisis?.addEventListener('click', () => {
+    if (!window.sessionState.ok) { openModal(); return; }
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'block';
+  });
+
+  btnAnalisisCancelar?.addEventListener('click', async () => {
+    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+  });
+
+  btnAnalisisContinuar?.addEventListener('click', async () => {
+    try {
+      const meRes = await fetch('/api/me', { credentials: 'include' });
+      const meData = await meRes.json().catch(() => ({}));
+
+      if (!meRes.ok || !meData.ok) {
+        return;
+      }
+
+      const res = await fetch('/api/request-analysis', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        alert(
+          'No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' +
+          (data.error || data.raw || 'sin detalle')
+        );
+        return;
+      }
+
+      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
+      if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    } catch (e) {
+      alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
+    }
+  });
+
+  // =========================
+  // RESULTADOS
+  // =========================
+  btnMostrarResultados?.addEventListener('click', async () => {
+    if (!window.sessionState.ok) { openModal(); return; }
+
+    const latestRes = await fetch('/api/results-latest-analysis', { credentials:'include' });
+    const latest = await latestRes.json().catch(() => ({}));
+
+    if (!latestRes.ok || !latest.ok) {
+      alert(`No se pudo obtener el último análisis: ${latest.error || 'sin detalle'}`);
+      return;
+    }
+
+    if (!latest.analysis_dt) {
+      alert('Aún no hay un análisis solicitado para esta escuela.');
+      return;
+    }
+
+    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
+    const url = `${baseUrl}?school_id=${encodeURIComponent(latest.school_id)}&analysis_dt=${encodeURIComponent(latest.analysis_dt)}`;
+    window.location.href = url;
+  });
+
+  // =========================
+  // DATOS: Supabase REST read
+  // =========================
+  const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aHlub2lra2JtZ3VsYnJ1ZXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODIzMDgsImV4cCI6MjA4MTI1ODMwOH0.k-jdaJ-QOu9RCTWIJ2vTZ1Eefdby70asQIq9rdTmPT4";
+
+  let datosIndex = 0;
+  let datosLoadedOnce = false;
+
+  const elNombre = document.getElementById('d_nombre');
+  const elApPaterno = document.getElementById('d_ap_paterno');
+  const elApMaterno = document.getElementById('d_ap_materno');
+  const elEst = document.getElementById('d_establecimiento');
+  const elStatus = document.getElementById('datosStatus');
+
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  function setStatus(text, type) {
+    elStatus.textContent = text || '';
+    elStatus.classList.remove('statusOk', 'statusWarn', 'statusErr');
+    elStatus.classList.add(type || 'statusWarn');
+  }
+
+  function fillFields(row) {
+    elNombre.value = row?.first_name ?? '';
+    elApPaterno.value = row?.pat_last_name ?? '';
+    elApMaterno.value = row?.mat_last_name ?? '';
+    elEst.value = row?.school_id ?? '';
+  }
+
+  async function fetchOneRow(offset) {
+    const url =
+      `${SUPABASE_URL}/rest/v1/encargado_escolar` +
+      `?select=first_name,pat_last_name,mat_last_name,school_id` +
+      `&limit=1&offset=${offset}`;
+
+    const res = await fetch(url, {
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+        "Accept": "application/json"
+      }
+    });
+
+    const text = await res.text();
+    let json;
+    try { json = text ? JSON.parse(text) : null; } catch { json = null; }
+
+    return { ok: res.ok, status: res.status, json };
+  }
+
+  async function loadCurrent() {
+    setStatus("Cargando datos...", "statusWarn");
+
+    try {
+      const result = await fetchOneRow(datosIndex);
+
+      if (!result.ok) {
+        setStatus(` No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
+        fillFields(null);
+        return;
+      }
+
+      const arr = Array.isArray(result.json) ? result.json : [];
+      if (arr.length === 0) {
+        if (datosIndex === 0) {
+          setStatus(" La tabla encargado_escolar está vacía (no hay registros).", "statusWarn");
+        } else {
+          setStatus(" No hay más registros. Retrocede para ver anteriores.", "statusWarn");
+          datosIndex = Math.max(0, datosIndex - 1);
+        }
+        fillFields(null);
+        return;
+      }
+
+      fillFields(arr[0]);
+      setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
+    } catch (e) {
+      setStatus(" Error de conexión con Supabase.", "statusErr");
+      fillFields(null);
+    }
+  }
+
+  btnPrev?.addEventListener('click', async () => {
+    datosIndex = Math.max(0, datosIndex - 1);
+    await loadCurrent();
+  });
+
+  btnNext?.addEventListener('click', async () => {
+    datosIndex = datosIndex + 1;
+    await loadCurrent();
+  });
+
+  window.loadDatosIfNeeded = async () => {
+    if (datosLoadedOnce) return;
+    datosLoadedOnce = true;
+    datosIndex = 0;
+    await loadCurrent();
+  };
+
+  // =========================
+  // ENCUESTA (tu lógica existente)
+  // =========================
+  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f";
+  const SURVEY_CODE = "SURVEY_001";
+
+  let SURVEY = null;
+  let currentQuestionIndex = 0;
+  let QUESTION_ID_MAP = {};
+  window.currentResponseId = null;
+
+  const QID_EDAD   = "1b5f4f28-8f41-4ed7-9bfa-07d927b2d1b4";
+  const QID_GRADO  = "6b5b3cdd-5e6d-4c02-a6c4-63d7b3c52e30";
+  const QID_GENERO = "c0a89b93-2b39-4e4c-9f10-8f58dbf8d0c7";
+  const QID_TIEMPO = "7c5d8e66-1d8d-4f0c-8a4f-8a6b6b5c4c11";
+
+  function getCurrentQuestionId(questionNumber) {
+    return QUESTION_ID_MAP[String(questionNumber)] || null;
+  }
+  function isEdadQ(qid)   { return qid === QID_EDAD; }
+  function isGradoQ(qid)  { return qid === QID_GRADO; }
+  function isGeneroQ(qid) { return qid === QID_GENERO; }
+  function isTiempoQ(qid) { return qid === QID_TIEMPO; }
+
+  const OPTIONS_CACHE = {};
+
+  async function getOptionsForQuestion(questionId) {
+    if (!questionId) return [];
+    if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
+
+    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`, {
+      credentials: "include"
+    });
+    const raw = await res.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+    if (!res.ok || !data.ok) {
+      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "sin detalle"}`);
+    }
+
+    OPTIONS_CACHE[questionId] = Array.isArray(data.options) ? data.options : [];
+    return OPTIONS_CACHE[questionId];
+  }
+
+  async function loadSurvey() {
+    if (SURVEY) return;
+    const res = await fetch('/data/survey_001.json', { cache: 'no-store' });
+    if (!res.ok) { alert('No se pudo cargar el survey'); return; }
+    SURVEY = await res.json();
+  }
+
+  function renderCurrentQuestion() {
+    const question = SURVEY.questions[currentQuestionIndex];
+    document.getElementById('qTitle').textContent =
+      `Pregunta ${question.number} de ${SURVEY.questions.length}`;
+    document.getElementById('qText').textContent = question.text;
+
+    const optionsDiv = document.getElementById('qOptions');
+    optionsDiv.innerHTML = '';
+
+    const qid = getCurrentQuestionId(question.number);
+
+    if (qid && (isEdadQ(qid) || isGradoQ(qid) || isGeneroQ(qid) || isTiempoQ(qid))) {
+      let label = "Selecciona una opción";
+      if (isEdadQ(qid)) label = "Selecciona tu edad";
+      if (isGradoQ(qid)) label = "Selecciona tu grado";
+      if (isGeneroQ(qid)) label = "Selecciona tu género";
+      if (isTiempoQ(qid)) label = "¿Cuánto tiempo llevas en esta escuela?";
+
+      optionsDiv.innerHTML = `
+        <label class="fieldLabel" for="answerSelect">${label}</label><br/>
+        <select id="answerSelect" class="textInput">
+          <option value="">Cargando...</option>
+        </select>
+      `;
+
+      (async () => {
+        try {
+          const opts = await getOptionsForQuestion(qid);
+          const sel = document.getElementById("answerSelect");
+          if (!sel) return;
+
+          sel.innerHTML = `<option value="">-- Selecciona --</option>` +
+            opts.map(o => {
+              const txt = (o.option_text ?? o.option_code ?? "").toString();
+              return `<option value="${o.id}">${txt}</option>`;
+            }).join("");
+        } catch (e) {
+          optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
+        }
+      })();
+
+    } else if (question.type === 'text') {
+      optionsDiv.innerHTML =
+        `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
+    } else {
+      question.options.forEach(opt => {
+        optionsDiv.insertAdjacentHTML(
+          'beforeend',
+          `<label style="display:block; margin-bottom:6px;">
+             <input type="radio" name="answer" value="${opt.code}">
+             ${opt.text}
+           </label>`
+        );
+      });
+    }
+
+    document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
+    document.getElementById('btnQNext').textContent =
+      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
+  }
+
+  async function saveCurrentAnswerOrStop() {
+    const q = SURVEY?.questions?.[currentQuestionIndex];
+    if (!q) { alert('No hay pregunta actual'); return false; }
+
+    const responseId = window.currentResponseId;
+    if (!responseId) { alert('Falta responseId (inicia sesión y vuelve a intentar).'); return false; }
+
+    const questionId = QUESTION_ID_MAP[String(q.number)] || null;
+    if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
+
+    let answerText = null;
+    let selectedOptionIds = [];
+
+    if (questionId && (isEdadQ(questionId) || isGradoQ(questionId) || isGeneroQ(questionId) || isTiempoQ(questionId))) {
+      const v = document.getElementById('answerSelect')?.value || "";
+      if (v) selectedOptionIds = [v];
+      answerText = null;
+    }
+    else if (q.type === 'text') {
+      answerText = document.getElementById('answerText')?.value?.trim() || null;
+    } else {
+      const checked = document.querySelector('input[name="answer"]:checked');
+      if (checked) selectedOptionIds = [checked.value];
+    }
+
+    if (q.required) {
+      if (q.type === 'text') {
+        if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
+      } else {
+        if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
+      }
+    }
+
+    const payload = { responseId, questionId, answerText, selectedOptionIds };
+
+    const r = await fetch('/api/save-answer', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const raw = await r.text();
+    let j = {};
+    try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
+    if (!r.ok || !j.ok) {
+      alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
+      return false;
+    }
+    return true;
+  }
+
+  async function showSurveyUI() {
+    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
+    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
+
+    if (encuestaOK) {
+      encuestaOK.style.pointerEvents = 'none';
+      encuestaOK.style.opacity = '0.6';
+    }
+
+    await loadSurvey();
+
+    const r = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(SURVEY_UUID)}`, {
+      credentials: 'include'
+    });
+
+    const raw = await r.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+    if (!r.ok || !data.ok) {
+      alert('No se pudo cargar mapa de preguntas: ' + (data.error || data.raw || 'sin detalle'));
+      return;
+    }
+
+    QUESTION_ID_MAP = data.map || {};
+
+    if (!window.currentResponseId) {
+      const r2 = await fetch('/api/start-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ surveyId: 'SURVEY_001' })
+      });
+
+      const raw2 = await r2.text();
+      let j2 = {};
+      try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
+
+      if (!r2.ok || !j2.ok) {
+        alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
+        return;
+      }
+
+      window.currentResponseId = j2.responseId;
+    }
+
+    surveyBox.style.display = 'block';
+    currentQuestionIndex = 0;
+    renderCurrentQuestion();
+  }
+
+  document.getElementById('btnQPrev')?.addEventListener('click', () => {
+    if (!SURVEY) return;
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      renderCurrentQuestion();
+    }
+  });
+
+  document.getElementById('btnQNext')?.addEventListener('click', async () => {
+    const ok = await saveCurrentAnswerOrStop();
+    if (!ok) return;
+
+    if (currentQuestionIndex < SURVEY.questions.length - 1) {
+      currentQuestionIndex++;
+      renderCurrentQuestion();
+      return;
+    }
+
+    try {
+      const r3 = await fetch('/api/submit-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ responseId: window.currentResponseId })
+      });
+
+      const raw3 = await r3.text();
+      let j3 = {};
+      try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
+
+      if (!r3.ok || !j3.ok) {
+        alert('No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' + JSON.stringify(j3, null, 2));
+        return;
+      }
+    } catch (e) {
+      alert('Error de conexión al finalizar la encuesta.');
+      return;
+    }
+
+    if (surveyBox) surveyBox.style.display = 'none';
+
+    window.currentResponseId = null;
+    SURVEY = null;
+    QUESTION_ID_MAP = {};
+    currentQuestionIndex = 0;
+
+    applySessionToUI();
+    alert('Encuesta finalizada.');
+  });
+
+  refreshSession();
+</script>
+
+</body>
+</html>
