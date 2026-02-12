@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -15,33 +15,9 @@
     header h1 { font-family:'Playfair Display', serif; font-size:48px; margin:0; }
     header p { color:#D6A21C; letter-spacing:2px; margin-top:10px; font-size:14px; }
 
-    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; flex-wrap:wrap; align-items:center; }
+    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; flex-wrap:wrap; }
     nav a { background-color:#1E2F3F; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
     nav a:hover { background-color:#D6A21C; color:#16222D; }
-
-    /* Buttons */
-    .btnPrimary {
-      padding:10px 16px;
-      font-weight:700;
-      border-radius:6px;
-      border:1px solid #D6A21C;
-      cursor:pointer;
-      background:#D6A21C;
-      color:#16222D;
-    }
-    .btnSecondary {
-      padding:10px 16px;
-      font-weight:600;
-      border-radius:6px;
-      border:1px solid #D6A21C;
-      background:transparent;
-      color:#D6A21C;
-      cursor:pointer;
-    }
-    .btnPrimary:disabled, .btnSecondary:disabled {
-      opacity:0.45;
-      cursor:not-allowed;
-    }
 
     /* Session bar */
     .sessionBar {
@@ -73,6 +49,14 @@
     .card { background-color:#243A4B; padding:25px; border-radius:8px; margin-top:25px; }
 
     footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
+
+    /* Buttons */
+    .btnPrimary { padding:10px 16px; font-weight:700; border-radius:6px; border:none; cursor:pointer; }
+    .btnSecondary { padding:10px 16px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer; }
+    .btnPrimary:disabled, .btnSecondary:disabled {
+      opacity:0.45;
+      cursor:not-allowed;
+    }
 
     /* Compact panel + stacked inputs */
     .formPanel {
@@ -144,7 +128,7 @@
       font-weight:700;
     }
 
-    .navAccess { margin-left: 40px; }
+    .navAccess { margin-left: 40px; } 
   </style>
 
   <script>
@@ -223,6 +207,7 @@
       Para ingresar a la encuesta y solicitar análisis, debe estar autenticado desde <b>ACCESO USUARIOS</b>.
     </p>
 
+    <!-- OK Panel (acciones) -->
     <div id="encuestaOK" class="formPanel" style="display:block; max-width:520px;">
       <p id="schoolWelcome" style="margin:0 0 12px 0;">Estado de sesión: No autenticado.</p>
 
@@ -236,6 +221,7 @@
       </div>
     </div>
 
+    <!-- Warning Panel: Solicitar análisis -->
     <div id="analisisWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
       <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
       <div style="margin-bottom:14px;">
@@ -250,6 +236,7 @@
       </div>
     </div>
 
+    <!-- Survey Box -->
     <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
       <div id="qText" style="margin-bottom:12px;"></div>
@@ -283,6 +270,23 @@
         <button id="btnMostrarResultados" class="btnPrimary" type="button">
           Mostrar resultados encuesta
         </button>
+      </div>
+    </div>
+
+    <!-- ✅ RESTAURADO: Warning Panel antes de abrir resultados -->
+    <div id="resultadosWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
+      <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
+      <div style="margin-bottom:14px;">
+        Vas a abrir el dashboard con los resultados del <b>último análisis solicitado</b> para tu escuela.
+        <br/><br/>
+        Si todavía no solicitaste un análisis, no habrá resultados.
+        <br/><br/>
+        ¿Deseas continuar?
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnResultadosContinuar" class="btnPrimary" type="button">Continuar</button>
+        <button id="btnResultadosCancelar" class="btnSecondary" type="button">Cancelar</button>
       </div>
     </div>
 
@@ -357,6 +361,7 @@
       <button id="modalClose" class="modalClose" type="button">X</button>
     </div>
 
+    <!-- Estado cuando HAY sesión -->
     <div id="modalSessionOn" style="display:none;">
       <div class="statusMsg statusOk" id="modalSessionText"></div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
@@ -365,6 +370,7 @@
       </div>
     </div>
 
+    <!-- Form cuando NO hay sesión -->
     <div id="modalSessionOff" style="display:none;">
       <div class="formPanel" style="margin-top:10px; max-width:100%;">
         <div class="fieldBlock">
@@ -393,10 +399,12 @@
   window.onerror = function (msg, src, line, col) {
     alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
   };
+
   window.onunhandledrejection = function (e) {
     const reason = e?.reason;
     const msg = (reason && (reason.message || String(reason))) || 'Unhandled promise rejection';
-    alert('PROMISE ERROR: ' + msg);
+    const stack = reason?.stack ? ("\n\nSTACK:\n" + reason.stack) : "";
+    alert('PROMISE ERROR: ' + msg + stack);
   };
 
   // =========================
@@ -421,7 +429,11 @@
   const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
 
   const surveyBox = document.getElementById('surveyBox');
+
   const btnMostrarResultados = document.getElementById('btnMostrarResultados');
+  const resultadosWarnPanel = document.getElementById('resultadosWarnPanel');
+  const btnResultadosContinuar = document.getElementById('btnResultadosContinuar');
+  const btnResultadosCancelar = document.getElementById('btnResultadosCancelar');
 
   async function refreshSession() {
     try {
@@ -442,6 +454,7 @@
     const ok = window.sessionState.ok;
     const schoolName = window.sessionState.school_name || '';
 
+    // badge
     if (ok) {
       sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
       sessionBadge.classList.remove('badgeNo');
@@ -452,6 +465,7 @@
       sessionBadge.classList.add('badgeNo');
     }
 
+    // mensajes + botones
     if (schoolWelcome) {
       schoolWelcome.textContent = ok
         ? `Estado de sesión: Autenticado. Escuela: ${schoolName}`.trim()
@@ -465,11 +479,14 @@
     if (encuestaNeedLogin) encuestaNeedLogin.style.display = ok ? 'none' : 'block';
     if (resultadosNeedLogin) resultadosNeedLogin.style.display = ok ? 'none' : 'block';
 
+    // Si no hay sesión, cerrar paneles sensibles
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+      if (resultadosWarnPanel) resultadosWarnPanel.style.display = 'none';
       if (surveyBox) surveyBox.style.display = 'none';
     }
 
+    // re-habilitar interacción post-login
     if (ok && surveyBox && surveyBox.style.display === 'none') {
       if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
       if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
@@ -522,11 +539,10 @@
     globalModal.style.display = 'none';
   }
 
-  // ✅ Asegurar que el botón funcione siempre
-  btnAccesoUsuarios?.addEventListener('click', openModal);
-  modalClose?.addEventListener('click', closeModal);
-  btnCerrarModal1?.addEventListener('click', closeModal);
-  btnCerrarModal2?.addEventListener('click', closeModal);
+  btnAccesoUsuarios?.addEventListener('click', () => openModal());
+  modalClose?.addEventListener('click', () => closeModal());
+  btnCerrarModal1?.addEventListener('click', () => closeModal());
+  btnCerrarModal2?.addEventListener('click', () => closeModal());
 
   globalModal?.addEventListener('click', (e) => {
     if (e.target === globalModal) closeModal();
@@ -627,9 +643,27 @@
     }
   });
 
+  // =========================
+  // ✅ RESULTADOS: restaura advertencia + validación
+  // =========================
   btnMostrarResultados?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
+    if (resultadosWarnPanel) resultadosWarnPanel.style.display = 'block';
+  });
 
+  btnResultadosCancelar?.addEventListener('click', async () => {
+    if (resultadosWarnPanel) resultadosWarnPanel.style.display = 'none';
+  });
+
+  btnResultadosContinuar?.addEventListener('click', async () => {
+    if (resultadosWarnPanel) resultadosWarnPanel.style.display = 'none';
+
+    // 1) Verifica sesión real
+    const meRes = await fetch('/api/me', { credentials:'include' });
+    const meData = await meRes.json().catch(() => ({}));
+    if (!meRes.ok || !meData.ok) { openModal(); return; }
+
+    // 2) Obtener el analysis_dt más reciente para esa escuela
     const latestRes = await fetch('/api/results-latest-analysis', { credentials:'include' });
     const latest = await latestRes.json().catch(() => ({}));
 
@@ -639,20 +673,22 @@
     }
 
     if (!latest.analysis_dt) {
-      alert('Aún no hay un análisis solicitado para esta escuela.');
+      alert('Aún no hay un análisis solicitado para esta escuela.\n\nVe a "ENCUESTA" y presiona "Solicitar analisis de la encuesta".');
+      showTab('encuesta');
       return;
     }
 
+    // 3) Redirigir a Streamlit con params
     const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
     const url = `${baseUrl}?school_id=${encodeURIComponent(latest.school_id)}&analysis_dt=${encodeURIComponent(latest.analysis_dt)}`;
     window.location.href = url;
   });
 
   // =========================
-  // DATOS: Supabase REST read (sin cambios)
+  // DATOS: Supabase REST read
   // =========================
   const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
-  const SUPABASE_ANON_KEY = "REEMPLAZA_AQUI_SI_CAMBIA";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aHlub2lra2JtZ3VsYnJ1ZXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODIzMDgsImV4cCI6MjA4MTI1ODMwOH0.k-jdaJ-QOu9RCTWIJ2vTZ1Eefdby70asQIq9rdTmPT4";
 
   let datosIndex = 0;
   let datosLoadedOnce = false;
@@ -750,32 +786,19 @@
   };
 
   // ================================
-  // ENCUESTA: FIX PRINCIPAL (UUIDs + external_id)
+  // ENCUESTA (tu lógica existente)
   // ================================
-  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f"; // tu survey real en supabase
+  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f";
   const SURVEY_CODE = "SURVEY_001";
 
   let SURVEY = null;
   let currentQuestionIndex = 0;
-  let QUESTION_ID_MAP = {}; // number -> question_uuid (db)
+  let QUESTION_ID_MAP = {};
   window.currentResponseId = null;
 
+  // Nota: estos IDs ya no se usan como UUID; se mapean con /api/questions-map (app.py)
+  // Se dejan para compatibilidad del flujo existente (no afectan).
   const OPTIONS_CACHE = {};
-
-  function isDemographicExternalId(ext) {
-    return ext === 'zero_general_curso'
-        || ext === 'zero_general_edad'
-        || ext === 'zero_general_genero'
-        || ext === 'zero_general_tiempo';
-  }
-
-  function demographicLabel(ext) {
-    if (ext === 'zero_general_curso') return 'Selecciona tu grado';
-    if (ext === 'zero_general_edad') return 'Selecciona tu edad';
-    if (ext === 'zero_general_genero') return 'Selecciona tu género';
-    if (ext === 'zero_general_tiempo') return 'Antigüedad en la escuela';
-    return 'Selecciona una opción';
-  }
 
   async function getOptionsForQuestion(questionId) {
     if (!questionId) return [];
@@ -803,15 +826,6 @@
     SURVEY = await res.json();
   }
 
-  function getDbQuestionIdByNumber(n) {
-    return QUESTION_ID_MAP[String(n)] || null;
-  }
-
-  function getExternalIdFromSurveyQuestion(q) {
-    // en tu JSON nuevo, question_id es el external_id (ej: zero_general_curso)
-    return (q && typeof q.question_id === 'string') ? q.question_id : '';
-  }
-
   function renderCurrentQuestion() {
     const question = SURVEY.questions[currentQuestionIndex];
     document.getElementById('qTitle').textContent =
@@ -821,85 +835,31 @@
     const optionsDiv = document.getElementById('qOptions');
     optionsDiv.innerHTML = '';
 
-    const dbQid = getDbQuestionIdByNumber(question.number);
-    const ext = getExternalIdFromSurveyQuestion(question);
+    const qid = QUESTION_ID_MAP[String(question.number)] || null;
 
-    // Si es single_choice: SIEMPRE usamos opciones desde Supabase y guardamos UUID (option_id)
-    if (question.type === 'single_choice') {
-      if (!dbQid) {
-        optionsDiv.innerHTML = `<div class="statusMsg statusErr">No se pudo resolver questionId (DB) para la pregunta #${question.number}.</div>`;
-        return;
-      }
+    // Todas las preguntas del nuevo survey son single_choice -> usar IDs reales de option (uuid)
+    optionsDiv.innerHTML = `
+      <label class="fieldLabel" for="answerSelect">Selecciona una opción</label><br/>
+      <select id="answerSelect" class="textInput">
+        <option value="">Cargando...</option>
+      </select>
+    `;
 
-      // Demográficas: select
-      if (isDemographicExternalId(ext)) {
-        const label = demographicLabel(ext);
-        optionsDiv.innerHTML = `
-          <label class="fieldLabel" for="answerSelect">${label}</label><br/>
-          <select id="answerSelect" class="textInput">
-            <option value="">Cargando...</option>
-          </select>
-        `;
+    (async () => {
+      try {
+        const opts = await getOptionsForQuestion(qid);
+        const sel = document.getElementById("answerSelect");
+        if (!sel) return;
 
-        (async () => {
-          try {
-            const opts = await getOptionsForQuestion(dbQid);
-            const sel = document.getElementById("answerSelect");
-            if (!sel) return;
-
-            sel.innerHTML =
-              `<option value="">-- Selecciona --</option>` +
-              opts.map(o => {
-                const txt = (o.option_text ?? o.option_code ?? "").toString();
-                return `<option value="${o.id}">${txt}</option>`;
-              }).join("");
-          } catch (e) {
-            optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
-          }
-        })();
-
-        document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
-        document.getElementById('btnQNext').textContent =
-          (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
-        return;
-      }
-
-      // No-demográficas: radios, pero con value=UUID (option_id)
-      optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
-
-      (async () => {
-        try {
-          const opts = await getOptionsForQuestion(dbQid);
-          if (!opts.length) {
-            optionsDiv.innerHTML = `<div class="statusMsg statusErr">Esta pregunta no tiene opciones en la base de datos.</div>`;
-            return;
-          }
-
-          optionsDiv.innerHTML = opts.map(o => {
+        sel.innerHTML = `<option value="">-- Selecciona --</option>` +
+          opts.map(o => {
             const txt = (o.option_text ?? o.option_code ?? "").toString();
-            return `
-              <label style="display:block; margin-bottom:6px;">
-                <input type="radio" name="answer" value="${o.id}">
-                ${txt}
-              </label>
-            `;
+            return `<option value="${o.id}">${txt}</option>`;
           }).join("");
-        } catch (e) {
-          optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
-        }
-      })();
-
-      document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
-      document.getElementById('btnQNext').textContent =
-        (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
-      return;
-    }
-
-    // fallback por si existieran text
-    if (question.type === 'text') {
-      optionsDiv.innerHTML =
-        `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
-    }
+      } catch (e) {
+        optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
+      }
+    })();
 
     document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
     document.getElementById('btnQNext').textContent =
@@ -913,36 +873,14 @@
     const responseId = window.currentResponseId;
     if (!responseId) { alert('Falta responseId (inicia sesión y vuelve a intentar).'); return false; }
 
-    const questionId = getDbQuestionIdByNumber(q.number);
+    const questionId = QUESTION_ID_MAP[String(q.number)] || null;
     if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
 
-    let answerText = null;
-    let selectedOptionIds = [];
+    const v = document.getElementById('answerSelect')?.value || "";
+    const selectedOptionIds = v ? [v] : [];
+    const answerText = null;
 
-    if (q.type === 'single_choice') {
-      const ext = getExternalIdFromSurveyQuestion(q);
-
-      if (isDemographicExternalId(ext)) {
-        const v = document.getElementById('answerSelect')?.value || "";
-        if (v) selectedOptionIds = [v]; // UUID de option
-      } else {
-        const checked = document.querySelector('input[name="answer"]:checked');
-        if (checked) selectedOptionIds = [checked.value]; // UUID de option
-      }
-    } else if (q.type === 'text') {
-      answerText = document.getElementById('answerText')?.value?.trim() || null;
-    }
-
-    // required por defecto: true si no existe en JSON
-    const required = (q.required === undefined) ? true : !!q.required;
-
-    if (required) {
-      if (q.type === 'text') {
-        if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
-      } else {
-        if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
-      }
-    }
+    if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
 
     const payload = { responseId, questionId, answerText, selectedOptionIds };
 
@@ -995,7 +933,7 @@
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: SURVEY_CODE })
+        body: JSON.stringify({ surveyId: 'SURVEY_001' })
       });
 
       const raw2 = await r2.text();
@@ -1033,6 +971,7 @@
       return;
     }
 
+    // FINALIZAR encuesta
     try {
       const r3 = await fetch('/api/submit-response', {
         method: 'POST',
@@ -1065,7 +1004,7 @@
     alert('Encuesta finalizada.');
   });
 
-  // Inicial
+  // Al cargar la página: detectar sesión y aplicar UI
   refreshSession();
 </script>
 
