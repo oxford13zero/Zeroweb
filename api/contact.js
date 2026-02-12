@@ -1,8 +1,7 @@
-import { Resend } from "resend";
-
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, error: "Method not allowed" });
+    res.status(405).json({ ok: false, error: "Method not allowed" });
+    return;
   }
 
   try {
@@ -10,7 +9,8 @@ export default async function handler(req, res) {
 
     // Honeypot anti-bots: si viene lleno, cortamos silenciosamente
     if (hp && String(hp).trim().length > 0) {
-      return res.status(200).json({ ok: true });
+      res.status(200).json({ ok: true });
+      return;
     }
 
     const cleanName = String(name || "").trim();
@@ -19,32 +19,30 @@ export default async function handler(req, res) {
     const cleanMessage = String(message || "").trim();
 
     if (!cleanName || !cleanEmail || !cleanSubject || !cleanMessage) {
-      return res.status(400).json({ ok: false, error: "Missing fields" });
+      res.status(400).json({ ok: false, error: "Missing fields" });
+      return;
     }
 
-    // Validación simple de email
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
-      return res.status(400).json({ ok: false, error: "Invalid email" });
+      res.status(400).json({ ok: false, error: "Invalid email" });
+      return;
     }
 
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ ok: false, error: "RESEND_API_KEY is not set" });
+      res.status(500).json({ ok: false, error: "RESEND_API_KEY is not set" });
+      return;
     }
 
-    const resend = new Resend(apiKey);
+    // Si no has verificado dominio aún, esto funciona:
+    const from = process.env.CONTACT_FROM || "TECH4ZERO <onboarding@resend.dev>";
 
-    // IMPORTANTE:
-    // - Si aún NO has verificado tu dominio en Resend, usa "onboarding@resend.dev"
-    // - Cuando verifiques "tech4zero.org", cambia FROM a algo como "contacto@tech4zero.org"
-    const FROM = process.env.CONTACT_FROM || "TECH4ZERO <onboarding@resend.dev>";
-
-    const to = [
-      "oxford13@gmail.com",
-      "rodolfo.lino.ramos@gmail.com",
-    ];
-
-    const text =
+    const payload = {
+      from,
+      to: ["oxford13@gmail.com", "rodolfo.lino.ramos@gmail.com"],
+      subject: `Contacto TECH4ZERO: ${cleanSubject}`,
+      reply_to: cleanEmail,
+      text:
 `Nuevo mensaje desde TECH4ZERO
 
 Nombre: ${cleanName}
@@ -53,9 +51,8 @@ Asunto: ${cleanSubject}
 
 Mensaje:
 ${cleanMessage}
-`;
-
-    const html =
+`,
+      html:
 `<div style="font-family:Arial,sans-serif;line-height:1.45">
   <h2>Nuevo mensaje desde TECH4ZERO</h2>
   <p><b>Nombre:</b> ${escapeHtml(cleanName)}</p>
@@ -63,22 +60,36 @@ ${cleanMessage}
   <p><b>Asunto:</b> ${escapeHtml(cleanSubject)}</p>
   <hr />
   <p style="white-space:pre-wrap">${escapeHtml(cleanMessage)}</p>
-</div>`;
+</div>`
+    };
 
-    const result = await resend.emails.send({
-      from: FROM,
-      to,
-      subject: `Contacto TECH4ZERO: ${cleanSubject}`,
-      reply_to: cleanEmail, // para que al responder vaya al usuario
-      text,
-      html,
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
     });
 
-    return res.status(200).json({ ok: true, id: result?.data?.id || null });
+    const raw = await r.text();
+    let data = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+    if (!r.ok) {
+      // Devuelve detalle real de Resend para depurar
+      res.status(500).json({
+        ok: false,
+        error: data?.message || data?.error || data?.raw || raw || "Resend error"
+      });
+      return;
+    }
+
+    res.status(200).json({ ok: true, id: data?.id || data?.data?.id || null });
   } catch (err) {
-    return res.status(500).json({ ok: false, error: err?.message || "Server error" });
+    res.status(500).json({ ok: false, error: err?.message || "Server error" });
   }
-}
+};
 
 function escapeHtml(str) {
   return String(str)
