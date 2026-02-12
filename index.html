@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -15,9 +15,33 @@
     header h1 { font-family:'Playfair Display', serif; font-size:48px; margin:0; }
     header p { color:#D6A21C; letter-spacing:2px; margin-top:10px; font-size:14px; }
 
-    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; flex-wrap:wrap; }
+    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; flex-wrap:wrap; align-items:center; }
     nav a { background-color:#1E2F3F; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
     nav a:hover { background-color:#D6A21C; color:#16222D; }
+
+    /* Buttons */
+    .btnPrimary {
+      padding:10px 16px;
+      font-weight:700;
+      border-radius:6px;
+      border:1px solid #D6A21C;
+      cursor:pointer;
+      background:#D6A21C;
+      color:#16222D;
+    }
+    .btnSecondary {
+      padding:10px 16px;
+      font-weight:600;
+      border-radius:6px;
+      border:1px solid #D6A21C;
+      background:transparent;
+      color:#D6A21C;
+      cursor:pointer;
+    }
+    .btnPrimary:disabled, .btnSecondary:disabled {
+      opacity:0.45;
+      cursor:not-allowed;
+    }
 
     /* Session bar */
     .sessionBar {
@@ -49,14 +73,6 @@
     .card { background-color:#243A4B; padding:25px; border-radius:8px; margin-top:25px; }
 
     footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
-
-    /* Buttons */
-    .btnPrimary { padding:10px 16px; font-weight:700; border-radius:6px; border:none; cursor:pointer; }
-    .btnSecondary { padding:10px 16px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer; }
-    .btnPrimary:disabled, .btnSecondary:disabled {
-      opacity:0.45;
-      cursor:not-allowed;
-    }
 
     /* Compact panel + stacked inputs */
     .formPanel {
@@ -128,9 +144,7 @@
       font-weight:700;
     }
 
-    .navAccess {
-      margin-left: 40px;
-    }
+    .navAccess { margin-left: 40px; }
   </style>
 
   <script>
@@ -158,10 +172,7 @@
   <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
   <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
 
-  <!-- ✅ FIX: abre modal directo, no depende del addEventListener -->
-  <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button" onclick="window.t4zOpenModal?.();">
-    ACCESO USUARIOS
-  </button>
+  <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button">ACCESO USUARIOS</button>
 </nav>
 
 <!-- BARRA GLOBAL DE SESIÓN -->
@@ -346,7 +357,6 @@
       <button id="modalClose" class="modalClose" type="button">X</button>
     </div>
 
-    <!-- Estado cuando HAY sesión -->
     <div id="modalSessionOn" style="display:none;">
       <div class="statusMsg statusOk" id="modalSessionText"></div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
@@ -355,7 +365,6 @@
       </div>
     </div>
 
-    <!-- Form cuando NO hay sesión -->
     <div id="modalSessionOff" style="display:none;">
       <div class="formPanel" style="margin-top:10px; max-width:100%;">
         <div class="fieldBlock">
@@ -384,12 +393,10 @@
   window.onerror = function (msg, src, line, col) {
     alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
   };
-
   window.onunhandledrejection = function (e) {
     const reason = e?.reason;
     const msg = (reason && (reason.message || String(reason))) || 'Unhandled promise rejection';
-    const stack = reason?.stack ? ("\n\nSTACK:\n" + reason.stack) : "";
-    alert('PROMISE ERROR: ' + msg + stack);
+    alert('PROMISE ERROR: ' + msg);
   };
 
   // =========================
@@ -414,7 +421,6 @@
   const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
 
   const surveyBox = document.getElementById('surveyBox');
-
   const btnMostrarResultados = document.getElementById('btnMostrarResultados');
 
   async function refreshSession() {
@@ -436,7 +442,6 @@
     const ok = window.sessionState.ok;
     const schoolName = window.sessionState.school_name || '';
 
-    // badge
     if (ok) {
       sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
       sessionBadge.classList.remove('badgeNo');
@@ -447,7 +452,6 @@
       sessionBadge.classList.add('badgeNo');
     }
 
-    // mensajes + botones
     if (schoolWelcome) {
       schoolWelcome.textContent = ok
         ? `Estado de sesión: Autenticado. Escuela: ${schoolName}`.trim()
@@ -461,13 +465,11 @@
     if (encuestaNeedLogin) encuestaNeedLogin.style.display = ok ? 'none' : 'block';
     if (resultadosNeedLogin) resultadosNeedLogin.style.display = ok ? 'none' : 'block';
 
-    // Si no hay sesión, cerrar paneles sensibles
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
       if (surveyBox) surveyBox.style.display = 'none';
     }
 
-    // Re-habilitar interacción y botones al volver al panel post-login
     if (ok && surveyBox && surveyBox.style.display === 'none') {
       if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
       if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
@@ -516,18 +518,15 @@
     globalModal.style.display = 'flex';
   }
 
-  // ✅ FIX: exponer función global para onclick del botón
-  window.t4zOpenModal = openModal;
-
   function closeModal() {
     globalModal.style.display = 'none';
   }
 
-  // (puedes dejar esto igual; aunque falle, el onclick ya funciona)
-  btnAccesoUsuarios?.addEventListener('click', () => openModal());
-  modalClose?.addEventListener('click', () => closeModal());
-  btnCerrarModal1?.addEventListener('click', () => closeModal());
-  btnCerrarModal2?.addEventListener('click', () => closeModal());
+  // ✅ Asegurar que el botón funcione siempre
+  btnAccesoUsuarios?.addEventListener('click', openModal);
+  modalClose?.addEventListener('click', closeModal);
+  btnCerrarModal1?.addEventListener('click', closeModal);
+  btnCerrarModal2?.addEventListener('click', closeModal);
 
   globalModal?.addEventListener('click', (e) => {
     if (e.target === globalModal) closeModal();
@@ -599,6 +598,7 @@
       const meData = await meRes.json().catch(() => ({}));
 
       if (!meRes.ok || !meData.ok) {
+        openModal();
         return;
       }
 
@@ -627,9 +627,6 @@
     }
   });
 
-  // =========================
-  // RESULTADOS
-  // =========================
   btnMostrarResultados?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
 
@@ -652,10 +649,10 @@
   });
 
   // =========================
-  // DATOS: Supabase REST read
+  // DATOS: Supabase REST read (sin cambios)
   // =========================
   const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aHlub2lra2JtZ3VsYnJ1ZXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODIzMDgsImV4cCI6MjA4MTI1ODMwOH0.k-jdaJ-QOu9RCTWIJ2vTZ1Eefdby70asQIq9rdTmPT4";
+  const SUPABASE_ANON_KEY = "REEMPLAZA_AQUI_SI_CAMBIA";
 
   let datosIndex = 0;
   let datosLoadedOnce = false;
@@ -710,7 +707,7 @@
       const result = await fetchOneRow(datosIndex);
 
       if (!result.ok) {
-        setStatus(` No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
+        setStatus(`No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
         fillFields(null);
         return;
       }
@@ -718,9 +715,9 @@
       const arr = Array.isArray(result.json) ? result.json : [];
       if (arr.length === 0) {
         if (datosIndex === 0) {
-          setStatus(" La tabla encargado_escolar está vacía (no hay registros).", "statusWarn");
+          setStatus("La tabla encargado_escolar está vacía (no hay registros).", "statusWarn");
         } else {
-          setStatus(" No hay más registros. Retrocede para ver anteriores.", "statusWarn");
+          setStatus("No hay más registros. Retrocede para ver anteriores.", "statusWarn");
           datosIndex = Math.max(0, datosIndex - 1);
         }
         fillFields(null);
@@ -728,9 +725,9 @@
       }
 
       fillFields(arr[0]);
-      setStatus(` Mostrando registro #${datosIndex + 1}`, "statusOk");
+      setStatus(`Mostrando registro #${datosIndex + 1}`, "statusOk");
     } catch (e) {
-      setStatus(" Error de conexión con Supabase.", "statusErr");
+      setStatus("Error de conexión con Supabase.", "statusErr");
       fillFields(null);
     }
   }
@@ -752,31 +749,33 @@
     await loadCurrent();
   };
 
-  // =========================
-  // ENCUESTA (tu lógica existente)
-  // =========================
-  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f";
+  // ================================
+  // ENCUESTA: FIX PRINCIPAL (UUIDs + external_id)
+  // ================================
+  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f"; // tu survey real en supabase
   const SURVEY_CODE = "SURVEY_001";
 
   let SURVEY = null;
   let currentQuestionIndex = 0;
-  let QUESTION_ID_MAP = {};
+  let QUESTION_ID_MAP = {}; // number -> question_uuid (db)
   window.currentResponseId = null;
 
-  const QID_EDAD   = "1b5f4f28-8f41-4ed7-9bfa-07d927b2d1b4";
-  const QID_GRADO  = "6b5b3cdd-5e6d-4c02-a6c4-63d7b3c52e30";
-  const QID_GENERO = "c0a89b93-2b39-4e4c-9f10-8f58dbf8d0c7";
-  const QID_TIEMPO = "7c5d8e66-1d8d-4f0c-8a4f-8a6b6b5c4c11";
-
-  function getCurrentQuestionId(questionNumber) {
-    return QUESTION_ID_MAP[String(questionNumber)] || null;
-  }
-  function isEdadQ(qid)   { return qid === QID_EDAD; }
-  function isGradoQ(qid)  { return qid === QID_GRADO; }
-  function isGeneroQ(qid) { return qid === QID_GENERO; }
-  function isTiempoQ(qid) { return qid === QID_TIEMPO; }
-
   const OPTIONS_CACHE = {};
+
+  function isDemographicExternalId(ext) {
+    return ext === 'zero_general_curso'
+        || ext === 'zero_general_edad'
+        || ext === 'zero_general_genero'
+        || ext === 'zero_general_tiempo';
+  }
+
+  function demographicLabel(ext) {
+    if (ext === 'zero_general_curso') return 'Selecciona tu grado';
+    if (ext === 'zero_general_edad') return 'Selecciona tu edad';
+    if (ext === 'zero_general_genero') return 'Selecciona tu género';
+    if (ext === 'zero_general_tiempo') return 'Antigüedad en la escuela';
+    return 'Selecciona una opción';
+  }
 
   async function getOptionsForQuestion(questionId) {
     if (!questionId) return [];
@@ -804,6 +803,15 @@
     SURVEY = await res.json();
   }
 
+  function getDbQuestionIdByNumber(n) {
+    return QUESTION_ID_MAP[String(n)] || null;
+  }
+
+  function getExternalIdFromSurveyQuestion(q) {
+    // en tu JSON nuevo, question_id es el external_id (ej: zero_general_curso)
+    return (q && typeof q.question_id === 'string') ? q.question_id : '';
+  }
+
   function renderCurrentQuestion() {
     const question = SURVEY.questions[currentQuestionIndex];
     document.getElementById('qTitle').textContent =
@@ -813,51 +821,84 @@
     const optionsDiv = document.getElementById('qOptions');
     optionsDiv.innerHTML = '';
 
-    const qid = getCurrentQuestionId(question.number);
+    const dbQid = getDbQuestionIdByNumber(question.number);
+    const ext = getExternalIdFromSurveyQuestion(question);
 
-    if (qid && (isEdadQ(qid) || isGradoQ(qid) || isGeneroQ(qid) || isTiempoQ(qid))) {
-      let label = "Selecciona una opción";
-      if (isEdadQ(qid)) label = "Selecciona tu edad";
-      if (isGradoQ(qid)) label = "Selecciona tu grado";
-      if (isGeneroQ(qid)) label = "Selecciona tu género";
-      if (isTiempoQ(qid)) label = "¿Cuánto tiempo llevas en esta escuela?";
+    // Si es single_choice: SIEMPRE usamos opciones desde Supabase y guardamos UUID (option_id)
+    if (question.type === 'single_choice') {
+      if (!dbQid) {
+        optionsDiv.innerHTML = `<div class="statusMsg statusErr">No se pudo resolver questionId (DB) para la pregunta #${question.number}.</div>`;
+        return;
+      }
 
-      optionsDiv.innerHTML = `
-        <label class="fieldLabel" for="answerSelect">${label}</label><br/>
-        <select id="answerSelect" class="textInput">
-          <option value="">Cargando...</option>
-        </select>
-      `;
+      // Demográficas: select
+      if (isDemographicExternalId(ext)) {
+        const label = demographicLabel(ext);
+        optionsDiv.innerHTML = `
+          <label class="fieldLabel" for="answerSelect">${label}</label><br/>
+          <select id="answerSelect" class="textInput">
+            <option value="">Cargando...</option>
+          </select>
+        `;
+
+        (async () => {
+          try {
+            const opts = await getOptionsForQuestion(dbQid);
+            const sel = document.getElementById("answerSelect");
+            if (!sel) return;
+
+            sel.innerHTML =
+              `<option value="">-- Selecciona --</option>` +
+              opts.map(o => {
+                const txt = (o.option_text ?? o.option_code ?? "").toString();
+                return `<option value="${o.id}">${txt}</option>`;
+              }).join("");
+          } catch (e) {
+            optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
+          }
+        })();
+
+        document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
+        document.getElementById('btnQNext').textContent =
+          (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
+        return;
+      }
+
+      // No-demográficas: radios, pero con value=UUID (option_id)
+      optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
 
       (async () => {
         try {
-          const opts = await getOptionsForQuestion(qid);
-          const sel = document.getElementById("answerSelect");
-          if (!sel) return;
+          const opts = await getOptionsForQuestion(dbQid);
+          if (!opts.length) {
+            optionsDiv.innerHTML = `<div class="statusMsg statusErr">Esta pregunta no tiene opciones en la base de datos.</div>`;
+            return;
+          }
 
-          sel.innerHTML = `<option value="">-- Selecciona --</option>` +
-            opts.map(o => {
-              const txt = (o.option_text ?? o.option_code ?? "").toString();
-              return `<option value="${o.id}">${txt}</option>`;
-            }).join("");
+          optionsDiv.innerHTML = opts.map(o => {
+            const txt = (o.option_text ?? o.option_code ?? "").toString();
+            return `
+              <label style="display:block; margin-bottom:6px;">
+                <input type="radio" name="answer" value="${o.id}">
+                ${txt}
+              </label>
+            `;
+          }).join("");
         } catch (e) {
           optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
         }
       })();
 
-    } else if (question.type === 'text') {
+      document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
+      document.getElementById('btnQNext').textContent =
+        (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
+      return;
+    }
+
+    // fallback por si existieran text
+    if (question.type === 'text') {
       optionsDiv.innerHTML =
         `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
-    } else {
-      question.options.forEach(opt => {
-        optionsDiv.insertAdjacentHTML(
-          'beforeend',
-          `<label style="display:block; margin-bottom:6px;">
-             <input type="radio" name="answer" value="${opt.code}">
-             ${opt.text}
-           </label>`
-        );
-      });
     }
 
     document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
@@ -872,25 +913,30 @@
     const responseId = window.currentResponseId;
     if (!responseId) { alert('Falta responseId (inicia sesión y vuelve a intentar).'); return false; }
 
-    const questionId = QUESTION_ID_MAP[String(q.number)] || null;
+    const questionId = getDbQuestionIdByNumber(q.number);
     if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
 
     let answerText = null;
     let selectedOptionIds = [];
 
-    if (questionId && (isEdadQ(questionId) || isGradoQ(questionId) || isGeneroQ(questionId) || isTiempoQ(questionId))) {
-      const v = document.getElementById('answerSelect')?.value || "";
-      if (v) selectedOptionIds = [v];
-      answerText = null;
-    }
-    else if (q.type === 'text') {
+    if (q.type === 'single_choice') {
+      const ext = getExternalIdFromSurveyQuestion(q);
+
+      if (isDemographicExternalId(ext)) {
+        const v = document.getElementById('answerSelect')?.value || "";
+        if (v) selectedOptionIds = [v]; // UUID de option
+      } else {
+        const checked = document.querySelector('input[name="answer"]:checked');
+        if (checked) selectedOptionIds = [checked.value]; // UUID de option
+      }
+    } else if (q.type === 'text') {
       answerText = document.getElementById('answerText')?.value?.trim() || null;
-    } else {
-      const checked = document.querySelector('input[name="answer"]:checked');
-      if (checked) selectedOptionIds = [checked.value];
     }
 
-    if (q.required) {
+    // required por defecto: true si no existe en JSON
+    const required = (q.required === undefined) ? true : !!q.required;
+
+    if (required) {
       if (q.type === 'text') {
         if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
       } else {
@@ -949,7 +995,7 @@
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: 'SURVEY_001' })
+        body: JSON.stringify({ surveyId: SURVEY_CODE })
       });
 
       const raw2 = await r2.text();
@@ -1019,6 +1065,7 @@
     alert('Encuesta finalizada.');
   });
 
+  // Inicial
   refreshSession();
 </script>
 
