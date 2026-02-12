@@ -406,8 +406,45 @@
 
 <section id="contacto">
   <h2>Contáctenos</h2>
+
   <div class="card">
-    <p>Email: contacto@tech4zero.org</p>
+    <p>También puede escribirnos usando el formulario:</p>
+
+    <div class="formPanel" style="max-width:640px;">
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="c_nombre">Nombre</label><br />
+        <input id="c_nombre" class="textInput" type="text" placeholder="Tu nombre" />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="c_email">Email</label><br />
+        <input id="c_email" class="textInput" type="email" placeholder="tu@email.com" />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="c_asunto">Asunto</label><br />
+        <input id="c_asunto" class="textInput" type="text" placeholder="Asunto" />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="c_mensaje">Mensaje</label><br />
+        <textarea id="c_mensaje" class="textInput" rows="6" placeholder="Escribe tu mensaje..."></textarea>
+      </div>
+
+      <!-- Honeypot anti-bots (debe quedar vacío) -->
+      <input id="c_company" type="text" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnEnviarContacto" class="btnPrimary" type="button">Enviar</button>
+        <button id="btnLimpiarContacto" class="btnSecondary" type="button">Limpiar</button>
+      </div>
+
+      <div id="contactoMsg" class="statusMsg statusWarn"></div>
+
+      <p style="margin-top:12px; opacity:0.85;">
+        Email directo: <b>contacto@tech4zero.org</b>
+      </p>
+    </div>
   </div>
 </section>
 
@@ -1133,10 +1170,88 @@
 
   // Inicial
   refreshSession();
+
+  // =========================
+  // CONTACTO: enviar email vía /api/contact (Resend)
+  // =========================
+  const cNombre = document.getElementById('c_nombre');
+  const cEmail  = document.getElementById('c_email');
+  const cAsunto = document.getElementById('c_asunto');
+  const cMensaje= document.getElementById('c_mensaje');
+  const cCompany= document.getElementById('c_company'); // honeypot
+  const btnEnviarContacto = document.getElementById('btnEnviarContacto');
+  const btnLimpiarContacto = document.getElementById('btnLimpiarContacto');
+  const contactoMsg = document.getElementById('contactoMsg');
+
+  function setContactoMsg(text, type) {
+    if (!contactoMsg) return;
+    contactoMsg.textContent = text || '';
+    contactoMsg.classList.remove('statusOk', 'statusWarn', 'statusErr');
+    contactoMsg.classList.add(type || 'statusWarn');
+  }
+
+  btnLimpiarContacto?.addEventListener('click', () => {
+    if (cNombre) cNombre.value = '';
+    if (cEmail) cEmail.value = '';
+    if (cAsunto) cAsunto.value = '';
+    if (cMensaje) cMensaje.value = '';
+    if (cCompany) cCompany.value = '';
+    setContactoMsg('', 'statusWarn');
+  });
+
+  btnEnviarContacto?.addEventListener('click', async () => {
+    const name = cNombre?.value?.trim() || '';
+    const email = cEmail?.value?.trim() || '';
+    const subject = cAsunto?.value?.trim() || '';
+    const message = cMensaje?.value?.trim() || '';
+    const hp = cCompany?.value?.trim() || ''; // honeypot
+
+    if (!name || !email || !subject || !message) {
+      setContactoMsg('Por favor completa nombre, email, asunto y mensaje.', 'statusWarn');
+      return;
+    }
+
+    // Validación simple de email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setContactoMsg('Email inválido. Revisa el formato.', 'statusWarn');
+      return;
+    }
+
+    try {
+      btnEnviarContacto.disabled = true;
+      setContactoMsg('Enviando...', 'statusWarn');
+
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message, hp })
+      });
+
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+
+      if (!res.ok || !data.ok) {
+        setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`, 'statusErr');
+        return;
+      }
+
+      setContactoMsg('Mensaje enviado. ¡Gracias!', 'statusOk');
+      btnLimpiarContacto?.click();
+    } catch (e) {
+      setContactoMsg('Error de conexión al enviar el mensaje.', 'statusErr');
+    } finally {
+      btnEnviarContacto.disabled = false;
+    }
+  });
+
+
+  
 </script>
 
 </body>
 </html>
+
 
 
 
