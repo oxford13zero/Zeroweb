@@ -4,8 +4,10 @@
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.49.0",
-    "cookie": "^0.6.0"
+    "cookie": "^0.6.0",
+    "resend": "^4.0.0"
   }
 }
+
 
 
