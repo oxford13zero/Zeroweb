@@ -1,101 +1,51 @@
-module.exports = async (req, res) => {
-  if (req.method !== "POST") {
-    res.status(405).json({ ok: false, error: "Method not allowed" });
-    return;
-  }
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export default async function handler(req, res) {
+  // CORS básico (por si lo llamas desde HTML estático)
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Method Not Allowed" });
 
   try {
-    const { name, email, subject, message, hp } = req.body || {};
+    const { name, email, message } = req.body || {};
 
-    // Honeypot anti-bots: si viene lleno, cortamos silenciosamente
-    if (hp && String(hp).trim().length > 0) {
-      res.status(200).json({ ok: true });
-      return;
+    if (!name || !email || !message) {
+      return res.status(400).json({ ok: false, error: "Faltan campos: name, email, message" });
     }
 
-    const cleanName = String(name || "").trim();
-    const cleanEmail = String(email || "").trim();
-    const cleanSubject = String(subject || "").trim();
-    const cleanMessage = String(message || "").trim();
-
-    if (!cleanName || !cleanEmail || !cleanSubject || !cleanMessage) {
-      res.status(400).json({ ok: false, error: "Missing fields" });
-      return;
+    if (!process.env.RESEND_API_KEY) {
+      return res.status(500).json({ ok: false, error: "Falta RESEND_API_KEY en Vercel" });
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
-      res.status(400).json({ ok: false, error: "Invalid email" });
-      return;
-    }
+    // IMPORTANTE: from debe ser un dominio verificado en Resend
+    const from = process.env.CONTACT_FROM || "Tech4Zero <onboarding@resend.dev>";
 
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      res.status(500).json({ ok: false, error: "RESEND_API_KEY is not set" });
-      return;
-    }
+    const to = (process.env.CONTACT_TO || "oxford13@gmail.com,rodolfo.lino.ramos@gmail.com")
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean);
 
-    // Si no has verificado dominio aún, esto funciona:
-    const from = process.env.CONTACT_FROM || "TECH4ZERO <onboarding@resend.dev>";
+    const subject = `Contacto Tech4Zero: ${name}`;
 
-    const payload = {
+    const { data, error } = await resend.emails.send({
       from,
-      to: ["oxford13@gmail.com", "rodolfo.lino.ramos@gmail.com"],
-      subject: `Contacto TECH4ZERO: ${cleanSubject}`,
-      reply_to: cleanEmail,
-      text:
-`Nuevo mensaje desde TECH4ZERO
-
-Nombre: ${cleanName}
-Email: ${cleanEmail}
-Asunto: ${cleanSubject}
-
-Mensaje:
-${cleanMessage}
-`,
-      html:
-`<div style="font-family:Arial,sans-serif;line-height:1.45">
-  <h2>Nuevo mensaje desde TECH4ZERO</h2>
-  <p><b>Nombre:</b> ${escapeHtml(cleanName)}</p>
-  <p><b>Email:</b> ${escapeHtml(cleanEmail)}</p>
-  <p><b>Asunto:</b> ${escapeHtml(cleanSubject)}</p>
-  <hr />
-  <p style="white-space:pre-wrap">${escapeHtml(cleanMessage)}</p>
-</div>`
-    };
-
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
+      to,
+      reply_to: email,
+      subject,
+      text: `Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`,
     });
 
-    const raw = await r.text();
-    let data = {};
-    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
-
-    if (!r.ok) {
-      // Devuelve detalle real de Resend para depurar
-      res.status(500).json({
-        ok: false,
-        error: data?.message || data?.error || data?.raw || raw || "Resend error"
-      });
-      return;
+    if (error) {
+      return res.status(500).json({ ok: false, error: error.message || "Resend error" });
     }
 
-    res.status(200).json({ ok: true, id: data?.id || data?.data?.id || null });
-  } catch (err) {
-    res.status(500).json({ ok: false, error: err?.message || "Server error" });
+    return res.status(200).json({ ok: true, id: data?.id });
+  } catch (e) {
+    return res.status(500).json({ ok: false, error: e?.message || "Server error" });
   }
-};
-
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
