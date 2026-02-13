@@ -52,7 +52,7 @@ export default async function handler(req, res) {
     }
 
     // OJO: idealmente usa un dominio verificado en Resend (ej: no-reply@tech4zero.com)
-    const from = process.env.CONTACT_FROM || "Tech4Zero <onboarding@resend.dev>";
+    const from = "Tech4Zero <no-reply@tech4zero.com>";
 
     const to = (process.env.CONTACT_TO || "oxford13@gmail.com,rodolfo.lino.ramos@gmail.com")
       .split(",")
@@ -78,3 +78,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ ok: false, error: e?.message || "Server error" });
   }
 }
+
