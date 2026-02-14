@@ -1192,8 +1192,7 @@ Portland, Oregon</p>
     }
     return true;
   }
-
-  async function showSurveyUI() {
+async function showSurveyUI() {
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
     if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
 
@@ -1203,6 +1202,24 @@ Portland, Oregon</p>
     }
 
     await loadSurvey();
+
+    if (!window.currentResponseId) {
+      const r2 = await fetch('/api/start-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      });
+      const raw2 = await r2.text();
+      let j2 = {};
+      try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
+      if (!r2.ok || !j2.ok) {
+        alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
+        return;
+      }
+      window.currentResponseId = j2.responseId;
+      SURVEY_UUID = j2.survey_id;
+    }
 
     const r = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(SURVEY_UUID)}`, {
       credentials: 'include'
@@ -1219,47 +1236,11 @@ Portland, Oregon</p>
 
     QUESTION_ID_MAP = data.map || {};
 
-    //if (!window.currentResponseId) {
-    //  const r2 = await fetch('/api/start-response', {
-    //    method: 'POST',
-    //    credentials: 'include',
-    //    headers: { 'Content-Type': 'application/json' },
-    //    //body: JSON.stringify({ surveyId: SURVEY_CODE })
-    //    body: JSON.stringify({})
-    //  });
-    //  const raw2 = await r2.text();
-    //  let j2 = {};
-    //  try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
-    //  if (!r2.ok || !j2.ok) {
-    //    alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
-    //    return;
-    //  }
-if (!window.currentResponseId) {
-  const r2 = await fetch('/api/start-response', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({})
-  });
-  const raw2 = await r2.text();
-  let j2 = {};
-  try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
-  if (!r2.ok || !j2.ok) {
-    alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
-    return;
-  }
-  window.currentResponseId = j2.responseId;
-  SURVEY_UUID = j2.survey_id;  // ← backend returns it, we grab it here
-}
-
-      
-      window.currentResponseId = j2.responseId;
-    }
-
     surveyBox.style.display = 'block';
     currentQuestionIndex = 0;
     renderCurrentQuestion();
   }
+
 
   document.getElementById('btnQPrev')?.addEventListener('click', () => {
     if (!SURVEY) return;
@@ -1394,6 +1375,7 @@ if (!window.currentResponseId) {
 
 </body>
 </html>
+
 
 
 
