@@ -1248,7 +1248,6 @@ if (!window.currentResponseId) {
     alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
     return;
   }
-
   window.currentResponseId = j2.responseId;
   SURVEY_UUID = j2.survey_id;  // ← backend returns it, we grab it here
 }
@@ -1395,6 +1394,7 @@ if (!window.currentResponseId) {
 
 </body>
 </html>
+
 
 
 
