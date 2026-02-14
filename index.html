@@ -976,9 +976,12 @@ Portland, Oregon</p>
   // ================================
   // ENCUESTA: FIX PRINCIPAL (UUIDs + external_id)
   // ================================
-  const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f"; // tu survey real en supabase
-  const SURVEY_CODE = "SURVEY_001";
-
+  
+  //const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f"; // tu survey real en supabase
+  //const SURVEY_CODE = "SURVEY_001";
+  let SURVEY_UUID = null;
+  
+  
   let SURVEY = null;
   let currentQuestionIndex = 0;
   let QUESTION_ID_MAP = {}; // number -> question_uuid (db)
@@ -1175,6 +1178,8 @@ Portland, Oregon</p>
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
+
+      
     });
 
     const raw = await r.text();
@@ -1214,23 +1219,41 @@ Portland, Oregon</p>
 
     QUESTION_ID_MAP = data.map || {};
 
-    if (!window.currentResponseId) {
-      const r2 = await fetch('/api/start-response', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: SURVEY_CODE })
-      });
+    //if (!window.currentResponseId) {
+    //  const r2 = await fetch('/api/start-response', {
+    //    method: 'POST',
+    //    credentials: 'include',
+    //    headers: { 'Content-Type': 'application/json' },
+    //    //body: JSON.stringify({ surveyId: SURVEY_CODE })
+    //    body: JSON.stringify({})
+    //  });
+    //  const raw2 = await r2.text();
+    //  let j2 = {};
+    //  try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
+    //  if (!r2.ok || !j2.ok) {
+    //    alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
+    //    return;
+    //  }
+if (!window.currentResponseId) {
+  const r2 = await fetch('/api/start-response', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({})
+  });
+  const raw2 = await r2.text();
+  let j2 = {};
+  try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
+  if (!r2.ok || !j2.ok) {
+    alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
+    return;
+  }
 
-      const raw2 = await r2.text();
-      let j2 = {};
-      try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
+  window.currentResponseId = j2.responseId;
+  SURVEY_UUID = j2.survey_id;  // ← backend returns it, we grab it here
+}
 
-      if (!r2.ok || !j2.ok) {
-        alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
-        return;
-      }
-
+      
       window.currentResponseId = j2.responseId;
     }
 
@@ -1372,6 +1395,7 @@ Portland, Oregon</p>
 
 </body>
 </html>
+
 
 
 
