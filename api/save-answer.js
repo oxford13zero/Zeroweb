@@ -139,7 +139,7 @@ export default async function handler(req, res) {
     });
   }
 
-  // 6) Insertar en answer_selected_options
+  // 6) Upsert en answer_selected_options (evita duplicados por race condition)
   const rows = optionIds.map((optId) => ({
     question_answer_id: answerId,
     option_id: optId,
@@ -147,7 +147,7 @@ export default async function handler(req, res) {
 
   const { error: insErr } = await supabaseAdmin
     .from("answer_selected_options")
-    .insert(rows);
+    .upsert(rows, { onConflict: "question_answer_id,option_id", ignoreDuplicates: true });
 
   if (insErr) {
     return res.status(500).json({
@@ -164,4 +164,5 @@ export default async function handler(req, res) {
     mode: allUuids ? "uuid_option_ids" : "option_codes",
   });
 }
+
 
