@@ -1060,12 +1060,11 @@ Portland, Oregon</p>
 
       // Demográficas: select
       if (isDemographicExternalId(ext)) {
-        const label = demographicLabel(ext);
-        optionsDiv.innerHTML = `
-          <label class="fieldLabel" for="answerSelect">${label}</label><br/>
-          <select id="answerSelect" class="textInput">
-            <option value="">Cargando...</option>
-          </select>
+        // NEW — no label, just select with placeholder
+       optionsDiv.innerHTML = `
+        <select id="answerSelect" class="textInput">
+        <option value="">Cargando...</option>
+        </select>
         `;
 
         (async () => {
@@ -1074,12 +1073,18 @@ Portland, Oregon</p>
             const sel = document.getElementById("answerSelect");
             if (!sel) return;
 
-            sel.innerHTML =
-              `<option value="">-- Selecciona --</option>` +
-              opts.map(o => {
-                const txt = (o.option_text ?? o.option_code ?? "").toString();
-                return `<option value="${o.id}">${txt}</option>`;
-              }).join("");
+            
+// NEW — use question text as placeholder
+const q = SURVEY.questions[currentQuestionIndex];
+const placeholder = q.text || "-- Selecciona --";
+sel.innerHTML =
+  `<option value="">${placeholder}</option>` +
+  opts.map(o => {
+    const txt = (o.option_text ?? o.option_code ?? "").toString();
+    return `<option value="${o.id}">${txt}</option>`;
+  }).join("");
+
+            
           } catch (e) {
             optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
           }
@@ -1375,6 +1380,7 @@ async function showSurveyUI() {
 
 </body>
 </html>
+
 
 
 
