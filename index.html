@@ -1025,7 +1025,7 @@ Portland, Oregon</p>
 
   async function loadSurvey() {
     if (SURVEY) return;
-    const res = await fetch('/data/survey_001.json', { cache: 'no-store' });
+    const res = await fetch('/data/survey_002.json', { cache: 'no-store' });
     if (!res.ok) { alert('No se pudo cargar el survey'); return; }
     SURVEY = await res.json();
   }
@@ -1375,6 +1375,7 @@ async function showSurveyUI() {
 
 </body>
 </html>
+
 
 
 
