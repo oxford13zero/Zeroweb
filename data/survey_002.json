@@ -1,0 +1,2090 @@
+{
+  "survey": {
+    "id": "TECH4ZERO-MX-v1.0",
+    "code": "SURVEY_002",
+    "title": "Encuesta de Clima Escolar, Bullying y Cyberbullying — TECH4ZERO-MX",
+    "version": "1.0",
+    "date": "2024",
+    "population": "Educación secundaria y media superior (12-18 años), México",
+    "application_time": "15-18 minutos",
+    "total_questions": 55,
+    "total_sections": 9,
+    "scale_unified": "0-4 (Likert adaptado — marco temporal: últimos 2 meses)",
+    "references": [
+      "OBVQ-R: Olweus (1996); Gaete et al. (2021); Resett et al. (2021)",
+      "ECIP-Q: Ortega-Ruiz et al. (2016, 2023); Romera et al. (2018)",
+      "ZERO-R: Roland (2000, 2011); Roland & Galloway (2004)",
+      "Contexto MX: INEGI (2017); Encuesta Mejoredu (2024); Lucio López & Gómez Triana (2020)",
+      "Teoría: Bronfenbrenner (1979); Bandura (1997); Cohen & Wills (1985); Salmivalli et al. (1996)"
+    ],
+    "mexico_adaptations": [
+      "Lengua indígena — ítems 4, 23, 32",
+      "Orientación sexual — ítem 5",
+      "Tipo de escuela (sistema SEP) — ítem 7",
+      "Plataformas digitales mexicanas: WhatsApp, Facebook, Instagram, TikTok — ítems 34-39",
+      "Dejar en visto como exclusión digital — ítems 36, 39",
+      "Transporte escolar: camión, combi, metro — ítem 44",
+      "Casa de compañeros para tareas — ítem 45",
+      "Orientador educativo — ítem 50",
+      "Impacto psicológico y consideración de ayuda profesional — ítems 52-55",
+      "Líneas de ayuda: Línea de la Vida 800 911 2000, Locatel 5658 1111"
+    ],
+    "admin_note": "Validar localmente antes de uso en decisiones de alta consecuencia. Recomendado: AFC + Alpha de Cronbach por dimensión.",
+    "changelog": [
+      "v3 (JSON): Built from authoritative PDF TECH4ZERO-MX v1.0.",
+      "v3: Aligned all 55 questions, 9 sections, construct/construct_role/scale_type/score_direction fields.",
+      "v3: Cyberbullying split into cybervictimizacion (Q34-36) and cyberagresion (Q37-39).",
+      "v3: All scales unified to 0-4 (frequency_0_4 or likert_0_4). No more ordinal_AD or frequency_0_3.",
+      "v3: Added section, section_name, reference, notes fields per question.",
+      "v3: Added score_direction per question (higher_means_more_risk vs higher_means_more_protective).",
+      "v3: Added published_alpha, threshold values, and analytics_use notes to constructs block.",
+      "v3: Global screener items (Q24, Q33) flagged to exclude from Cronbach alpha.",
+      "v3: Ecology section flagged as conditional (only for victims)."
+    ]
+  },
+  "constructs": {
+    "demographic": {
+      "n_items": 7,
+      "alpha_computable": false,
+      "construct_role": "demographic",
+      "score_direction": "n/a",
+      "sections": [
+        "A"
+      ]
+    },
+    "clima_docente": {
+      "n_items": 4,
+      "alpha_computable": true,
+      "construct_role": "climate_protective",
+      "score_direction": "higher_means_more_protective",
+      "sections": [
+        "B"
+      ],
+      "reference": "ZERO-R Roland (2000, 2011); validated Stavanger trials (40-50% bullying reduction)",
+      "published_alpha": "Not specified — validate locally"
+    },
+    "normas_grupo": {
+      "n_items": 4,
+      "alpha_computable": true,
+      "construct_role": "climate_protective",
+      "score_direction": "higher_means_more_protective",
+      "sections": [
+        "C"
+      ],
+      "reference": "Bandura (1997); Roland & Galloway (2004); Salmivalli et al. (1996)",
+      "note": "Item 15 (zero_normas_intervencion_activa) measures behavior, not perception — consider separate subscale"
+    },
+    "victimizacion": {
+      "n_items": 9,
+      "alpha_computable": true,
+      "alpha_computable_note": "Exclude zero_victim_general (Q24 — global screener) from alpha calculation",
+      "construct_role": "victim_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "D"
+      ],
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021) CFI>.94 RMSEA<.08 alpha=.90-.95",
+      "published_alpha": "0.90–0.95 (Chile N=2775; Argentina)",
+      "threshold_monthly": 2,
+      "threshold_weekly": 3
+    },
+    "perpetracion": {
+      "n_items": 9,
+      "alpha_computable": true,
+      "alpha_computable_note": "Exclude zero_agresor_general (Q33 — global screener) from alpha calculation",
+      "construct_role": "perpetration_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "E"
+      ],
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021) alpha=.81-.95",
+      "published_alpha": "0.81–0.95 (Chile, Argentina)",
+      "note": "Social desirability bias inherent to self-report of aggression (Roland, 1993)"
+    },
+    "cybervictimizacion": {
+      "n_items": 3,
+      "alpha_computable": true,
+      "construct_role": "victim_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "F"
+      ],
+      "reference": "ECIP-Q Ortega-Ruiz et al. (2016); EBCIP-QB (2023) CFI>.98 RMSEA<.05 alpha>.80",
+      "published_alpha": ">0.80"
+    },
+    "cyberagresion": {
+      "n_items": 3,
+      "alpha_computable": true,
+      "construct_role": "perpetration_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "F"
+      ],
+      "reference": "ECIP-Q Ortega-Ruiz et al. (2016); Romera et al. (2018)",
+      "published_alpha": ">0.80"
+    },
+    "ecologia_espacios": {
+      "n_items": 8,
+      "alpha_computable": true,
+      "construct_role": "ecology_unsafe",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "G"
+      ],
+      "reference": "Bronfenbrenner (1979); Astor et al. (2004); Roland (2000); Ortega-Ruiz (2016)",
+      "note": "Conditional section — only answered by students who reported victimization (Q16-24) or cyberbullying (Q34-36). Treat missing as 'not applicable', not as zero.",
+      "analytics_use": "Rank locations by mean score to identify hotspots"
+    },
+    "apoyo_institucional": {
+      "n_items": 4,
+      "alpha_computable": true,
+      "construct_role": "institutional_support",
+      "score_direction": "higher_means_more_protective",
+      "sections": [
+        "H"
+      ],
+      "reference": "ZERO-R Roland (2000); Cohen & Wills (1985); Encuesta Mejoredu (2024)",
+      "note": "Low scores = silence flag risk. Cross-reference with victimizacion scores."
+    },
+    "impacto": {
+      "n_items": 4,
+      "alpha_computable": true,
+      "construct_role": "impact",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "I"
+      ],
+      "reference": "UAEMex (2012); Lucio López & Gómez Triana (2020); Encuesta Mejoredu (2024)",
+      "note": "Only meaningful for students who reported victimization. Consider filtering denominator."
+    }
+  },
+  "questions": [
+    {
+      "number": 1,
+      "question_id": "zero_general_curso",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿En qué curso estás?",
+      "options": [
+        {
+          "code": "1",
+          "text": "1° de secundaria"
+        },
+        {
+          "code": "2",
+          "text": "2° de secundaria"
+        },
+        {
+          "code": "3",
+          "text": "3° de secundaria"
+        },
+        {
+          "code": "4",
+          "text": "1° de preparatoria"
+        },
+        {
+          "code": "5",
+          "text": "2° de preparatoria"
+        },
+        {
+          "code": "6",
+          "text": "3° de preparatoria"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "question_id": "zero_general_edad",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿Cuántos años tienes?",
+      "options": [
+        {
+          "code": "12",
+          "text": "12"
+        },
+        {
+          "code": "13",
+          "text": "13"
+        },
+        {
+          "code": "14",
+          "text": "14"
+        },
+        {
+          "code": "15",
+          "text": "15"
+        },
+        {
+          "code": "16",
+          "text": "16"
+        },
+        {
+          "code": "17",
+          "text": "17"
+        },
+        {
+          "code": "18",
+          "text": "18 o más"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "question_id": "zero_general_genero",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿Con qué género te identificas?",
+      "options": [
+        {
+          "code": "F",
+          "text": "Mujer"
+        },
+        {
+          "code": "M",
+          "text": "Hombre"
+        },
+        {
+          "code": "O",
+          "text": "No binario"
+        },
+        {
+          "code": "N",
+          "text": "Prefiero no responder"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "question_id": "zero_general_lengua",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿En tu hogar se habla alguna lengua indígena?",
+      "notes": "Adaptación específica México — intersección con ítem 23 (discriminación por lengua)",
+      "options": [
+        {
+          "code": "S",
+          "text": "Sí"
+        },
+        {
+          "code": "N",
+          "text": "No"
+        },
+        {
+          "code": "P",
+          "text": "Prefiero no responder"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "question_id": "zero_general_orientacion",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿Cuál es tu orientación sexual?",
+      "notes": "Adaptación específica México",
+      "options": [
+        {
+          "code": "HET",
+          "text": "Heterosexual"
+        },
+        {
+          "code": "HOM",
+          "text": "Homosexual"
+        },
+        {
+          "code": "BI",
+          "text": "Bisexual"
+        },
+        {
+          "code": "ASEX",
+          "text": "Asexual"
+        },
+        {
+          "code": "NS",
+          "text": "No estoy seguro/a"
+        },
+        {
+          "code": "PNR",
+          "text": "Prefiero no responder"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "question_id": "zero_general_tiempo",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿Cuánto tiempo llevas en este centro educativo?",
+      "options": [
+        {
+          "code": "1",
+          "text": "Menos de 1 año"
+        },
+        {
+          "code": "2",
+          "text": "1-2 años"
+        },
+        {
+          "code": "3",
+          "text": "3-4 años"
+        },
+        {
+          "code": "4",
+          "text": "Más de 4 años"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "question_id": "zero_general_tipo_escuela",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿Qué tipo de escuela es esta?",
+      "notes": "Adaptación específica México — sistema educativo mexicano (SEP)",
+      "options": [
+        {
+          "code": "GEN",
+          "text": "General"
+        },
+        {
+          "code": "TEC",
+          "text": "Técnica"
+        },
+        {
+          "code": "PRIV",
+          "text": "Privada"
+        },
+        {
+          "code": "TELE",
+          "text": "Telesecundaria"
+        },
+        {
+          "code": "OTR",
+          "text": "Otra"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "question_id": "zero_clima_normas",
+      "section": "B",
+      "section_name": "Clima de Aula y Liderazgo del Tutor",
+      "construct": "clima_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Mi profesor/a jefe (tutor) explica claramente las normas de convivencia y las consecuencias de no cumplirlas",
+      "reference": "ZERO-R Roland (2000, 2011)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "question_id": "zero_clima_interviene",
+      "section": "B",
+      "section_name": "Clima de Aula y Liderazgo del Tutor",
+      "construct": "clima_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Mi profesor/a jefe (tutor) interviene de forma justa cuando alguien interrumpe la clase o molesta a otros",
+      "reference": "ZERO-R Roland (2000, 2011)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "question_id": "zero_clima_bienestar",
+      "section": "B",
+      "section_name": "Clima de Aula y Liderazgo del Tutor",
+      "construct": "clima_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Mi profesor/a jefe (tutor) se preocupa por nuestro bienestar y está disponible para ayudarnos",
+      "reference": "ZERO-R Roland (2000, 2011)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "question_id": "zero_clima_seguimiento",
+      "section": "B",
+      "section_name": "Clima de Aula y Liderazgo del Tutor",
+      "construct": "clima_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Mi profesor/a jefe (tutor) hace seguimiento de los problemas que le reportamos hasta que se resuelven",
+      "reference": "ZERO-R Roland (2000, 2011)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "question_id": "zero_normas_reaccion",
+      "section": "C",
+      "section_name": "Normas y Eficacia Grupal",
+      "construct": "normas_grupo",
+      "construct_role": "climate_protective",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Cuando alguien es agresivo en clase, los demás estudiantes intervienen para detener la situación",
+      "reference": "Bandura (1997); Roland & Galloway (2004)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "question_id": "zero_normas_popularidad",
+      "section": "C",
+      "section_name": "Normas y Eficacia Grupal",
+      "construct": "normas_grupo",
+      "construct_role": "climate_protective",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "En mi clase, los estudiantes amables y solidarios son más respetados que los agresivos",
+      "reference": "Bandura (1997); Roland & Galloway (2004)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "question_id": "zero_normas_defensa",
+      "section": "C",
+      "section_name": "Normas y Eficacia Grupal",
+      "construct": "normas_grupo",
+      "construct_role": "climate_protective",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Si defiendo a alguien que está siendo molestado, otros estudiantes me apoyan",
+      "reference": "Bandura (1997); Salmivalli et al. (1996)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "question_id": "zero_normas_intervencion_activa",
+      "section": "C",
+      "section_name": "Normas y Eficacia Grupal",
+      "construct": "normas_grupo",
+      "construct_role": "bystander_behavior",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_active",
+      "type": "single_choice",
+      "text": "Durante los últimos 2 meses, he intervenido para ayudar a alguien que estaba siendo molestado",
+      "reference": "Salmivalli et al. (1996)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "question_id": "zero_victima_agresion_fisica",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han golpeado, empujado o lastimado físicamente",
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "question_id": "zero_victima_amenazas",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han amenazado o intimidado",
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "question_id": "zero_victima_insultos",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han dicho cosas hirientes, insultos o bromas humillantes",
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "question_id": "zero_victima_rumores",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Han difundido rumores falsos sobre mí o han hablado mal de mí a mis espaldas",
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "question_id": "zero_victima_exclusion",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han excluido intencionalmente de grupos o actividades",
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "question_id": "zero_victima_robo_danos",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han robado o dañado mis cosas a propósito",
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "question_id": "zero_victima_coercion",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han obligado a hacer cosas contra mi voluntad",
+      "reference": "OBVQ-R Olweus (1996); Gaete et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "question_id": "zero_victima_discriminacion",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han molestado por mi apariencia, color de piel, religión, origen o lengua indígena",
+      "notes": "Adaptación específica México — lengua indígena (INEGI, 2017)",
+      "reference": "OBVQ-R adaptado; Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "question_id": "zero_victim_general",
+      "section": "D",
+      "section_name": "Victimización",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En general, ¿con qué frecuencia has sido víctima de bullying en la escuela?",
+      "notes": "Global item — used as single-item screener. NOT included in Cronbach alpha calculation to avoid item overlap.",
+      "reference": "OBVQ-R Olweus (1996)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "question_id": "zero_agresor_agresion_fisica",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He golpeado, empujado o lastimado físicamente a otros estudiantes",
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "question_id": "zero_agresor_amenazas",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He amenazado o intimidado a otros estudiantes",
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "question_id": "zero_agresor_insultos",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He dicho cosas hirientes, insultos o bromas humillantes a otros",
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "question_id": "zero_agresor_rumores",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He difundido rumores falsos sobre otros o hablado mal de ellos a sus espaldas",
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "question_id": "zero_agresor_exclusion",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He excluido intencionalmente a otros de grupos o actividades",
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "question_id": "zero_agresor_robo_danos",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He robado o dañado las cosas de otros a propósito",
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "question_id": "zero_agresor_coercion",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He obligado a otros a hacer cosas contra su voluntad",
+      "reference": "OBVQ-R Olweus (1996); Resett et al. (2021)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "question_id": "zero_agresor_discriminacion",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He molestado a otros por su apariencia, color de piel, religión, origen o lengua indígena",
+      "notes": "Adaptación específica México",
+      "reference": "OBVQ-R adaptado; Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "question_id": "zero_agresor_general",
+      "section": "E",
+      "section_name": "Agresión",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En general, ¿con qué frecuencia has hecho bullying a otros en la escuela?",
+      "notes": "Global item — single-item screener for perpetration. NOT included in Cronbach alpha calculation.",
+      "reference": "OBVQ-R Olweus (1996)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca en los últimos 2 meses"
+        },
+        {
+          "code": "1",
+          "text": "Ha pasado 1 o 2 veces"
+        },
+        {
+          "code": "2",
+          "text": "2 o 3 veces al mes"
+        },
+        {
+          "code": "3",
+          "text": "Más o menos 1 vez por semana"
+        },
+        {
+          "code": "4",
+          "text": "Varias veces por semana"
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "question_id": "zero_cyber_victima_mensajes",
+      "section": "F",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He recibido mensajes o comentarios hirientes por WhatsApp, Facebook, Instagram, TikTok u otras redes",
+      "notes": "Adaptación específica México — plataformas locales",
+      "reference": "ECIP-Q Ortega-Ruiz et al. (2016); Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "question_id": "zero_cyber_victima_fotos",
+      "section": "F",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Han publicado o compartido fotos, videos o contenido en línea para humillarme o burlarse de mí",
+      "reference": "ECIP-Q Ortega-Ruiz et al. (2016)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "question_id": "zero_cyber_victima_visto",
+      "section": "F",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Me han dejado en 'visto' o leído sin responder en WhatsApp o Messenger como forma de ignorarme o excluirme",
+      "notes": "Adaptación específica México — 'dejar en visto' como exclusión digital",
+      "reference": "ECIP-Q adaptado; Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "question_id": "zero_cyber_agresor_mensajes",
+      "section": "F",
+      "section_name": "Cyberbullying",
+      "construct": "cyberagresion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He enviado mensajes hirientes o comentarios para burlarme de alguien por redes sociales o WhatsApp",
+      "notes": "Adaptación específica México",
+      "reference": "ECIP-Q Ortega-Ruiz et al. (2016)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "question_id": "zero_cyber_agresor_exclusion",
+      "section": "F",
+      "section_name": "Cyberbullying",
+      "construct": "cyberagresion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He excluido a alguien intencionalmente de grupos de WhatsApp, Facebook, Discord o redes sociales",
+      "notes": "Adaptación específica México",
+      "reference": "ECIP-Q Ortega-Ruiz et al. (2016)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "question_id": "zero_cyber_agresor_visto",
+      "section": "F",
+      "section_name": "Cyberbullying",
+      "construct": "cyberagresion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He dejado en 'visto' o leído sin responder a alguien como forma de ignorarlo o excluirlo",
+      "notes": "Adaptación específica México",
+      "reference": "ECIP-Q adaptado",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "question_id": "zero_ecologia_aula",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En el aula durante las clases",
+      "reference": "Bronfenbrenner (1979); Astor et al. (2004); Roland (2000)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "question_id": "zero_ecologia_patio",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En el patio o áreas de recreo",
+      "reference": "Roland (2000); Astor et al. (2004)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "question_id": "zero_ecologia_pasillos_banos",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En pasillos, escaleras o baños",
+      "reference": "Astor et al. (2004)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "question_id": "zero_ecologia_entrada_salida",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En la entrada/salida de la escuela o calles cercanas",
+      "reference": "Astor et al. (2004)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "question_id": "zero_ecologia_transporte",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En el transporte escolar (camión, combi, metro, etc.)",
+      "notes": "Adaptación específica México — transporte escolar mexicano",
+      "reference": "Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "question_id": "zero_ecologia_casa_companeros",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En la casa de compañeros (para hacer tareas o reuniones)",
+      "notes": "Adaptación específica México",
+      "reference": "Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "question_id": "zero_ecologia_cafeteria",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En la cafetería o comedor escolar",
+      "reference": "Astor et al. (2004)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "question_id": "zero_ecologia_online",
+      "section": "G",
+      "section_name": "Ecología del Bullying",
+      "construct": "ecologia_espacios",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "En línea (WhatsApp, Facebook, Instagram, TikTok, juegos, etc.)",
+      "notes": "Adaptación específica México — extensión digital de Ortega-Ruiz (2016)",
+      "reference": "Ortega-Ruiz et al. (2016); Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "question_id": "zero_apoyo_reporte_efectivo",
+      "section": "H",
+      "section_name": "Respuesta Institucional y Recursos de Apoyo",
+      "construct": "apoyo_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Cuando reporto problemas a un adulto de la escuela, recibo ayuda efectiva",
+      "reference": "ZERO-R Roland (2000); Cohen & Wills (1985)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 49,
+      "question_id": "zero_apoyo_resolucion",
+      "section": "H",
+      "section_name": "Respuesta Institucional y Recursos de Apoyo",
+      "construct": "apoyo_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Las situaciones de bullying que reporto se resuelven adecuadamente",
+      "reference": "ZERO-R Roland (2000); Cohen & Wills (1985)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "question_id": "zero_apoyo_orientador",
+      "section": "H",
+      "section_name": "Respuesta Institucional y Recursos de Apoyo",
+      "construct": "apoyo_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "El orientador educativo de mi escuela está disponible para apoyarme cuando lo necesito",
+      "notes": "Adaptación específica México — orientador educativo (Encuesta Mejoredu, 2024)",
+      "reference": "Encuesta Mejoredu (2024)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 51,
+      "question_id": "zero_apoyo_conoce_recurso",
+      "section": "H",
+      "section_name": "Respuesta Institucional y Recursos de Apoyo",
+      "construct": "apoyo_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "Conozco a quién acudir en la escuela si experimento bullying o cyberbullying",
+      "reference": "ZERO-R Roland (2000)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 52,
+      "question_id": "zero_impacto_rendimiento",
+      "section": "I",
+      "section_name": "Impacto y Consecuencias",
+      "construct": "impacto",
+      "construct_role": "impact",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "El bullying que he experimentado me ha afectado en mi rendimiento escolar",
+      "reference": "UAEMex (2012); Lucio López & Gómez Triana (2020); Encuesta Mejoredu (2024)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "question_id": "zero_impacto_emocional",
+      "section": "I",
+      "section_name": "Impacto y Consecuencias",
+      "construct": "impacto",
+      "construct_role": "impact",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "El bullying que he experimentado me ha hecho sentir tristeza o desesperanza",
+      "reference": "UAEMex (2012); Lucio López & Gómez Triana (2020)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "question_id": "zero_impacto_evitar_escuela",
+      "section": "I",
+      "section_name": "Impacto y Consecuencias",
+      "construct": "impacto",
+      "construct_role": "impact",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "El bullying que he experimentado me ha hecho pensar en no querer ir a la escuela",
+      "reference": "UAEMex (2012); Encuesta Mejoredu (2024)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    },
+    {
+      "number": 55,
+      "question_id": "zero_impacto_buscar_ayuda",
+      "section": "I",
+      "section_name": "Impacto y Consecuencias",
+      "construct": "impacto",
+      "construct_role": "impact",
+      "scale_type": "likert_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "He considerado buscar ayuda profesional (psicólogo, psiquiatra) por el bullying que experimento",
+      "reference": "Encuesta Mejoredu (2024); SEP (2024)",
+      "options": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "A menudo"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ]
+    }
+  ]
+}
