@@ -1562,7 +1562,7 @@ async function loadApprovedAnalyses() {
   alert('🔍 Step 1: Starting to load analyses...\nSchool ID: ' + window.sessionState.school_id);
   
   try {
-    const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
+    const res = await fetch('/api/api_list_analyses', { credentials: 'include' });
     
     alert('🔍 Step 2: Got response\nStatus: ' + res.status);
     
@@ -1720,6 +1720,7 @@ btnViewSelectedAnalysis?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
