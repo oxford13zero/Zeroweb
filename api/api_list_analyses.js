@@ -1,7 +1,4 @@
-// ===================================================================
-// /api/list-approved-analyses - GET ALL APPROVED ANALYSES FOR SCHOOL
-// ===================================================================
-
+// /api/list-approved-analyses
 app.get('/api/list-approved-analyses', async (req, res) => {
   if (!req.session || !req.session.ok || !req.session.school_id) {
     return res.status(401).json({ ok: false, error: 'No autenticado' });
@@ -10,32 +7,34 @@ app.get('/api/list-approved-analyses', async (req, res) => {
   const schoolId = req.session.school_id;
 
   try {
-    // Query: Get all approved analyses grouped by analysis_requested_dt
+    // Query approved analyses
     const { data, error } = await supabase
       .from('survey_responses')
       .select('school_id, analysis_requested_dt, analysis_approved_at, submitted_at')
       .eq('school_id', schoolId)
       .eq('status', 'submitted')
-      .eq('analysis_approved', true)
+      .eq('analysis_approved', true)  // Only approved
       .not('analysis_requested_dt', 'is', null);
 
     if (error) {
-      console.error('Error fetching approved analyses:', error);
+      console.error('Supabase error:', error);
       return res.status(500).json({ 
         ok: false, 
-        error: 'Error al obtener análisis: ' + error.message 
+        error: 'Error en base de datos: ' + error.message 
       });
     }
+
+    console.log(`Found ${data ? data.length : 0} rows for school_id ${schoolId}`);
 
     if (!data || data.length === 0) {
       return res.json({ 
         ok: true, 
         analyses: [],
-        message: 'No hay análisis aprobados disponibles'
+        message: 'No hay análisis aprobados'
       });
     }
 
-    // Group by analysis_requested_dt and calculate stats
+    // Group by analysis_requested_dt
     const analysesMap = {};
 
     data.forEach(row => {
@@ -53,7 +52,7 @@ app.get('/api/list-approved-analyses', async (req, res) => {
 
       analysesMap[dt].total_students += 1;
 
-      // Track earliest and latest submission dates
+      // Track date range
       if (row.submitted_at) {
         if (!analysesMap[dt].earliest_response || row.submitted_at < analysesMap[dt].earliest_response) {
           analysesMap[dt].earliest_response = row.submitted_at;
@@ -64,10 +63,12 @@ app.get('/api/list-approved-analyses', async (req, res) => {
       }
     });
 
-    // Convert to array and sort by most recent first
+    // Convert to array and sort
     const analyses = Object.values(analysesMap).sort((a, b) => {
       return new Date(b.analysis_date) - new Date(a.analysis_date);
     });
+
+    console.log(`Returning ${analyses.length} grouped analyses`);
 
     return res.json({ 
       ok: true, 
@@ -76,10 +77,10 @@ app.get('/api/list-approved-analyses', async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Error in /api/list-approved-analyses:', err);
+    console.error('Unexpected error:', err);
     return res.status(500).json({ 
       ok: false, 
-      error: 'Error interno: ' + err.message 
+      error: 'Error del servidor: ' + err.message 
     });
   }
 });
