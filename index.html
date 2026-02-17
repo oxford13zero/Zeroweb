@@ -203,11 +203,12 @@
   right: 20px;
   z-index: 10000;
   background: transparent;
-  color: #D6A21C;
-  border: none;
+  color: #7a8e9e;
+  border: 2px solid #7a8e9e;
+  border-radius: 50%;
   width: 50px;
   height: 50px;
-  font-size: 32px;
+  font-size: 24px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -216,11 +217,13 @@
 }
 
 .adminIcon:hover {
-  transform: scale(1.2);
-  color: #f0b91c;
+  border-color: #D6A21C;
+  color: #D6A21C;
+  transform: scale(1.1);
 }
 
 .adminIcon.authenticated {
+  border-color: #4CAF50;
   color: #4CAF50;
 }
 
@@ -1976,6 +1979,7 @@ checkAdminSession();
 
 </body>
 </html>
+
 
 
 
