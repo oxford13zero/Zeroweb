@@ -1,47 +1,59 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+function parseCookies(cookieHeader = "") {
+  const out = {};
+  cookieHeader.split(";").forEach(part => {
+    const [k, ...v] = part.trim().split("=");
+    if (!k) return;
+    out[k] = decodeURIComponent(v.join("=") || "");
+  });
+  return out;
+}
 
 export default async function handler(req, res) {
   console.log('========================================');
   console.log('API CALLED: list-approved-analyses');
-  console.log('Method:', req.method);
-  console.log('Has session?', !!req.session);
-  console.log('School ID:', req.session?.school_id);
-  console.log('========================================');
-
-  // Allow GET only
+  
+  // Only allow GET
   if (req.method !== 'GET') {
-    console.log('❌ Wrong method');
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  // Check session
-  if (!req.session || !req.session.ok || !req.session.school_id) {
-    console.log('❌ No valid session');
-    return res.status(401).json({ ok: false, error: 'No autenticado' });
-  }
-
-  const schoolId = req.session.school_id;
-  console.log('✅ School ID:', schoolId);
-
   try {
-    console.log('Starting query...');
-    
+    // Parse cookies to get school_id
+    const cookies = parseCookies(req.headers.cookie || "");
+    const school_id = cookies["t4z_session"];
+
+    console.log('Cookie school_id:', school_id);
+
+    if (!school_id) {
+      console.log('❌ No session cookie');
+      return res.status(401).json({ ok: false, error: 'No autenticado' });
+    }
+
+    // Initialize Supabase
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+    if (!SUPABASE_URL || !SUPABASE_KEY) {
+      console.error('❌ Missing Supabase credentials');
+      return res.status(500).json({ ok: false, error: 'Configuración incorrecta' });
+    }
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { 
+      auth: { persistSession: false } 
+    });
+
+    console.log('✅ Querying approved analyses for school_id:', school_id);
+
+    // Query approved analyses
     const { data, error } = await supabase
       .from('survey_responses')
       .select('school_id, analysis_requested_dt, analysis_approved_at, submitted_at')
-      .eq('school_id', schoolId)
+      .eq('school_id', school_id)
       .eq('status', 'submitted')
       .eq('analysis_approved', true)
       .not('analysis_requested_dt', 'is', null);
-
-    console.log('Query completed');
-    console.log('Error?', error);
-    console.log('Data rows:', data?.length);
 
     if (error) {
       console.error('❌ Supabase error:', error);
@@ -51,16 +63,16 @@ export default async function handler(req, res) {
       });
     }
 
+    console.log(`✅ Found ${data?.length || 0} rows`);
+
     if (!data || data.length === 0) {
-      console.log('⚠️ No data found');
+      console.log('No approved analyses found');
       return res.json({ 
         ok: true, 
         analyses: [],
         message: 'No hay análisis aprobados'
       });
     }
-
-    console.log(`✅ Found ${data.length} rows, grouping...`);
 
     // Group by analysis_requested_dt
     const analysesMap = {};
@@ -90,26 +102,22 @@ export default async function handler(req, res) {
       }
     });
 
+    // Convert to array and sort by most recent first
     const analyses = Object.values(analysesMap).sort((a, b) => {
       return new Date(b.analysis_date) - new Date(a.analysis_date);
     });
 
-    console.log(`✅ Returning ${analyses.length} analyses`);
-    console.log('First analysis:', JSON.stringify(analyses[0]));
-
-    const response = { 
-      ok: true, 
-      analyses: analyses,
-      school_id: schoolId
-    };
-
+    console.log(`✅ Returning ${analyses.length} grouped analyses`);
     console.log('========================================');
 
-    return res.json(response);
+    return res.json({ 
+      ok: true, 
+      analyses: analyses,
+      school_id: school_id
+    });
 
   } catch (err) {
     console.error('❌ Unexpected error:', err);
-    console.error('Stack:', err.stack);
     return res.status(500).json({ 
       ok: false, 
       error: 'Error del servidor: ' + err.message 
