@@ -1935,7 +1935,7 @@ btnAdminLogin?.addEventListener('click', async () => {
     closeAdminModal();
     
     // Show success message
-    alert(`✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}`);
+    alert('✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}');
 
   } catch (e) {
     adminLoginMsg.textContent = 'Connection error';
@@ -1979,6 +1979,7 @@ checkAdminSession();
 
 </body>
 </html>
+
 
 
 
