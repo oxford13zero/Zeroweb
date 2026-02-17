@@ -195,6 +195,52 @@
       color:#D6A21C;
       font-weight:700;
     }
+
+/* Admin icon - top right corner */
+.adminIcon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  background: #D6A21C;
+  color: #16222D;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adminIcon:hover {
+  background: #f0b91c;
+  transform: scale(1.1);
+}
+
+.adminIcon.authenticated {
+  background: #4CAF50;
+}
+
+/* Admin buttons in navbar */
+.adminNavButtons {
+  display: none;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.adminNavButtons.show {
+  display: flex;
+}
+
+
+
+
+
     
   </style>
 
@@ -214,6 +260,13 @@
   <p>EDUCATION+IA</p>
 </header>
 
+<!-- ADMIN ICON - Top Right Corner -->
+<button id="adminIcon" class="adminIcon" type="button" title="Admin Access">
+  🔐
+</button>
+
+
+  
 <nav>
   <a href="#" onclick="showTab('home'); return false;">INICIO</a>
   <a href="#" onclick="showTab('programa'); return false;">PROGRAMA</a>
@@ -639,9 +692,51 @@ Portland, Oregon</p>
   </div>
 </div>
 
-// codigo nuevo ventana modal para elegir encuesta 02/17/2026
+<!-- MODAL: ADMIN LOGIN -->
+<div id="adminModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:450px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">🔐 Admin Access</h3>
+      <button id="adminModalClose" class="modalClose" type="button">X</button>
+    </div>
 
-<!-- ADD THIS MODAL AFTER THE PRIVACY MODAL (around line 770) -->
+    <!-- LOGGED OUT STATE -->
+    <div id="adminLoginForm" style="display:block;">
+      <div class="formPanel" style="margin-top:10px; max-width:100%;">
+        <div class="fieldBlock">
+          <label for="adminUsername" class="fieldLabel">Username</label><br />
+          <input id="adminUsername" class="textInput" type="text" placeholder="admin" autocomplete="off" />
+        </div>
+
+        <div class="fieldBlock">
+          <label for="adminPassword" class="fieldLabel">Password</label><br />
+          <input id="adminPassword" class="textInput" type="password" placeholder="Password" />
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+          <button id="btnAdminLogin" class="btnPrimary" type="button">Login</button>
+          <button id="btnAdminCancel" class="btnSecondary" type="button">Cancel</button>
+        </div>
+
+        <div id="adminLoginMsg" class="statusMsg statusErr"></div>
+      </div>
+    </div>
+
+    <!-- LOGGED IN STATE -->
+    <div id="adminLoggedIn" style="display:none;">
+      <div style="padding:20px; text-align:center;">
+        <div class="statusMsg statusOk" id="adminWelcomeMsg">Welcome, Admin!</div>
+        
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; justify-content:center;">
+          <button id="btnAdminLogout" class="btnSecondary" type="button">Logout</button>
+          <button id="btnAdminClose" class="btnPrimary" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <!-- MODAL: SELECT ANALYSIS TO VIEW -->
 <div id="selectAnalysisModal" class="modalOverlay">
@@ -1702,13 +1797,188 @@ btnViewSelectedAnalysis?.addEventListener('click', () => {
   
   window.location.href = url;
 });
+// === ADMIN LOGIN SYSTEM ===
+window.adminState = { authenticated: false, username: null, role: null };
 
+const adminIcon = document.getElementById('adminIcon');
+const adminModal = document.getElementById('adminModal');
+const adminModalClose = document.getElementById('adminModalClose');
+const adminLoginForm = document.getElementById('adminLoginForm');
+const adminLoggedIn = document.getElementById('adminLoggedIn');
+const adminNavButtons = document.getElementById('adminNavButtons');
+
+const adminUsername = document.getElementById('adminUsername');
+const adminPassword = document.getElementById('adminPassword');
+const btnAdminLogin = document.getElementById('btnAdminLogin');
+const btnAdminCancel = document.getElementById('btnAdminCancel');
+const btnAdminLogout = document.getElementById('btnAdminLogout');
+const btnAdminClose = document.getElementById('btnAdminClose');
+const adminLoginMsg = document.getElementById('adminLoginMsg');
+const adminWelcomeMsg = document.getElementById('adminWelcomeMsg');
+
+// Check admin session on page load
+async function checkAdminSession() {
+  try {
+    const res = await fetch('/api/admin-me', { credentials: 'include' });
+    const data = await res.json().catch(() => ({}));
+    
+    if (data.ok && data.admin) {
+      window.adminState = {
+        authenticated: true,
+        username: data.admin.username,
+        role: data.admin.role
+      };
+      updateAdminUI();
+    } else {
+      window.adminState = { authenticated: false, username: null, role: null };
+      updateAdminUI();
+    }
+  } catch (e) {
+    console.error('Admin session check failed:', e);
+  }
+}
+
+function updateAdminUI() {
+  if (window.adminState.authenticated) {
+    // Change icon to green
+    adminIcon.classList.add('authenticated');
+    adminIcon.title = `Admin: ${window.adminState.username}`;
+    
+    // Show admin buttons in navbar
+    if (adminNavButtons) {
+      adminNavButtons.classList.add('show');
+    }
+  } else {
+    // Reset icon
+    adminIcon.classList.remove('authenticated');
+    adminIcon.title = 'Admin Access';
+    
+    // Hide admin buttons
+    if (adminNavButtons) {
+      adminNavButtons.classList.remove('show');
+    }
+  }
+}
+
+function openAdminModal() {
+  if (window.adminState.authenticated) {
+    // Show logged in view
+    adminLoginForm.style.display = 'none';
+    adminLoggedIn.style.display = 'block';
+    adminWelcomeMsg.textContent = `Welcome, ${window.adminState.username}!`;
+  } else {
+    // Show login form
+    adminLoginForm.style.display = 'block';
+    adminLoggedIn.style.display = 'none';
+    adminUsername.value = '';
+    adminPassword.value = '';
+    adminLoginMsg.textContent = '';
+  }
+  
+  adminModal.style.display = 'flex';
+  setTimeout(() => adminUsername?.focus(), 100);
+}
+
+function closeAdminModal() {
+  adminModal.style.display = 'none';
+}
+
+// Event listeners
+adminIcon?.addEventListener('click', openAdminModal);
+adminModalClose?.addEventListener('click', closeAdminModal);
+btnAdminCancel?.addEventListener('click', closeAdminModal);
+btnAdminClose?.addEventListener('click', closeAdminModal);
+
+adminModal?.addEventListener('click', (e) => {
+  if (e.target === adminModal) closeAdminModal();
+});
+
+// Admin login
+btnAdminLogin?.addEventListener('click', async () => {
+  const username = adminUsername?.value?.trim() || '';
+  const password = adminPassword?.value?.trim() || '';
+
+  if (!username || !password) {
+    adminLoginMsg.textContent = 'Please enter username and password';
+    return;
+  }
+
+  try {
+    adminLoginMsg.textContent = 'Authenticating...';
+    btnAdminLogin.disabled = true;
+
+    const res = await fetch('/api/admin-login', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data.ok) {
+      adminLoginMsg.textContent = data.error || 'Login failed';
+      btnAdminLogin.disabled = false;
+      return;
+    }
+
+    // Success
+    window.adminState = {
+      authenticated: true,
+      username: data.admin.username,
+      role: data.admin.role
+    };
+
+    adminLoginMsg.textContent = '';
+    updateAdminUI();
+    closeAdminModal();
+    
+    // Show success message
+    alert(`✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}`);
+
+  } catch (e) {
+    adminLoginMsg.textContent = 'Connection error';
+    console.error('Admin login error:', e);
+  } finally {
+    btnAdminLogin.disabled = false;
+  }
+});
+
+// Admin logout
+btnAdminLogout?.addEventListener('click', async () => {
+  try {
+    await fetch('/api/admin-logout', {
+      method: 'POST',
+      credentials: 'include'
+    });
+
+    window.adminState = { authenticated: false, username: null, role: null };
+    updateAdminUI();
+    closeAdminModal();
+    
+    alert('✅ Logged out successfully');
+
+  } catch (e) {
+    console.error('Logout error:', e);
+  }
+});
+
+// Password field - Enter key to login
+adminPassword?.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    btnAdminLogin?.click();
+  }
+});
+
+// Check admin session on page load
+checkAdminSession();
 
   
 </script>
 
 </body>
 </html>
+
 
 
 
