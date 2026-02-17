@@ -1559,16 +1559,16 @@ async function loadApprovedAnalyses() {
   analysesEmpty.style.display = 'none';
   analysesList.innerHTML = '';
   
-  alert('🔍 Step 1: Starting to load analyses...\nSchool ID: ' + window.sessionState.school_id);
+  alert('Step 1: Starting to load analyses...\nSchool ID: ' + window.sessionState.school_id);
   
   try {
-    const res = await fetch('/api/api_list_analyses', { credentials: 'include' });
+    const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
     
-    alert('🔍 Step 2: Got response\nStatus: ' + res.status);
+    alert('Step 2: Got response\nStatus: ' + res.status);
     
     const data = await res.json().catch(() => ({}));
     
-    alert('🔍 Step 3: Parsed JSON\nData: ' + JSON.stringify(data, null, 2));
+    alert('Step 3: Parsed JSON\nData: ' + JSON.stringify(data, null, 2));
     
     if (!res.ok || !data.ok) {
       alert('❌ API Error: ' + (data.error || 'Unknown error'));
@@ -1577,15 +1577,15 @@ async function loadApprovedAnalyses() {
     
     analysesLoading.style.display = 'none';
     
-    alert('🔍 Step 4: Number of analyses: ' + (data.analyses?.length || 0));
+    alert('Step 4: Number of analyses: ' + (data.analyses?.length || 0));
     
     if (!data.analyses || data.analyses.length === 0) {
-      alert('⚠️ No analyses found - showing empty message');
+      alert('No analyses found - showing empty message');
       analysesEmpty.style.display = 'block';
       return;
     }
     
-    alert('✅ Rendering ' + data.analyses.length + ' analyses');
+    alert('Rendering ' + data.analyses.length + ' analyses');
     renderAnalysesList(data.analyses);
     
   } catch (e) {
@@ -1720,6 +1720,7 @@ btnViewSelectedAnalysis?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
