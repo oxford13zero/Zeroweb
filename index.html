@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <!-- ESTE CODIGO FUNCIONA -->
   <title>TECH4ZERO – Educational Designs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -147,59 +146,55 @@
 
     .navAccess { margin-left: 40px; }
 
-.video-container {
-  position: relative;
-  width: 65%;           /* <-- 80% = 20% más pequeño */
-  padding-top: 45%;     /* mantiene proporción aproximada */
-  margin: 16px auto;    /* centra el video */
-  border-radius: 12px;
-  overflow: hidden;
-}
+    .video-container {
+      position: relative;
+      width: 65%;
+      padding-top: 45%;
+      margin: 16px auto;
+      border-radius: 12px;
+      overflow: hidden;
+    }
 
-.video-container iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-    /* Alinear texto con el ancho del video (ahora tu video es 65%) */
-.programa-content{
-  width: 65%;
-  margin: 0 auto;
-}
+    .video-container iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
 
-/* Opcional: que el texto/bullets no queden pegados al borde */
-.programa-content p,
-.programa-content ul,
-.programa-content .nota{
-  margin-left: 0;
-  margin-right: 0;
-}
+    .programa-content{
+      width: 65%;
+      margin: 0 auto;
+    }
 
-/* Celular: texto y video a 100% */
-@media (max-width: 768px){
-  .programa-content{
-    width: 100%;
-  }
+    .programa-content p,
+    .programa-content ul,
+    .programa-content .nota{
+      margin-left: 0;
+      margin-right: 0;
+    }
 
-  .video-container{
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 en mobile */
-  }
-}
+    @media (max-width: 768px){
+      .programa-content{
+        width: 100%;
+      }
 
+      .video-container{
+        width: 100%;
+        padding-top: 56.25%;
+      }
+    }
 
-    /* Bullets Programa: números en amarillo (igual que títulos) */
-.bullets-programa .num{
-  color:#D6A21C;
-  font-weight:800;          /* opcional, para que destaque */
-  font-size: calc(1em + 1px); /* +1px aprox */
-}
+    .bullets-programa .num{
+      color:#D6A21C;
+      font-weight:800;
+      font-size: calc(1em + 1px);
+    }
 
     .highlight {
-  color:#D6A21C;
-  font-weight:700;
-}
+      color:#D6A21C;
+      font-weight:700;
+    }
     
   </style>
 
@@ -223,7 +218,6 @@
   <a href="#" onclick="showTab('home'); return false;">INICIO</a>
   <a href="#" onclick="showTab('programa'); return false;">PROGRAMA</a>
   <a href="#" onclick="showTab('encuesta'); return false;">ENCUESTA</a>
-  <!-- <a href="#" onclick="showTab('datos'); return false;">DATOS</a> -->
   <a href="#" onclick="showTab('resultados'); return false;">RESULTADOS</a>
   <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
   <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
@@ -281,10 +275,8 @@ te entregamos un perfil completo de tu escuela, junto con un plan de intervenci�
     <li><span class="num">92%</span> de docentes reportan mayor confianza para identificar señales tempranas</li>
   </ul>
 
-  <!-- Si quieres, puedes dejar tus <br> aquí -->
   <br><br>
 </div>
-
 
     <!-- VIDEO1 -->
 <div class="video-container">
@@ -318,7 +310,6 @@ te entregamos un perfil completo de tu escuela, junto con un plan de intervenci�
     allowfullscreen>
   </iframe>
 </div>
-
 
     
     <p class="nota">
@@ -505,16 +496,9 @@ te entregamos un perfil completo de tu escuela, junto con un plan de intervenci�
         </div>
         <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">
           Consultor senior en datos, inteligencia artificial y tecnología, modernizando y asegurando sistemas de 
-          misión crítica en los sectores de educación, salud y minería.Experto en interacción humano-tecnologíca en entornos de alto riesgo.
+          misión crítica en los sectores de educación, salud y minería. Experto en interacción humano-tecnologíca en entornos de alto riesgo.
         </p>
       </div>
-    </div>
-
-    <!-- Responsive (móvil) -->
-    <div style="margin-top:12px; color:#a9c0d3; font-size:12px;">
-      <script>
-        // No es necesario, pero si quieres: puedes eliminar este script.
-      </script>
     </div>
   </div>
 </section>
@@ -551,7 +535,6 @@ Portland, Oregon</p>
         <textarea id="c_mensaje" class="textInput" rows="6" placeholder="Escribe tu mensaje..."></textarea>
       </div>
 
-      <!-- Honeypot anti-bots (debe quedar vacío) -->
       <input id="c_company" type="text" style="display:none" tabindex="-1" autocomplete="off" />
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
@@ -560,12 +543,6 @@ Portland, Oregon</p>
       </div>
 
       <div id="contactoMsg" class="statusMsg statusWarn"></div>
-
-<!--
-<p style="margin-top:12px; opacity:0.85;">
-  Email directo: <b>contacto@tech4zero.org</b>
-</p>
--->
     </div>
   </div>
 </section>
@@ -613,8 +590,57 @@ Portland, Oregon</p>
   </div>
 </div>
 
+<!-- MODAL: PRIVACIDAD ENCUESTA -->
+<div id="privacyModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:580px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">🔒 Tu privacidad está protegida</h3>
+    </div>
+
+    <div style="padding:8px 0;">
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;">
+          <strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>
+        </p>
+        
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+          ✅ <strong>No guardamos tu nombre</strong> – La encuesta no pregunta quién eres ni registra datos que te identifiquen.
+        </p>
+        
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+          ✅ <strong>Tus respuestas son privadas</strong> – Nadie (ni profesores, ni directores, ni otros estudiantes) puede saber qué respondiste.
+        </p>
+        
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+          ✅ <strong>Los resultados se analizan en grupo</strong> – Solo se usan estadísticas generales para mejorar el ambiente escolar.
+        </p>
+        
+        <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
+          <em>Tu sinceridad ayuda a crear una escuela más segura para todos. Gracias por participar.</em>
+        </p>
+      </div>
+
+      <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
+          <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
+          <span>He leído y entiendo que esta encuesta es anónima y confidencial</span>
+        </label>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
+          Continuar con la encuesta
+        </button>
+        <button id="btnPrivacyCancel" class="btnSecondary" type="button">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  // === DEBUG: mostrar errores JS sin consola ===
+  // === DEBUG ===
   window.onerror = function (msg, src, line, col) {
     alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
   };
@@ -624,9 +650,7 @@ Portland, Oregon</p>
     alert('PROMISE ERROR: ' + msg);
   };
 
-  // =========================
-  // SESSION STATE GLOBAL
-  // =========================
+  // === SESSION STATE ===
   window.sessionState = { ok:false, school_id:null, school_name:null };
 
   const sessionBadge = document.getElementById('sessionBadge');
@@ -705,9 +729,7 @@ Portland, Oregon</p>
     }
   }
 
-  // =========================
-  // MODAL LOGIN / LOGOUT
-  // =========================
+  // === MODAL LOGIN ===
   const globalModal = document.getElementById('globalModal');
   const modalClose = document.getElementById('modalClose');
 
@@ -747,7 +769,6 @@ Portland, Oregon</p>
     globalModal.style.display = 'none';
   }
 
-  // ✅ Asegurar que el botón funcione siempre
   btnAccesoUsuarios?.addEventListener('click', openModal);
   modalClose?.addEventListener('click', closeModal);
   btnCerrarModal1?.addEventListener('click', closeModal);
@@ -799,13 +820,44 @@ Portland, Oregon</p>
     await refreshSession();
   });
 
-  // =========================
-  // ACCIONES ENCUESTA
-  // =========================
+  // === MODAL PRIVACIDAD ===
+  const privacyModal = document.getElementById('privacyModal');
+  const privacyAccept = document.getElementById('privacyAccept');
+  const btnPrivacyContinue = document.getElementById('btnPrivacyContinue');
+  const btnPrivacyCancel = document.getElementById('btnPrivacyCancel');
+
+  function openPrivacyModal() {
+    if (privacyAccept) privacyAccept.checked = false;
+    if (btnPrivacyContinue) btnPrivacyContinue.disabled = true;
+    privacyModal.style.display = 'flex';
+  }
+
+  function closePrivacyModal() {
+    privacyModal.style.display = 'none';
+  }
+
+  privacyAccept?.addEventListener('change', (e) => {
+    if (btnPrivacyContinue) {
+      btnPrivacyContinue.disabled = !e.target.checked;
+    }
+  });
+
+  btnPrivacyContinue?.addEventListener('click', async () => {
+    closePrivacyModal();
+    await showSurveyUI();
+  });
+
+  btnPrivacyCancel?.addEventListener('click', closePrivacyModal);
+
+  privacyModal?.addEventListener('click', (e) => {
+    if (e.target === privacyModal) closePrivacyModal();
+  });
+
+  // === ACCIONES ENCUESTA ===
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    await showSurveyUI();
+    openPrivacyModal(); // NUEVO: Mostrar modal de privacidad
   });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
@@ -873,9 +925,7 @@ Portland, Oregon</p>
     window.location.href = url;
   });
 
-  // =========================
-  // DATOS: Supabase REST read (sin cambios)
-  // =========================
+  // === DATOS ===
   const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
   const SUPABASE_ANON_KEY = "REEMPLAZA_AQUI_SI_CAMBIA";
 
@@ -974,18 +1024,11 @@ Portland, Oregon</p>
     await loadCurrent();
   };
 
-  // ================================
-  // ENCUESTA: FIX PRINCIPAL (UUIDs + external_id)
-  // ================================
-  
-  //const SURVEY_UUID = "d43cddec-0693-4d03-a6f4-31b73e44b31f"; // tu survey real en supabase
-  //const SURVEY_CODE = "SURVEY_001";
+  // === ENCUESTA ===
   let SURVEY_UUID = null;
-  
-  
   let SURVEY = null;
   let currentQuestionIndex = 0;
-  let QUESTION_ID_MAP = {}; // number -> question_uuid (db)
+  let QUESTION_ID_MAP = {};
   window.currentResponseId = null;
 
   const OPTIONS_CACHE = {};
@@ -1036,7 +1079,6 @@ Portland, Oregon</p>
   }
 
   function getExternalIdFromSurveyQuestion(q) {
-    // en tu JSON nuevo, question_id es el external_id (ej: zero_general_curso)
     return (q && typeof q.question_id === 'string') ? q.question_id : '';
   }
 
@@ -1052,20 +1094,17 @@ Portland, Oregon</p>
     const dbQid = getDbQuestionIdByNumber(question.number);
     const ext = getExternalIdFromSurveyQuestion(question);
 
-    // Si es single_choice: SIEMPRE usamos opciones desde Supabase y guardamos UUID (option_id)
     if (question.type === 'single_choice') {
       if (!dbQid) {
         optionsDiv.innerHTML = `<div class="statusMsg statusErr">No se pudo resolver questionId (DB) para la pregunta #${question.number}.</div>`;
         return;
       }
 
-      // Demográficas: select
       if (isDemographicExternalId(ext)) {
-        // NEW — no label, just select with placeholder
-       optionsDiv.innerHTML = `
-        <select id="answerSelect" class="textInput">
-        <option value="">Cargando...</option>
-        </select>
+        optionsDiv.innerHTML = `
+          <select id="answerSelect" class="textInput">
+            <option value="">Cargando...</option>
+          </select>
         `;
 
         (async () => {
@@ -1074,18 +1113,14 @@ Portland, Oregon</p>
             const sel = document.getElementById("answerSelect");
             if (!sel) return;
 
-            
-// NEW — use question text as placeholder
-const q = SURVEY.questions[currentQuestionIndex];
-const placeholder = q.text || "-- Selecciona --";
-sel.innerHTML =
-  `<option value="">${placeholder}</option>` +
-  opts.map(o => {
-    const txt = (o.option_text ?? o.option_code ?? "").toString();
-    return `<option value="${o.id}">${txt}</option>`;
-  }).join("");
-
-            
+            const q = SURVEY.questions[currentQuestionIndex];
+            const placeholder = q.text || "-- Selecciona --";
+            sel.innerHTML =
+              `<option value="">${placeholder}</option>` +
+              opts.map(o => {
+                const txt = (o.option_text ?? o.option_code ?? "").toString();
+                return `<option value="${o.id}">${txt}</option>`;
+              }).join("");
           } catch (e) {
             optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
           }
@@ -1097,7 +1132,6 @@ sel.innerHTML =
         return;
       }
 
-      // No-demográficas: radios, pero con value=UUID (option_id)
       optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
 
       (async () => {
@@ -1128,7 +1162,6 @@ sel.innerHTML =
       return;
     }
 
-    // fallback por si existieran text
     if (question.type === 'text') {
       optionsDiv.innerHTML =
         `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
@@ -1157,16 +1190,15 @@ sel.innerHTML =
 
       if (isDemographicExternalId(ext)) {
         const v = document.getElementById('answerSelect')?.value || "";
-        if (v) selectedOptionIds = [v]; // UUID de option
+        if (v) selectedOptionIds = [v];
       } else {
         const checked = document.querySelector('input[name="answer"]:checked');
-        if (checked) selectedOptionIds = [checked.value]; // UUID de option
+        if (checked) selectedOptionIds = [checked.value];
       }
     } else if (q.type === 'text') {
       answerText = document.getElementById('answerText')?.value?.trim() || null;
     }
 
-    // required por defecto: true si no existe en JSON
     const required = (q.required === undefined) ? true : !!q.required;
 
     if (required) {
@@ -1184,8 +1216,6 @@ sel.innerHTML =
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
-
-      
     });
 
     const raw = await r.text();
@@ -1198,7 +1228,8 @@ sel.innerHTML =
     }
     return true;
   }
-async function showSurveyUI() {
+
+  async function showSurveyUI() {
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
     if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
 
@@ -1246,7 +1277,6 @@ async function showSurveyUI() {
     currentQuestionIndex = 0;
     renderCurrentQuestion();
   }
-
 
   document.getElementById('btnQPrev')?.addEventListener('click', () => {
     if (!SURVEY) return;
@@ -1298,17 +1328,14 @@ async function showSurveyUI() {
     alert('Encuesta finalizada.');
   });
 
-  // Inicial
   refreshSession();
 
-  // =========================
-  // CONTACTO: enviar email vía /api/contact (Resend)
-  // =========================
+  // === CONTACTO ===
   const cNombre = document.getElementById('c_nombre');
   const cEmail  = document.getElementById('c_email');
   const cAsunto = document.getElementById('c_asunto');
   const cMensaje= document.getElementById('c_mensaje');
-  const cCompany= document.getElementById('c_company'); // honeypot
+  const cCompany= document.getElementById('c_company');
   const btnEnviarContacto = document.getElementById('btnEnviarContacto');
   const btnLimpiarContacto = document.getElementById('btnLimpiarContacto');
   const contactoMsg = document.getElementById('contactoMsg');
@@ -1334,14 +1361,13 @@ async function showSurveyUI() {
     const email = cEmail?.value?.trim() || '';
     const subject = cAsunto?.value?.trim() || '';
     const message = cMensaje?.value?.trim() || '';
-    const hp = cCompany?.value?.trim() || ''; // honeypot
+    const hp = cCompany?.value?.trim() || '';
 
     if (!name || !email || !subject || !message) {
       setContactoMsg('Por favor completa nombre, email, asunto y mensaje.', 'statusWarn');
       return;
     }
 
-    // Validación simple de email
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setContactoMsg('Email inválido. Revisa el formato.', 'statusWarn');
       return;
@@ -1374,67 +1400,7 @@ async function showSurveyUI() {
       btnEnviarContacto.disabled = false;
     }
   });
-
-
-  
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
