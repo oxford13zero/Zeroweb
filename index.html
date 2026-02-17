@@ -206,9 +206,9 @@
   color: #7a8e9e;
   border: 2px solid #7a8e9e;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
+  width: 40px;         /* Changed from 50px (20% smaller) */
+  height: 40px;        /* Changed from 50px (20% smaller) */
+  font-size: 20px;     /* Changed from 24px (proportional) */
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -238,7 +238,26 @@
   display: flex;
 }
 
+/* Admin buttons styling - yellow circle borders */
+#btnAddSchool,
+#btnApproveSurvey {
+  background-color: #1E2F3F;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 2px solid #D6A21C;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
+#btnAddSchool:hover,
+#btnApproveSurvey:hover {
+  background-color: #D6A21C;
+  color: #16222D;
+}
 
 
 
@@ -1851,6 +1870,13 @@ function updateAdminUI() {
     adminIcon.classList.add('authenticated');
     adminIcon.title = `Admin: ${window.adminState.username}`;
     
+    // Update session badge to show Admin
+    if (sessionBadge) {
+      sessionBadge.textContent = `Admin: ${window.adminState.username}`;
+      sessionBadge.classList.remove('badgeNo');
+      sessionBadge.classList.add('badgeOk');
+    }
+    
     // Show admin buttons in navbar
     if (adminNavButtons) {
       adminNavButtons.classList.add('show');
@@ -1859,6 +1885,13 @@ function updateAdminUI() {
     // Reset icon
     adminIcon.classList.remove('authenticated');
     adminIcon.title = 'Admin Access';
+    
+    // Reset session badge if no school session
+    if (!window.sessionState.ok && sessionBadge) {
+      sessionBadge.textContent = 'No autenticado';
+      sessionBadge.classList.remove('badgeOk');
+      sessionBadge.classList.add('badgeNo');
+    }
     
     // Hide admin buttons
     if (adminNavButtons) {
@@ -1985,6 +2018,7 @@ checkAdminSession();
 
 </body>
 </html>
+
 
 
 
