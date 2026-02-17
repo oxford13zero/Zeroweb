@@ -1041,26 +1041,18 @@ Portland, Oregon</p>
     }
   });
 
-  btnMostrarResultados?.addEventListener('click', async () => {
-    if (!window.sessionState.ok) { openModal(); return; }
+// NEW CODE - Open selection modal instead
+btnMostrarResultados?.addEventListener('click', async () => {
+  if (!window.sessionState.ok) { 
+    openModal(); 
+    return; 
+  }
+  
+  // Open selection modal
+  openSelectAnalysisModal();
+});
 
-    const latestRes = await fetch('/api/results-latest-analysis', { credentials:'include' });
-    const latest = await latestRes.json().catch(() => ({}));
-
-    if (!latestRes.ok || !latest.ok) {
-      alert(`No se pudo obtener el último análisis: ${latest.error || 'sin detalle'}`);
-      return;
-    }
-
-    if (!latest.analysis_dt) {
-      alert('Aún no hay un análisis solicitado para esta escuela.');
-      return;
-    }
-
-    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
-    const url = `${baseUrl}?school_id=${encodeURIComponent(latest.school_id)}&analysis_dt=${encodeURIComponent(latest.analysis_dt)}`;
-    window.location.href = url;
-  });
+  
 
   // === DATOS ===
   const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
@@ -1537,10 +1529,183 @@ Portland, Oregon</p>
       btnEnviarContacto.disabled = false;
     }
   });
+
+// === ANALYSIS SELECTION MODAL ===
+const selectAnalysisModal = document.getElementById('selectAnalysisModal');
+const selectAnalysisClose = document.getElementById('selectAnalysisClose');
+const analysesLoading = document.getElementById('analysesLoading');
+const analysesEmpty = document.getElementById('analysesEmpty');
+const analysesList = document.getElementById('analysesList');
+const btnViewSelectedAnalysis = document.getElementById('btnViewSelectedAnalysis');
+const btnCancelSelectAnalysis = document.getElementById('btnCancelSelectAnalysis');
+
+let selectedAnalysisData = null;
+
+function openSelectAnalysisModal() {
+  selectAnalysisModal.style.display = 'flex';
+  loadApprovedAnalyses();
+}
+
+function closeSelectAnalysisModal() {
+  selectAnalysisModal.style.display = 'none';
+  analysesList.innerHTML = '';
+  selectedAnalysisData = null;
+  if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = true;
+}
+
+async function loadApprovedAnalyses() {
+  // Show loading
+  analysesLoading.style.display = 'block';
+  analysesEmpty.style.display = 'none';
+  analysesList.innerHTML = '';
+  
+  try {
+    const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
+    const data = await res.json().catch(() => ({}));
+    
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || 'Error al cargar análisis');
+    }
+    
+    analysesLoading.style.display = 'none';
+    
+    if (!data.analyses || data.analyses.length === 0) {
+      analysesEmpty.style.display = 'block';
+      return;
+    }
+    
+    // Render analyses list
+    renderAnalysesList(data.analyses);
+    
+  } catch (e) {
+    analysesLoading.style.display = 'none';
+    analysesEmpty.style.display = 'block';
+    console.error('Error loading analyses:', e);
+  }
+}
+
+function renderAnalysesList(analyses) {
+  analysesList.innerHTML = '';
+  
+  analyses.forEach((analysis, index) => {
+    const card = document.createElement('div');
+    card.className = 'analysisCard';
+    
+    // Format dates
+    const analysisDate = formatDateTime(analysis.analysis_date);
+    const dateRange = formatDateRange(analysis.earliest_response, analysis.latest_response);
+    
+    card.innerHTML = `
+      <label>
+        <input 
+          type="radio" 
+          name="selectedAnalysis" 
+          value="${analysis.analysis_date}"
+          data-analysis='${JSON.stringify(analysis)}'
+        />
+        <div class="analysisInfo">
+          <div class="analysisDate">${analysisDate}</div>
+          <div class="analysisStats">
+            <div class="analysisStat">
+              <span class="statLabel">👥 Estudiantes:</span>
+              <span class="statValue">${analysis.total_students}</span>
+            </div>
+            <div class="analysisStat">
+              <span class="statLabel">📅 Rango:</span>
+              <span class="statValue">${dateRange}</span>
+            </div>
+            <span class="statusBadge">✅ Aprobado</span>
+          </div>
+        </div>
+      </label>
+    `;
+    
+    // Add click handler
+    const radio = card.querySelector('input[type="radio"]');
+    radio.addEventListener('change', (e) => {
+      // Update selected state visually
+      document.querySelectorAll('.analysisCard').forEach(c => c.classList.remove('selected'));
+      if (e.target.checked) {
+        card.classList.add('selected');
+        selectedAnalysisData = JSON.parse(e.target.dataset.analysis);
+        if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = false;
+      }
+    });
+    
+    // Make entire card clickable
+    card.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'INPUT') {
+        radio.click();
+      }
+    });
+    
+    analysesList.appendChild(card);
+  });
+}
+
+function formatDateTime(isoString) {
+  if (!isoString) return 'N/A';
+  try {
+    const date = new Date(isoString);
+    const options = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return date.toLocaleDateString('es-MX', options);
+  } catch (e) {
+    return isoString;
+  }
+}
+
+function formatDateRange(earliest, latest) {
+  if (!earliest || !latest) return 'N/A';
+  try {
+    const start = new Date(earliest);
+    const end = new Date(latest);
+    
+    const startStr = start.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+    const endStr = end.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+    
+    if (startStr === endStr) {
+      return startStr;
+    }
+    
+    return `${startStr} - ${endStr}`;
+  } catch (e) {
+    return 'N/A';
+  }
+}
+
+// Modal controls
+selectAnalysisClose?.addEventListener('click', closeSelectAnalysisModal);
+btnCancelSelectAnalysis?.addEventListener('click', closeSelectAnalysisModal);
+
+selectAnalysisModal?.addEventListener('click', (e) => {
+  if (e.target === selectAnalysisModal) closeSelectAnalysisModal();
+});
+
+btnViewSelectedAnalysis?.addEventListener('click', () => {
+  if (!selectedAnalysisData) {
+    alert('Por favor selecciona un análisis');
+    return;
+  }
+  
+  const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
+  const url = `${baseUrl}?school_id=${encodeURIComponent(window.sessionState.school_id)}&analysis_dt=${encodeURIComponent(selectedAnalysisData.analysis_date)}`;
+  
+  window.location.href = url;
+});
+
+
+  
 </script>
 
 </body>
 </html>
+
 
 
 
