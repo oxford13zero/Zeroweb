@@ -24,7 +24,7 @@ app.get('/api/list-approved-analyses', async (req, res) => {
       });
     }
 
-    console.log(`Found ${data ? data.length : 0} rows for school_id ${schoolId}`);
+    console.log('Found ${data ? data.length : 0} rows for school_id ${schoolId}');
 
     if (!data || data.length === 0) {
       return res.json({ 
@@ -68,7 +68,7 @@ app.get('/api/list-approved-analyses', async (req, res) => {
       return new Date(b.analysis_date) - new Date(a.analysis_date);
     });
 
-    console.log(`Returning ${analyses.length} grouped analyses`);
+    console.log('Returning ${analyses.length} grouped analyses');
 
     return res.json({ 
       ok: true, 
