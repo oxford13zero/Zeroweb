@@ -202,15 +202,13 @@
   top: 20px;
   right: 20px;
   z-index: 10000;
-  background: #D6A21C;
-  color: #16222D;
+  background: transparent;
+  color: #D6A21C;
   border: none;
-  border-radius: 50%;
   width: 50px;
   height: 50px;
-  font-size: 24px;
+  font-size: 32px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
@@ -218,12 +216,12 @@
 }
 
 .adminIcon:hover {
-  background: #f0b91c;
-  transform: scale(1.1);
+  transform: scale(1.2);
+  color: #f0b91c;
 }
 
 .adminIcon.authenticated {
-  background: #4CAF50;
+  color: #4CAF50;
 }
 
 /* Admin buttons in navbar */
@@ -1978,6 +1976,7 @@ checkAdminSession();
 
 </body>
 </html>
+
 
 
 
