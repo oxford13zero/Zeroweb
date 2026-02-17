@@ -639,6 +639,143 @@ Portland, Oregon</p>
   </div>
 </div>
 
+// codigo nuevo ventana modal para elegir encuesta 02/17/2026
+
+<!-- ADD THIS MODAL AFTER THE PRIVACY MODAL (around line 770) -->
+
+<!-- MODAL: SELECT ANALYSIS TO VIEW -->
+<div id="selectAnalysisModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:700px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">📊 Seleccionar Análisis</h3>
+      <button id="selectAnalysisClose" class="modalClose" type="button">X</button>
+    </div>
+
+    <div style="padding:8px 0;">
+      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
+        Selecciona el análisis que deseas visualizar:
+      </p>
+
+      <!-- Loading state -->
+      <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
+        <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
+        <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
+          <p style="margin:0; font-size:15px; color:#ffdca8;">
+            No hay análisis aprobados disponibles.
+          </p>
+          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
+            Solicite un análisis o espere la aprobación.
+          </p>
+        </div>
+      </div>
+
+      <!-- List of analyses -->
+      <div id="analysesList" style="max-height:400px; overflow-y:auto; margin-bottom:16px;"></div>
+
+      <!-- Action buttons -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>
+          Ver Análisis Seleccionado
+        </button>
+        <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Analysis card styles */
+.analysisCard {
+  background: #1E2F3F;
+  border: 2px solid #365468;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.analysisCard:hover {
+  border-color: #D6A21C;
+  background: #243A4B;
+}
+
+.analysisCard.selected {
+  border-color: #D6A21C;
+  background: #243A4B;
+  box-shadow: 0 0 0 2px rgba(214, 162, 28, 0.2);
+}
+
+.analysisCard label {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.analysisCard input[type="radio"] {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.analysisInfo {
+  flex: 1;
+}
+
+.analysisDate {
+  font-size: 16px;
+  font-weight: 700;
+  color: #D6A21C;
+  margin-bottom: 6px;
+}
+
+.analysisStats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: #a9c0d3;
+}
+
+.analysisStat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.statLabel {
+  color: #7a8e9e;
+}
+
+.statValue {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #b9ffcf;
+  color: #0f1d27;
+}
+</style>  
+
+
+// end codigio nuevo 02/17/2026
+  
 <script>
   // === DEBUG ===
   window.onerror = function (msg, src, line, col) {
@@ -1404,6 +1541,7 @@ Portland, Oregon</p>
 
 </body>
 </html>
+
 
 
 
