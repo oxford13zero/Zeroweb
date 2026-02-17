@@ -946,18 +946,24 @@ Portland, Oregon</p>
   }
 
   function applySessionToUI() {
-    const ok = window.sessionState.ok;
-    const schoolName = window.sessionState.school_name || '';
+  const ok = window.sessionState.ok;
+  const schoolName = window.sessionState.school_name || '';
 
-    if (ok) {
-      sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
-      sessionBadge.classList.remove('badgeNo');
-      sessionBadge.classList.add('badgeOk');
-    } else {
-      sessionBadge.textContent = 'No autenticado';
-      sessionBadge.classList.remove('badgeOk');
-      sessionBadge.classList.add('badgeNo');
-    }
+  // PRIORITY: If admin is authenticated, show admin badge instead of school
+  if (window.adminState && window.adminState.authenticated) {
+    sessionBadge.textContent = `Admin: ${window.adminState.username}`;
+    sessionBadge.classList.remove('badgeNo');
+    sessionBadge.classList.add('badgeOk');
+  } else if (ok) {
+    // Show school session only if admin is not logged in
+    sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
+    sessionBadge.classList.remove('badgeNo');
+    sessionBadge.classList.add('badgeOk');
+  } else {
+    sessionBadge.textContent = 'No autenticado';
+    sessionBadge.classList.remove('badgeOk');
+    sessionBadge.classList.add('badgeNo');
+  }
 
     if (schoolWelcome) {
       schoolWelcome.textContent = ok
@@ -2032,6 +2038,7 @@ checkAdminSession();
 
 </body>
 </html>
+
 
 
 
