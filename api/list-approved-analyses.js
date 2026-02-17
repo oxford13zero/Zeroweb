@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  console.log('🔍 list-approved-analyses called');
+  console.log('list-approved-analyses called');
 
   // Check session
   if (!req.session || !req.session.ok || !req.session.school_id) {
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
   console.log('✅ School ID:', schoolId);
 
   try {
-    console.log('🔍 Querying database...');
+    console.log('Querying database...');
     
     const { data, error } = await supabase
       .from('survey_responses')
@@ -98,4 +98,5 @@ module.exports = async (req, res) => {
       error: 'Error del servidor: ' + err.message 
     });
   }
+
 };
