@@ -245,7 +245,7 @@
   color: white;
   padding: 8px 18px;
   border-radius: 20px;
-  border: 2px solid #D6A21C;
+  border: 1px solid rgba(214, 162, 28, 0.4);  /* Thinner, more transparent */
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -1855,6 +1855,13 @@ async function checkAdminSession() {
         role: data.admin.role
       };
       updateAdminUI();
+      
+      // IMPORTANT: Update session badge to show admin, overriding school session
+      if (sessionBadge) {
+        sessionBadge.textContent = `Admin: ${data.admin.username}`;
+        sessionBadge.classList.remove('badgeNo');
+        sessionBadge.classList.add('badgeOk');
+      }
     } else {
       window.adminState = { authenticated: false, username: null, role: null };
       updateAdminUI();
@@ -1962,19 +1969,26 @@ btnAdminLogin?.addEventListener('click', async () => {
       return;
     }
 
-    // Success
-    window.adminState = {
-      authenticated: true,
-      username: data.admin.username,
-      role: data.admin.role
-    };
+// Success
+window.adminState = {
+  authenticated: true,
+  username: data.admin.username,
+  role: data.admin.role
+};
 
-    adminLoginMsg.textContent = '';
-    updateAdminUI();
-    closeAdminModal();
-    
-    // Show success message
-    alert('✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}');
+adminLoginMsg.textContent = '';
+updateAdminUI();
+
+// Update session badge immediately
+if (sessionBadge) {
+  sessionBadge.textContent = `Admin: ${data.admin.username}`;
+  sessionBadge.classList.remove('badgeNo');
+  sessionBadge.classList.add('badgeOk');
+}
+
+closeAdminModal();
+
+alert('✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}');
 
   } catch (e) {
     adminLoginMsg.textContent = 'Connection error';
@@ -2018,6 +2032,7 @@ checkAdminSession();
 
 </body>
 </html>
+
 
 
 
