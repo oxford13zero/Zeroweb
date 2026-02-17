@@ -1559,37 +1559,26 @@ async function loadApprovedAnalyses() {
   analysesEmpty.style.display = 'none';
   analysesList.innerHTML = '';
   
-  alert('Step 1: Starting to load analyses...\nSchool ID: ' + window.sessionState.school_id);
-  
   try {
     const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
-    
-    alert('Step 2: Got response\nStatus: ' + res.status);
-    
     const data = await res.json().catch(() => ({}));
     
-    alert('Step 3: Parsed JSON\nData: ' + JSON.stringify(data, null, 2));
-    
     if (!res.ok || !data.ok) {
-      alert('❌ API Error: ' + (data.error || 'Unknown error'));
       throw new Error(data.error || 'Error al cargar análisis');
     }
     
     analysesLoading.style.display = 'none';
     
-    alert('Step 4: Number of analyses: ' + (data.analyses?.length || 0));
-    
     if (!data.analyses || data.analyses.length === 0) {
-      alert('No analyses found - showing empty message');
       analysesEmpty.style.display = 'block';
       return;
     }
     
-    alert('Rendering ' + data.analyses.length + ' analyses');
+    // Render analyses list
     renderAnalysesList(data.analyses);
     
   } catch (e) {
-    alert('❌ Exception caught: ' + e.message);
+    console.error('Error loading analyses:', e);
     analysesLoading.style.display = 'none';
     analysesEmpty.style.display = 'block';
   }
@@ -1720,6 +1709,7 @@ btnViewSelectedAnalysis?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
