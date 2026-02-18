@@ -38,30 +38,32 @@ export default async function handler(req, res) {
       auth: { persistSession: false }
     });
 
-    // Approve the survey - ONLY 2 COLUMNS
+    // Reject the survey - clear analysis AND set status back to in_progress
     const { data, error } = await supabase
       .from('survey_responses')
       .update({
-        analysis_approved: true,
-        analysis_approved_at: new Date().toISOString()
+        analysis_requested_dt: null,
+        analysis_approved: false,
+        analysis_approved_at: null,
+        status: 'in_progress'  // ← ADDED THIS
       })
       .eq('school_id', school_id)
       .eq('analysis_requested_dt', analysis_dt)
       .eq('status', 'submitted');
 
     if (error) {
-      console.error('Approve error:', error);
+      console.error('Reject error:', error);
       return res.status(500).json({
         ok: false,
         error: 'Database error: ' + error.message
       });
     }
 
-    console.log(`✅ Approved survey for school ${school_id}, analysis ${analysis_dt}`);
+    console.log(`✅ Rejected survey for school ${school_id}, analysis ${analysis_dt} - set status to in_progress`);
 
     return res.json({
       ok: true,
-      message: 'Survey approved successfully'
+      message: 'Survey rejected successfully'
     });
 
   } catch (err) {
