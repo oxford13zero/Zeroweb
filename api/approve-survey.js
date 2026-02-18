@@ -19,7 +19,6 @@ export default async function handler(req, res) {
     // Check admin session
     const cookies = parseCookies(req.headers.cookie || "");
     const admin_id = cookies["t4z_admin_session"];
-    const admin_username = cookies["t4z_admin_username"];
 
     if (!admin_id) {
       return res.status(401).json({ ok: false, error: 'Admin authentication required' });
@@ -39,13 +38,12 @@ export default async function handler(req, res) {
       auth: { persistSession: false }
     });
 
-    // Approve the survey
+    // Approve the survey - ONLY the 2 columns you have
     const { data, error } = await supabase
       .from('survey_responses')
       .update({
         analysis_approved: true,
-        analysis_approved_at: new Date().toISOString(),
-        analysis_approved_by: admin_username || admin_id
+        analysis_approved_at: new Date().toISOString()
       })
       .eq('school_id', school_id)
       .eq('analysis_requested_dt', analysis_dt)
