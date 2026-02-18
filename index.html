@@ -2258,20 +2258,20 @@ function renderPendingSurveys(surveys) {
 
     card.innerHTML = `
       <div class="surveyHeader">
-        <div class="surveySchoolName">🏫 ${survey.school_name}</div>
+        <div class="surveySchoolName">${survey.school_name}</div>
       </div>
 
       <div class="surveyMeta">
         <div class="surveyMetaItem">
-          <span style="color:#7a8e9e;">👥 Students:</span>
+          <span style="color:#7a8e9e;">Students:</span>
           <span style="color:#fff; font-weight:600;">${survey.total_students}</span>
         </div>
         <div class="surveyMetaItem">
-          <span style="color:#7a8e9e;">📅 Requested:</span>
+          <span style="color:#7a8e9e;">Requested:</span>
           <span style="color:#fff;">${analysisDate}</span>
         </div>
         <div class="surveyMetaItem">
-          <span style="color:#7a8e9e;">📊 Range:</span>
+          <span style="color:#7a8e9e;">Range:</span>
           <span style="color:#fff;">${dateRange}</span>
         </div>
       </div>
@@ -2281,10 +2281,10 @@ function renderPendingSurveys(surveys) {
           ✅ Approve
         </button>
         <button class="btnReject" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">
-          ❌ Reject
+          Reject
         </button>
         <button class="btnPreview" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">
-          👁️ Preview
+          Preview
         </button>
       </div>
     `;
@@ -2415,6 +2415,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
