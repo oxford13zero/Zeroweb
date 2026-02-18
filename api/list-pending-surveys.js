@@ -41,10 +41,10 @@ export default async function handler(req, res) {
 
     console.log('✅ Querying pending surveys...');
 
-    // Get all pending surveys (not approved)
+    // Get all pending surveys (not approved) - ONLY 2 COLUMNS
     const { data, error } = await supabase
       .from('survey_responses')
-      .select('school_id, analysis_requested_dt, analysis_completed_at, submitted_at')
+      .select('school_id, analysis_requested_dt, submitted_at')
       .eq('status', 'submitted')
       .eq('analysis_approved', false)
       .not('analysis_requested_dt', 'is', null);
@@ -77,7 +77,6 @@ export default async function handler(req, res) {
         pendingMap[key] = {
           school_id: row.school_id,
           analysis_date: row.analysis_requested_dt,
-          completed_at: row.analysis_completed_at,
           total_students: 0,
           earliest_response: row.submitted_at,
           latest_response: row.submitted_at
@@ -98,7 +97,7 @@ export default async function handler(req, res) {
 
     const pending = Object.values(pendingMap);
 
-    // Get school names for each pending survey
+    // Get school names
     const schoolIds = [...new Set(pending.map(p => p.school_id))];
     
     const { data: schools, error: schoolError } = await supabase
