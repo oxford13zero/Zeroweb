@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  console.log('🔍 list-pending-surveys called');
+  console.log('list-pending-surveys called');
 
   try {
     // Check admin session
@@ -140,3 +140,4 @@ export default async function handler(req, res) {
     });
   }
 }
+
