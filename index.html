@@ -2281,7 +2281,7 @@ function renderPendingSurveys(surveys) {
           Approve
         </button>
         <button class="btnReject" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">
-          Reject
+          Re-open
         </button>
         <button class="btnPreview" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">
           Preview
@@ -2363,11 +2363,11 @@ async function rejectSurvey(schoolId, analysisDate, schoolName) {
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok || !data.ok) {
-      alert('Failed to reject: ' + (data.error || 'Unknown error'));
+      alert('Failed to re-open: ' + (data.error || 'Unknown error'));
       return;
     }
 
-    alert(`❌ Survey rejected for ${schoolName}`);
+    alert(`❌ Survey re-open for ${schoolName}`);
 
     // Remove card from list
     const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
@@ -2381,7 +2381,7 @@ async function rejectSurvey(schoolId, analysisDate, schoolName) {
     }
 
   } catch (e) {
-    console.error('Reject error:', e);
+    console.error('Re-open error:', e);
     alert('Error rejecting survey');
   }
 }
@@ -2415,6 +2415,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
