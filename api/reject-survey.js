@@ -59,11 +59,11 @@ export default async function handler(req, res) {
       });
     }
 
-    console.log(`✅ Rejected survey for school ${school_id}, analysis ${analysis_dt} - set status to in_progress`);
+    console.log('Re-opened survey for school ${school_id}, analysis ${analysis_dt} - set status to in_progress');
 
     return res.json({
       ok: true,
-      message: 'Survey rejected successfully'
+      message: 'Survey re-opened successfully'
     });
 
   } catch (err) {
@@ -74,3 +74,4 @@ export default async function handler(req, res) {
     });
   }
 }
+
