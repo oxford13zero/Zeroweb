@@ -1,0 +1,364 @@
+{
+  "survey_code": "SURVEY_003_PRIMARIA",
+  "survey_uuid": "uuid-primaria-002",
+  "title": "Mi Escuela y Yo 🏫",
+  "description": "Queremos saber cómo te sientes en la escuela",
+  "target_grades": "1-6",
+  "based_on": "SURVEY_003 (TECH4ZERO-MX v1.0) - Adapted for elementary students",
+  "application_time": "15-20 minutes with teacher support",
+  "total_questions": 35,
+  "note": "Questions simplified for 1st grade comprehension (6-7 years). Teacher should read aloud for grades 1-2.",
+  "questions": [
+    {
+      "number": 1,
+      "text": "¿Cómo te sientes cuando estás en la escuela? 😊",
+      "type": "single_choice",
+      "question_id": "primaria_sentimiento_general",
+      "required": true,
+      "help_text": "Piensa en cómo te sientes la mayoría de los días"
+    },
+    {
+      "number": 2,
+      "text": "¿Te gusta venir a la escuela? 🎒",
+      "type": "single_choice",
+      "question_id": "primaria_gusto_escuela",
+      "required": true
+    },
+    {
+      "number": 3,
+      "text": "¿Tienes amigos en la escuela? 👫",
+      "type": "single_choice",
+      "question_id": "primaria_tiene_amigos",
+      "required": true
+    },
+    {
+      "number": 4,
+      "text": "¿Algún niño o niña te ha molestado? 😟",
+      "type": "single_choice",
+      "question_id": "primaria_victima_bullying",
+      "required": true,
+      "help_text": "Por ejemplo: te pega, te quita cosas, te dice cosas feas, no te deja jugar"
+    },
+    {
+      "number": 5,
+      "text": "Si alguien te molesta, ¿cuántas veces pasa? 📅",
+      "type": "single_choice",
+      "question_id": "primaria_frecuencia_victima",
+      "required": true,
+      "conditional": {
+        "show_if": {
+          "question": 4,
+          "answer_contains": "sí"
+        }
+      }
+    },
+    {
+      "number": 6,
+      "text": "¿Dónde te molestan más? 📍",
+      "type": "single_choice",
+      "question_id": "primaria_lugar_victimizacion",
+      "required": true,
+      "conditional": {
+        "show_if": {
+          "question": 4,
+          "answer_contains": "sí"
+        }
+      }
+    },
+    {
+      "number": 7,
+      "text": "¿Le has contado a alguien cuando te molestan? 🗣️",
+      "type": "single_choice",
+      "question_id": "primaria_reporta_adulto",
+      "required": true,
+      "conditional": {
+        "show_if": {
+          "question": 4,
+          "answer_contains": "sí"
+        }
+      }
+    },
+    {
+      "number": 8,
+      "text": "¿Has visto cuando molestan a otros niños? 👀",
+      "type": "single_choice",
+      "question_id": "primaria_testigo_bullying",
+      "required": true
+    },
+    {
+      "number": 9,
+      "text": "Cuando ves que molestan a otro niño, ¿qué haces? 🤔",
+      "type": "single_choice",
+      "question_id": "primaria_accion_testigo",
+      "required": true,
+      "conditional": {
+        "show_if": {
+          "question": 8,
+          "answer_contains": "sí"
+        }
+      }
+    },
+    {
+      "number": 10,
+      "text": "¿Te sientes seguro en la escuela? 🛡️",
+      "type": "single_choice",
+      "question_id": "primaria_seguridad_escuela",
+      "required": true
+    },
+    {
+      "number": 11,
+      "text": "¿Te sientes seguro en el recreo? 🏃",
+      "type": "single_choice",
+      "question_id": "primaria_seguridad_recreo",
+      "required": true
+    },
+    {
+      "number": 12,
+      "text": "¿Te sientes seguro en el baño? 🚻",
+      "type": "single_choice",
+      "question_id": "primaria_seguridad_bano",
+      "required": true
+    },
+    {
+      "number": 13,
+      "text": "¿Tus maestros te cuidan y te ayudan? 👨‍🏫👩‍🏫",
+      "type": "single_choice",
+      "question_id": "primaria_apoyo_maestros",
+      "required": true
+    },
+    {
+      "number": 14,
+      "text": "¿Tus maestros paran a los niños que molestan a otros? ✋",
+      "type": "single_choice",
+      "question_id": "primaria_intervencion_maestros",
+      "required": true
+    },
+    {
+      "number": 15,
+      "text": "¿Hay reglas claras sobre cómo portarse en la escuela? 📋",
+      "type": "single_choice",
+      "question_id": "primaria_claridad_reglas",
+      "required": true
+    },
+    {
+      "number": 16,
+      "text": "¿Las reglas son justas para todos? ⚖️",
+      "type": "single_choice",
+      "question_id": "primaria_justicia_reglas",
+      "required": true
+    },
+    {
+      "number": 17,
+      "text": "¿Los niños mayores te tratan bien? 🤝",
+      "type": "single_choice",
+      "question_id": "primaria_relacion_mayores",
+      "required": true,
+      "help_text": "Los niños de grados más grandes"
+    },
+    {
+      "number": 18,
+      "text": "¿Usas internet, tablet o celular en la escuela? 📱",
+      "type": "single_choice",
+      "question_id": "primaria_uso_tecnologia",
+      "required": true
+    },
+    {
+      "number": 19,
+      "text": "¿Alguien te ha molestado por internet o WhatsApp? 💬",
+      "type": "single_choice",
+      "question_id": "primaria_ciberbullying_victima",
+      "required": true,
+      "conditional": {
+        "show_if": {
+          "question": 18,
+          "answer_contains": "sí"
+        }
+      }
+    },
+    {
+      "number": 20,
+      "text": "¿Te gusta ayudar a otros niños? 🤗",
+      "type": "single_choice",
+      "question_id": "primaria_conducta_prosocial",
+      "required": true
+    },
+    {
+      "number": 21,
+      "text": "¿Compartes tus cosas con tus compañeros? 🎁",
+      "type": "single_choice",
+      "question_id": "primaria_compartir",
+      "required": true
+    },
+    {
+      "number": 22,
+      "text": "¿Te enojas fácilmente en la escuela? 😤",
+      "type": "single_choice",
+      "question_id": "primaria_control_emocional",
+      "required": true
+    },
+    {
+      "number": 23,
+      "text": "Cuando estás enojado, ¿qué haces? 🌡️",
+      "type": "single_choice",
+      "question_id": "primaria_manejo_enojo",
+      "required": true
+    },
+    {
+      "number": 24,
+      "text": "¿Te sientes triste en la escuela? 😢",
+      "type": "single_choice",
+      "question_id": "primaria_estado_animo",
+      "required": true
+    },
+    {
+      "number": 25,
+      "text": "¿Hay algún lugar en la escuela donde NO te gusta estar? 🚫",
+      "type": "single_choice",
+      "question_id": "primaria_lugares_inseguros",
+      "required": true
+    },
+    {
+      "number": 26,
+      "text": "Si te molestan, ¿sabes a quién pedirle ayuda? 🆘",
+      "type": "single_choice",
+      "question_id": "primaria_conoce_ayuda",
+      "required": true
+    },
+    {
+      "number": 27,
+      "text": "¿Te gustan las actividades que hacen en la escuela? 🎨",
+      "type": "single_choice",
+      "question_id": "primaria_gusto_actividades",
+      "required": true
+    },
+    {
+      "number": 28,
+      "text": "¿Sientes que puedes aprender bien en tu escuela? 📚",
+      "type": "single_choice",
+      "question_id": "primaria_ambiente_aprendizaje",
+      "required": true
+    },
+    {
+      "number": 29,
+      "text": "¿Hay niños en tu salón que molestan mucho? 😠",
+      "type": "single_choice",
+      "question_id": "primaria_disrupcion_clase",
+      "required": true
+    },
+    {
+      "number": 30,
+      "text": "Si pudieras cambiar algo en tu escuela para sentirte mejor, ¿qué sería? ✨",
+      "type": "text",
+      "question_id": "primaria_sugerencia_mejora",
+      "required": false,
+      "help_text": "Escribe lo que piensas (opcional)"
+    }
+  ],
+  "response_options": {
+    "frecuencia_4_opciones": [
+      {"value": "nunca", "label": "😊 Nunca", "emoji": "😊"},
+      {"value": "pocas_veces", "label": "🙂 Pocas veces", "emoji": "🙂"},
+      {"value": "muchas_veces", "label": "😟 Muchas veces", "emoji": "😟"},
+      {"value": "siempre", "label": "😢 Siempre", "emoji": "😢"}
+    ],
+    "si_no": [
+      {"value": "si", "label": "✅ Sí", "emoji": "✅"},
+      {"value": "no", "label": "❌ No", "emoji": "❌"}
+    ],
+    "si_no_a_veces": [
+      {"value": "si", "label": "✅ Sí", "emoji": "✅"},
+      {"value": "a_veces", "label": "🤔 A veces", "emoji": "🤔"},
+      {"value": "no", "label": "❌ No", "emoji": "❌"}
+    ],
+    "sentimiento_3": [
+      {"value": "bien", "label": "😊 Bien (Me gusta estar aquí)", "emoji": "😊"},
+      {"value": "mas_o_menos", "label": "😐 Más o menos", "emoji": "😐"},
+      {"value": "mal", "label": "😢 Mal (No me gusta)", "emoji": "😢"}
+    ],
+    "frecuencia_simple": [
+      {"value": "todos_dias", "label": "📅 Todos los días", "emoji": "📅"},
+      {"value": "varias_veces", "label": "📆 Varias veces a la semana", "emoji": "📆"},
+      {"value": "una_vez", "label": "📌 Una vez a la semana", "emoji": "📌"},
+      {"value": "casi_nunca", "label": "✨ Casi nunca", "emoji": "✨"}
+    ],
+    "lugares_escuela": [
+      {"value": "salon", "label": "🏫 En el salón", "emoji": "🏫"},
+      {"value": "recreo", "label": "🏃 En el recreo", "emoji": "🏃"},
+      {"value": "bano", "label": "🚻 En el baño", "emoji": "🚻"},
+      {"value": "pasillo", "label": "🚶 En los pasillos", "emoji": "🚶"},
+      {"value": "entrada", "label": "🚪 A la entrada/salida", "emoji": "🚪"}
+    ],
+    "a_quien_cuenta": [
+      {"value": "maestro", "label": "👨‍🏫 A mi maestro/a", "emoji": "👨‍🏫"},
+      {"value": "padres", "label": "👨‍👩‍👧 A mis papás", "emoji": "👨‍👩‍👧"},
+      {"value": "director", "label": "👔 Al director/a", "emoji": "👔"},
+      {"value": "amigo", "label": "👫 A un amigo", "emoji": "👫"},
+      {"value": "nadie", "label": "🤐 A nadie", "emoji": "🤐"}
+    ],
+    "que_hace_testigo": [
+      {"value": "ayudo", "label": "🦸 Ayudo al niño", "emoji": "🦸"},
+      {"value": "aviso", "label": "🗣️ Le aviso a un maestro", "emoji": "🗣️"},
+      {"value": "nada", "label": "😶 No hago nada", "emoji": "😶"},
+      {"value": "me_voy", "label": "🏃 Me voy de ahí", "emoji": "🏃"}
+    ],
+    "manejo_enojo": [
+      {"value": "respiro", "label": "🌬️ Respiro y me calmo", "emoji": "🌬️"},
+      {"value": "hablo", "label": "🗣️ Hablo con alguien", "emoji": "🗣️"},
+      {"value": "grito", "label": "😤 Grito o me enojo más", "emoji": "😤"},
+      {"value": "pego", "label": "✊ Empujo o pego", "emoji": "✊"}
+    ]
+  },
+  "question_option_mapping": {
+    "primaria_sentimiento_general": "sentimiento_3",
+    "primaria_gusto_escuela": "si_no_a_veces",
+    "primaria_tiene_amigos": "si_no",
+    "primaria_victima_bullying": "si_no",
+    "primaria_frecuencia_victima": "frecuencia_simple",
+    "primaria_lugar_victimizacion": "lugares_escuela",
+    "primaria_reporta_adulto": "a_quien_cuenta",
+    "primaria_testigo_bullying": "si_no",
+    "primaria_accion_testigo": "que_hace_testigo",
+    "primaria_seguridad_escuela": "si_no_a_veces",
+    "primaria_seguridad_recreo": "si_no_a_veces",
+    "primaria_seguridad_bano": "si_no_a_veces",
+    "primaria_apoyo_maestros": "si_no_a_veces",
+    "primaria_intervencion_maestros": "si_no_a_veces",
+    "primaria_claridad_reglas": "si_no_a_veces",
+    "primaria_justicia_reglas": "si_no_a_veces",
+    "primaria_relacion_mayores": "si_no_a_veces",
+    "primaria_uso_tecnologia": "si_no",
+    "primaria_ciberbullying_victima": "si_no",
+    "primaria_conducta_prosocial": "frecuencia_4_opciones",
+    "primaria_compartir": "frecuencia_4_opciones",
+    "primaria_control_emocional": "frecuencia_4_opciones",
+    "primaria_manejo_enojo": "manejo_enojo",
+    "primaria_estado_animo": "frecuencia_4_opciones",
+    "primaria_lugares_inseguros": "si_no",
+    "primaria_conoce_ayuda": "si_no",
+    "primaria_gusto_actividades": "si_no_a_veces",
+    "primaria_ambiente_aprendizaje": "si_no_a_veces",
+    "primaria_disrupcion_clase": "frecuencia_4_opciones"
+  },
+  "design_notes": {
+    "language_level": "1st grade (6-7 years old)",
+    "reading_support": "Teachers should read questions aloud for grades 1-2",
+    "visual_aids": "All questions include emoji icons",
+    "question_length": "Maximum 12 words per question",
+    "response_format": "Visual options with emoji + text",
+    "estimated_time": "15-20 minutes with teacher support",
+    "accessibility": "Large font recommended, oral administration for non-readers"
+  },
+  "constructs_measured": {
+    "victimizacion": [4, 5, 6, 19],
+    "testigo": [8, 9],
+    "seguridad_percibida": [10, 11, 12, 25],
+    "clima_escolar": [1, 2, 27, 28],
+    "apoyo_adultos": [13, 14, 26],
+    "normas_justicia": [15, 16],
+    "relaciones_pares": [3, 17, 20, 21],
+    "regulacion_emocional": [22, 23, 24],
+    "disrupcion": [29],
+    "ciberbullying": [18, 19],
+    "reporte_adultos": [7]
+  }
+}
