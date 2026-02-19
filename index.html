@@ -1590,44 +1590,92 @@ btnMostrarResultados?.addEventListener('click', async () => {
   }
 
   async function saveCurrentAnswerOrStop() {
-    const q = SURVEY?.questions?.[currentQuestionIndex];
-    if (!q) { alert('No hay pregunta actual'); return false; }
+  const q = SURVEY?.questions?.[currentQuestionIndex];
+  if (!q) { 
+    alert('No hay pregunta actual'); 
+    return false; 
+  }
 
-    const responseId = window.currentResponseId;
-    if (!responseId) { alert('Falta responseId (inicia sesión y vuelve a intentar).'); return false; }
+  const responseId = window.currentResponseId;
+  if (!responseId) { 
+    alert('Falta responseId (inicia sesión y vuelve a intentar).'); 
+    return false; 
+  }
 
-    const questionId = getDbQuestionIdByNumber(q.number);
-    if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
+  const questionId = getDbQuestionIdByNumber(q.number);
+  if (!questionId) { 
+    alert('No se pudo resolver questionId para number: ' + q.number); 
+    return false; 
+  }
 
-    let answerText = null;
-    let selectedOptionIds = [];
+  let answerText = null;
+  let selectedOptionIds = [];
 
-    if (q.type === 'single_choice') {
-      const ext = getExternalIdFromSurveyQuestion(q);
+  if (q.type === 'single_choice') {
+    const ext = getExternalIdFromSurveyQuestion(q);
 
-      if (isDemographicExternalId(ext)) {
-        const v = document.getElementById('answerSelect')?.value || "";
-        if (v) selectedOptionIds = [v];
-      } else {
-        const checked = document.querySelector('input[name="answer"]:checked');
-        if (checked) selectedOptionIds = [checked.value];
-      }
-    } else if (q.type === 'text') {
-      answerText = document.getElementById('answerText')?.value?.trim() || null;
+    if (isDemographicExternalId(ext)) {
+      const v = document.getElementById('answerSelect')?.value || "";
+      if (v) selectedOptionIds = [v];
+    } else {
+      const checked = document.querySelector('input[name="answer"]:checked');
+      if (checked) selectedOptionIds = [checked.value];
     }
+  } else if (q.type === 'text') {
+    answerText = document.getElementById('answerText')?.value?.trim() || null;
+  }
 
-    const required = (q.required === undefined) ? true : !!q.required;
+  const required = (q.required === undefined) ? true : !!q.required;
 
-    if (required) {
-      if (q.type === 'text') {
-        if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
-      } else {
-        if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
+  if (required) {
+    if (q.type === 'text') {
+      if (!answerText) { 
+        alert('Escribe una respuesta para continuar.'); 
+        return false; 
+      }
+    } else {
+      if (selectedOptionIds.length === 0) { 
+        alert('Selecciona una opción para continuar.'); 
+        return false; 
       }
     }
+  }
 
+  // ════════════════════════════════════════════════════════════
+  // ⭐ NEW: ROUTING LOGIC FOR GRADE-BASED SURVEY SELECTION
+  // ════════════════════════════════════════════════════════════
+  
+  if (q.is_routing_question && currentQuestionIndex === 0) {
+    console.log('🔀 Routing question detected');
+    
+    // Get the selected grade option
+    const selectedGradeId = selectedOptionIds[0];
+    
+    // Get the actual grade code from the selected option
+    const gradeOptionsRes = await getOptionsForQuestion(questionId);
+    const selectedOption = gradeOptionsRes.find(opt => opt.id === selectedGradeId);
+    const gradeCode = selectedOption?.option_code || "";
+    
+    console.log('Selected grade code:', gradeCode);
+    
+    // Determine which survey to load based on routing rules
+    let targetSurvey = null;
+    
+    if (q.routing_rules) {
+      // Check primaria grades (1-6)
+      if (q.routing_rules.primaria && q.routing_rules.primaria.includes(gradeCode)) {
+        targetSurvey = 'SURVEY_003_PRIMARIA';
+        console.log('→ Routing to PRIMARIA survey');
+      }
+      // Check secundaria grades (7-12)
+      else if (q.routing_rules.secundaria && q.routing_rules.secundaria.includes(gradeCode)) {
+        targetSurvey = 'SURVEY_003'; // Continue with current survey
+        console.log('→ Continuing with SECUNDARIA survey');
+      }
+    }
+    
+    // Save the grade answer first
     const payload = { responseId, questionId, answerText, selectedOptionIds };
-
     const r = await fetch('/api/save-answer', {
       method: 'POST',
       credentials: 'include',
@@ -1643,9 +1691,81 @@ btnMostrarResultados?.addEventListener('click', async () => {
       alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
       return false;
     }
+    
+    // If routing to primaria, load new survey
+    if (targetSurvey === 'SURVEY_003_PRIMARIA') {
+      console.log('📚 Loading primaria survey...');
+      
+      // Clear current survey
+      SURVEY = null;
+      
+      // Load primaria survey
+      const primRes = await fetch('/data/SURVEY_003_PRIMARIA.json', { cache: 'no-store' });
+      if (!primRes.ok) { 
+        alert('No se pudo cargar la encuesta de primaria'); 
+        return false; 
+      }
+      SURVEY = await primRes.json();
+      
+      // Get survey UUID from loaded survey
+      const primSurveyUuid = SURVEY.survey_uuid || 'uuid-primaria-002';
+      
+      // Load question map for primaria survey
+      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(primSurveyUuid)}`, {
+        credentials: 'include'
+      });
+      
+      if (mapRes.ok) {
+        const mapData = await mapRes.json();
+        if (mapData.ok) {
+          QUESTION_ID_MAP = mapData.map || {};
+          console.log('✅ Question map loaded for primaria');
+        }
+      }
+      
+      // Start from question 1 of new survey
+      currentQuestionIndex = 0;
+      renderCurrentQuestion();
+      
+      return true;
+    }
+    
+    // If continuing with secundaria, just proceed normally
     return true;
   }
+  
+  // ════════════════════════════════════════════════════════════
+  // END ROUTING LOGIC
+  // ════════════════════════════════════════════════════════════
 
+  // Regular save logic (existing code)
+  const payload = { responseId, questionId, answerText, selectedOptionIds };
+
+  const r = await fetch('/api/save-answer', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  const raw = await r.text();
+  let j = {};
+  try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
+
+  if (!r.ok || !j.ok) {
+    alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
+    return false;
+  }
+  return true;
+}
+
+
+
+
+
+
+
+  
   async function showSurveyUI() {
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
     if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
@@ -2415,6 +2535,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
