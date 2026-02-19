@@ -8,8 +8,8 @@
     "date": "2024",
     "population": "Educación primaria (6-12 años), México",
     "application_time": "15-20 minutos con apoyo del maestro",
-    "total_questions": 35,
-    "note": "Preguntas simplificadas para comprensión de 1° grado (6-7 años). El maestro debe leer en voz alta para grados 1-2."
+    "total_questions": 30,
+    "note": "Preguntas simplificadas para comprensión de 1° grado (6-7 años). El maestro debe leer en voz alta para grados 1-2. La pregunta de grado ya fue respondida en SURVEY_003."
   },
   "questions": [
     {
