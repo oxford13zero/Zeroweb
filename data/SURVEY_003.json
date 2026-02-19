@@ -161,80 +161,32 @@
   "questions": [
 {
   "number": 1,
-  "question_id": "zero_general_curso",
+  "question_id": "zero_general_grado",
   "section": "A",
   "section_name": "Información General",
   "construct": "demographic",
   "construct_role": "demographic",
   "scale_type": "categorical",
   "type": "single_choice",
-  "text": "¿En qué curso estás?",
+  "text": "¿En qué grado estás?",
   "is_routing_question": true,
   "routing_rules": {
     "primaria": ["1", "2", "3", "4", "5", "6"],
     "secundaria": ["7", "8", "9", "10", "11", "12"]
   },
   "options": [
-    {
-      "code": "1",
-      "text": "1° de primaria",
-      "route": "primaria"
-    },
-    {
-      "code": "2",
-      "text": "2° de primaria",
-      "route": "primaria"
-    },
-    {
-      "code": "3",
-      "text": "3° de primaria",
-      "route": "primaria"
-    },
-    {
-      "code": "4",
-      "text": "4° de primaria",
-      "route": "primaria"
-    },
-    {
-      "code": "5",
-      "text": "5° de primaria",
-      "route": "primaria"
-    },
-    {
-      "code": "6",
-      "text": "6° de primaria",
-      "route": "primaria"
-    },
-    {
-      "code": "7",
-      "text": "7° (1° de secundaria)",
-      "route": "secundaria"
-    },
-    {
-      "code": "8",
-      "text": "8° (2° de secundaria)",
-      "route": "secundaria"
-    },
-    {
-      "code": "9",
-      "text": "9° (3° de secundaria)",
-      "route": "secundaria"
-    },
-    {
-      "code": "10",
-      "text": "10° (1° de preparatoria)",
-      "route": "secundaria"
-    },
-    {
-      "code": "11",
-      "text": "11° (2° de preparatoria)",
-      "route": "secundaria"
-    },
-    {
-      "code": "12",
-      "text": "12° (3° de preparatoria)",
-      "route": "secundaria"
-    }
+    {"code": "1", "text": "1° de primaria", "route": "primaria"},
+    {"code": "2", "text": "2° de primaria", "route": "primaria"},
+    {"code": "3", "text": "3° de primaria", "route": "primaria"},
+    {"code": "4", "text": "4° de primaria", "route": "primaria"},
+    {"code": "5", "text": "5° de primaria", "route": "primaria"},
+    {"code": "6", "text": "6° de primaria", "route": "primaria"},
+    {"code": "7", "text": "7° (1° de secundaria)", "route": "secundaria"},
+    {"code": "8", "text": "8° (2° de secundaria)", "route": "secundaria"},
+    {"code": "9", "text": "9° (3° de secundaria)", "route": "secundaria"},
+    {"code": "10", "text": "10° (1° de preparatoria)", "route": "secundaria"},
+    {"code": "11", "text": "11° (2° de preparatoria)", "route": "secundaria"},
+    {"code": "12", "text": "12° (3° de preparatoria)", "route": "secundaria"}
   ]
 },
     {
@@ -2130,4 +2082,5 @@
   ]
 
 }
+
 
