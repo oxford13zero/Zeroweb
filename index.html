@@ -1706,6 +1706,27 @@ btnMostrarResultados?.addEventListener('click', async () => {
         return false; 
       }
       SURVEY = await primRes.json();
+
+       // ⭐ NUEVO: Crear un nuevo response para la encuesta de primaria
+  const newResponseRes = await fetch('/api/start-response', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      surveyId: SURVEY.survey.survey_uuid || 'a62a21ce-9372-45f5-975d-47fdfd5d2c40'
+    })
+  });
+  
+  const newResponseData = await newResponseRes.json();
+  if (!newResponseData.ok) {
+    alert('Error al iniciar encuesta de primaria: ' + newResponseData.error);
+    return false;
+  }
+  
+  // Actualizar el responseId actual
+  window.currentResponseId = newResponseData.responseId;
+  console.log('✅ Nuevo response creado para primaria:', newResponseData.responseId);
+
       
       // Get survey UUID from loaded survey
       const primSurveyUuid = SURVEY.survey_uuid || 'uuid-primaria-002';
@@ -2535,6 +2556,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
