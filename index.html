@@ -1071,7 +1071,9 @@ Portland, Oregon</p>
 
   // === SESSION STATE ===
   window.sessionState = { ok:false, school_id:null, school_name:null };
-
+// NUEVO: Clear any stale responseId from previous sessions
+window.currentResponseId = null;
+sessionStorage.removeItem('currentResponseId');
   const sessionBadge = document.getElementById('sessionBadge');
   const btnAccesoUsuarios = document.getElementById('btnAccesoUsuarios');
 
@@ -1734,6 +1736,8 @@ if (!newResponseData.ok) {
 // Update current responseId
 window.currentResponseId = newResponseData.responseId;
 console.log('Nuevo response para primaria:', newResponseData.responseId);
+// NUEVO: Persist in sessionStorage
+sessionStorage.setItem('currentResponseId', newResponseData.responseId);
 
       // Load question map for primaria survey
       const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(primariaSurveyId)}`, {
@@ -1830,6 +1834,8 @@ console.log('Nuevo response para primaria:', newResponseData.responseId);
       }
       window.currentResponseId = j2.responseId;
       SURVEY_UUID = j2.survey_id;
+      // NUEVO: Persist in sessionStorage
+      sessionStorage.setItem('currentResponseId', j2.responseId);
     }
 
     const r = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(SURVEY_UUID)}`, {
@@ -1912,6 +1918,7 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
     if (surveyBox) surveyBox.style.display = 'none';
 
     window.currentResponseId = null;
+    sessionStorage.removeItem('currentResponseId');  // NUEVO
     SURVEY = null;
     QUESTION_ID_MAP = {};
     currentQuestionIndex = 0;
@@ -2590,6 +2597,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
