@@ -12,101 +12,50 @@ export default async function handler(req, res) {
     const auth = await requireAuth(req, res);
     if (!auth?.ok) return;
 
-//    // 2) Input
-//    const { surveyId } = req.body || {};
-//    const surveyKey = typeof surveyId === "string" ? surveyId.trim() : "";
-//    if (!surveyKey) {
-//      return res.status(400).json({ ok: false, error: "MISSING_SURVEY_ID" });
-//    }
-//    // 3) Resolver survey UUID
-//    const looksLikeUuid =
-//      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-//        surveyKey
-//      );
-//    let surveyUuid = null;
-//    async function findSurveyIdByCode(code) {
-//      // en tu BD existe: surveys.code
-//      const { data, error } = await supabaseAdmin
-//        .from("surveys")
-//        .select("id")
-//        .eq("code", code)
-//        .eq("is_active", true)
-//        .maybeSingle();
-//      if (error) return { ok: false, error };
-//      if (!data?.id) return { ok: false, notFound: true };
-//      return { ok: true, id: data.id };
-//    }
-//    async function findSurveyIdByTitle(title) {
-//      // en tu BD existe: surveys.title
-//      // (búsqueda flexible, por si alguna vez envías el título)
-//      const { data, error } = await supabaseAdmin
-//       .from("surveys")
-//        .select("id")
-//        .ilike("title", title) // exacto si no hay %
-//        .eq("is_active", true);
-//      if (error) return { ok: false, error };
-//      if (!Array.isArray(data) || data.length === 0) return { ok: false, notFound: true };
-//      if (data.length > 1) return { ok: false, multiple: true, count: data.length, col: "title" };
-//      return { ok: true, id: data[0].id };
-//    }
-//    if (looksLikeUuid) {
-//      surveyUuid = surveyKey;
-//    } else {
-//      // 1) Primero, match EXACTO por code (recomendado)
-//      let found = await findSurveyIdByCode(surveyKey);
-//      // 2) Si no encuentra, intenta por title (opcional)
-//      if (!found.ok && found.notFound) {
-//        found = await findSurveyIdByTitle(surveyKey);
-//      }
-//      if (!found.ok) {
-//        if (found.multiple) {
-//          return res.status(400).json({
-//            ok: false,
-//            error: "SURVEY_NOT_UNIQUE",
-//            detail: `Multiple surveys match ${found.col}=${surveyKey} (count=${found.count})`
-//          });
-//        }
-//        if (found.error) {
-//          return res.status(500).json({
-//            ok: false,
-//            error: "SURVEY_LOOKUP_FAILED",
-//            detail: found.error.message || String(found.error)
-//          });
-//        }
-//        return res.status(400).json({
-//          ok: false,
-//          error: "SURVEY_NOT_FOUND",
-//          detail: `No survey found matching code/title = ${surveyKey}`
-//        });
-//      }
-//      surveyUuid = found.id;
-//   }
+    // 2) Input - get surveyId from request body
+    const { surveyId } = req.body || {};
+    const surveyKey = typeof surveyId === "string" ? surveyId.trim() : "";
 
-    // 2) Get active survey directly from DB
-let surveyUuid = null;
-const { data: activeSurvey, error: surveyError } = await supabaseAdmin
-  .from("surveys")
-  .select("id")
-  .eq("is_active", true)
-  .maybeSingle();
-if (surveyError) {
-  return res.status(500).json({
-    ok: false,
-    error: "SURVEY_LOOKUP_FAILED",
-    detail: surveyError.message || String(surveyError)
-  });
-}
-if (!activeSurvey?.id) {
-  return res.status(400).json({
-    ok: false,
-    error: "NO_ACTIVE_SURVEY",
-    detail: "No survey found with is_active = true"
-  });
-}
-surveyUuid = activeSurvey.id;
+    if (!surveyKey) {
+      return res.status(400).json({ ok: false, error: "MISSING_SURVEY_ID" });
+    }
 
+    // 3) Determine if surveyKey is UUID or code
+    const looksLikeUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(surveyKey);
 
-    
+    let surveyUuid = null;
+
+    if (looksLikeUuid) {
+      // Direct UUID
+      surveyUuid = surveyKey;
+    } else {
+      // Look up by code
+      const { data: surveyByCode, error: codeError } = await supabaseAdmin
+        .from("surveys")
+        .select("id")
+        .eq("code", surveyKey)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (codeError) {
+        return res.status(500).json({
+          ok: false,
+          error: "SURVEY_LOOKUP_FAILED",
+          detail: codeError.message || String(codeError)
+        });
+      }
+
+      if (!surveyByCode?.id) {
+        return res.status(400).json({
+          ok: false,
+          error: "SURVEY_NOT_FOUND",
+          detail: `No survey found with code = ${surveyKey}`
+        });
+      }
+
+      surveyUuid = surveyByCode.id;
+    }
+
     // 4) Crear response
     const { data, error } = await supabaseAdmin
       .from("survey_responses")
@@ -139,4 +88,3 @@ surveyUuid = activeSurvey.id;
     });
   }
 }
-
