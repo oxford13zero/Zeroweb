@@ -2591,12 +2591,231 @@ btnApproveSurvey?.addEventListener('click', () => {
   openApproveSurveysModal();
 });
 
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- ADD SCHOOL JAVASCRIPT - Insert this in the <script> section -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
+// === ADD SCHOOL MODAL ===
+const addSchoolModal = document.getElementById('addSchoolModal');
+const addSchoolClose = document.getElementById('addSchoolClose');
+const btnAddSchool = document.getElementById('btnAddSchool');
+const btnSaveSchool = document.getElementById('btnSaveSchool');
+const btnCancelAddSchool = document.getElementById('btnCancelAddSchool');
+const addSchoolMsg = document.getElementById('addSchoolMsg');
+
+function openAddSchoolModal() {
+  // Clear all fields
+  document.getElementById('addSchoolName').value = '';
+  document.getElementById('addSchoolUsername').value = '';
+  document.getElementById('addSchoolPassword').value = '';
+  document.getElementById('addStudentsPrimaria').value = '';
+  document.getElementById('addStudentsSecundaria').value = '';
+  document.getElementById('addStudentsPreparatoria').value = '';
+  document.getElementById('addEncFirstName').value = '';
+  document.getElementById('addEncPatLastName').value = '';
+  document.getElementById('addEncMatLastName').value = '';
   
-  
+  addSchoolMsg.textContent = '';
+  addSchoolModal.style.display = 'flex';
+}
+
+function closeAddSchoolModal() {
+  addSchoolModal.style.display = 'none';
+}
+
+// Event listeners
+btnAddSchool?.addEventListener('click', () => {
+  if (!window.adminState?.authenticated) {
+    alert('Please login as admin first');
+    return;
+  }
+  openAddSchoolModal();
+});
+
+addSchoolClose?.addEventListener('click', closeAddSchoolModal);
+btnCancelAddSchool?.addEventListener('click', closeAddSchoolModal);
+
+addSchoolModal?.addEventListener('click', (e) => {
+  if (e.target === addSchoolModal) closeAddSchoolModal();
+});
+
+// Save school
+btnSaveSchool?.addEventListener('click', async () => {
+  const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
+  const username = document.getElementById('addSchoolUsername')?.value?.trim() || '';
+  const password = document.getElementById('addSchoolPassword')?.value?.trim() || '';
+  const studentsPrimaria = document.getElementById('addStudentsPrimaria')?.value?.trim() || '0';
+  const studentsSecundaria = document.getElementById('addStudentsSecundaria')?.value?.trim() || '0';
+  const studentsPreparatoria = document.getElementById('addStudentsPreparatoria')?.value?.trim() || '0';
+  const encFirstName = document.getElementById('addEncFirstName')?.value?.trim() || '';
+  const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
+  const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
+
+  // Validation
+  if (!schoolName || !username || !password) {
+    addSchoolMsg.textContent = 'School name, username, and password are required';
+    addSchoolMsg.className = 'statusMsg statusErr';
+    return;
+  }
+
+  if (!encFirstName || !encPatLastName) {
+    addSchoolMsg.textContent = 'Encargado first name and paternal last name are required';
+    addSchoolMsg.className = 'statusMsg statusErr';
+    return;
+  }
+
+  if (password.length < 6) {
+    addSchoolMsg.textContent = 'Password must be at least 6 characters';
+    addSchoolMsg.className = 'statusMsg statusErr';
+    return;
+  }
+
+  try {
+    btnSaveSchool.disabled = true;
+    addSchoolMsg.textContent = 'Creating school...';
+    addSchoolMsg.className = 'statusMsg statusWarn';
+
+    const res = await fetch('/api/add-school', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        schoolName,
+        username,
+        password,
+        studentsPrimaria: parseInt(studentsPrimaria),
+        studentsSecundaria: parseInt(studentsSecundaria),
+        studentsPreparatoria: parseInt(studentsPreparatoria),
+        encFirstName,
+        encPatLastName,
+        encMatLastName
+      })
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data.ok) {
+      addSchoolMsg.textContent = data.error || 'Failed to create school';
+      addSchoolMsg.className = 'statusMsg statusErr';
+      btnSaveSchool.disabled = false;
+      return;
+    }
+
+    // Success
+    addSchoolMsg.textContent = `✅ School "${data.school.name}" created successfully!`;
+    addSchoolMsg.className = 'statusMsg statusOk';
+
+    // Close modal after 2 seconds
+    setTimeout(() => {
+      closeAddSchoolModal();
+    }, 2000);
+
+  } catch (e) {
+    console.error('Error creating school:', e);
+    addSchoolMsg.textContent = 'Connection error';
+    addSchoolMsg.className = 'statusMsg statusErr';
+  } finally {
+    btnSaveSchool.disabled = false;
+  }
+});
 </script>
 
+
+
+Add school modal · HTML
+Copy
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- ADD SCHOOL MODAL - 
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
+<div id="addSchoolModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:600px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Add New School</h3>
+      <button id="addSchoolClose" class="modalClose" type="button">X</button>
+    </div>
+
+    <div style="padding:8px 0;">
+      <!-- School Information Section -->
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
+        
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addSchoolName">School Name *</label><br />
+          <input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Escuela Primaria Benito Juárez" style="width:100%; max-width:100%;" />
+        </div>
+
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addSchoolUsername">Username *</label><br />
+          <input id="addSchoolUsername" class="textInput" type="text" placeholder="e.g., escuela_benito" autocomplete="off" style="width:100%; max-width:100%;" />
+        </div>
+
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addSchoolPassword">Password *</label><br />
+          <input id="addSchoolPassword" class="textInput" type="password" placeholder="Minimum 6 characters" autocomplete="new-password" style="width:100%; max-width:100%;" />
+        </div>
+      </div>
+
+      <!-- Student Enrollment Section -->
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
+        
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+          <div class="fieldBlock">
+            <label class="fieldLabel" for="addStudentsPrimaria">Primaria (1-6)</label><br />
+            <input id="addStudentsPrimaria" class="textInput" type="number" min="0" placeholder="0" style="width:100%;" />
+          </div>
+
+          <div class="fieldBlock">
+            <label class="fieldLabel" for="addStudentsSecundaria">Secundaria (7-9)</label><br />
+            <input id="addStudentsSecundaria" class="textInput" type="number" min="0" placeholder="0" style="width:100%;" />
+          </div>
+
+          <div class="fieldBlock">
+            <label class="fieldLabel" for="addStudentsPreparatoria">Preparatoria (10-12)</label><br />
+            <input id="addStudentsPreparatoria" class="textInput" type="number" min="0" placeholder="0" style="width:100%;" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Encargado Information Section -->
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
+        
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addEncFirstName">First Name *</label><br />
+          <input id="addEncFirstName" class="textInput" type="text" placeholder="e.g., María" style="width:100%; max-width:100%;" />
+        </div>
+
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addEncPatLastName">Paternal Last Name *</label><br />
+          <input id="addEncPatLastName" class="textInput" type="text" placeholder="e.g., García" style="width:100%; max-width:100%;" />
+        </div>
+
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addEncMatLastName">Maternal Last Name</label><br />
+          <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López" style="width:100%; max-width:100%;" />
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnSaveSchool" class="btnPrimary" type="button">Create School</button>
+        <button id="btnCancelAddSchool" class="btnSecondary" type="button">Cancel</button>
+      </div>
+
+      <!-- Status Message -->
+      <div id="addSchoolMsg" class="statusMsg statusErr" style="margin-top:12px;"></div>
+    </div>
+  </div>
+</div>
+
+  
 </body>
 </html>
+
 
 
 
