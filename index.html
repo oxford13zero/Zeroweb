@@ -1735,8 +1735,6 @@ if (!newResponseData.ok) {
 window.currentResponseId = newResponseData.responseId;
 console.log('Nuevo response para primaria:', newResponseData.responseId);
 
-
-      
       // Load question map for primaria survey
       const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(primariaSurveyId)}`, {
         credentials: 'include'
@@ -1873,7 +1871,10 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
     }
 
     try {
-      //console.log('🏁 Submitting survey, responseId:', window.currentResponseId);
+      console.log('🏁 Submitting survey');
+      console.log('📋 Current responseId:', window.currentResponseId);
+      console.log('📋 Survey code:', SURVEY?.survey?.code);
+      console.log('📋 Survey UUID:', SURVEY?.survey?.survey_uuid);
       
       const r3 = await fetch('/api/submit-response', {
         method: 'POST',
@@ -2589,6 +2590,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
