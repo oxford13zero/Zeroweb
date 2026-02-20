@@ -1805,12 +1805,24 @@ console.log('Nuevo response para primaria:', newResponseData.responseId);
     await loadSurvey();
 
     if (!window.currentResponseId) {
-      const r2 = await fetch('/api/start-response', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
-      });
+  // Get survey UUID from loaded SURVEY object
+  const initialSurveyId = SURVEY?.survey?.id || SURVEY?.id;
+  
+  if (!initialSurveyId) {
+    alert('Error: No se pudo determinar el survey_id');
+    return;
+  }
+  
+  const r2 = await fetch('/api/start-response', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      surveyId: initialSurveyId
+    })
+  });
+
+      
       const raw2 = await r2.text();
       let j2 = {};
       try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
@@ -2562,6 +2574,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
