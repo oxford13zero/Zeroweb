@@ -1880,28 +1880,6 @@ console.log('Nuevo response para primaria:', newResponseData.responseId);
         body: JSON.stringify({ responseId: window.currentResponseId })
       });
 
-console.log('📡 Submit status:', r3.status);
-      
-      const raw3 = await r3.text();
-      console.log('📡 Submit body:', raw3);
-      
-      let j3 = {};
-      try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
-      console.log('📡 Submit parsed:', j3);
-
-      if (!r3.ok || !j3.ok) {
-        alert('No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' + JSON.stringify(j3, null, 2));
-        return;
-      }
-    } catch (e) {
-      console.error('❌ Submit error:', e);
-      alert('Error de conexión al finalizar la encuesta.');
-      return;
-    }
-
-
-
-      
       const raw3 = await r3.text();
       let j3 = {};
       try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
@@ -2596,8 +2574,6 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
-
-
 
 
 
