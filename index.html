@@ -1806,7 +1806,7 @@ console.log('Nuevo response para primaria:', newResponseData.responseId);
 
     if (!window.currentResponseId) {
   // Get survey UUID from loaded SURVEY object
-  const initialSurveyId = SURVEY?.survey?.id || SURVEY?.id;
+ const initialSurveyId = SURVEY?.survey?.survey_uuid || SURVEY?.survey?.code || 'SURVEY_003';
   
   if (!initialSurveyId) {
     alert('Error: No se pudo determinar el survey_id');
@@ -2574,6 +2574,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
