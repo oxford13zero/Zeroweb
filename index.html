@@ -1707,29 +1707,35 @@ btnMostrarResultados?.addEventListener('click', async () => {
       }
       SURVEY = await primRes.json();
 
-       // ⭐ NUEVO: Crear un nuevo response para la encuesta de primaria
-  const newResponseRes = await fetch('/api/start-response', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      surveyId: SURVEY.survey.survey_uuid || 'a62a21ce-9372-45f5-975d-47fdfd5d2c40'
-    })
-  });
-  
-  const newResponseData = await newResponseRes.json();
-  if (!newResponseData.ok) {
-    alert('Error al iniciar encuesta de primaria: ' + newResponseData.error);
-    return false;
-  }
-  
-  // Actualizar el responseId actual
-  window.currentResponseId = newResponseData.responseId;
-  console.log('✅ Nuevo response creado para primaria:', newResponseData.responseId);
+// ⭐ Get survey_uuid from loaded JSON
+const primariaSurveyId = SURVEY.survey?.survey_uuid;
 
-      
-      // Get survey UUID from loaded survey
-      const primSurveyUuid = SURVEY.survey_uuid || 'uuid-primaria-002';
+if (!primariaSurveyId) {
+  alert('Error: No se encontró survey_uuid en SURVEY_003_PRIMARIA.json');
+  return false;
+}
+
+// Create new response for primaria survey
+const newResponseRes = await fetch('/api/start-response', {
+  method: 'POST',
+  credentials: 'include',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    surveyId: primariaSurveyId
+  })
+});
+
+const newResponseData = await newResponseRes.json();
+if (!newResponseData.ok) {
+  alert('Error al iniciar encuesta de primaria: ' + newResponseData.error);
+  return false;
+}
+
+// Update current responseId
+window.currentResponseId = newResponseData.responseId;
+console.log('Nuevo response para primaria:', newResponseData.responseId);
+
+
       
       // Load question map for primaria survey
       const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(primSurveyUuid)}`, {
@@ -1740,7 +1746,7 @@ btnMostrarResultados?.addEventListener('click', async () => {
         const mapData = await mapRes.json();
         if (mapData.ok) {
           QUESTION_ID_MAP = mapData.map || {};
-          console.log('✅ Question map loaded for primaria');
+          console.log('Question map loaded for primaria');
         }
       }
       
@@ -2556,6 +2562,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
