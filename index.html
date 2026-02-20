@@ -1873,7 +1873,7 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
     }
 
     try {
-      console.log('🏁 Submitting survey, responseId:', window.currentResponseId);
+      //console.log('🏁 Submitting survey, responseId:', window.currentResponseId);
       
       const r3 = await fetch('/api/submit-response', {
         method: 'POST',
@@ -1882,22 +1882,22 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
         body: JSON.stringify({ responseId: window.currentResponseId })
       });
 
-      console.log('📡 Status:', r3.status);
+      //console.log('📡 Status:', r3.status);
 
       const raw3 = await r3.text();
-      console.log('📡 Raw response:', raw3);
+      //console.log('📡 Raw response:', raw3);
       
       let j3 = {};
       try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
       
-      console.log('📡 Parsed:', j3);
+      //console.log('📡 Parsed:', j3);
 
       if (!r3.ok || !j3.ok) {
         alert('No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' + JSON.stringify(j3, null, 2));
         return;
       }
     } catch (e) {
-      console.error('❌ Submit error:', e);
+      //console.error('❌ Submit error:', e);
       alert('Error de conexión al finalizar la encuesta.');
       return;
     }
@@ -2589,6 +2589,7 @@ btnApproveSurvey?.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
