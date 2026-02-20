@@ -66,7 +66,9 @@ export default async function handler(req, res) {
       })
       .select("id")
       .single();
-
+    
+console.log('📥 Insert result:', { data, error, surveyUuid, schoolId: auth.school.id });
+    
     if (error || !data) {
       return res.status(500).json({
         ok: false,
@@ -88,3 +90,4 @@ export default async function handler(req, res) {
     });
   }
 }
+
