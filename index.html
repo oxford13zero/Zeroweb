@@ -1072,8 +1072,8 @@ Portland, Oregon</p>
   // === SESSION STATE ===
   window.sessionState = { ok:false, school_id:null, school_name:null };
 // NUEVO: Clear any stale responseId from previous sessions
-//window.currentResponseId = null;
-//sessionStorage.removeItem('currentResponseId');
+window.currentResponseId = null;
+sessionStorage.removeItem('currentResponseId');
 
   
   const sessionBadge = document.getElementById('sessionBadge');
@@ -2974,6 +2974,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
 </body>
 </html>
+
 
 
 
