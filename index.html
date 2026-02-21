@@ -1593,12 +1593,6 @@ btnMostrarResultados?.addEventListener('click', async () => {
     return false; 
   }
 
-  const responseId = window.currentResponseId;
-  if (!responseId) { 
-    alert('Falta responseId (inicia sesión y vuelve a intentar).'); 
-    return false; 
-  }
-
   const questionId = getDbQuestionIdByNumber(q.number);
   if (!questionId) { 
     alert('No se pudo resolver questionId para number: ' + q.number); 
@@ -1779,6 +1773,13 @@ btnMostrarResultados?.addEventListener('click', async () => {
   // ════════════════════════════════════════════════════════════
   // END ROUTING LOGIC
   // ════════════════════════════════════════════════════════════
+
+  // Check responseId for NON-routing questions
+  const responseId = window.currentResponseId;
+  if (!responseId) { 
+    alert('Falta responseId (inicia sesión y vuelve a intentar).'); 
+    return false; 
+  }
 
   // Regular save logic for non-routing questions
   const payload = { responseId, questionId, answerText, selectedOptionIds };
