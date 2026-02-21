@@ -2582,6 +2582,15 @@ approveSurveysModal?.addEventListener('click', (e) => {
   if (e.target === approveSurveysModal) closeApproveSurveysModal();
 });
 
+// Button click handler
+btnApproveSurvey?.addEventListener('click', () => {
+  if (!window.adminState.authenticated) {
+    alert('Please login as admin first');
+    return;
+  }
+  openApproveSurveysModal();
+});
+  
 // 02202026 dos modales nuevos
 
 // === ADD SCHOOL MODAL - TWO STEP SYSTEM ===
@@ -2963,6 +2972,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
 </body>
 </html>
+
 
 
 
