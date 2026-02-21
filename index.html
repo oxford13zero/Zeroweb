@@ -206,9 +206,9 @@
   color: #7a8e9e;
   border: 2px solid #7a8e9e;
   border-radius: 50%;
-  width: 40px;         /* Changed from 50px (20% smaller) */
-  height: 40px;        /* Changed from 50px (20% smaller) */
-  font-size: 20px;     /* Changed from 24px (proportional) */
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -245,7 +245,7 @@
   color: white;
   padding: 8px 18px;
   border-radius: 20px;
-  border: 1px solid rgba(214, 162, 28, 0.0);  /* Thinner, more transparent */   
+  border: 1px solid rgba(214, 162, 28, 0.0);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -894,8 +894,6 @@ Portland, Oregon</p>
 }
 </style>  
 
-<!-- ADD THIS AFTER THE SELECT ANALYSIS MODAL (around line 1050) -->
-
 <!-- MODAL: APPROVE SURVEYS -->
 <div id="approveSurveysModal" class="modalOverlay">
   <div class="modalBox" style="max-width:800px;">
@@ -1071,9 +1069,7 @@ Portland, Oregon</p>
 
   // === SESSION STATE ===
   window.sessionState = { ok:false, school_id:null, school_name:null };
-// NUEVO: Clear any stale responseId from previous sessions
-window.currentResponseId = null;
-sessionStorage.removeItem('currentResponseId');
+  window.currentResponseId = null;
 
   
   const sessionBadge = document.getElementById('sessionBadge');
@@ -1286,7 +1282,7 @@ sessionStorage.removeItem('currentResponseId');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    openPrivacyModal(); // NUEVO: Mostrar modal de privacidad
+    openPrivacyModal();
   });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
@@ -1333,14 +1329,12 @@ sessionStorage.removeItem('currentResponseId');
     }
   });
 
-// NEW CODE - Open selection modal instead
 btnMostrarResultados?.addEventListener('click', async () => {
   if (!window.sessionState.ok) { 
     openModal(); 
     return; 
   }
   
-  // Open selection modal
   openSelectAnalysisModal();
 });
 
@@ -1450,7 +1444,6 @@ btnMostrarResultados?.addEventListener('click', async () => {
   let SURVEY = null;
   let currentQuestionIndex = 0;
   let QUESTION_ID_MAP = {};
-  window.currentResponseId = null;
 
   const OPTIONS_CACHE = {};
 
@@ -1646,64 +1639,38 @@ btnMostrarResultados?.addEventListener('click', async () => {
   }
 
   // ════════════════════════════════════════════════════════════
-  // ⭐ NEW: ROUTING LOGIC FOR GRADE-BASED SURVEY SELECTION
+  // ⭐ ROUTING LOGIC - CREATE RESPONSE AFTER GRADE SELECTION
   // ════════════════════════════════════════════════════════════
   
   if (q.is_routing_question && currentQuestionIndex === 0) {
     console.log('🔀 Routing question detected');
     
-    // Get the selected grade option
     const selectedGradeId = selectedOptionIds[0];
-    
-    // Get the actual grade code from the selected option
     const gradeOptionsRes = await getOptionsForQuestion(questionId);
     const selectedOption = gradeOptionsRes.find(opt => opt.id === selectedGradeId);
     const gradeCode = selectedOption?.option_code || "";
     
     console.log('Selected grade code:', gradeCode);
     
-    // Determine which survey to load based on routing rules
     let targetSurvey = null;
     
     if (q.routing_rules) {
-      // Check primaria grades (1-6)
       if (q.routing_rules.primaria && q.routing_rules.primaria.includes(gradeCode)) {
         targetSurvey = 'SURVEY_003_PRIMARIA';
         console.log('→ Routing to PRIMARIA survey');
       }
-      // Check secundaria grades (7-12)
       else if (q.routing_rules.secundaria && q.routing_rules.secundaria.includes(gradeCode)) {
-        targetSurvey = 'SURVEY_003'; // Continue with current survey
+        targetSurvey = 'SURVEY_003';
         console.log('→ Continuing with SECUNDARIA survey');
       }
     }
     
-    // Save the grade answer first
-    const payload = { responseId, questionId, answerText, selectedOptionIds };
-    const r = await fetch('/api/save-answer', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    const raw = await r.text();
-    let j = {};
-    try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
-
-    if (!r.ok || !j.ok) {
-      alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
-      return false;
-    }
-    
-    // If routing to primaria, load new survey
+    // ✅ CREATE RESPONSE FOR PRIMARIA
     if (targetSurvey === 'SURVEY_003_PRIMARIA') {
       console.log('📚 Loading primaria survey...');
       
-      // Clear current survey
       SURVEY = null;
       
-      // Load primaria survey
       const primRes = await fetch('/data/SURVEY_003_PRIMARIA.json', { cache: 'no-store' });
       if (!primRes.ok) { 
         alert('No se pudo cargar la encuesta de primaria'); 
@@ -1711,37 +1678,45 @@ btnMostrarResultados?.addEventListener('click', async () => {
       }
       SURVEY = await primRes.json();
 
-// ⭐ Get survey_uuid from loaded JSON
-const primariaSurveyId = SURVEY.survey?.survey_uuid;
+      const primariaSurveyId = SURVEY.survey?.survey_uuid;
 
-if (!primariaSurveyId) {
-  alert('Error: No se encontró survey_uuid en SURVEY_003_PRIMARIA.json');
-  return false;
-}
+      if (!primariaSurveyId) {
+        alert('Error: No se encontró survey_uuid en SURVEY_003_PRIMARIA.json');
+        return false;
+      }
 
-// Create new response for primaria survey
-const newResponseRes = await fetch('/api/start-response', {
-  method: 'POST',
-  credentials: 'include',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    surveyId: primariaSurveyId
-  })
-});
+      // Create response for primaria
+      const newResponseRes = await fetch('/api/start-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ surveyId: primariaSurveyId })
+      });
 
-const newResponseData = await newResponseRes.json();
-if (!newResponseData.ok) {
-  alert('Error al iniciar encuesta de primaria: ' + newResponseData.error);
-  return false;
-}
+      const newResponseData = await newResponseRes.json();
+      if (!newResponseData.ok) {
+        alert('Error al iniciar encuesta de primaria: ' + newResponseData.error);
+        return false;
+      }
 
-// Update current responseId
-window.currentResponseId = newResponseData.responseId;
-console.log('Nuevo response para primaria:', newResponseData.responseId);
-// NUEVO: Persist in sessionStorage
-sessionStorage.setItem('currentResponseId', newResponseData.responseId);
+      window.currentResponseId = newResponseData.responseId;
+      sessionStorage.setItem('currentResponseId', newResponseData.responseId);
+      console.log('✅ Response created for primaria:', newResponseData.responseId);
 
-      // Load question map for primaria survey
+      // Save grade answer to NEW response
+      await fetch('/api/save-answer', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          responseId: window.currentResponseId, 
+          questionId, 
+          answerText, 
+          selectedOptionIds 
+        })
+      });
+
+      // Load question map for primaria
       const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(primariaSurveyId)}`, {
         credentials: 'include'
       });
@@ -1754,22 +1729,58 @@ sessionStorage.setItem('currentResponseId', newResponseData.responseId);
         }
       }
       
-      // Start from question 1 of new survey
       currentQuestionIndex = 0;
       renderCurrentQuestion();
       
       return true;
     }
     
-    // If continuing with secundaria, just proceed normally
-    return true;
+    // ✅ CREATE RESPONSE FOR SECUNDARIA
+    if (targetSurvey === 'SURVEY_003') {
+      console.log('📚 Continuing with secundaria survey...');
+      
+      const secundariaSurveyId = SURVEY.survey?.survey_uuid || 'SURVEY_003';
+
+      // Create response for secundaria
+      const newResponseRes = await fetch('/api/start-response', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ surveyId: secundariaSurveyId })
+      });
+
+      const newResponseData = await newResponseRes.json();
+      if (!newResponseData.ok) {
+        alert('Error al iniciar encuesta: ' + newResponseData.error);
+        return false;
+      }
+
+      window.currentResponseId = newResponseData.responseId;
+      sessionStorage.setItem('currentResponseId', newResponseData.responseId);
+      console.log('✅ Response created for secundaria:', newResponseData.responseId);
+
+      // Save grade answer to NEW response
+      await fetch('/api/save-answer', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          responseId: window.currentResponseId, 
+          questionId, 
+          answerText, 
+          selectedOptionIds 
+        })
+      });
+
+      return true;
+    }
   }
   
   // ════════════════════════════════════════════════════════════
   // END ROUTING LOGIC
   // ════════════════════════════════════════════════════════════
 
-  // Regular save logic (existing code)
+  // Regular save logic for non-routing questions
   const payload = { responseId, questionId, answerText, selectedOptionIds };
 
   const r = await fetch('/api/save-answer', {
@@ -1790,12 +1801,6 @@ sessionStorage.setItem('currentResponseId', newResponseData.responseId);
   return true;
 }
 
-
-
-
-
-
-
   
   async function showSurveyUI() {
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
@@ -1808,37 +1813,8 @@ sessionStorage.setItem('currentResponseId', newResponseData.responseId);
 
     await loadSurvey();
 
-    if (!window.currentResponseId) {
-  // Get survey UUID from loaded SURVEY object
- const initialSurveyId = SURVEY?.survey?.survey_uuid || SURVEY?.survey?.code || 'SURVEY_003';
-  
-  if (!initialSurveyId) {
-    alert('Error: No se pudo determinar el survey_id');
-    return;
-  }
-  
-  const r2 = await fetch('/api/start-response', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      surveyId: initialSurveyId
-    })
-  });
-
-      
-      const raw2 = await r2.text();
-      let j2 = {};
-      try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { j2 = { raw2 }; }
-      if (!r2.ok || !j2.ok) {
-        alert('No se pudo iniciar la encuesta (HTTP ' + r2.status + '):\n' + JSON.stringify(j2, null, 2));
-        return;
-      }
-      window.currentResponseId = j2.responseId;
-      SURVEY_UUID = j2.survey_id;
-      // NUEVO: Persist in sessionStorage
-      sessionStorage.setItem('currentResponseId', j2.responseId);
-    }
+    // ✅ DO NOT CREATE RESPONSE HERE - wait for routing
+    SURVEY_UUID = SURVEY?.survey?.survey_uuid || 'SURVEY_003';
 
     const r = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(SURVEY_UUID)}`, {
       credentials: 'include'
@@ -1881,8 +1857,6 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
     try {
       console.log('🏁 Submitting survey');
       console.log('📋 Current responseId:', window.currentResponseId);
-      console.log('📋 Survey code:', SURVEY?.survey?.code);
-      console.log('📋 Survey UUID:', SURVEY?.survey?.survey_uuid);
       
       const r3 = await fetch('/api/submit-response', {
         method: 'POST',
@@ -1891,36 +1865,24 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
         body: JSON.stringify({ responseId: window.currentResponseId })
       });
 
-      //console.log('📡 Status:', r3.status);
-
       const raw3 = await r3.text();
-      //console.log('📡 Raw response:', raw3);
       
       let j3 = {};
       try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
-      
-      //console.log('📡 Parsed:', j3);
 
       if (!r3.ok || !j3.ok) {
         alert('No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' + JSON.stringify(j3, null, 2));
         return;
       }
     } catch (e) {
-      //console.error('❌ Submit error:', e);
       alert('Error de conexión al finalizar la encuesta.');
       return;
     }
 
-
-
-
-
-  
-
     if (surveyBox) surveyBox.style.display = 'none';
 
     window.currentResponseId = null;
-    sessionStorage.removeItem('currentResponseId');  // NUEVO
+    sessionStorage.removeItem('currentResponseId');
     SURVEY = null;
     QUESTION_ID_MAP = {};
     currentQuestionIndex = 0;
@@ -2026,7 +1988,6 @@ function closeSelectAnalysisModal() {
 }
 
 async function loadApprovedAnalyses() {
-  // Show loading
   analysesLoading.style.display = 'block';
   analysesEmpty.style.display = 'none';
   analysesList.innerHTML = '';
@@ -2046,7 +2007,6 @@ async function loadApprovedAnalyses() {
       return;
     }
     
-    // Render analyses list
     renderAnalysesList(data.analyses);
     
   } catch (e) {
@@ -2056,9 +2016,6 @@ async function loadApprovedAnalyses() {
   }
 }
 
-
-
-
   
 function renderAnalysesList(analyses) {
   analysesList.innerHTML = '';
@@ -2067,7 +2024,6 @@ function renderAnalysesList(analyses) {
     const card = document.createElement('div');
     card.className = 'analysisCard';
     
-    // Format dates
     const analysisDate = formatDateTime(analysis.analysis_date);
     const dateRange = formatDateRange(analysis.earliest_response, analysis.latest_response);
     
@@ -2096,10 +2052,8 @@ function renderAnalysesList(analyses) {
       </label>
     `;
     
-    // Add click handler
     const radio = card.querySelector('input[type="radio"]');
     radio.addEventListener('change', (e) => {
-      // Update selected state visually
       document.querySelectorAll('.analysisCard').forEach(c => c.classList.remove('selected'));
       if (e.target.checked) {
         card.classList.add('selected');
@@ -2108,7 +2062,6 @@ function renderAnalysesList(analyses) {
       }
     });
     
-    // Make entire card clickable
     card.addEventListener('click', (e) => {
       if (e.target.tagName !== 'INPUT') {
         radio.click();
@@ -2155,7 +2108,6 @@ function formatDateRange(earliest, latest) {
   }
 }
 
-// Modal controls
 selectAnalysisClose?.addEventListener('click', closeSelectAnalysisModal);
 btnCancelSelectAnalysis?.addEventListener('click', closeSelectAnalysisModal);
 
@@ -2174,6 +2126,7 @@ btnViewSelectedAnalysis?.addEventListener('click', () => {
   
   window.location.href = url;
 });
+
 // === ADMIN LOGIN SYSTEM ===
 window.adminState = { authenticated: false, username: null, role: null };
 
@@ -2193,7 +2146,6 @@ const btnAdminClose = document.getElementById('btnAdminClose');
 const adminLoginMsg = document.getElementById('adminLoginMsg');
 const adminWelcomeMsg = document.getElementById('adminWelcomeMsg');
 
-// Check admin session on page load
 async function checkAdminSession() {
   try {
     const res = await fetch('/api/admin-me', { credentials: 'include' });
@@ -2207,7 +2159,6 @@ async function checkAdminSession() {
       };
       updateAdminUI();
       
-      // IMPORTANT: Update session badge to show admin, overriding school session
       if (sessionBadge) {
         sessionBadge.textContent = `Admin: ${data.admin.username}`;
         sessionBadge.classList.remove('badgeNo');
@@ -2224,34 +2175,28 @@ async function checkAdminSession() {
 
 function updateAdminUI() {
   if (window.adminState.authenticated) {
-    // Change icon to green
     adminIcon.classList.add('authenticated');
     adminIcon.title = `Admin: ${window.adminState.username}`;
     
-    // Update session badge to show Admin
     if (sessionBadge) {
       sessionBadge.textContent = `Admin: ${window.adminState.username}`;
       sessionBadge.classList.remove('badgeNo');
       sessionBadge.classList.add('badgeOk');
     }
     
-    // Show admin buttons in navbar
     if (adminNavButtons) {
       adminNavButtons.classList.add('show');
     }
   } else {
-    // Reset icon
     adminIcon.classList.remove('authenticated');
     adminIcon.title = 'Admin Access';
     
-    // Reset session badge if no school session
     if (!window.sessionState.ok && sessionBadge) {
       sessionBadge.textContent = 'No autenticado';
       sessionBadge.classList.remove('badgeOk');
       sessionBadge.classList.add('badgeNo');
     }
     
-    // Hide admin buttons
     if (adminNavButtons) {
       adminNavButtons.classList.remove('show');
     }
@@ -2260,12 +2205,10 @@ function updateAdminUI() {
 
 function openAdminModal() {
   if (window.adminState.authenticated) {
-    // Show logged in view
     adminLoginForm.style.display = 'none';
     adminLoggedIn.style.display = 'block';
     adminWelcomeMsg.textContent = `Welcome, ${window.adminState.username}!`;
   } else {
-    // Show login form
     adminLoginForm.style.display = 'block';
     adminLoggedIn.style.display = 'none';
     adminUsername.value = '';
@@ -2281,7 +2224,6 @@ function closeAdminModal() {
   adminModal.style.display = 'none';
 }
 
-// Event listeners
 adminIcon?.addEventListener('click', openAdminModal);
 adminModalClose?.addEventListener('click', closeAdminModal);
 btnAdminCancel?.addEventListener('click', closeAdminModal);
@@ -2291,7 +2233,6 @@ adminModal?.addEventListener('click', (e) => {
   if (e.target === adminModal) closeAdminModal();
 });
 
-// Admin login
 btnAdminLogin?.addEventListener('click', async () => {
   const username = adminUsername?.value?.trim() || '';
   const password = adminPassword?.value?.trim() || '';
@@ -2320,26 +2261,23 @@ btnAdminLogin?.addEventListener('click', async () => {
       return;
     }
 
-// Success
-window.adminState = {
-  authenticated: true,
-  username: data.admin.username,
-  role: data.admin.role
-};
+    window.adminState = {
+      authenticated: true,
+      username: data.admin.username,
+      role: data.admin.role
+    };
 
-adminLoginMsg.textContent = '';
-updateAdminUI();
+    adminLoginMsg.textContent = '';
+    updateAdminUI();
 
-// Update session badge immediately
-if (sessionBadge) {
-  sessionBadge.textContent = `Admin: ${data.admin.username}`;
-  sessionBadge.classList.remove('badgeNo');
-  sessionBadge.classList.add('badgeOk');
-}
+    if (sessionBadge) {
+      sessionBadge.textContent = `Admin: ${data.admin.username}`;
+      sessionBadge.classList.remove('badgeNo');
+      sessionBadge.classList.add('badgeOk');
+    }
 
-closeAdminModal();
-
-alert('✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}');
+    closeAdminModal();
+    alert(`✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}`);
 
   } catch (e) {
     adminLoginMsg.textContent = 'Connection error';
@@ -2349,7 +2287,6 @@ alert('✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.ad
   }
 });
 
-// Admin logout
 btnAdminLogout?.addEventListener('click', async () => {
   try {
     await fetch('/api/admin-logout', {
@@ -2368,20 +2305,15 @@ btnAdminLogout?.addEventListener('click', async () => {
   }
 });
 
-// Password field - Enter key to login
 adminPassword?.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     btnAdminLogin?.click();
   }
 });
 
-// Check admin session on page load
 checkAdminSession();
 
-
 // === APPROVE SURVEYS MODAL ===
-// ADD THIS TO THE END OF YOUR <script> SECTION IN index.html
-
 const approveSurveysModal = document.getElementById('approveSurveysModal');
 const approveSurveysClose = document.getElementById('approveSurveysClose');
 const pendingSurveysLoading = document.getElementById('pendingSurveysLoading');
@@ -2473,7 +2405,6 @@ function renderPendingSurveys(surveys) {
       </div>
     `;
 
-    // Add event listeners
     const btnApprove = card.querySelector('.btnApprove');
     const btnReject = card.querySelector('.btnReject');
     const btnPreview = card.querySelector('.btnPreview');
@@ -2511,13 +2442,11 @@ async function approveSurvey(schoolId, analysisDate, schoolName) {
 
     alert(`✅ Survey approved for ${schoolName}!`);
 
-    // Remove card from list
     const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
     if (card) {
       card.remove();
     }
 
-    // Check if list is empty
     if (pendingSurveysList.children.length === 0) {
       pendingSurveysEmpty.style.display = 'block';
     }
@@ -2553,13 +2482,11 @@ async function rejectSurvey(schoolId, analysisDate, schoolName) {
 
     alert(`❌ Survey re-open for ${schoolName}`);
 
-    // Remove card from list
     const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
     if (card) {
       card.remove();
     }
 
-    // Check if list is empty
     if (pendingSurveysList.children.length === 0) {
       pendingSurveysEmpty.style.display = 'block';
     }
@@ -2576,7 +2503,6 @@ function previewSurvey(schoolId, analysisDate) {
   window.open(url, '_blank');
 }
 
-// Modal controls
 approveSurveysClose?.addEventListener('click', closeApproveSurveysModal);
 btnClosePendingSurveys?.addEventListener('click', closeApproveSurveysModal);
 
@@ -2584,7 +2510,6 @@ approveSurveysModal?.addEventListener('click', (e) => {
   if (e.target === approveSurveysModal) closeApproveSurveysModal();
 });
 
-// Button click handler
 btnApproveSurvey?.addEventListener('click', () => {
   if (!window.adminState.authenticated) {
     alert('Please login as admin first');
@@ -2593,8 +2518,6 @@ btnApproveSurvey?.addEventListener('click', () => {
   openApproveSurveysModal();
 });
   
-// 02202026 dos modales nuevos
-
 // === ADD SCHOOL MODAL - TWO STEP SYSTEM ===
 document.addEventListener('DOMContentLoaded', () => {
   const addSchoolModal1 = document.getElementById('addSchoolModal1');
@@ -2614,7 +2537,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Store form data between modals
   let schoolFormData = {};
 
   function clearAllFields() {
@@ -2652,7 +2574,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const studentsSecundaria = document.getElementById('addStudentsSecundaria')?.value?.trim() || '';
     const studentsPreparatoria = document.getElementById('addStudentsPreparatoria')?.value?.trim() || '';
 
-    // Validate required fields
     if (!schoolName) {
       addSchoolMsg1.textContent = 'School name is required';
       addSchoolMsg1.className = 'statusMsg statusErr';
@@ -2677,7 +2598,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
 
-    // Validate student counts are provided (0 is valid)
     if (studentsPrimaria === '') {
       addSchoolMsg1.textContent = 'Students Primaria is required (0 is allowed)';
       addSchoolMsg1.className = 'statusMsg statusErr';
@@ -2696,7 +2616,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
 
-    // Store validated data
     schoolFormData = {
       schoolName,
       username,
@@ -2713,14 +2632,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function openModal2() {
     addSchoolModal1.style.display = 'none';
     addSchoolModal2.style.display = 'flex';
-    // Focus first field
     setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100);
   }
 
   function backToModal1() {
     addSchoolModal2.style.display = 'none';
     addSchoolModal1.style.display = 'flex';
-    // Restore form values
     if (schoolFormData.schoolName) {
       document.getElementById('addSchoolName').value = schoolFormData.schoolName;
       document.getElementById('addSchoolUsername').value = schoolFormData.username;
@@ -2731,7 +2648,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Event listeners - Open modal 1
   btnAddSchool?.addEventListener('click', () => {
     if (!window.adminState?.authenticated) {
       alert('Please login as admin first');
@@ -2740,12 +2656,10 @@ document.addEventListener('DOMContentLoaded', () => {
     openModal1();
   });
 
-  // Close buttons
   addSchoolClose1?.addEventListener('click', closeAllModals);
   addSchoolClose2?.addEventListener('click', closeAllModals);
   btnCancelAddSchool1?.addEventListener('click', closeAllModals);
 
-  // Click outside to close
   addSchoolModal1?.addEventListener('click', (e) => {
     if (e.target === addSchoolModal1) closeAllModals();
   });
@@ -2754,23 +2668,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === addSchoolModal2) closeAllModals();
   });
 
-  // Next button - Step 1 to Step 2
   btnNextToEncargado?.addEventListener('click', () => {
     if (validateStep1()) {
       openModal2();
     }
   });
 
-  // Back button - Step 2 to Step 1
   btnBackToSchoolInfo?.addEventListener('click', backToModal1);
 
-  // Create School button - Final submission
   btnCreateSchool?.addEventListener('click', async () => {
     const encFirstName = document.getElementById('addEncFirstName')?.value?.trim() || '';
     const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
     const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
 
-    // Validate encargado fields
     if (!encFirstName) {
       addSchoolMsg2.textContent = 'Encargado first name is required';
       addSchoolMsg2.className = 'statusMsg statusErr';
@@ -2783,7 +2693,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Combine all data
     const finalData = {
       ...schoolFormData,
       encFirstName,
@@ -2791,7 +2700,6 @@ document.addEventListener('DOMContentLoaded', () => {
       encMatLastName
     };
 
-    // Submit to API
     try {
       btnCreateSchool.disabled = true;
       addSchoolMsg2.textContent = 'Creating school...';
@@ -2813,11 +2721,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Success
       addSchoolMsg2.textContent = `✅ School "${data.school.name}" created successfully!`;
       addSchoolMsg2.className = 'statusMsg statusOk';
 
-      // Close modals after 2 seconds
       setTimeout(() => {
         closeAllModals();
       }, 2000);
@@ -2831,7 +2737,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Enter key support
   document.getElementById('addSchoolPassword')?.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       btnNextToEncargado?.click();
@@ -2851,18 +2756,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-  
-
-
 </script>
 
-
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
-<!-- ADD SCHOOL MODAL - STEP 1: School Information -->
-<!-- ═══════════════════════════════════════════════════════════════════ -->
-
+<!-- ADD SCHOOL MODAL - STEP 1 -->
 <div id="addSchoolModal1" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
     <div class="modalHeader">
@@ -2871,7 +2767,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div style="padding:8px 0;">
-      <!-- School Information Section -->
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
         
@@ -2891,7 +2786,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Student Enrollment Section -->
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
         
@@ -2913,22 +2807,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Action Buttons -->
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnCancelAddSchool1" class="btnSecondary" type="button">Cancel</button>
         <button id="btnNextToEncargado" class="btnPrimary" type="button">Next &gt;</button>
       </div>
 
-      <!-- Status Message -->
       <div id="addSchoolMsg1" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════════ -->
-<!-- ADD SCHOOL MODAL - STEP 2: Encargado Information -->
-<!-- ═══════════════════════════════════════════════════════════════════ -->
-
+<!-- ADD SCHOOL MODAL - STEP 2 -->
 <div id="addSchoolModal2" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
     <div class="modalHeader">
@@ -2937,7 +2826,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <div style="padding:8px 0;">
-      <!-- Encargado Information Section -->
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
         
@@ -2957,63 +2845,15 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Action Buttons -->
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnBackToSchoolInfo" class="btnSecondary" type="button">&lt; Back</button>
         <button id="btnCreateSchool" class="btnPrimary" type="button">Create School</button>
       </div>
 
-      <!-- Status Message -->
       <div id="addSchoolMsg2" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
 </div>
 
-
-
-  
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
