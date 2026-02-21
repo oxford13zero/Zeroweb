@@ -2582,148 +2582,281 @@ approveSurveysModal?.addEventListener('click', (e) => {
   if (e.target === approveSurveysModal) closeApproveSurveysModal();
 });
 
-// Button click handler
-btnApproveSurvey?.addEventListener('click', () => {
-  if (!window.adminState.authenticated) {
-    alert('Please login as admin first');
-    return;
-  }
-  openApproveSurveysModal();
-});
-// === ADD SCHOOL MODAL ===
+// 02202026 dos modales nuevos
+
+// === ADD SCHOOL MODAL - TWO STEP SYSTEM ===
 document.addEventListener('DOMContentLoaded', () => {
-  const addSchoolModal = document.getElementById('addSchoolModal');
-  const addSchoolClose = document.getElementById('addSchoolClose');
+  const addSchoolModal1 = document.getElementById('addSchoolModal1');
+  const addSchoolModal2 = document.getElementById('addSchoolModal2');
+  const addSchoolClose1 = document.getElementById('addSchoolClose1');
+  const addSchoolClose2 = document.getElementById('addSchoolClose2');
   const btnAddSchool = document.getElementById('btnAddSchool');
-  const btnSaveSchool = document.getElementById('btnSaveSchool');
-  const btnCancelAddSchool = document.getElementById('btnCancelAddSchool');
-  const addSchoolMsg = document.getElementById('addSchoolMsg');
+  const btnCancelAddSchool1 = document.getElementById('btnCancelAddSchool1');
+  const btnNextToEncargado = document.getElementById('btnNextToEncargado');
+  const btnBackToSchoolInfo = document.getElementById('btnBackToSchoolInfo');
+  const btnCreateSchool = document.getElementById('btnCreateSchool');
+  const addSchoolMsg1 = document.getElementById('addSchoolMsg1');
+  const addSchoolMsg2 = document.getElementById('addSchoolMsg2');
 
-  if (!addSchoolModal) {
-    console.error('❌ addSchoolModal not found');
+  if (!addSchoolModal1 || !addSchoolModal2) {
+    console.error('❌ Add School modals not found');
     return;
   }
 
-  function openAddSchoolModal() {
+  // Store form data between modals
+  let schoolFormData = {};
+
+  function clearAllFields() {
     document.getElementById('addSchoolName').value = '';
     document.getElementById('addSchoolUsername').value = '';
     document.getElementById('addSchoolPassword').value = '';
-    document.getElementById('addStudentsPrimaria').value = '';
-    document.getElementById('addStudentsSecundaria').value = '';
-    document.getElementById('addStudentsPreparatoria').value = '';
+    document.getElementById('addStudentsPrimaria').value = '0';
+    document.getElementById('addStudentsSecundaria').value = '0';
+    document.getElementById('addStudentsPreparatoria').value = '0';
     document.getElementById('addEncFirstName').value = '';
     document.getElementById('addEncPatLastName').value = '';
     document.getElementById('addEncMatLastName').value = '';
     
-    addSchoolMsg.textContent = '';
-    addSchoolModal.style.display = 'flex';
+    addSchoolMsg1.textContent = '';
+    addSchoolMsg2.textContent = '';
+    schoolFormData = {};
   }
 
-  function closeAddSchoolModal() {
-    addSchoolModal.style.display = 'none';
+  function openModal1() {
+    clearAllFields();
+    addSchoolModal1.style.display = 'flex';
+    addSchoolModal2.style.display = 'none';
   }
 
+  function closeAllModals() {
+    addSchoolModal1.style.display = 'none';
+    addSchoolModal2.style.display = 'none';
+  }
+
+  function validateStep1() {
+    const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
+    const username = document.getElementById('addSchoolUsername')?.value?.trim() || '';
+    const password = document.getElementById('addSchoolPassword')?.value?.trim() || '';
+    const studentsPrimaria = document.getElementById('addStudentsPrimaria')?.value?.trim() || '';
+    const studentsSecundaria = document.getElementById('addStudentsSecundaria')?.value?.trim() || '';
+    const studentsPreparatoria = document.getElementById('addStudentsPreparatoria')?.value?.trim() || '';
+
+    // Validate required fields
+    if (!schoolName) {
+      addSchoolMsg1.textContent = 'School name is required';
+      addSchoolMsg1.className = 'statusMsg statusErr';
+      return false;
+    }
+
+    if (!username) {
+      addSchoolMsg1.textContent = 'Username is required';
+      addSchoolMsg1.className = 'statusMsg statusErr';
+      return false;
+    }
+
+    if (!password) {
+      addSchoolMsg1.textContent = 'Password is required';
+      addSchoolMsg1.className = 'statusMsg statusErr';
+      return false;
+    }
+
+    if (password.length < 6) {
+      addSchoolMsg1.textContent = 'Password must be at least 6 characters';
+      addSchoolMsg1.className = 'statusMsg statusErr';
+      return false;
+    }
+
+    // Validate student counts are provided (0 is valid)
+    if (studentsPrimaria === '') {
+      addSchoolMsg1.textContent = 'Students Primaria is required (0 is allowed)';
+      addSchoolMsg1.className = 'statusMsg statusErr';
+      return false;
+    }
+
+    if (studentsSecundaria === '') {
+      addSchoolMsg1.textContent = 'Students Secundaria is required (0 is allowed)';
+      addSchoolMsg1.className = 'statusMsg statusErr';
+      return false;
+    }
+
+    if (studentsPreparatoria === '') {
+      addSchoolMsg1.textContent = 'Students Preparatoria is required (0 is allowed)';
+      addSchoolMsg1.className = 'statusMsg statusErr';
+      return false;
+    }
+
+    // Store validated data
+    schoolFormData = {
+      schoolName,
+      username,
+      password,
+      studentsPrimaria: parseInt(studentsPrimaria),
+      studentsSecundaria: parseInt(studentsSecundaria),
+      studentsPreparatoria: parseInt(studentsPreparatoria)
+    };
+
+    addSchoolMsg1.textContent = '';
+    return true;
+  }
+
+  function openModal2() {
+    addSchoolModal1.style.display = 'none';
+    addSchoolModal2.style.display = 'flex';
+    // Focus first field
+    setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100);
+  }
+
+  function backToModal1() {
+    addSchoolModal2.style.display = 'none';
+    addSchoolModal1.style.display = 'flex';
+    // Restore form values
+    if (schoolFormData.schoolName) {
+      document.getElementById('addSchoolName').value = schoolFormData.schoolName;
+      document.getElementById('addSchoolUsername').value = schoolFormData.username;
+      document.getElementById('addSchoolPassword').value = schoolFormData.password;
+      document.getElementById('addStudentsPrimaria').value = schoolFormData.studentsPrimaria;
+      document.getElementById('addStudentsSecundaria').value = schoolFormData.studentsSecundaria;
+      document.getElementById('addStudentsPreparatoria').value = schoolFormData.studentsPreparatoria;
+    }
+  }
+
+  // Event listeners - Open modal 1
   btnAddSchool?.addEventListener('click', () => {
     if (!window.adminState?.authenticated) {
       alert('Please login as admin first');
       return;
     }
-    openAddSchoolModal();
+    openModal1();
   });
 
-  addSchoolClose?.addEventListener('click', closeAddSchoolModal);
-  btnCancelAddSchool?.addEventListener('click', closeAddSchoolModal);
+  // Close buttons
+  addSchoolClose1?.addEventListener('click', closeAllModals);
+  addSchoolClose2?.addEventListener('click', closeAllModals);
+  btnCancelAddSchool1?.addEventListener('click', closeAllModals);
 
-  addSchoolModal?.addEventListener('click', (e) => {
-    if (e.target === addSchoolModal) closeAddSchoolModal();
+  // Click outside to close
+  addSchoolModal1?.addEventListener('click', (e) => {
+    if (e.target === addSchoolModal1) closeAllModals();
   });
 
-  btnSaveSchool?.addEventListener('click', async () => {
-    const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
-    const username = document.getElementById('addSchoolUsername')?.value?.trim() || '';
-    const password = document.getElementById('addSchoolPassword')?.value?.trim() || '';
-    const studentsPrimaria = document.getElementById('addStudentsPrimaria')?.value?.trim() || '0';
-    const studentsSecundaria = document.getElementById('addStudentsSecundaria')?.value?.trim() || '0';
-    const studentsPreparatoria = document.getElementById('addStudentsPreparatoria')?.value?.trim() || '0';
+  addSchoolModal2?.addEventListener('click', (e) => {
+    if (e.target === addSchoolModal2) closeAllModals();
+  });
+
+  // Next button - Step 1 to Step 2
+  btnNextToEncargado?.addEventListener('click', () => {
+    if (validateStep1()) {
+      openModal2();
+    }
+  });
+
+  // Back button - Step 2 to Step 1
+  btnBackToSchoolInfo?.addEventListener('click', backToModal1);
+
+  // Create School button - Final submission
+  btnCreateSchool?.addEventListener('click', async () => {
     const encFirstName = document.getElementById('addEncFirstName')?.value?.trim() || '';
     const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
     const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
 
-    if (!schoolName || !username || !password) {
-      addSchoolMsg.textContent = 'School name, username, and password are required';
-      addSchoolMsg.className = 'statusMsg statusErr';
+    // Validate encargado fields
+    if (!encFirstName) {
+      addSchoolMsg2.textContent = 'Encargado first name is required';
+      addSchoolMsg2.className = 'statusMsg statusErr';
       return;
     }
 
-    if (!encFirstName || !encPatLastName) {
-      addSchoolMsg.textContent = 'Encargado first name and paternal last name are required';
-      addSchoolMsg.className = 'statusMsg statusErr';
+    if (!encPatLastName) {
+      addSchoolMsg2.textContent = 'Encargado paternal last name is required';
+      addSchoolMsg2.className = 'statusMsg statusErr';
       return;
     }
 
-    if (password.length < 6) {
-      addSchoolMsg.textContent = 'Password must be at least 6 characters';
-      addSchoolMsg.className = 'statusMsg statusErr';
-      return;
-    }
+    // Combine all data
+    const finalData = {
+      ...schoolFormData,
+      encFirstName,
+      encPatLastName,
+      encMatLastName
+    };
 
+    // Submit to API
     try {
-      btnSaveSchool.disabled = true;
-      addSchoolMsg.textContent = 'Creating school...';
-      addSchoolMsg.className = 'statusMsg statusWarn';
+      btnCreateSchool.disabled = true;
+      addSchoolMsg2.textContent = 'Creating school...';
+      addSchoolMsg2.className = 'statusMsg statusWarn';
 
       const res = await fetch('/api/add-school', {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          schoolName,
-          username,
-          password,
-          studentsPrimaria: parseInt(studentsPrimaria),
-          studentsSecundaria: parseInt(studentsSecundaria),
-          studentsPreparatoria: parseInt(studentsPreparatoria),
-          encFirstName,
-          encPatLastName,
-          encMatLastName
-        })
+        body: JSON.stringify(finalData)
       });
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.ok) {
-        addSchoolMsg.textContent = data.error || 'Failed to create school';
-        addSchoolMsg.className = 'statusMsg statusErr';
-        btnSaveSchool.disabled = false;
+        addSchoolMsg2.textContent = data.error || 'Failed to create school';
+        addSchoolMsg2.className = 'statusMsg statusErr';
+        btnCreateSchool.disabled = false;
         return;
       }
 
-      addSchoolMsg.textContent = `✅ School "${data.school.name}" created successfully!`;
-      addSchoolMsg.className = 'statusMsg statusOk';
+      // Success
+      addSchoolMsg2.textContent = `✅ School "${data.school.name}" created successfully!`;
+      addSchoolMsg2.className = 'statusMsg statusOk';
 
+      // Close modals after 2 seconds
       setTimeout(() => {
-        closeAddSchoolModal();
+        closeAllModals();
       }, 2000);
 
     } catch (e) {
       console.error('Error creating school:', e);
-      addSchoolMsg.textContent = 'Connection error';
-      addSchoolMsg.className = 'statusMsg statusErr';
+      addSchoolMsg2.textContent = 'Connection error';
+      addSchoolMsg2.className = 'statusMsg statusErr';
     } finally {
-      btnSaveSchool.disabled = false;
+      btnCreateSchool.disabled = false;
+    }
+  });
+
+  // Enter key support
+  document.getElementById('addSchoolPassword')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      btnNextToEncargado?.click();
+    }
+  });
+
+  document.getElementById('addEncPatLastName')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      btnCreateSchool?.click();
+    }
+  });
+
+  document.getElementById('addEncMatLastName')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      btnCreateSchool?.click();
     }
   });
 });
+
+
+  
+
 
 </script>
 
 
 
-<div id="addSchoolModal" class="modalOverlay">
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- ADD SCHOOL MODAL - STEP 1: School Information -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
+<div id="addSchoolModal1" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
     <div class="modalHeader">
-      <h3 class="modalTitle">Add New School</h3>
-      <button id="addSchoolClose" class="modalClose" type="button">X</button>
+      <h3 class="modalTitle">Add New School - Step 1 of 2</h3>
+      <button id="addSchoolClose1" class="modalClose" type="button">X</button>
     </div>
 
     <div style="padding:8px 0;">
@@ -2753,22 +2886,46 @@ document.addEventListener('DOMContentLoaded', () => {
         
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
           <div class="fieldBlock">
-            <label class="fieldLabel" for="addStudentsPrimaria">Primaria (1-6)</label><br />
-            <input id="addStudentsPrimaria" class="textInput" type="number" min="0" placeholder="0" style="width:100%;" />
+            <label class="fieldLabel" for="addStudentsPrimaria">Primaria (1-6) *</label><br />
+            <input id="addStudentsPrimaria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
           </div>
 
           <div class="fieldBlock">
-            <label class="fieldLabel" for="addStudentsSecundaria">Secundaria (7-9)</label><br />
-            <input id="addStudentsSecundaria" class="textInput" type="number" min="0" placeholder="0" style="width:100%;" />
+            <label class="fieldLabel" for="addStudentsSecundaria">Secundaria (7-9) *</label><br />
+            <input id="addStudentsSecundaria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
           </div>
 
           <div class="fieldBlock">
-            <label class="fieldLabel" for="addStudentsPreparatoria">Preparatoria (10-12)</label><br />
-            <input id="addStudentsPreparatoria" class="textInput" type="number" min="0" placeholder="0" style="width:100%;" />
+            <label class="fieldLabel" for="addStudentsPreparatoria">Preparatoria (10-12) *</label><br />
+            <input id="addStudentsPreparatoria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
           </div>
         </div>
       </div>
 
+      <!-- Action Buttons -->
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <button id="btnCancelAddSchool1" class="btnSecondary" type="button">Cancel</button>
+        <button id="btnNextToEncargado" class="btnPrimary" type="button">Next &gt;</button>
+      </div>
+
+      <!-- Status Message -->
+      <div id="addSchoolMsg1" class="statusMsg statusErr" style="margin-top:12px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- ADD SCHOOL MODAL - STEP 2: Encargado Information -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
+<div id="addSchoolModal2" class="modalOverlay">
+  <div class="modalBox" style="max-width:600px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Add New School - Step 2 of 2</h3>
+      <button id="addSchoolClose2" class="modalClose" type="button">X</button>
+    </div>
+
+    <div style="padding:8px 0;">
       <!-- Encargado Information Section -->
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
@@ -2785,25 +2942,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncMatLastName">Maternal Last Name</label><br />
-          <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López" style="width:100%; max-width:100%;" />
+          <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López (optional)" style="width:100%; max-width:100%;" />
         </div>
       </div>
 
       <!-- Action Buttons -->
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnSaveSchool" class="btnPrimary" type="button">Create School</button>
-        <button id="btnCancelAddSchool" class="btnSecondary" type="button">Cancel</button>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <button id="btnBackToSchoolInfo" class="btnSecondary" type="button">&lt; Back</button>
+        <button id="btnCreateSchool" class="btnPrimary" type="button">Create School</button>
       </div>
 
       <!-- Status Message -->
-      <div id="addSchoolMsg" class="statusMsg statusErr" style="margin-top:12px;"></div>
+      <div id="addSchoolMsg2" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
 </div>
 
+
+
   
 </body>
 </html>
+
 
 
 
