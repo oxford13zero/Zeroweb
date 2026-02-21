@@ -1,131 +1,151 @@
-import { createClient } from '@supabase/supabase-js';
+// /api/admin-login.js
+import { supabaseAdmin } from "./_lib/supabaseAdmin.js";
+import { generateSessionToken, getSessionExpiration } from "./_lib/generateSessionToken.js";
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
-  console.log('=== ADMIN LOGIN DEBUG START ===');
-  
-  if (req.method !== 'POST') {
-    return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
   }
 
   try {
-    const { username, password } = req.body;
-    console.log('1. Received username:', username);
-    console.log('2. Password length:', password?.length);
+    const { username, password } = req.body || {};
 
     if (!username || !password) {
-      return res.status(400).json({ ok: false, error: 'Username and password required' });
-    }
-
-    // Initialize Supabase
-    const SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
-    console.log('3. Supabase URL exists:', !!SUPABASE_URL);
-    console.log('4. Supabase KEY exists:', !!SUPABASE_KEY);
-
-    if (!SUPABASE_URL || !SUPABASE_KEY) {
-      return res.status(500).json({ ok: false, error: 'Server configuration error' });
-    }
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-      auth: { persistSession: false }
-    });
-
-    // Get admin user
-    console.log('5. Querying database for username:', username);
-    
-    const { data: adminUser, error } = await supabase
-      .from('admin_users')
-      .select('id, username, password_hash, email, full_name, role, is_active')
-      .eq('username', username)
-      .maybeSingle();
-
-    console.log('6. Query error:', error);
-    console.log('7. User found:', !!adminUser);
-    
-    if (adminUser) {
-      console.log('8. User details:', {
-        username: adminUser.username,
-        email: adminUser.email,
-        is_active: adminUser.is_active,
-        hash_length: adminUser.password_hash?.length,
-        hash_start: adminUser.password_hash?.substring(0, 10)
+      return res.status(400).json({
+        ok: false,
+        error: "MISSING_CREDENTIALS",
+        detail: "Username and password are required"
       });
     }
 
-    if (error || !adminUser) {
-      console.log('Admin not found:', username);
-      return res.status(401).json({ ok: false, error: 'Invalid credentials' });
+    // 1. Validate credentials against admin_users table
+    const { data: admin, error: adminError } = await supabaseAdmin
+      .from("admin_users")
+      .select("id, username, password_hash, full_name, role, is_active")
+      .eq("username", username)
+      .maybeSingle();
+
+    if (adminError || !admin) {
+      return res.status(401).json({
+        ok: false,
+        error: "INVALID_CREDENTIALS",
+        detail: "Invalid username or password"
+      });
     }
 
-    // Check if active
-    if (!adminUser.is_active) {
-      console.log('9. Account is not active');
-      return res.status(401).json({ ok: false, error: 'Account disabled' });
+    // Check if admin account is active
+    if (!admin.is_active) {
+      return res.status(401).json({
+        ok: false,
+        error: "ACCOUNT_INACTIVE",
+        detail: "Admin account is inactive"
+      });
     }
 
-    // Verify password
-    console.log('10. Starting password verification...');
-    console.log('11. Entered password:', password);
-    console.log('12. Stored hash:', adminUser.password_hash);
-    
+    // 2. Verify password using bcrypt
     let isValid = false;
     
     try {
-      isValid = await bcrypt.compare(password, adminUser.password_hash);
-      console.log('13. Bcrypt compare result:', isValid);
+      isValid = await bcrypt.compare(password, admin.password_hash);
     } catch (bcryptError) {
-      console.error('14. Bcrypt error:', bcryptError);
-      return res.status(500).json({ ok: false, error: 'Password verification failed' });
+      console.error("Bcrypt error:", bcryptError);
+      return res.status(500).json({
+        ok: false,
+        error: "PASSWORD_VERIFICATION_FAILED",
+        detail: "Error verifying password"
+      });
     }
 
     if (!isValid) {
-      console.log('15. Password invalid - bcrypt compare returned false');
-      
-      // ADDITIONAL TEST: Try comparing with a freshly generated hash
-      try {
-        const testHash = await bcrypt.hash(password, 10);
-        const testCompare = await bcrypt.compare(password, testHash);
-        console.log('16. Test hash generation and compare:', testCompare);
-      } catch (testError) {
-        console.error('17. Test hash error:', testError);
-      }
-      
-      return res.status(401).json({ ok: false, error: 'Invalid credentials' });
+      return res.status(401).json({
+        ok: false,
+        error: "INVALID_CREDENTIALS",
+        detail: "Invalid username or password"
+      });
     }
 
-    console.log('18. Password valid! Updating last login...');
+    // 3. Generate secure session token
+    const sessionToken = generateSessionToken();
+    const expiresAt = getSessionExpiration(8); // 8 hours
 
-    // Update last login
-    await supabase
-      .from('admin_users')
+    // 4. Get client info for audit trail
+    const ipAddress = req.headers['x-forwarded-for'] || 
+                     req.headers['x-real-ip'] || 
+                     req.socket?.remoteAddress || 
+                     'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+
+    // 5. Create session record in database
+    const { data: session, error: sessionError } = await supabaseAdmin
+      .from("admin_sessions")
+      .insert({
+        admin_id: admin.id,
+        session_token: sessionToken,
+        expires_at: expiresAt.toISOString(),
+        ip_address: ipAddress,
+        user_agent: userAgent
+      })
+      .select("id, expires_at")
+      .single();
+
+    if (sessionError || !session) {
+      console.error("Session creation failed:", sessionError);
+      return res.status(500).json({
+        ok: false,
+        error: "SESSION_CREATION_FAILED",
+        detail: "Failed to create session"
+      });
+    }
+
+    // 6. Update last login timestamp
+    await supabaseAdmin
+      .from("admin_users")
       .update({ last_login: new Date().toISOString() })
-      .eq('id', adminUser.id);
+      .eq("id", admin.id);
 
-    // Set session cookie
+    // 7. Set secure cookies
+    const cookieOptions = [
+      `t4z_admin_session=${sessionToken}`,
+      'Path=/',
+      'HttpOnly',
+      'SameSite=Lax',
+      `Max-Age=${8 * 60 * 60}`, // 8 hours in seconds
+      // Add 'Secure' in production (requires HTTPS)
+      // process.env.NODE_ENV === 'production' ? 'Secure' : ''
+    ].filter(Boolean).join('; ');
+
+    // Set additional cookies for client-side access (non-sensitive data)
+    const usernameCookie = `t4z_admin_username=${admin.username}; Path=/; Max-Age=${8 * 60 * 60}; SameSite=Lax`;
+    const roleCookie = `t4z_admin_role=${admin.role}; Path=/; Max-Age=${8 * 60 * 60}; SameSite=Lax`;
+
     res.setHeader('Set-Cookie', [
-      `t4z_admin_session=${adminUser.id}; Path=/; HttpOnly; SameSite=Strict`,
-      `t4z_admin_username=${adminUser.username}; Path=/; SameSite=Strict`,
-      `t4z_admin_role=${adminUser.role}; Path=/; SameSite=Strict`
+      cookieOptions,
+      usernameCookie,
+      roleCookie
     ]);
 
-    console.log('19. Login successful!');
-    console.log('=== ADMIN LOGIN DEBUG END ===');
-
-    return res.json({
+    // 8. Return success response
+    return res.status(200).json({
       ok: true,
       admin: {
-        id: adminUser.id,
-        username: adminUser.username,
-        full_name: adminUser.full_name,
-        role: adminUser.role
+        id: admin.id,
+        username: admin.username,
+        full_name: admin.full_name,
+        role: admin.role
+      },
+      session: {
+        id: session.id,
+        expires_at: session.expires_at
       }
     });
 
-  } catch (err) {
-    console.error('FATAL ERROR:', err);
-    console.error('Stack:', err.stack);
-    return res.status(500).json({ ok: false, error: 'Server error' });
+  } catch (e) {
+    console.error("Admin login error:", e);
+    return res.status(500).json({
+      ok: false,
+      error: "INTERNAL_SERVER_ERROR",
+      detail: e?.message || String(e)
+    });
   }
 }
