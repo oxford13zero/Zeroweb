@@ -2,22 +2,22 @@
 import { supabaseAdmin } from "./_lib/supabaseAdmin.js";
 import { requireAdminAuth } from "./_lib/adminAuth.js";
 
+const VALID_COUNTRIES = ["MX", "CL", "CR", "DO", "US"];
+
 export default async function handler(req, res) {
   try {
-    // Only POST allowed
     if (req.method !== "POST") {
       return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
     }
 
-    // Require admin authentication
     const adminAuth = await requireAdminAuth(req, res);
     if (!adminAuth?.ok) return;
 
-    // Extract data from request
     const {
       schoolName,
       username,
       password,
+      country,
       studentsPrimaria,
       studentsSecundaria,
       studentsPreparatoria,
@@ -43,7 +43,17 @@ export default async function handler(req, res) {
       });
     }
 
-    // Validate student counts are non-negative integers
+    // Validate country
+    const schoolCountry = (country || "MX").toUpperCase();
+    if (!VALID_COUNTRIES.includes(schoolCountry)) {
+      return res.status(400).json({
+        ok: false,
+        error: "INVALID_COUNTRY",
+        detail: `Country must be one of: ${VALID_COUNTRIES.join(", ")}`
+      });
+    }
+
+    // Validate student counts
     const primaria = parseInt(studentsPrimaria) || 0;
     const secundaria = parseInt(studentsSecundaria) || 0;
     const preparatoria = parseInt(studentsPreparatoria) || 0;
@@ -77,12 +87,13 @@ export default async function handler(req, res) {
       .insert({
         name: schoolName,
         username: username,
-        password: password, // TODO: Hash password in future
+        password: password,
+        country: schoolCountry,
         students_primaria: primaria,
         students_secundaria: secundaria,
         students_preparatoria: preparatoria
       })
-      .select("id, name, username")
+      .select("id, name, username, country")
       .single();
 
     if (schoolError || !school) {
@@ -108,8 +119,8 @@ export default async function handler(req, res) {
 
     if (encargadoError || !encargado) {
       console.error("Encargado creation failed:", encargadoError);
-      
-      // Rollback: Delete the school we just created
+
+      // Rollback: delete the school we just created
       await supabaseAdmin
         .from("schools")
         .delete()
@@ -122,13 +133,13 @@ export default async function handler(req, res) {
       });
     }
 
-    // Success
     return res.status(201).json({
       ok: true,
       school: {
         id: school.id,
         name: school.name,
         username: school.username,
+        country: school.country,
         students: {
           primaria,
           secundaria,
