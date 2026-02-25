@@ -1139,7 +1139,7 @@ Portland, Oregon</p>
 
   async function loadRoutingQuestion() {
     if (ROUTING_QUESTION) return;
-    const res = await fetch('/data/ROUTING_QUESTION.json', { cache: 'no-store' });
+    const res = await fetch('/data/Routing_question.json', { cache: 'no-store' });
     if (!res.ok) { alert(`ERROR: No se pudo cargar ROUTING_QUESTION.json (HTTP ${res.status})`); return; }
     ROUTING_QUESTION = await res.json();
   }
