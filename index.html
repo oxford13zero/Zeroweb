@@ -1315,7 +1315,7 @@ Portland, Oregon</p>
   function renderCurrentQuestion() {
     const question = SURVEY.questions[currentQuestionIndex];
     document.getElementById('qTitle').textContent =
-      `Pregunta ${question.number} de ${SURVEY.questions.length}`;
+      `Pregunta ${currentQuestionIndex + 1} de ${SURVEY.questions.length}`;
     document.getElementById('qText').textContent = question.text;
 
     const optionsDiv = document.getElementById('qOptions');
