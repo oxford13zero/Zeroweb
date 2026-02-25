@@ -259,9 +259,6 @@
   color: #16222D;
 }
 
-
-
-    
   </style>
 
   <script>
@@ -432,6 +429,17 @@ te entregamos un perfil completo de tu escuela, junto con un plan de intervenci�
       </div>
     </div>
 
+    <!-- ROUTING QUESTION BOX: shown before survey loads -->
+    <div id="routingBox" class="formPanel" style="display:none; margin-top:18px;">
+      <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Pregunta inicial</div>
+      <div id="routingText" style="margin-bottom:12px;"></div>
+      <div id="routingOptions"></div>
+      <div style="margin-top:14px;">
+        <button id="btnRoutingNext" class="btnPrimary" type="button">Siguiente</button>
+      </div>
+      <div id="routingMsg" class="statusMsg statusWarn"></div>
+    </div>
+
     <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
       <div id="qText" style="margin-bottom:12px;"></div>
@@ -541,7 +549,6 @@ te entregamos un perfil completo de tu escuela, junto con un plan de intervenci�
           Rodolfo enseña habilidades socioemocionales en el mundo educativo. 
           Ha sido invitado por la ciudad de Neuss, en Alemania, para liderar el programa Die Welt Erziehung Und Die Neuerung 
           (Educación e Innovación Mundial) y ha implementado exitosamente el programa Zero en Chile, México, Costa Rica, República Dominicana y Estados Unidos.
-
         </p>
       </div>
 
@@ -762,8 +769,6 @@ Portland, Oregon</p>
   </div>
 </div>
 
-
-
 <!-- MODAL: SELECT ANALYSIS TO VIEW -->
 <div id="selectAnalysisModal" class="modalOverlay">
   <div class="modalBox" style="max-width:700px;">
@@ -777,12 +782,10 @@ Portland, Oregon</p>
         Selecciona el análisis que deseas visualizar:
       </p>
 
-      <!-- Loading state -->
       <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
         <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
       </div>
 
-      <!-- Empty state -->
       <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
         <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
           <p style="margin:0; font-size:15px; color:#ffdca8;">
@@ -794,10 +797,8 @@ Portland, Oregon</p>
         </div>
       </div>
 
-      <!-- List of analyses -->
       <div id="analysesList" style="max-height:400px; overflow-y:auto; margin-bottom:16px;"></div>
 
-      <!-- Action buttons -->
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>
           Ver Análisis Seleccionado
@@ -811,7 +812,6 @@ Portland, Oregon</p>
 </div>
 
 <style>
-/* Analysis card styles */
 .analysisCard {
   background: #1E2F3F;
   border: 2px solid #365468;
@@ -821,77 +821,17 @@ Portland, Oregon</p>
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
-.analysisCard:hover {
-  border-color: #D6A21C;
-  background: #243A4B;
-}
-
-.analysisCard.selected {
-  border-color: #D6A21C;
-  background: #243A4B;
-  box-shadow: 0 0 0 2px rgba(214, 162, 28, 0.2);
-}
-
-.analysisCard label {
-  display: flex;
-  align-items: start;
-  gap: 12px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.analysisCard input[type="radio"] {
-  margin-top: 4px;
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.analysisInfo {
-  flex: 1;
-}
-
-.analysisDate {
-  font-size: 16px;
-  font-weight: 700;
-  color: #D6A21C;
-  margin-bottom: 6px;
-}
-
-.analysisStats {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  font-size: 13px;
-  color: #a9c0d3;
-}
-
-.analysisStat {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.statLabel {
-  color: #7a8e9e;
-}
-
-.statValue {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.statusBadge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  background: #b9ffcf;
-  color: #0f1d27;
-}
+.analysisCard:hover { border-color: #D6A21C; background: #243A4B; }
+.analysisCard.selected { border-color: #D6A21C; background: #243A4B; box-shadow: 0 0 0 2px rgba(214, 162, 28, 0.2); }
+.analysisCard label { display: flex; align-items: start; gap: 12px; cursor: pointer; width: 100%; }
+.analysisCard input[type="radio"] { margin-top: 4px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
+.analysisInfo { flex: 1; }
+.analysisDate { font-size: 16px; font-weight: 700; color: #D6A21C; margin-bottom: 6px; }
+.analysisStats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; }
+.analysisStat { display: flex; align-items: center; gap: 4px; }
+.statLabel { color: #7a8e9e; }
+.statValue { color: #ffffff; font-weight: 600; }
+.statusBadge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: #b9ffcf; color: #0f1d27; }
 </style>  
 
 <!-- MODAL: APPROVE SURVEYS -->
@@ -907,155 +847,44 @@ Portland, Oregon</p>
         Review and approve pending surveys:
       </p>
 
-      <!-- Loading state -->
       <div id="pendingSurveysLoading" style="display:none; text-align:center; padding:20px;">
         <div class="statusMsg statusWarn">Loading pending surveys...</div>
       </div>
 
-      <!-- Empty state -->
       <div id="pendingSurveysEmpty" style="display:none; padding:20px; text-align:center;">
         <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
-          <p style="margin:0; font-size:15px; color:#b9ffcf;">
-            ✅ All surveys approved!
-          </p>
-          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
-            No pending surveys at this time.
-          </p>
+          <p style="margin:0; font-size:15px; color:#b9ffcf;">✅ All surveys approved!</p>
+          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">No pending surveys at this time.</p>
         </div>
       </div>
 
-      <!-- List of pending surveys -->
       <div id="pendingSurveysList" style="max-height:500px; overflow-y:auto; margin-bottom:16px;"></div>
 
-      <!-- Close button -->
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnClosePendingSurveys" class="btnSecondary" type="button">
-          Close
-        </button>
+        <button id="btnClosePendingSurveys" class="btnSecondary" type="button">Close</button>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-/* Pending survey card styles */
-.pendingSurveyCard {
-  background: #1E2F3F;
-  border: 2px solid #365468;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-  transition: all 0.2s ease;
-}
-
-.pendingSurveyCard:hover {
-  border-color: #D6A21C;
-  background: #243A4B;
-}
-
-.surveyHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  margin-bottom: 12px;
-  gap: 10px;
-}
-
-.surveySchoolName {
-  font-size: 18px;
-  font-weight: 700;
-  color: #D6A21C;
-  flex: 1;
-}
-
-.surveyMeta {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  font-size: 13px;
-  color: #a9c0d3;
-  margin-bottom: 14px;
-}
-
-.surveyMetaItem {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.surveyActions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.btnApprove {
-  background: #4CAF50;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btnApprove:hover {
-  background: #45a049;
-}
-
-.btnApprove:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btnReject {
-  background: transparent;
-  color: #ff6b6b;
-  border: 1px solid #ff6b6b;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btnReject:hover {
-  background: #ff6b6b;
-  color: white;
-}
-
-.btnReject:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btnPreview {
-  background: transparent;
-  color: #D6A21C;
-  border: 1px solid #D6A21C;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btnPreview:hover {
-  background: #D6A21C;
-  color: #16222D;
-}
+.pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
+.pendingSurveyCard:hover { border-color: #D6A21C; background: #243A4B; }
+.surveyHeader { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; gap: 10px; }
+.surveySchoolName { font-size: 18px; font-weight: 700; color: #D6A21C; flex: 1; }
+.surveyMeta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; margin-bottom: 14px; }
+.surveyMetaItem { display: flex; align-items: center; gap: 6px; }
+.surveyActions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btnApprove { background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btnApprove:hover { background: #45a049; }
+.btnApprove:disabled { opacity: 0.5; cursor: not-allowed; }
+.btnReject { background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btnReject:hover { background: #ff6b6b; color: white; }
+.btnReject:disabled { opacity: 0.5; cursor: not-allowed; }
+.btnPreview { background: transparent; color: #D6A21C; border: 1px solid #D6A21C; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btnPreview:hover { background: #D6A21C; color: #16222D; }
 </style>
 
-
-
-  
-
-// end codigio nuevo 02/17/2026
-  
 <script>
   // === DEBUG ===
   window.onerror = function (msg, src, line, col) {
@@ -1071,25 +900,27 @@ Portland, Oregon</p>
   window.sessionState = { ok:false, school_id:null, school_name:null };
   window.currentResponseId = null;
 
-  
   const sessionBadge = document.getElementById('sessionBadge');
   const btnAccesoUsuarios = document.getElementById('btnAccesoUsuarios');
-
   const encuestaNeedLogin = document.getElementById('encuestaNeedLogin');
   const resultadosNeedLogin = document.getElementById('resultadosNeedLogin');
-
   const encuestaOK = document.getElementById('encuestaOK');
-
   const schoolWelcome = document.getElementById('schoolWelcome');
   const btnIngresarEncuesta = document.getElementById('btnIngresarEncuesta');
   const btnSolicitarAnalisis = document.getElementById('btnSolicitarAnalisis');
-
   const analisisWarnPanel = document.getElementById('analisisWarnPanel');
   const btnAnalisisContinuar = document.getElementById('btnAnalisisContinuar');
   const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
-
   const surveyBox = document.getElementById('surveyBox');
   const btnMostrarResultados = document.getElementById('btnMostrarResultados');
+
+  // === ROUTING BOX elements ===
+  const routingBox = document.getElementById('routingBox');
+  const routingTitle = document.getElementById('routingTitle');
+  const routingText = document.getElementById('routingText');
+  const routingOptions = document.getElementById('routingOptions');
+  const btnRoutingNext = document.getElementById('btnRoutingNext');
+  const routingMsg = document.getElementById('routingMsg');
 
   async function refreshSession() {
     try {
@@ -1107,24 +938,22 @@ Portland, Oregon</p>
   }
 
   function applySessionToUI() {
-  const ok = window.sessionState.ok;
-  const schoolName = window.sessionState.school_name || '';
+    const ok = window.sessionState.ok;
+    const schoolName = window.sessionState.school_name || '';
 
-  // PRIORITY: If admin is authenticated, show admin badge instead of school
-  if (window.adminState && window.adminState.authenticated) {
-    sessionBadge.textContent = `Admin: ${window.adminState.username}`;
-    sessionBadge.classList.remove('badgeNo');
-    sessionBadge.classList.add('badgeOk');
-  } else if (ok) {
-    // Show school session only if admin is not logged in
-    sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
-    sessionBadge.classList.remove('badgeNo');
-    sessionBadge.classList.add('badgeOk');
-  } else {
-    sessionBadge.textContent = 'No autenticado';
-    sessionBadge.classList.remove('badgeOk');
-    sessionBadge.classList.add('badgeNo');
-  }
+    if (window.adminState && window.adminState.authenticated) {
+      sessionBadge.textContent = `Admin: ${window.adminState.username}`;
+      sessionBadge.classList.remove('badgeNo');
+      sessionBadge.classList.add('badgeOk');
+    } else if (ok) {
+      sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
+      sessionBadge.classList.remove('badgeNo');
+      sessionBadge.classList.add('badgeOk');
+    } else {
+      sessionBadge.textContent = 'No autenticado';
+      sessionBadge.classList.remove('badgeOk');
+      sessionBadge.classList.add('badgeNo');
+    }
 
     if (schoolWelcome) {
       schoolWelcome.textContent = ok
@@ -1141,12 +970,11 @@ Portland, Oregon</p>
 
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+      if (routingBox) routingBox.style.display = 'none';
       if (surveyBox) surveyBox.style.display = 'none';
     }
 
-    if (ok && surveyBox && surveyBox.style.display === 'none') {
-      if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
-      if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
+    if (ok) {
       if (encuestaOK) {
         encuestaOK.style.pointerEvents = 'auto';
         encuestaOK.style.opacity = '';
@@ -1157,15 +985,12 @@ Portland, Oregon</p>
   // === MODAL LOGIN ===
   const globalModal = document.getElementById('globalModal');
   const modalClose = document.getElementById('modalClose');
-
   const modalSessionOn = document.getElementById('modalSessionOn');
   const modalSessionOff = document.getElementById('modalSessionOff');
   const modalSessionText = document.getElementById('modalSessionText');
-
   const btnCerrarSesion = document.getElementById('btnCerrarSesion');
   const btnCerrarModal1 = document.getElementById('btnCerrarModal1');
   const btnCerrarModal2 = document.getElementById('btnCerrarModal2');
-
   const globalUser = document.getElementById('globalUser');
   const globalPass = document.getElementById('globalPass');
   const btnDoLogin = document.getElementById('btnDoLogin');
@@ -1190,38 +1015,26 @@ Portland, Oregon</p>
     globalModal.style.display = 'flex';
   }
 
-  function closeModal() {
-    globalModal.style.display = 'none';
-  }
+  function closeModal() { globalModal.style.display = 'none'; }
 
   btnAccesoUsuarios?.addEventListener('click', openModal);
   modalClose?.addEventListener('click', closeModal);
   btnCerrarModal1?.addEventListener('click', closeModal);
   btnCerrarModal2?.addEventListener('click', closeModal);
-
-  globalModal?.addEventListener('click', (e) => {
-    if (e.target === globalModal) closeModal();
-  });
+  globalModal?.addEventListener('click', (e) => { if (e.target === globalModal) closeModal(); });
 
   btnDoLogin?.addEventListener('click', async () => {
     const u = globalUser?.value?.trim() || '';
     const p = globalPass?.value?.trim() || '';
-
-    if (!u || !p) {
-      globalLoginMsg.textContent = 'Por favor ingrese usuario y contraseña.';
-      return;
-    }
+    if (!u || !p) { globalLoginMsg.textContent = 'Por favor ingrese usuario y contraseña.'; return; }
 
     try {
       globalLoginMsg.textContent = 'Validando...';
-
       const res = await fetch('/api/login', {
-        method:'POST',
-        credentials:'include',
+        method:'POST', credentials:'include',
         headers:{ 'Content-Type':'application/json' },
         body: JSON.stringify({ username:u, password:p })
       });
-
       const raw = await res.text();
       let data = {};
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
@@ -1230,7 +1043,6 @@ Portland, Oregon</p>
         globalLoginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
         return;
       }
-
       globalLoginMsg.textContent = '';
       closeModal();
       await refreshSession();
@@ -1257,26 +1069,19 @@ Portland, Oregon</p>
     privacyModal.style.display = 'flex';
   }
 
-  function closePrivacyModal() {
-    privacyModal.style.display = 'none';
-  }
+  function closePrivacyModal() { privacyModal.style.display = 'none'; }
 
   privacyAccept?.addEventListener('change', (e) => {
-    if (btnPrivacyContinue) {
-      btnPrivacyContinue.disabled = !e.target.checked;
-    }
+    if (btnPrivacyContinue) btnPrivacyContinue.disabled = !e.target.checked;
   });
 
-  btnPrivacyContinue?.addEventListener('click', async () => {
+  btnPrivacyContinue?.addEventListener('click', () => {
     closePrivacyModal();
-    await showSurveyUI();
+    showRoutingQuestion();  // ← NEW: show grade question instead of going straight into survey
   });
 
   btnPrivacyCancel?.addEventListener('click', closePrivacyModal);
-
-  privacyModal?.addEventListener('click', (e) => {
-    if (e.target === privacyModal) closePrivacyModal();
-  });
+  privacyModal?.addEventListener('click', (e) => { if (e.target === privacyModal) closePrivacyModal(); });
 
   // === ACCIONES ENCUESTA ===
   btnIngresarEncuesta?.addEventListener('click', async () => {
@@ -1290,7 +1095,7 @@ Portland, Oregon</p>
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'block';
   });
 
-  btnAnalisisCancelar?.addEventListener('click', async () => {
+  btnAnalisisCancelar?.addEventListener('click', () => {
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
   });
 
@@ -1298,27 +1103,18 @@ Portland, Oregon</p>
     try {
       const meRes = await fetch('/api/me', { credentials: 'include' });
       const meData = await meRes.json().catch(() => ({}));
-
-      if (!meRes.ok || !meData.ok) {
-        openModal();
-        return;
-      }
+      if (!meRes.ok || !meData.ok) { openModal(); return; }
 
       const res = await fetch('/api/request-analysis', {
-        method: 'POST',
-        credentials: 'include',
+        method: 'POST', credentials: 'include',
         headers: { 'Content-Type': 'application/json' }
       });
-
       const raw = await res.text();
       let data = {};
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        alert(
-          'No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' +
-          (data.error || data.raw || 'sin detalle')
-        );
+        alert('No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'sin detalle'));
         return;
       }
 
@@ -1329,122 +1125,161 @@ Portland, Oregon</p>
     }
   });
 
-btnMostrarResultados?.addEventListener('click', async () => {
-  if (!window.sessionState.ok) { 
-    openModal(); 
-    return; 
-  }
-  
-  openSelectAnalysisModal();
-});
+  btnMostrarResultados?.addEventListener('click', async () => {
+    if (!window.sessionState.ok) { openModal(); return; }
+    openSelectAnalysisModal();
+  });
 
-  
 
-  // === DATOS ===
-  const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
-  const SUPABASE_ANON_KEY = "REEMPLAZA_AQUI_SI_CAMBIA";
+  // ════════════════════════════════════════════════════════════
+  // STEP 1 — ROUTING QUESTION (grade selector, outside surveys)
+  // ════════════════════════════════════════════════════════════
 
-  let datosIndex = 0;
-  let datosLoadedOnce = false;
+  let ROUTING_QUESTION = null;  // loaded once from /data/ROUTING_QUESTION.json
 
-  const elNombre = document.getElementById('d_nombre');
-  const elApPaterno = document.getElementById('d_ap_paterno');
-  const elApMaterno = document.getElementById('d_ap_materno');
-  const elEst = document.getElementById('d_establecimiento');
-  const elStatus = document.getElementById('datosStatus');
-
-  const btnPrev = document.getElementById('btnPrev');
-  const btnNext = document.getElementById('btnNext');
-
-  function setStatus(text, type) {
-    elStatus.textContent = text || '';
-    elStatus.classList.remove('statusOk', 'statusWarn', 'statusErr');
-    elStatus.classList.add(type || 'statusWarn');
+  async function loadRoutingQuestion() {
+    if (ROUTING_QUESTION) return;
+    const res = await fetch('/data/ROUTING_QUESTION.json', { cache: 'no-store' });
+    if (!res.ok) { alert('No se pudo cargar la pregunta de grado'); return; }
+    ROUTING_QUESTION = await res.json();
   }
 
-  function fillFields(row) {
-    elNombre.value = row?.first_name ?? '';
-    elApPaterno.value = row?.pat_last_name ?? '';
-    elApMaterno.value = row?.mat_last_name ?? '';
-    elEst.value = row?.school_id ?? '';
+  async function showRoutingQuestion() {
+    // Disable main buttons while routing is active
+    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
+    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
+    if (encuestaOK) { encuestaOK.style.pointerEvents = 'none'; encuestaOK.style.opacity = '0.6'; }
+
+    await loadRoutingQuestion();
+    if (!ROUTING_QUESTION) return;
+
+    // Render the routing question in routingBox
+    routingTitle.textContent = 'Pregunta 0 — Información General';
+    routingText.textContent = ROUTING_QUESTION.text;
+
+    routingOptions.innerHTML = ROUTING_QUESTION.options.map(o => `
+      <label style="display:block; margin-bottom:8px; cursor:pointer;">
+        <input type="radio" name="routingAnswer" value="${o.code}" style="margin-right:8px;">
+        ${o.text}
+      </label>
+    `).join('');
+
+    routingMsg.textContent = '';
+    routingBox.style.display = 'block';
   }
 
-  async function fetchOneRow(offset) {
-    const url =
-      `${SUPABASE_URL}/rest/v1/encargado_escolar` +
-      `?select=first_name,pat_last_name,mat_last_name,school_id` +
-      `&limit=1&offset=${offset}`;
+  // Handle "Siguiente" on the routing question
+  btnRoutingNext?.addEventListener('click', async () => {
+    const checked = document.querySelector('input[name="routingAnswer"]:checked');
+    if (!checked) {
+      routingMsg.textContent = 'Selecciona tu grado para continuar.';
+      return;
+    }
 
-    const res = await fetch(url, {
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": "Bearer " + SUPABASE_ANON_KEY,
-        "Accept": "application/json"
-      }
-    });
+    const selectedCode = checked.value;
+    const routingRules = ROUTING_QUESTION.routing_rules;
 
-    const text = await res.text();
-    let json;
-    try { json = text ? JSON.parse(text) : null; } catch { json = null; }
+    // Determine which survey to load
+    let targetSurveyFile = null;
+    let targetSurveyId = null;
 
-    return { ok: res.ok, status: res.status, json };
-  }
+    if (routingRules.primaria.includes(selectedCode)) {
+      targetSurveyFile = '/data/SURVEY_003_PRIMARIA.json';
+    } else if (routingRules.secundaria.includes(selectedCode)) {
+      targetSurveyFile = '/data/SURVEY_003.json';
+    } else {
+      routingMsg.textContent = 'Grado no reconocido. Contacta al administrador.';
+      return;
+    }
 
-  async function loadCurrent() {
-    setStatus("Cargando datos...", "statusWarn");
+    routingMsg.textContent = 'Cargando encuesta...';
+    btnRoutingNext.disabled = true;
 
     try {
-      const result = await fetchOneRow(datosIndex);
+      // Load the correct survey
+      const surveyRes = await fetch(targetSurveyFile, { cache: 'no-store' });
+      if (!surveyRes.ok) { alert('No se pudo cargar la encuesta'); btnRoutingNext.disabled = false; return; }
+      SURVEY = await surveyRes.json();
 
-      if (!result.ok) {
-        setStatus(`No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr");
-        fillFields(null);
+      targetSurveyId = SURVEY.survey?.survey_uuid;
+      if (!targetSurveyId) { alert('Error: survey_uuid no encontrado en el archivo de encuesta.'); btnRoutingNext.disabled = false; return; }
+
+      // Create the response now that we know which survey
+      const startRes = await fetch('/api/start-response', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ surveyId: targetSurveyId })
+      });
+      const startData = await startRes.json().catch(() => ({}));
+      if (!startData.ok) {
+        alert('Error al iniciar respuesta: ' + (startData.error || 'sin detalle'));
+        btnRoutingNext.disabled = false;
         return;
       }
 
-      const arr = Array.isArray(result.json) ? result.json : [];
-      if (arr.length === 0) {
-        if (datosIndex === 0) {
-          setStatus("La tabla encargado_escolar está vacía (no hay registros).", "statusWarn");
-        } else {
-          setStatus("No hay más registros. Retrocede para ver anteriores.", "statusWarn");
-          datosIndex = Math.max(0, datosIndex - 1);
-        }
-        fillFields(null);
+      window.currentResponseId = startData.responseId;
+      sessionStorage.setItem('currentResponseId', startData.responseId);
+
+      // Save the grade answer to this response using the routing question's question_id
+      // We need the DB questionId for zero_general_grado — fetch from questions-map of the selected survey
+      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
+      const mapData = await mapRes.json().catch(() => ({}));
+      if (!mapData.ok) {
+        alert('No se pudo cargar mapa de preguntas: ' + (mapData.error || 'sin detalle'));
+        btnRoutingNext.disabled = false;
         return;
       }
+      QUESTION_ID_MAP = mapData.map || {};
 
-      fillFields(arr[0]);
-      setStatus(`Mostrando registro #${datosIndex + 1}`, "statusOk");
+      // Look up the DB id for zero_general_grado by scanning the map for that external_id
+      // The map is { "questionNumber": "dbUUID" } keyed by question number.
+      // Since zero_general_grado is NOT in either survey anymore, we need to get its DB id
+      // via a dedicated endpoint or by passing the external_id directly.
+      // We use a separate lightweight call to resolve it by external_id.
+      const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_grado`, { credentials: 'include' });
+      const gradeQData = await gradeQRes.json().catch(() => ({}));
+
+      if (gradeQData.ok && gradeQData.questionId) {
+        // Save grade answer
+        await fetch('/api/save-answer', {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            responseId: window.currentResponseId,
+            questionId: gradeQData.questionId,
+            answerText: null,
+            selectedOptionIds: [selectedCode]   // selectedCode is the option code (e.g. "1","7", etc.)
+          })
+        });
+      }
+      // Note: if the endpoint doesn't exist yet, the grade answer save is skipped gracefully
+      // but the survey still proceeds correctly.
+
+      // Hide routing box, start the actual survey
+      routingBox.style.display = 'none';
+      routingMsg.textContent = '';
+
+      currentQuestionIndex = 0;
+      surveyBox.style.display = 'block';
+      renderCurrentQuestion();
+
     } catch (e) {
-      setStatus("Error de conexión con Supabase.", "statusErr");
-      fillFields(null);
+      routingMsg.textContent = 'Error de conexión. Intenta de nuevo.';
+      console.error(e);
+    } finally {
+      btnRoutingNext.disabled = false;
     }
-  }
-
-  btnPrev?.addEventListener('click', async () => {
-    datosIndex = Math.max(0, datosIndex - 1);
-    await loadCurrent();
   });
 
-  btnNext?.addEventListener('click', async () => {
-    datosIndex = datosIndex + 1;
-    await loadCurrent();
-  });
 
-  window.loadDatosIfNeeded = async () => {
-    if (datosLoadedOnce) return;
-    datosLoadedOnce = true;
-    datosIndex = 0;
-    await loadCurrent();
-  };
+  // ════════════════════════════════════════════════════════════
+  // SURVEY ENGINE (unchanged except routing logic removed)
+  // ════════════════════════════════════════════════════════════
 
-  // === ENCUESTA ===
   let SURVEY_UUID = null;
   let SURVEY = null;
   let currentQuestionIndex = 0;
   let QUESTION_ID_MAP = {};
-
   const OPTIONS_CACHE = {};
 
   function isDemographicExternalId(ext) {
@@ -1454,21 +1289,11 @@ btnMostrarResultados?.addEventListener('click', async () => {
         || ext === 'zero_general_tiempo';
   }
 
-  function demographicLabel(ext) {
-    if (ext === 'zero_general_curso') return 'Selecciona tu grado';
-    if (ext === 'zero_general_edad') return 'Selecciona tu edad';
-    if (ext === 'zero_general_genero') return 'Selecciona tu género';
-    if (ext === 'zero_general_tiempo') return 'Antigüedad en la escuela';
-    return 'Selecciona una opción';
-  }
-
   async function getOptionsForQuestion(questionId) {
     if (!questionId) return [];
     if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
 
-    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`, {
-      credentials: "include"
-    });
+    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`, { credentials: "include" });
     const raw = await res.text();
     let data = {};
     try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
@@ -1479,13 +1304,6 @@ btnMostrarResultados?.addEventListener('click', async () => {
 
     OPTIONS_CACHE[questionId] = Array.isArray(data.options) ? data.options : [];
     return OPTIONS_CACHE[questionId];
-  }
-
-  async function loadSurvey() {
-    if (SURVEY) return;
-    const res = await fetch('/data/SURVEY_003.json', { cache: 'no-store' });
-    if (!res.ok) { alert('No se pudo cargar el survey'); return; }
-    SURVEY = await res.json();
   }
 
   function getDbQuestionIdByNumber(n) {
@@ -1526,9 +1344,7 @@ btnMostrarResultados?.addEventListener('click', async () => {
             const opts = await getOptionsForQuestion(dbQid);
             const sel = document.getElementById("answerSelect");
             if (!sel) return;
-
-            const q = SURVEY.questions[currentQuestionIndex];
-            const placeholder = q.text || "-- Selecciona --";
+            const placeholder = question.text || "-- Selecciona --";
             sel.innerHTML =
               `<option value="">${placeholder}</option>` +
               opts.map(o => {
@@ -1539,36 +1355,30 @@ btnMostrarResultados?.addEventListener('click', async () => {
             optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
           }
         })();
+      } else {
+        optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
 
-        document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
-        document.getElementById('btnQNext').textContent =
-          (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
-        return;
-      }
-
-      optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
-
-      (async () => {
-        try {
-          const opts = await getOptionsForQuestion(dbQid);
-          if (!opts.length) {
-            optionsDiv.innerHTML = `<div class="statusMsg statusErr">Esta pregunta no tiene opciones en la base de datos.</div>`;
-            return;
+        (async () => {
+          try {
+            const opts = await getOptionsForQuestion(dbQid);
+            if (!opts.length) {
+              optionsDiv.innerHTML = `<div class="statusMsg statusErr">Esta pregunta no tiene opciones en la base de datos.</div>`;
+              return;
+            }
+            optionsDiv.innerHTML = opts.map(o => {
+              const txt = (o.option_text ?? o.option_code ?? "").toString();
+              return `
+                <label style="display:block; margin-bottom:6px;">
+                  <input type="radio" name="answer" value="${o.id}">
+                  ${txt}
+                </label>
+              `;
+            }).join("");
+          } catch (e) {
+            optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
           }
-
-          optionsDiv.innerHTML = opts.map(o => {
-            const txt = (o.option_text ?? o.option_code ?? "").toString();
-            return `
-              <label style="display:block; margin-bottom:6px;">
-                <input type="radio" name="answer" value="${o.id}">
-                ${txt}
-              </label>
-            `;
-          }).join("");
-        } catch (e) {
-          optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
-        }
-      })();
+        })();
+      }
 
       document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
       document.getElementById('btnQNext').textContent =
@@ -1587,254 +1397,57 @@ btnMostrarResultados?.addEventListener('click', async () => {
   }
 
   async function saveCurrentAnswerOrStop() {
-  const q = SURVEY?.questions?.[currentQuestionIndex];
-  if (!q) { 
-    alert('No hay pregunta actual'); 
-    return false; 
-  }
+    const q = SURVEY?.questions?.[currentQuestionIndex];
+    if (!q) { alert('No hay pregunta actual'); return false; }
 
-  const questionId = getDbQuestionIdByNumber(q.number);
-  if (!questionId) { 
-    alert('No se pudo resolver questionId para number: ' + q.number); 
-    return false; 
-  }
+    const questionId = getDbQuestionIdByNumber(q.number);
+    if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
 
-  let answerText = null;
-  let selectedOptionIds = [];
+    let answerText = null;
+    let selectedOptionIds = [];
 
-  if (q.type === 'single_choice') {
-    const ext = getExternalIdFromSurveyQuestion(q);
-
-    if (isDemographicExternalId(ext)) {
-      const v = document.getElementById('answerSelect')?.value || "";
-      if (v) selectedOptionIds = [v];
-    } else {
-      const checked = document.querySelector('input[name="answer"]:checked');
-      if (checked) selectedOptionIds = [checked.value];
-    }
-  } else if (q.type === 'text') {
-    answerText = document.getElementById('answerText')?.value?.trim() || null;
-  }
-
-  const required = (q.required === undefined) ? true : !!q.required;
-
-  if (required) {
-    if (q.type === 'text') {
-      if (!answerText) { 
-        alert('Escribe una respuesta para continuar.'); 
-        return false; 
+    if (q.type === 'single_choice') {
+      const ext = getExternalIdFromSurveyQuestion(q);
+      if (isDemographicExternalId(ext)) {
+        const v = document.getElementById('answerSelect')?.value || "";
+        if (v) selectedOptionIds = [v];
+      } else {
+        const checked = document.querySelector('input[name="answer"]:checked');
+        if (checked) selectedOptionIds = [checked.value];
       }
-    } else {
-      if (selectedOptionIds.length === 0) { 
-        alert('Selecciona una opción para continuar.'); 
-        return false; 
-      }
-    }
-  }
-
-  // ════════════════════════════════════════════════════════════
-  // ⭐ ROUTING LOGIC - CREATE RESPONSE AFTER GRADE SELECTION
-  // ════════════════════════════════════════════════════════════
-  
-  if (q.is_routing_question && currentQuestionIndex === 0) {
-    console.log('🔀 Routing question detected');
-    
-    const selectedGradeId = selectedOptionIds[0];
-    const gradeOptionsRes = await getOptionsForQuestion(questionId);
-    const selectedOption = gradeOptionsRes.find(opt => opt.id === selectedGradeId);
-    const gradeCode = selectedOption?.option_code || "";
-    
-    console.log('Selected grade code:', gradeCode);
-    
-    let targetSurvey = null;
-    
-    if (q.routing_rules) {
-      if (q.routing_rules.primaria && q.routing_rules.primaria.includes(gradeCode)) {
-        targetSurvey = 'SURVEY_003_PRIMARIA';
-        console.log('→ Routing to PRIMARIA survey');
-      }
-      else if (q.routing_rules.secundaria && q.routing_rules.secundaria.includes(gradeCode)) {
-        targetSurvey = 'SURVEY_003';
-        console.log('→ Continuing with SECUNDARIA survey');
-      }
-    }
-    
-    // ✅ CREATE RESPONSE FOR PRIMARIA
-    if (targetSurvey === 'SURVEY_003_PRIMARIA') {
-      console.log('📚 Loading primaria survey...');
-      
-      SURVEY = null;
-      
-      const primRes = await fetch('/data/SURVEY_003_PRIMARIA.json', { cache: 'no-store' });
-      if (!primRes.ok) { 
-        alert('No se pudo cargar la encuesta de primaria'); 
-        return false; 
-      }
-      SURVEY = await primRes.json();
-
-      const primariaSurveyId = SURVEY.survey?.survey_uuid;
-
-      if (!primariaSurveyId) {
-        alert('Error: No se encontró survey_uuid en SURVEY_003_PRIMARIA.json');
-        return false;
-      }
-
-      // Create response for primaria
-      const newResponseRes = await fetch('/api/start-response', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: primariaSurveyId })
-      });
-
-      const newResponseData = await newResponseRes.json();
-      if (!newResponseData.ok) {
-        alert('Error al iniciar encuesta de primaria: ' + newResponseData.error);
-        return false;
-      }
-
-      window.currentResponseId = newResponseData.responseId;
-      sessionStorage.setItem('currentResponseId', newResponseData.responseId);
-      console.log('✅ Response created for primaria:', newResponseData.responseId);
-
-      // Save grade answer to NEW response
-      await fetch('/api/save-answer', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          responseId: window.currentResponseId, 
-          questionId, 
-          answerText, 
-          selectedOptionIds 
-        })
-      });
-
-      // Load question map for primaria
-      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(primariaSurveyId)}`, {
-        credentials: 'include'
-      });
-      
-      if (mapRes.ok) {
-        const mapData = await mapRes.json();
-        if (mapData.ok) {
-          QUESTION_ID_MAP = mapData.map || {};
-          console.log('Question map loaded for primaria');
-        }
-      }
-      
-      currentQuestionIndex = 0;
-      renderCurrentQuestion();
-      
-      return true;
-    }
-    
-    // ✅ CREATE RESPONSE FOR SECUNDARIA
-    if (targetSurvey === 'SURVEY_003') {
-      console.log('📚 Continuing with secundaria survey...');
-      
-      const secundariaSurveyId = SURVEY.survey?.survey_uuid || 'SURVEY_003';
-
-      // Create response for secundaria
-      const newResponseRes = await fetch('/api/start-response', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: secundariaSurveyId })
-      });
-
-      const newResponseData = await newResponseRes.json();
-      if (!newResponseData.ok) {
-        alert('Error al iniciar encuesta: ' + newResponseData.error);
-        return false;
-      }
-
-      window.currentResponseId = newResponseData.responseId;
-      sessionStorage.setItem('currentResponseId', newResponseData.responseId);
-      console.log('✅ Response created for secundaria:', newResponseData.responseId);
-
-      // Save grade answer to NEW response
-      await fetch('/api/save-answer', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          responseId: window.currentResponseId, 
-          questionId, 
-          answerText, 
-          selectedOptionIds 
-        })
-      });
-
-      return true;
-    }
-  }
-  
-  // ════════════════════════════════════════════════════════════
-  // END ROUTING LOGIC
-  // ════════════════════════════════════════════════════════════
-
-  // Check responseId for NON-routing questions
-  const responseId = window.currentResponseId;
-  if (!responseId) { 
-    alert('Falta responseId (inicia sesión y vuelve a intentar).'); 
-    return false; 
-  }
-
-  // Regular save logic for non-routing questions
-  const payload = { responseId, questionId, answerText, selectedOptionIds };
-
-  const r = await fetch('/api/save-answer', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-
-  const raw = await r.text();
-  let j = {};
-  try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
-
-  if (!r.ok || !j.ok) {
-    alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
-    return false;
-  }
-  return true;
-}
-
-  
-  async function showSurveyUI() {
-    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
-    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
-
-    if (encuestaOK) {
-      encuestaOK.style.pointerEvents = 'none';
-      encuestaOK.style.opacity = '0.6';
+    } else if (q.type === 'text') {
+      answerText = document.getElementById('answerText')?.value?.trim() || null;
     }
 
-    await loadSurvey();
+    const required = (q.required === undefined) ? true : !!q.required;
 
-    // ✅ DO NOT CREATE RESPONSE HERE - wait for routing
-    SURVEY_UUID = SURVEY?.survey?.survey_uuid || 'SURVEY_003';
+    if (required) {
+      if (q.type === 'text') {
+        if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
+      } else {
+        if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
+      }
+    }
 
-    const r = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(SURVEY_UUID)}`, {
-      credentials: 'include'
+    // responseId must exist at this point (created during routing)
+    const responseId = window.currentResponseId;
+    if (!responseId) { alert('Falta responseId (inicia sesión y vuelve a intentar).'); return false; }
+
+    const r = await fetch('/api/save-answer', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ responseId, questionId, answerText, selectedOptionIds })
     });
 
     const raw = await r.text();
-    let data = {};
-    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+    let j = {};
+    try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 
-    if (!r.ok || !data.ok) {
-      alert('No se pudo cargar mapa de preguntas: ' + (data.error || data.raw || 'sin detalle'));
-      return;
+    if (!r.ok || !j.ok) {
+      alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
+      return false;
     }
-
-    QUESTION_ID_MAP = data.map || {};
-
-    surveyBox.style.display = 'block';
-    currentQuestionIndex = 0;
-    renderCurrentQuestion();
+    return true;
   }
 
   document.getElementById('btnQPrev')?.addEventListener('click', () => {
@@ -1845,7 +1458,7 @@ btnMostrarResultados?.addEventListener('click', async () => {
     }
   });
 
-document.getElementById('btnQNext')?.addEventListener('click', async () => {
+  document.getElementById('btnQNext')?.addEventListener('click', async () => {
     const ok = await saveCurrentAnswerOrStop();
     if (!ok) return;
 
@@ -1855,19 +1468,14 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
       return;
     }
 
+    // Last question — submit
     try {
-      console.log('🏁 Submitting survey');
-      console.log('📋 Current responseId:', window.currentResponseId);
-      
       const r3 = await fetch('/api/submit-response', {
-        method: 'POST',
-        credentials: 'include',
+        method: 'POST', credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ responseId: window.currentResponseId })
       });
-
       const raw3 = await r3.text();
-      
       let j3 = {};
       try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
 
@@ -1880,19 +1488,91 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
       return;
     }
 
+    // Reset everything
     if (surveyBox) surveyBox.style.display = 'none';
-
     window.currentResponseId = null;
     sessionStorage.removeItem('currentResponseId');
     SURVEY = null;
     QUESTION_ID_MAP = {};
     currentQuestionIndex = 0;
+    ROUTING_QUESTION = null; // reset so it reloads fresh next time
 
     applySessionToUI();
     alert('Encuesta finalizada.');
   });
 
   refreshSession();
+
+  // === DATOS ===
+  const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
+  const SUPABASE_ANON_KEY = "REEMPLAZA_AQUI_SI_CAMBIA";
+
+  let datosIndex = 0;
+  let datosLoadedOnce = false;
+
+  const elNombre = document.getElementById('d_nombre');
+  const elApPaterno = document.getElementById('d_ap_paterno');
+  const elApMaterno = document.getElementById('d_ap_materno');
+  const elEst = document.getElementById('d_establecimiento');
+  const elStatus = document.getElementById('datosStatus');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  function setStatus(text, type) {
+    elStatus.textContent = text || '';
+    elStatus.classList.remove('statusOk', 'statusWarn', 'statusErr');
+    elStatus.classList.add(type || 'statusWarn');
+  }
+
+  function fillFields(row) {
+    elNombre.value = row?.first_name ?? '';
+    elApPaterno.value = row?.pat_last_name ?? '';
+    elApMaterno.value = row?.mat_last_name ?? '';
+    elEst.value = row?.school_id ?? '';
+  }
+
+  async function fetchOneRow(offset) {
+    const url = `${SUPABASE_URL}/rest/v1/encargado_escolar?select=first_name,pat_last_name,mat_last_name,school_id&limit=1&offset=${offset}`;
+    const res = await fetch(url, {
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+        "Accept": "application/json"
+      }
+    });
+    const text = await res.text();
+    let json;
+    try { json = text ? JSON.parse(text) : null; } catch { json = null; }
+    return { ok: res.ok, status: res.status, json };
+  }
+
+  async function loadCurrent() {
+    setStatus("Cargando datos...", "statusWarn");
+    try {
+      const result = await fetchOneRow(datosIndex);
+      if (!result.ok) { setStatus(`No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr"); fillFields(null); return; }
+      const arr = Array.isArray(result.json) ? result.json : [];
+      if (arr.length === 0) {
+        if (datosIndex === 0) { setStatus("La tabla encargado_escolar está vacía.", "statusWarn"); }
+        else { setStatus("No hay más registros.", "statusWarn"); datosIndex = Math.max(0, datosIndex - 1); }
+        fillFields(null); return;
+      }
+      fillFields(arr[0]);
+      setStatus(`Mostrando registro #${datosIndex + 1}`, "statusOk");
+    } catch (e) {
+      setStatus("Error de conexión con Supabase.", "statusErr"); fillFields(null);
+    }
+  }
+
+  btnPrev?.addEventListener('click', async () => { datosIndex = Math.max(0, datosIndex - 1); await loadCurrent(); });
+  btnNext?.addEventListener('click', async () => { datosIndex = datosIndex + 1; await loadCurrent(); });
+
+  window.loadDatosIfNeeded = async () => {
+    if (datosLoadedOnce) return;
+    datosLoadedOnce = true;
+    datosIndex = 0;
+    await loadCurrent();
+  };
 
   // === CONTACTO ===
   const cNombre = document.getElementById('c_nombre');
@@ -1928,13 +1608,10 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
     const hp = cCompany?.value?.trim() || '';
 
     if (!name || !email || !subject || !message) {
-      setContactoMsg('Por favor completa nombre, email, asunto y mensaje.', 'statusWarn');
-      return;
+      setContactoMsg('Por favor completa nombre, email, asunto y mensaje.', 'statusWarn'); return;
     }
-
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setContactoMsg('Email inválido. Revisa el formato.', 'statusWarn');
-      return;
+      setContactoMsg('Email inválido. Revisa el formato.', 'statusWarn'); return;
     }
 
     try {
@@ -1952,8 +1629,7 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`, 'statusErr');
-        return;
+        setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`, 'statusErr'); return;
       }
 
       setContactoMsg('Mensaje enviado. ¡Gracias!', 'statusOk');
@@ -1965,797 +1641,481 @@ document.getElementById('btnQNext')?.addEventListener('click', async () => {
     }
   });
 
-// === ANALYSIS SELECTION MODAL ===
-const selectAnalysisModal = document.getElementById('selectAnalysisModal');
-const selectAnalysisClose = document.getElementById('selectAnalysisClose');
-const analysesLoading = document.getElementById('analysesLoading');
-const analysesEmpty = document.getElementById('analysesEmpty');
-const analysesList = document.getElementById('analysesList');
-const btnViewSelectedAnalysis = document.getElementById('btnViewSelectedAnalysis');
-const btnCancelSelectAnalysis = document.getElementById('btnCancelSelectAnalysis');
+  // === ANALYSIS SELECTION MODAL ===
+  const selectAnalysisModal = document.getElementById('selectAnalysisModal');
+  const selectAnalysisClose = document.getElementById('selectAnalysisClose');
+  const analysesLoading = document.getElementById('analysesLoading');
+  const analysesEmpty = document.getElementById('analysesEmpty');
+  const analysesList = document.getElementById('analysesList');
+  const btnViewSelectedAnalysis = document.getElementById('btnViewSelectedAnalysis');
+  const btnCancelSelectAnalysis = document.getElementById('btnCancelSelectAnalysis');
 
-let selectedAnalysisData = null;
+  let selectedAnalysisData = null;
 
-function openSelectAnalysisModal() {
-  selectAnalysisModal.style.display = 'flex';
-  loadApprovedAnalyses();
-}
+  function openSelectAnalysisModal() {
+    selectAnalysisModal.style.display = 'flex';
+    loadApprovedAnalyses();
+  }
 
-function closeSelectAnalysisModal() {
-  selectAnalysisModal.style.display = 'none';
-  analysesList.innerHTML = '';
-  selectedAnalysisData = null;
-  if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = true;
-}
+  function closeSelectAnalysisModal() {
+    selectAnalysisModal.style.display = 'none';
+    analysesList.innerHTML = '';
+    selectedAnalysisData = null;
+    if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = true;
+  }
 
-async function loadApprovedAnalyses() {
-  analysesLoading.style.display = 'block';
-  analysesEmpty.style.display = 'none';
-  analysesList.innerHTML = '';
-  
-  try {
-    const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
-    const data = await res.json().catch(() => ({}));
-    
-    if (!res.ok || !data.ok) {
-      throw new Error(data.error || 'Error al cargar análisis');
-    }
-    
-    analysesLoading.style.display = 'none';
-    
-    if (!data.analyses || data.analyses.length === 0) {
+  async function loadApprovedAnalyses() {
+    analysesLoading.style.display = 'block';
+    analysesEmpty.style.display = 'none';
+    analysesList.innerHTML = '';
+
+    try {
+      const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Error al cargar análisis');
+
+      analysesLoading.style.display = 'none';
+      if (!data.analyses || data.analyses.length === 0) { analysesEmpty.style.display = 'block'; return; }
+      renderAnalysesList(data.analyses);
+    } catch (e) {
+      console.error('Error loading analyses:', e);
+      analysesLoading.style.display = 'none';
       analysesEmpty.style.display = 'block';
-      return;
     }
-    
-    renderAnalysesList(data.analyses);
-    
-  } catch (e) {
-    console.error('Error loading analyses:', e);
-    analysesLoading.style.display = 'none';
-    analysesEmpty.style.display = 'block';
   }
-}
 
-  
-function renderAnalysesList(analyses) {
-  analysesList.innerHTML = '';
-  
-  analyses.forEach((analysis, index) => {
-    const card = document.createElement('div');
-    card.className = 'analysisCard';
-    
-    const analysisDate = formatDateTime(analysis.analysis_date);
-    const dateRange = formatDateRange(analysis.earliest_response, analysis.latest_response);
-    
-    card.innerHTML = `
-      <label>
-        <input 
-          type="radio" 
-          name="selectedAnalysis" 
-          value="${analysis.analysis_date}"
-          data-analysis='${JSON.stringify(analysis)}'
-        />
-        <div class="analysisInfo">
-          <div class="analysisDate">${analysisDate}</div>
-          <div class="analysisStats">
-            <div class="analysisStat">
-              <span class="statLabel">Estudiantes:</span>
-              <span class="statValue">${analysis.total_students}</span>
+  function renderAnalysesList(analyses) {
+    analysesList.innerHTML = '';
+    analyses.forEach((analysis) => {
+      const card = document.createElement('div');
+      card.className = 'analysisCard';
+      const analysisDate = formatDateTime(analysis.analysis_date);
+      const dateRange = formatDateRange(analysis.earliest_response, analysis.latest_response);
+      card.innerHTML = `
+        <label>
+          <input type="radio" name="selectedAnalysis" value="${analysis.analysis_date}" data-analysis='${JSON.stringify(analysis)}' />
+          <div class="analysisInfo">
+            <div class="analysisDate">${analysisDate}</div>
+            <div class="analysisStats">
+              <div class="analysisStat"><span class="statLabel">Estudiantes:</span><span class="statValue">${analysis.total_students}</span></div>
+              <div class="analysisStat"><span class="statLabel">Rango:</span><span class="statValue">${dateRange}</span></div>
+              <span class="statusBadge">Aprobado</span>
             </div>
-            <div class="analysisStat">
-              <span class="statLabel">Rango:</span>
-              <span class="statValue">${dateRange}</span>
-            </div>
-            <span class="statusBadge">Aprobado</span>
           </div>
-        </div>
-      </label>
-    `;
-    
-    const radio = card.querySelector('input[type="radio"]');
-    radio.addEventListener('change', (e) => {
-      document.querySelectorAll('.analysisCard').forEach(c => c.classList.remove('selected'));
-      if (e.target.checked) {
-        card.classList.add('selected');
-        selectedAnalysisData = JSON.parse(e.target.dataset.analysis);
-        if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = false;
-      }
+        </label>
+      `;
+      const radio = card.querySelector('input[type="radio"]');
+      radio.addEventListener('change', (e) => {
+        document.querySelectorAll('.analysisCard').forEach(c => c.classList.remove('selected'));
+        if (e.target.checked) {
+          card.classList.add('selected');
+          selectedAnalysisData = JSON.parse(e.target.dataset.analysis);
+          if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = false;
+        }
+      });
+      card.addEventListener('click', (e) => { if (e.target.tagName !== 'INPUT') radio.click(); });
+      analysesList.appendChild(card);
     });
-    
-    card.addEventListener('click', (e) => {
-      if (e.target.tagName !== 'INPUT') {
-        radio.click();
-      }
-    });
-    
-    analysesList.appendChild(card);
+  }
+
+  function formatDateTime(isoString) {
+    if (!isoString) return 'N/A';
+    try {
+      return new Date(isoString).toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    } catch (e) { return isoString; }
+  }
+
+  function formatDateRange(earliest, latest) {
+    if (!earliest || !latest) return 'N/A';
+    try {
+      const startStr = new Date(earliest).toLocaleDateString('es-MX', { day:'numeric', month:'short', year:'numeric' });
+      const endStr   = new Date(latest).toLocaleDateString('es-MX', { day:'numeric', month:'short', year:'numeric' });
+      return startStr === endStr ? startStr : `${startStr} - ${endStr}`;
+    } catch (e) { return 'N/A'; }
+  }
+
+  selectAnalysisClose?.addEventListener('click', closeSelectAnalysisModal);
+  btnCancelSelectAnalysis?.addEventListener('click', closeSelectAnalysisModal);
+  selectAnalysisModal?.addEventListener('click', (e) => { if (e.target === selectAnalysisModal) closeSelectAnalysisModal(); });
+
+  btnViewSelectedAnalysis?.addEventListener('click', () => {
+    if (!selectedAnalysisData) { alert('Por favor selecciona un análisis'); return; }
+    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
+    const url = `${baseUrl}?school_id=${encodeURIComponent(window.sessionState.school_id)}&analysis_dt=${encodeURIComponent(selectedAnalysisData.analysis_date)}`;
+    window.location.href = url;
   });
-}
 
-function formatDateTime(isoString) {
-  if (!isoString) return 'N/A';
-  try {
-    const date = new Date(isoString);
-    const options = { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    };
-    return date.toLocaleDateString('es-MX', options);
-  } catch (e) {
-    return isoString;
+  // === ADMIN LOGIN SYSTEM ===
+  window.adminState = { authenticated: false, username: null, role: null };
+
+  const adminIcon = document.getElementById('adminIcon');
+  const adminModal = document.getElementById('adminModal');
+  const adminModalClose = document.getElementById('adminModalClose');
+  const adminLoginForm = document.getElementById('adminLoginForm');
+  const adminLoggedIn = document.getElementById('adminLoggedIn');
+  const adminNavButtons = document.getElementById('adminNavButtons');
+  const adminUsername = document.getElementById('adminUsername');
+  const adminPassword = document.getElementById('adminPassword');
+  const btnAdminLogin = document.getElementById('btnAdminLogin');
+  const btnAdminCancel = document.getElementById('btnAdminCancel');
+  const btnAdminLogout = document.getElementById('btnAdminLogout');
+  const btnAdminClose = document.getElementById('btnAdminClose');
+  const adminLoginMsg = document.getElementById('adminLoginMsg');
+  const adminWelcomeMsg = document.getElementById('adminWelcomeMsg');
+
+  async function checkAdminSession() {
+    try {
+      const res = await fetch('/api/admin-me', { credentials: 'include' });
+      const data = await res.json().catch(() => ({}));
+      if (data.ok && data.admin) {
+        window.adminState = { authenticated: true, username: data.admin.username, role: data.admin.role };
+        updateAdminUI();
+        if (sessionBadge) {
+          sessionBadge.textContent = `Admin: ${data.admin.username}`;
+          sessionBadge.classList.remove('badgeNo');
+          sessionBadge.classList.add('badgeOk');
+        }
+      } else {
+        window.adminState = { authenticated: false, username: null, role: null };
+        updateAdminUI();
+      }
+    } catch (e) { console.error('Admin session check failed:', e); }
   }
-}
 
-function formatDateRange(earliest, latest) {
-  if (!earliest || !latest) return 'N/A';
-  try {
-    const start = new Date(earliest);
-    const end = new Date(latest);
-    
-    const startStr = start.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
-    const endStr = end.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
-    
-    if (startStr === endStr) {
-      return startStr;
+  function updateAdminUI() {
+    if (window.adminState.authenticated) {
+      adminIcon.classList.add('authenticated');
+      adminIcon.title = `Admin: ${window.adminState.username}`;
+      if (sessionBadge) {
+        sessionBadge.textContent = `Admin: ${window.adminState.username}`;
+        sessionBadge.classList.remove('badgeNo');
+        sessionBadge.classList.add('badgeOk');
+      }
+      if (adminNavButtons) adminNavButtons.classList.add('show');
+    } else {
+      adminIcon.classList.remove('authenticated');
+      adminIcon.title = 'Admin Access';
+      if (!window.sessionState.ok && sessionBadge) {
+        sessionBadge.textContent = 'No autenticado';
+        sessionBadge.classList.remove('badgeOk');
+        sessionBadge.classList.add('badgeNo');
+      }
+      if (adminNavButtons) adminNavButtons.classList.remove('show');
     }
-    
-    return `${startStr} - ${endStr}`;
-  } catch (e) {
-    return 'N/A';
   }
-}
 
-selectAnalysisClose?.addEventListener('click', closeSelectAnalysisModal);
-btnCancelSelectAnalysis?.addEventListener('click', closeSelectAnalysisModal);
-
-selectAnalysisModal?.addEventListener('click', (e) => {
-  if (e.target === selectAnalysisModal) closeSelectAnalysisModal();
-});
-
-btnViewSelectedAnalysis?.addEventListener('click', () => {
-  if (!selectedAnalysisData) {
-    alert('Por favor selecciona un análisis');
-    return;
+  function openAdminModal() {
+    if (window.adminState.authenticated) {
+      adminLoginForm.style.display = 'none';
+      adminLoggedIn.style.display = 'block';
+      adminWelcomeMsg.textContent = `Welcome, ${window.adminState.username}!`;
+    } else {
+      adminLoginForm.style.display = 'block';
+      adminLoggedIn.style.display = 'none';
+      adminUsername.value = '';
+      adminPassword.value = '';
+      adminLoginMsg.textContent = '';
+    }
+    adminModal.style.display = 'flex';
+    setTimeout(() => adminUsername?.focus(), 100);
   }
-  
-  const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
-  const url = `${baseUrl}?school_id=${encodeURIComponent(window.sessionState.school_id)}&analysis_dt=${encodeURIComponent(selectedAnalysisData.analysis_date)}`;
-  
-  window.location.href = url;
-});
 
-// === ADMIN LOGIN SYSTEM ===
-window.adminState = { authenticated: false, username: null, role: null };
+  function closeAdminModal() { adminModal.style.display = 'none'; }
 
-const adminIcon = document.getElementById('adminIcon');
-const adminModal = document.getElementById('adminModal');
-const adminModalClose = document.getElementById('adminModalClose');
-const adminLoginForm = document.getElementById('adminLoginForm');
-const adminLoggedIn = document.getElementById('adminLoggedIn');
-const adminNavButtons = document.getElementById('adminNavButtons');
+  adminIcon?.addEventListener('click', openAdminModal);
+  adminModalClose?.addEventListener('click', closeAdminModal);
+  btnAdminCancel?.addEventListener('click', closeAdminModal);
+  btnAdminClose?.addEventListener('click', closeAdminModal);
+  adminModal?.addEventListener('click', (e) => { if (e.target === adminModal) closeAdminModal(); });
 
-const adminUsername = document.getElementById('adminUsername');
-const adminPassword = document.getElementById('adminPassword');
-const btnAdminLogin = document.getElementById('btnAdminLogin');
-const btnAdminCancel = document.getElementById('btnAdminCancel');
-const btnAdminLogout = document.getElementById('btnAdminLogout');
-const btnAdminClose = document.getElementById('btnAdminClose');
-const adminLoginMsg = document.getElementById('adminLoginMsg');
-const adminWelcomeMsg = document.getElementById('adminWelcomeMsg');
+  btnAdminLogin?.addEventListener('click', async () => {
+    const username = adminUsername?.value?.trim() || '';
+    const password = adminPassword?.value?.trim() || '';
+    if (!username || !password) { adminLoginMsg.textContent = 'Please enter username and password'; return; }
 
-async function checkAdminSession() {
-  try {
-    const res = await fetch('/api/admin-me', { credentials: 'include' });
-    const data = await res.json().catch(() => ({}));
-    
-    if (data.ok && data.admin) {
-      window.adminState = {
-        authenticated: true,
-        username: data.admin.username,
-        role: data.admin.role
-      };
+    try {
+      adminLoginMsg.textContent = 'Authenticating...';
+      btnAdminLogin.disabled = true;
+
+      const res = await fetch('/api/admin-login', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) { adminLoginMsg.textContent = data.error || 'Login failed'; btnAdminLogin.disabled = false; return; }
+
+      window.adminState = { authenticated: true, username: data.admin.username, role: data.admin.role };
+      adminLoginMsg.textContent = '';
       updateAdminUI();
-      
       if (sessionBadge) {
         sessionBadge.textContent = `Admin: ${data.admin.username}`;
         sessionBadge.classList.remove('badgeNo');
         sessionBadge.classList.add('badgeOk');
       }
-    } else {
+      closeAdminModal();
+      alert(`✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}`);
+    } catch (e) {
+      adminLoginMsg.textContent = 'Connection error';
+      console.error('Admin login error:', e);
+    } finally {
+      btnAdminLogin.disabled = false;
+    }
+  });
+
+  btnAdminLogout?.addEventListener('click', async () => {
+    try {
+      await fetch('/api/admin-logout', { method: 'POST', credentials: 'include' });
       window.adminState = { authenticated: false, username: null, role: null };
       updateAdminUI();
-    }
-  } catch (e) {
-    console.error('Admin session check failed:', e);
-  }
-}
-
-function updateAdminUI() {
-  if (window.adminState.authenticated) {
-    adminIcon.classList.add('authenticated');
-    adminIcon.title = `Admin: ${window.adminState.username}`;
-    
-    if (sessionBadge) {
-      sessionBadge.textContent = `Admin: ${window.adminState.username}`;
-      sessionBadge.classList.remove('badgeNo');
-      sessionBadge.classList.add('badgeOk');
-    }
-    
-    if (adminNavButtons) {
-      adminNavButtons.classList.add('show');
-    }
-  } else {
-    adminIcon.classList.remove('authenticated');
-    adminIcon.title = 'Admin Access';
-    
-    if (!window.sessionState.ok && sessionBadge) {
-      sessionBadge.textContent = 'No autenticado';
-      sessionBadge.classList.remove('badgeOk');
-      sessionBadge.classList.add('badgeNo');
-    }
-    
-    if (adminNavButtons) {
-      adminNavButtons.classList.remove('show');
-    }
-  }
-}
-
-function openAdminModal() {
-  if (window.adminState.authenticated) {
-    adminLoginForm.style.display = 'none';
-    adminLoggedIn.style.display = 'block';
-    adminWelcomeMsg.textContent = `Welcome, ${window.adminState.username}!`;
-  } else {
-    adminLoginForm.style.display = 'block';
-    adminLoggedIn.style.display = 'none';
-    adminUsername.value = '';
-    adminPassword.value = '';
-    adminLoginMsg.textContent = '';
-  }
-  
-  adminModal.style.display = 'flex';
-  setTimeout(() => adminUsername?.focus(), 100);
-}
-
-function closeAdminModal() {
-  adminModal.style.display = 'none';
-}
-
-adminIcon?.addEventListener('click', openAdminModal);
-adminModalClose?.addEventListener('click', closeAdminModal);
-btnAdminCancel?.addEventListener('click', closeAdminModal);
-btnAdminClose?.addEventListener('click', closeAdminModal);
-
-adminModal?.addEventListener('click', (e) => {
-  if (e.target === adminModal) closeAdminModal();
-});
-
-btnAdminLogin?.addEventListener('click', async () => {
-  const username = adminUsername?.value?.trim() || '';
-  const password = adminPassword?.value?.trim() || '';
-
-  if (!username || !password) {
-    adminLoginMsg.textContent = 'Please enter username and password';
-    return;
-  }
-
-  try {
-    adminLoginMsg.textContent = 'Authenticating...';
-    btnAdminLogin.disabled = true;
-
-    const res = await fetch('/api/admin-login', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok || !data.ok) {
-      adminLoginMsg.textContent = data.error || 'Login failed';
-      btnAdminLogin.disabled = false;
-      return;
-    }
-
-    window.adminState = {
-      authenticated: true,
-      username: data.admin.username,
-      role: data.admin.role
-    };
-
-    adminLoginMsg.textContent = '';
-    updateAdminUI();
-
-    if (sessionBadge) {
-      sessionBadge.textContent = `Admin: ${data.admin.username}`;
-      sessionBadge.classList.remove('badgeNo');
-      sessionBadge.classList.add('badgeOk');
-    }
-
-    closeAdminModal();
-    alert(`✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}`);
-
-  } catch (e) {
-    adminLoginMsg.textContent = 'Connection error';
-    console.error('Admin login error:', e);
-  } finally {
-    btnAdminLogin.disabled = false;
-  }
-});
-
-btnAdminLogout?.addEventListener('click', async () => {
-  try {
-    await fetch('/api/admin-logout', {
-      method: 'POST',
-      credentials: 'include'
-    });
-
-    window.adminState = { authenticated: false, username: null, role: null };
-    updateAdminUI();
-    closeAdminModal();
-    
-    alert('✅ Logged out successfully');
-
-  } catch (e) {
-    console.error('Logout error:', e);
-  }
-});
-
-adminPassword?.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    btnAdminLogin?.click();
-  }
-});
-
-checkAdminSession();
-
-// === APPROVE SURVEYS MODAL ===
-const approveSurveysModal = document.getElementById('approveSurveysModal');
-const approveSurveysClose = document.getElementById('approveSurveysClose');
-const pendingSurveysLoading = document.getElementById('pendingSurveysLoading');
-const pendingSurveysEmpty = document.getElementById('pendingSurveysEmpty');
-const pendingSurveysList = document.getElementById('pendingSurveysList');
-const btnClosePendingSurveys = document.getElementById('btnClosePendingSurveys');
-const btnApproveSurvey = document.getElementById('btnApproveSurvey');
-
-function openApproveSurveysModal() {
-  approveSurveysModal.style.display = 'flex';
-  loadPendingSurveys();
-}
-
-function closeApproveSurveysModal() {
-  approveSurveysModal.style.display = 'none';
-  pendingSurveysList.innerHTML = '';
-}
-
-async function loadPendingSurveys() {
-  pendingSurveysLoading.style.display = 'block';
-  pendingSurveysEmpty.style.display = 'none';
-  pendingSurveysList.innerHTML = '';
-
-  try {
-    const res = await fetch('/api/list-pending-surveys', { credentials: 'include' });
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok || !data.ok) {
-      throw new Error(data.error || 'Failed to load pending surveys');
-    }
-
-    pendingSurveysLoading.style.display = 'none';
-
-    if (!data.pending || data.pending.length === 0) {
-      pendingSurveysEmpty.style.display = 'block';
-      return;
-    }
-
-    renderPendingSurveys(data.pending);
-
-  } catch (e) {
-    console.error('Error loading pending surveys:', e);
-    pendingSurveysLoading.style.display = 'none';
-    pendingSurveysEmpty.style.display = 'block';
-  }
-}
-
-function renderPendingSurveys(surveys) {
-  pendingSurveysList.innerHTML = '';
-
-  surveys.forEach(survey => {
-    const card = document.createElement('div');
-    card.className = 'pendingSurveyCard';
-    card.id = `survey-${survey.school_id}-${survey.analysis_date}`;
-
-    const analysisDate = formatDateTime(survey.analysis_date);
-    const dateRange = formatDateRange(survey.earliest_response, survey.latest_response);
-
-    card.innerHTML = `
-      <div class="surveyHeader">
-        <div class="surveySchoolName">${survey.school_name}</div>
-      </div>
-
-      <div class="surveyMeta">
-        <div class="surveyMetaItem">
-          <span style="color:#7a8e9e;">Students:</span>
-          <span style="color:#fff; font-weight:600;">${survey.total_students}</span>
-        </div>
-        <div class="surveyMetaItem">
-          <span style="color:#7a8e9e;">Requested:</span>
-          <span style="color:#fff;">${analysisDate}</span>
-        </div>
-        <div class="surveyMetaItem">
-          <span style="color:#7a8e9e;">Range:</span>
-          <span style="color:#fff;">${dateRange}</span>
-        </div>
-      </div>
-
-      <div class="surveyActions">
-        <button class="btnApprove" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">
-          Approve
-        </button>
-        <button class="btnReject" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">
-          Re-open
-        </button>
-        <button class="btnPreview" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">
-          Preview
-        </button>
-      </div>
-    `;
-
-    const btnApprove = card.querySelector('.btnApprove');
-    const btnReject = card.querySelector('.btnReject');
-    const btnPreview = card.querySelector('.btnPreview');
-
-    btnApprove.addEventListener('click', () => approveSurvey(survey.school_id, survey.analysis_date, survey.school_name));
-    btnReject.addEventListener('click', () => rejectSurvey(survey.school_id, survey.analysis_date, survey.school_name));
-    btnPreview.addEventListener('click', () => previewSurvey(survey.school_id, survey.analysis_date));
-
-    pendingSurveysList.appendChild(card);
-  });
-}
-
-async function approveSurvey(schoolId, analysisDate, schoolName) {
-  if (!confirm(`Approve survey for ${schoolName}?`)) {
-    return;
-  }
-
-  try {
-    const res = await fetch('/api/approve-survey', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        school_id: schoolId,
-        analysis_dt: analysisDate
-      })
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok || !data.ok) {
-      alert('Failed to approve: ' + (data.error || 'Unknown error'));
-      return;
-    }
-
-    alert(`✅ Survey approved for ${schoolName}!`);
-
-    const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
-    if (card) {
-      card.remove();
-    }
-
-    if (pendingSurveysList.children.length === 0) {
-      pendingSurveysEmpty.style.display = 'block';
-    }
-
-  } catch (e) {
-    console.error('Approve error:', e);
-    alert('Error approving survey');
-  }
-}
-
-async function rejectSurvey(schoolId, analysisDate, schoolName) {
-  if (!confirm(`Reject survey for ${schoolName}?\n\nThis will remove the analysis request.`)) {
-    return;
-  }
-
-  try {
-    const res = await fetch('/api/reject-survey', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        school_id: schoolId,
-        analysis_dt: analysisDate
-      })
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok || !data.ok) {
-      alert('Failed to re-open: ' + (data.error || 'Unknown error'));
-      return;
-    }
-
-    alert(`❌ Survey re-open for ${schoolName}`);
-
-    const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
-    if (card) {
-      card.remove();
-    }
-
-    if (pendingSurveysList.children.length === 0) {
-      pendingSurveysEmpty.style.display = 'block';
-    }
-
-  } catch (e) {
-    console.error('Re-open error:', e);
-    alert('Error rejecting survey');
-  }
-}
-
-function previewSurvey(schoolId, analysisDate) {
-  const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
-  const url = `${baseUrl}?school_id=${encodeURIComponent(schoolId)}&analysis_dt=${encodeURIComponent(analysisDate)}&preview=true`;
-  window.open(url, '_blank');
-}
-
-approveSurveysClose?.addEventListener('click', closeApproveSurveysModal);
-btnClosePendingSurveys?.addEventListener('click', closeApproveSurveysModal);
-
-approveSurveysModal?.addEventListener('click', (e) => {
-  if (e.target === approveSurveysModal) closeApproveSurveysModal();
-});
-
-btnApproveSurvey?.addEventListener('click', () => {
-  if (!window.adminState.authenticated) {
-    alert('Please login as admin first');
-    return;
-  }
-  openApproveSurveysModal();
-});
-  
-// === ADD SCHOOL MODAL - TWO STEP SYSTEM ===
-document.addEventListener('DOMContentLoaded', () => {
-  const addSchoolModal1 = document.getElementById('addSchoolModal1');
-  const addSchoolModal2 = document.getElementById('addSchoolModal2');
-  const addSchoolClose1 = document.getElementById('addSchoolClose1');
-  const addSchoolClose2 = document.getElementById('addSchoolClose2');
-  const btnAddSchool = document.getElementById('btnAddSchool');
-  const btnCancelAddSchool1 = document.getElementById('btnCancelAddSchool1');
-  const btnNextToEncargado = document.getElementById('btnNextToEncargado');
-  const btnBackToSchoolInfo = document.getElementById('btnBackToSchoolInfo');
-  const btnCreateSchool = document.getElementById('btnCreateSchool');
-  const addSchoolMsg1 = document.getElementById('addSchoolMsg1');
-  const addSchoolMsg2 = document.getElementById('addSchoolMsg2');
-
-  if (!addSchoolModal1 || !addSchoolModal2) {
-    console.error('❌ Add School modals not found');
-    return;
-  }
-
-  let schoolFormData = {};
-
-  function clearAllFields() {
-    document.getElementById('addSchoolName').value = '';
-    document.getElementById('addSchoolUsername').value = '';
-    document.getElementById('addSchoolPassword').value = '';
-    document.getElementById('addStudentsPrimaria').value = '0';
-    document.getElementById('addStudentsSecundaria').value = '0';
-    document.getElementById('addStudentsPreparatoria').value = '0';
-    document.getElementById('addEncFirstName').value = '';
-    document.getElementById('addEncPatLastName').value = '';
-    document.getElementById('addEncMatLastName').value = '';
-    
-    addSchoolMsg1.textContent = '';
-    addSchoolMsg2.textContent = '';
-    schoolFormData = {};
-  }
-
-  function openModal1() {
-    clearAllFields();
-    addSchoolModal1.style.display = 'flex';
-    addSchoolModal2.style.display = 'none';
-  }
-
-  function closeAllModals() {
-    addSchoolModal1.style.display = 'none';
-    addSchoolModal2.style.display = 'none';
-  }
-
-  function validateStep1() {
-    const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
-    const username = document.getElementById('addSchoolUsername')?.value?.trim() || '';
-    const password = document.getElementById('addSchoolPassword')?.value?.trim() || '';
-    const studentsPrimaria = document.getElementById('addStudentsPrimaria')?.value?.trim() || '';
-    const studentsSecundaria = document.getElementById('addStudentsSecundaria')?.value?.trim() || '';
-    const studentsPreparatoria = document.getElementById('addStudentsPreparatoria')?.value?.trim() || '';
-
-    if (!schoolName) {
-      addSchoolMsg1.textContent = 'School name is required';
-      addSchoolMsg1.className = 'statusMsg statusErr';
-      return false;
-    }
-
-    if (!username) {
-      addSchoolMsg1.textContent = 'Username is required';
-      addSchoolMsg1.className = 'statusMsg statusErr';
-      return false;
-    }
-
-    if (!password) {
-      addSchoolMsg1.textContent = 'Password is required';
-      addSchoolMsg1.className = 'statusMsg statusErr';
-      return false;
-    }
-
-    if (password.length < 6) {
-      addSchoolMsg1.textContent = 'Password must be at least 6 characters';
-      addSchoolMsg1.className = 'statusMsg statusErr';
-      return false;
-    }
-
-    if (studentsPrimaria === '') {
-      addSchoolMsg1.textContent = 'Students Primaria is required (0 is allowed)';
-      addSchoolMsg1.className = 'statusMsg statusErr';
-      return false;
-    }
-
-    if (studentsSecundaria === '') {
-      addSchoolMsg1.textContent = 'Students Secundaria is required (0 is allowed)';
-      addSchoolMsg1.className = 'statusMsg statusErr';
-      return false;
-    }
-
-    if (studentsPreparatoria === '') {
-      addSchoolMsg1.textContent = 'Students Preparatoria is required (0 is allowed)';
-      addSchoolMsg1.className = 'statusMsg statusErr';
-      return false;
-    }
-
-    schoolFormData = {
-      schoolName,
-      username,
-      password,
-      studentsPrimaria: parseInt(studentsPrimaria),
-      studentsSecundaria: parseInt(studentsSecundaria),
-      studentsPreparatoria: parseInt(studentsPreparatoria)
-    };
-
-    addSchoolMsg1.textContent = '';
-    return true;
-  }
-
-  function openModal2() {
-    addSchoolModal1.style.display = 'none';
-    addSchoolModal2.style.display = 'flex';
-    setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100);
-  }
-
-  function backToModal1() {
-    addSchoolModal2.style.display = 'none';
-    addSchoolModal1.style.display = 'flex';
-    if (schoolFormData.schoolName) {
-      document.getElementById('addSchoolName').value = schoolFormData.schoolName;
-      document.getElementById('addSchoolUsername').value = schoolFormData.username;
-      document.getElementById('addSchoolPassword').value = schoolFormData.password;
-      document.getElementById('addStudentsPrimaria').value = schoolFormData.studentsPrimaria;
-      document.getElementById('addStudentsSecundaria').value = schoolFormData.studentsSecundaria;
-      document.getElementById('addStudentsPreparatoria').value = schoolFormData.studentsPreparatoria;
-    }
-  }
-
-  btnAddSchool?.addEventListener('click', () => {
-    if (!window.adminState?.authenticated) {
-      alert('Please login as admin first');
-      return;
-    }
-    openModal1();
+      closeAdminModal();
+      alert('✅ Logged out successfully');
+    } catch (e) { console.error('Logout error:', e); }
   });
 
-  addSchoolClose1?.addEventListener('click', closeAllModals);
-  addSchoolClose2?.addEventListener('click', closeAllModals);
-  btnCancelAddSchool1?.addEventListener('click', closeAllModals);
+  adminPassword?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnAdminLogin?.click(); });
 
-  addSchoolModal1?.addEventListener('click', (e) => {
-    if (e.target === addSchoolModal1) closeAllModals();
-  });
+  checkAdminSession();
 
-  addSchoolModal2?.addEventListener('click', (e) => {
-    if (e.target === addSchoolModal2) closeAllModals();
-  });
+  // === APPROVE SURVEYS MODAL ===
+  const approveSurveysModal = document.getElementById('approveSurveysModal');
+  const approveSurveysClose = document.getElementById('approveSurveysClose');
+  const pendingSurveysLoading = document.getElementById('pendingSurveysLoading');
+  const pendingSurveysEmpty = document.getElementById('pendingSurveysEmpty');
+  const pendingSurveysList = document.getElementById('pendingSurveysList');
+  const btnClosePendingSurveys = document.getElementById('btnClosePendingSurveys');
+  const btnApproveSurvey = document.getElementById('btnApproveSurvey');
 
-  btnNextToEncargado?.addEventListener('click', () => {
-    if (validateStep1()) {
-      openModal2();
-    }
-  });
+  function openApproveSurveysModal() { approveSurveysModal.style.display = 'flex'; loadPendingSurveys(); }
+  function closeApproveSurveysModal() { approveSurveysModal.style.display = 'none'; pendingSurveysList.innerHTML = ''; }
 
-  btnBackToSchoolInfo?.addEventListener('click', backToModal1);
-
-  btnCreateSchool?.addEventListener('click', async () => {
-    const encFirstName = document.getElementById('addEncFirstName')?.value?.trim() || '';
-    const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
-    const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
-
-    if (!encFirstName) {
-      addSchoolMsg2.textContent = 'Encargado first name is required';
-      addSchoolMsg2.className = 'statusMsg statusErr';
-      return;
-    }
-
-    if (!encPatLastName) {
-      addSchoolMsg2.textContent = 'Encargado paternal last name is required';
-      addSchoolMsg2.className = 'statusMsg statusErr';
-      return;
-    }
-
-    const finalData = {
-      ...schoolFormData,
-      encFirstName,
-      encPatLastName,
-      encMatLastName
-    };
+  async function loadPendingSurveys() {
+    pendingSurveysLoading.style.display = 'block';
+    pendingSurveysEmpty.style.display = 'none';
+    pendingSurveysList.innerHTML = '';
 
     try {
-      btnCreateSchool.disabled = true;
-      addSchoolMsg2.textContent = 'Creating school...';
-      addSchoolMsg2.className = 'statusMsg statusWarn';
-
-      const res = await fetch('/api/add-school', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(finalData)
-      });
-
+      const res = await fetch('/api/list-pending-surveys', { credentials: 'include' });
       const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Failed to load pending surveys');
 
-      if (!res.ok || !data.ok) {
-        addSchoolMsg2.textContent = data.error || 'Failed to create school';
-        addSchoolMsg2.className = 'statusMsg statusErr';
-        btnCreateSchool.disabled = false;
-        return;
-      }
-
-      addSchoolMsg2.textContent = `✅ School "${data.school.name}" created successfully!`;
-      addSchoolMsg2.className = 'statusMsg statusOk';
-
-      setTimeout(() => {
-        closeAllModals();
-      }, 2000);
-
+      pendingSurveysLoading.style.display = 'none';
+      if (!data.pending || data.pending.length === 0) { pendingSurveysEmpty.style.display = 'block'; return; }
+      renderPendingSurveys(data.pending);
     } catch (e) {
-      console.error('Error creating school:', e);
-      addSchoolMsg2.textContent = 'Connection error';
-      addSchoolMsg2.className = 'statusMsg statusErr';
-    } finally {
-      btnCreateSchool.disabled = false;
+      console.error('Error loading pending surveys:', e);
+      pendingSurveysLoading.style.display = 'none';
+      pendingSurveysEmpty.style.display = 'block';
     }
+  }
+
+  function renderPendingSurveys(surveys) {
+    pendingSurveysList.innerHTML = '';
+    surveys.forEach(survey => {
+      const card = document.createElement('div');
+      card.className = 'pendingSurveyCard';
+      card.id = `survey-${survey.school_id}-${survey.analysis_date}`;
+      const analysisDate = formatDateTime(survey.analysis_date);
+      const dateRange = formatDateRange(survey.earliest_response, survey.latest_response);
+      card.innerHTML = `
+        <div class="surveyHeader"><div class="surveySchoolName">${survey.school_name}</div></div>
+        <div class="surveyMeta">
+          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Students:</span><span style="color:#fff; font-weight:600;">${survey.total_students}</span></div>
+          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Requested:</span><span style="color:#fff;">${analysisDate}</span></div>
+          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Range:</span><span style="color:#fff;">${dateRange}</span></div>
+        </div>
+        <div class="surveyActions">
+          <button class="btnApprove" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Approve</button>
+          <button class="btnReject" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Re-open</button>
+          <button class="btnPreview" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Preview</button>
+        </div>
+      `;
+      card.querySelector('.btnApprove').addEventListener('click', () => approveSurvey(survey.school_id, survey.analysis_date, survey.school_name));
+      card.querySelector('.btnReject').addEventListener('click', () => rejectSurvey(survey.school_id, survey.analysis_date, survey.school_name));
+      card.querySelector('.btnPreview').addEventListener('click', () => previewSurvey(survey.school_id, survey.analysis_date));
+      pendingSurveysList.appendChild(card);
+    });
+  }
+
+  async function approveSurvey(schoolId, analysisDate, schoolName) {
+    if (!confirm(`Approve survey for ${schoolName}?`)) return;
+    try {
+      const res = await fetch('/api/approve-survey', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ school_id: schoolId, analysis_dt: analysisDate })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) { alert('Failed to approve: ' + (data.error || 'Unknown error')); return; }
+      alert(`✅ Survey approved for ${schoolName}!`);
+      const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
+      if (card) card.remove();
+      if (pendingSurveysList.children.length === 0) pendingSurveysEmpty.style.display = 'block';
+    } catch (e) { console.error('Approve error:', e); alert('Error approving survey'); }
+  }
+
+  async function rejectSurvey(schoolId, analysisDate, schoolName) {
+    if (!confirm(`Reject survey for ${schoolName}?\n\nThis will remove the analysis request.`)) return;
+    try {
+      const res = await fetch('/api/reject-survey', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ school_id: schoolId, analysis_dt: analysisDate })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) { alert('Failed to re-open: ' + (data.error || 'Unknown error')); return; }
+      alert(`❌ Survey re-open for ${schoolName}`);
+      const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
+      if (card) card.remove();
+      if (pendingSurveysList.children.length === 0) pendingSurveysEmpty.style.display = 'block';
+    } catch (e) { console.error('Re-open error:', e); alert('Error rejecting survey'); }
+  }
+
+  function previewSurvey(schoolId, analysisDate) {
+    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
+    const url = `${baseUrl}?school_id=${encodeURIComponent(schoolId)}&analysis_dt=${encodeURIComponent(analysisDate)}&preview=true`;
+    window.open(url, '_blank');
+  }
+
+  approveSurveysClose?.addEventListener('click', closeApproveSurveysModal);
+  btnClosePendingSurveys?.addEventListener('click', closeApproveSurveysModal);
+  approveSurveysModal?.addEventListener('click', (e) => { if (e.target === approveSurveysModal) closeApproveSurveysModal(); });
+  btnApproveSurvey?.addEventListener('click', () => {
+    if (!window.adminState.authenticated) { alert('Please login as admin first'); return; }
+    openApproveSurveysModal();
   });
 
-  document.getElementById('addSchoolPassword')?.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      btnNextToEncargado?.click();
-    }
-  });
+  // === ADD SCHOOL MODAL - TWO STEP SYSTEM ===
+  document.addEventListener('DOMContentLoaded', () => {
+    const addSchoolModal1 = document.getElementById('addSchoolModal1');
+    const addSchoolModal2 = document.getElementById('addSchoolModal2');
+    const addSchoolClose1 = document.getElementById('addSchoolClose1');
+    const addSchoolClose2 = document.getElementById('addSchoolClose2');
+    const btnAddSchool = document.getElementById('btnAddSchool');
+    const btnCancelAddSchool1 = document.getElementById('btnCancelAddSchool1');
+    const btnNextToEncargado = document.getElementById('btnNextToEncargado');
+    const btnBackToSchoolInfo = document.getElementById('btnBackToSchoolInfo');
+    const btnCreateSchool = document.getElementById('btnCreateSchool');
+    const addSchoolMsg1 = document.getElementById('addSchoolMsg1');
+    const addSchoolMsg2 = document.getElementById('addSchoolMsg2');
 
-  document.getElementById('addEncPatLastName')?.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      btnCreateSchool?.click();
-    }
-  });
+    if (!addSchoolModal1 || !addSchoolModal2) { console.error('❌ Add School modals not found'); return; }
 
-  document.getElementById('addEncMatLastName')?.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      btnCreateSchool?.click();
+    let schoolFormData = {};
+
+    function clearAllFields() {
+      document.getElementById('addSchoolName').value = '';
+      document.getElementById('addSchoolUsername').value = '';
+      document.getElementById('addSchoolPassword').value = '';
+      document.getElementById('addStudentsPrimaria').value = '0';
+      document.getElementById('addStudentsSecundaria').value = '0';
+      document.getElementById('addStudentsPreparatoria').value = '0';
+      document.getElementById('addEncFirstName').value = '';
+      document.getElementById('addEncPatLastName').value = '';
+      document.getElementById('addEncMatLastName').value = '';
+      addSchoolMsg1.textContent = '';
+      addSchoolMsg2.textContent = '';
+      schoolFormData = {};
     }
+
+    function openModal1() { clearAllFields(); addSchoolModal1.style.display = 'flex'; addSchoolModal2.style.display = 'none'; }
+    function closeAllModals() { addSchoolModal1.style.display = 'none'; addSchoolModal2.style.display = 'none'; }
+
+    function validateStep1() {
+      const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
+      const username = document.getElementById('addSchoolUsername')?.value?.trim() || '';
+      const password = document.getElementById('addSchoolPassword')?.value?.trim() || '';
+      const studentsPrimaria = document.getElementById('addStudentsPrimaria')?.value?.trim() || '';
+      const studentsSecundaria = document.getElementById('addStudentsSecundaria')?.value?.trim() || '';
+      const studentsPreparatoria = document.getElementById('addStudentsPreparatoria')?.value?.trim() || '';
+
+      if (!schoolName) { addSchoolMsg1.textContent = 'School name is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (!username) { addSchoolMsg1.textContent = 'Username is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (!password) { addSchoolMsg1.textContent = 'Password is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (password.length < 6) { addSchoolMsg1.textContent = 'Password must be at least 6 characters'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (studentsPrimaria === '') { addSchoolMsg1.textContent = 'Students Primaria is required (0 is allowed)'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (studentsSecundaria === '') { addSchoolMsg1.textContent = 'Students Secundaria is required (0 is allowed)'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (studentsPreparatoria === '') { addSchoolMsg1.textContent = 'Students Preparatoria is required (0 is allowed)'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+
+      schoolFormData = {
+        schoolName, username, password,
+        studentsPrimaria: parseInt(studentsPrimaria),
+        studentsSecundaria: parseInt(studentsSecundaria),
+        studentsPreparatoria: parseInt(studentsPreparatoria)
+      };
+      addSchoolMsg1.textContent = '';
+      return true;
+    }
+
+    function openModal2() { addSchoolModal1.style.display = 'none'; addSchoolModal2.style.display = 'flex'; setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100); }
+
+    function backToModal1() {
+      addSchoolModal2.style.display = 'none';
+      addSchoolModal1.style.display = 'flex';
+      if (schoolFormData.schoolName) {
+        document.getElementById('addSchoolName').value = schoolFormData.schoolName;
+        document.getElementById('addSchoolUsername').value = schoolFormData.username;
+        document.getElementById('addSchoolPassword').value = schoolFormData.password;
+        document.getElementById('addStudentsPrimaria').value = schoolFormData.studentsPrimaria;
+        document.getElementById('addStudentsSecundaria').value = schoolFormData.studentsSecundaria;
+        document.getElementById('addStudentsPreparatoria').value = schoolFormData.studentsPreparatoria;
+      }
+    }
+
+    btnAddSchool?.addEventListener('click', () => {
+      if (!window.adminState?.authenticated) { alert('Please login as admin first'); return; }
+      openModal1();
+    });
+
+    addSchoolClose1?.addEventListener('click', closeAllModals);
+    addSchoolClose2?.addEventListener('click', closeAllModals);
+    btnCancelAddSchool1?.addEventListener('click', closeAllModals);
+    addSchoolModal1?.addEventListener('click', (e) => { if (e.target === addSchoolModal1) closeAllModals(); });
+    addSchoolModal2?.addEventListener('click', (e) => { if (e.target === addSchoolModal2) closeAllModals(); });
+    btnNextToEncargado?.addEventListener('click', () => { if (validateStep1()) openModal2(); });
+    btnBackToSchoolInfo?.addEventListener('click', backToModal1);
+
+    btnCreateSchool?.addEventListener('click', async () => {
+      const encFirstName = document.getElementById('addEncFirstName')?.value?.trim() || '';
+      const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
+      const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
+
+      if (!encFirstName) { addSchoolMsg2.textContent = 'Encargado first name is required'; addSchoolMsg2.className = 'statusMsg statusErr'; return; }
+      if (!encPatLastName) { addSchoolMsg2.textContent = 'Encargado paternal last name is required'; addSchoolMsg2.className = 'statusMsg statusErr'; return; }
+
+      const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName };
+
+      try {
+        btnCreateSchool.disabled = true;
+        addSchoolMsg2.textContent = 'Creating school...';
+        addSchoolMsg2.className = 'statusMsg statusWarn';
+
+        const res = await fetch('/api/add-school', {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(finalData)
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data.ok) { addSchoolMsg2.textContent = data.error || 'Failed to create school'; addSchoolMsg2.className = 'statusMsg statusErr'; btnCreateSchool.disabled = false; return; }
+
+        addSchoolMsg2.textContent = `✅ School "${data.school.name}" created successfully!`;
+        addSchoolMsg2.className = 'statusMsg statusOk';
+        setTimeout(() => closeAllModals(), 2000);
+      } catch (e) {
+        console.error('Error creating school:', e);
+        addSchoolMsg2.textContent = 'Connection error';
+        addSchoolMsg2.className = 'statusMsg statusErr';
+      } finally {
+        btnCreateSchool.disabled = false;
+      }
+    });
+
+    document.getElementById('addSchoolPassword')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnNextToEncargado?.click(); });
+    document.getElementById('addEncPatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
+    document.getElementById('addEncMatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
   });
-});
 
 </script>
 
@@ -2766,53 +2126,43 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3 class="modalTitle">Add New School - Step 1 of 2</h3>
       <button id="addSchoolClose1" class="modalClose" type="button">X</button>
     </div>
-
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
-        
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolName">School Name *</label><br />
           <input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Escuela Primaria Benito Juárez" style="width:100%; max-width:100%;" />
         </div>
-
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolUsername">Username *</label><br />
           <input id="addSchoolUsername" class="textInput" type="text" placeholder="e.g., escuela_benito" autocomplete="off" style="width:100%; max-width:100%;" />
         </div>
-
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolPassword">Password *</label><br />
           <input id="addSchoolPassword" class="textInput" type="password" placeholder="Minimum 6 characters" autocomplete="new-password" style="width:100%; max-width:100%;" />
         </div>
       </div>
-
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
-        
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
           <div class="fieldBlock">
             <label class="fieldLabel" for="addStudentsPrimaria">Primaria (1-6) *</label><br />
             <input id="addStudentsPrimaria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
           </div>
-
           <div class="fieldBlock">
             <label class="fieldLabel" for="addStudentsSecundaria">Secundaria (7-9) *</label><br />
             <input id="addStudentsSecundaria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
           </div>
-
           <div class="fieldBlock">
             <label class="fieldLabel" for="addStudentsPreparatoria">Preparatoria (10-12) *</label><br />
             <input id="addStudentsPreparatoria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
           </div>
         </div>
       </div>
-
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnCancelAddSchool1" class="btnSecondary" type="button">Cancel</button>
         <button id="btnNextToEncargado" class="btnPrimary" type="button">Next &gt;</button>
       </div>
-
       <div id="addSchoolMsg1" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
@@ -2825,32 +2175,26 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3 class="modalTitle">Add New School - Step 2 of 2</h3>
       <button id="addSchoolClose2" class="modalClose" type="button">X</button>
     </div>
-
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
-        
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncFirstName">First Name *</label><br />
           <input id="addEncFirstName" class="textInput" type="text" placeholder="e.g., María" style="width:100%; max-width:100%;" />
         </div>
-
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncPatLastName">Paternal Last Name *</label><br />
           <input id="addEncPatLastName" class="textInput" type="text" placeholder="e.g., García" style="width:100%; max-width:100%;" />
         </div>
-
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncMatLastName">Maternal Last Name</label><br />
           <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López (optional)" style="width:100%; max-width:100%;" />
         </div>
       </div>
-
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnBackToSchoolInfo" class="btnSecondary" type="button">&lt; Back</button>
         <button id="btnCreateSchool" class="btnPrimary" type="button">Create School</button>
       </div>
-
       <div id="addSchoolMsg2" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
