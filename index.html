@@ -1075,9 +1075,9 @@ Portland, Oregon</p>
     if (btnPrivacyContinue) btnPrivacyContinue.disabled = !e.target.checked;
   });
 
-  btnPrivacyContinue?.addEventListener('click', () => {
+  btnPrivacyContinue?.addEventListener('click', async () => {
     closePrivacyModal();
-    showRoutingQuestion();  // ← NEW: show grade question instead of going straight into survey
+    await showRoutingQuestion();
   });
 
   btnPrivacyCancel?.addEventListener('click', closePrivacyModal);
@@ -1139,19 +1139,35 @@ Portland, Oregon</p>
 
   async function loadRoutingQuestion() {
     if (ROUTING_QUESTION) return;
-    const res = await fetch('/data/ROUTING_QUESTION.json', { cache: 'no-store' });
-    if (!res.ok) { alert('No se pudo cargar la pregunta de grado'); return; }
-    ROUTING_QUESTION = await res.json();
+    try {
+      const res = await fetch('/data/ROUTING_QUESTION.json', { cache: 'no-store' });
+      if (!res.ok) {
+        alert(`ERROR: No se pudo cargar ROUTING_QUESTION.json (HTTP ${res.status})\nURL: /data/ROUTING_QUESTION.json`);
+        return;
+      }
+      ROUTING_QUESTION = await res.json();
+      console.log('✅ ROUTING_QUESTION loaded:', ROUTING_QUESTION);
+    } catch (e) {
+      alert('ERROR cargando ROUTING_QUESTION.json: ' + (e?.message || String(e)));
+    }
   }
 
   async function showRoutingQuestion() {
+    console.log('showRoutingQuestion() called');
+
     // Disable main buttons while routing is active
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
     if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
     if (encuestaOK) { encuestaOK.style.pointerEvents = 'none'; encuestaOK.style.opacity = '0.6'; }
 
     await loadRoutingQuestion();
-    if (!ROUTING_QUESTION) return;
+
+    if (!ROUTING_QUESTION) {
+      alert('ERROR: ROUTING_QUESTION es null después de cargar. Revisa /data/ROUTING_QUESTION.json');
+      return;
+    }
+
+    console.log('Rendering routing question:', ROUTING_QUESTION.text);
 
     // Render the routing question in routingBox
     routingTitle.textContent = 'Pregunta 0 — Información General';
@@ -1166,6 +1182,7 @@ Portland, Oregon</p>
 
     routingMsg.textContent = '';
     routingBox.style.display = 'block';
+    console.log('✅ routingBox should now be visible');
   }
 
   // Handle "Siguiente" on the routing question
