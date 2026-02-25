@@ -19,7 +19,6 @@ export default async function handler(req, res) {
 
     const SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
     if (!SUPABASE_URL) return res.status(500).json({ ok: false, error: "MISSING_SUPABASE_URL" });
     if (!SUPABASE_KEY) return res.status(500).json({ ok: false, error: "MISSING_SUPABASE_SERVICE_KEY" });
 
@@ -27,13 +26,18 @@ export default async function handler(req, res) {
 
     const { data: school, error } = await supabase
       .from("schools")
-      .select("id, name")
+      .select("id, name, country")
       .eq("id", school_id)
       .maybeSingle();
 
     if (error || !school) return res.status(200).json({ ok: false, error: "SCHOOL_NOT_FOUND" });
 
-    return res.status(200).json({ ok: true, school_id: school.id, school_name: school.name });
+    return res.status(200).json({
+      ok: true,
+      school_id: school.id,
+      school_name: school.name,
+      country: school.country || "MX"
+    });
   } catch (e) {
     console.error("me error:", e);
     return res.status(200).json({ ok: false, error: "SERVER_ERROR" });
