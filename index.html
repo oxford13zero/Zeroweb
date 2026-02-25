@@ -929,10 +929,11 @@ Portland, Oregon</p>
       window.sessionState = {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
-        school_name: data?.school_name || null
+        school_name: data?.school_name || null,
+        country: data?.country || 'MX'
       };
     } catch (e) {
-      window.sessionState = { ok:false, school_id:null, school_name:null };
+      window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
     }
     applySessionToUI();
   }
@@ -1139,9 +1140,17 @@ Portland, Oregon</p>
 
   async function loadRoutingQuestion() {
     if (ROUTING_QUESTION) return;
-    const res = await fetch('/data/Routing_question.json', { cache: 'no-store' });
-    if (!res.ok) { alert(`ERROR: No se pudo cargar ROUTING_QUESTION.json (HTTP ${res.status})`); return; }
-    ROUTING_QUESTION = await res.json();
+    const res = await fetch('/api/routing-config', { credentials: 'include' });
+    if (!res.ok) { alert(`ERROR: No se pudo cargar la configuración de grados (HTTP ${res.status})`); return; }
+    const data = await res.json();
+    if (!data.ok) { alert(`ERROR: ${data.error || 'No se pudo cargar routing-config'}`); return; }
+    // Normalize to the same shape the rest of the code expects
+    ROUTING_QUESTION = {
+      question_id: "zero_general_grado",
+      text: data.question_text,
+      routing_rules: data.routing_rules,
+      options: data.options
+    };
   }
 
   async function showRoutingQuestion() {
@@ -1177,15 +1186,16 @@ Portland, Oregon</p>
     const selectedCode = checked.value;
     const routingRules = ROUTING_QUESTION.routing_rules;
 
-    // Determine which survey to load
+    // Find which route_key this grade belongs to
     let targetSurveyFile = null;
-    let targetSurveyId = null;
+    for (const [routeKey, config] of Object.entries(routingRules)) {
+      if (config.grade_codes.includes(selectedCode)) {
+        targetSurveyFile = `/data/${config.survey_file}`;
+        break;
+      }
+    }
 
-    if (routingRules.primaria.includes(selectedCode)) {
-      targetSurveyFile = '/data/SURVEY_003_PRIMARIA.json';
-    } else if (routingRules.secundaria.includes(selectedCode)) {
-      targetSurveyFile = '/data/SURVEY_003.json';
-    } else {
+    if (!targetSurveyFile) {
       routingMsg.textContent = 'Grado no reconocido. Contacta al administrador.';
       return;
     }
@@ -1997,8 +2007,60 @@ Portland, Oregon</p>
     const btnCreateSchool = document.getElementById('btnCreateSchool');
     const addSchoolMsg1 = document.getElementById('addSchoolMsg1');
     const addSchoolMsg2 = document.getElementById('addSchoolMsg2');
+    const addSchoolCountry = document.getElementById('addSchoolCountry');
+    const enrollmentFields = document.getElementById('enrollmentFields');
 
     if (!addSchoolModal1 || !addSchoolModal2) { console.error('❌ Add School modals not found'); return; }
+
+    // Enrollment config per country
+    const ENROLLMENT_CONFIG = {
+      MX: [
+        { id: 'addStudentsGroup1', label: 'Primaria (1°–6°)',      key: 'studentsPrimaria' },
+        { id: 'addStudentsGroup2', label: 'Secundaria (7°–9°)',     key: 'studentsSecundaria' },
+        { id: 'addStudentsGroup3', label: 'Preparatoria (10°–12°)', key: 'studentsPreparatoria' }
+      ],
+      CL: [
+        { id: 'addStudentsGroup1', label: 'Básica (1°–8°)',  key: 'studentsPrimaria' },
+        { id: 'addStudentsGroup2', label: 'Media (9°–12°)',  key: 'studentsSecundaria' },
+        { id: 'addStudentsGroup3', label: '',                key: 'studentsPreparatoria', hidden: true }
+      ],
+      CR: [
+        { id: 'addStudentsGroup1', label: 'Primaria (1°–6°)',    key: 'studentsPrimaria' },
+        { id: 'addStudentsGroup2', label: 'Secundaria (7°–11°)', key: 'studentsSecundaria' },
+        { id: 'addStudentsGroup3', label: '',                    key: 'studentsPreparatoria', hidden: true }
+      ],
+      DO: [
+        { id: 'addStudentsGroup1', label: 'Primaria (1°–6°)',    key: 'studentsPrimaria' },
+        { id: 'addStudentsGroup2', label: 'Secundaria (7°–12°)', key: 'studentsSecundaria' },
+        { id: 'addStudentsGroup3', label: '',                    key: 'studentsPreparatoria', hidden: true }
+      ],
+      US: [
+        { id: 'addStudentsGroup1', label: 'Elementary (K–5)', key: 'studentsPrimaria' },
+        { id: 'addStudentsGroup2', label: 'Middle (6–8)',      key: 'studentsSecundaria' },
+        { id: 'addStudentsGroup3', label: 'High (9–12)',       key: 'studentsPreparatoria' }
+      ]
+    };
+
+    function renderEnrollmentFields(country) {
+      const config = ENROLLMENT_CONFIG[country] || ENROLLMENT_CONFIG['MX'];
+      enrollmentFields.innerHTML = config
+        .filter(f => !f.hidden)
+        .map(f => `
+          <div class="fieldBlock">
+            <label class="fieldLabel" for="${f.id}">${f.label} *</label><br />
+            <input id="${f.id}" class="textInput" type="number" min="0" value="0"
+              data-key="${f.key}" style="width:100%;" />
+          </div>
+        `).join('');
+    }
+
+    // Render on country change
+    addSchoolCountry?.addEventListener('change', () => {
+      renderEnrollmentFields(addSchoolCountry.value);
+    });
+
+    // Initial render
+    renderEnrollmentFields('MX');
 
     let schoolFormData = {};
 
@@ -2006,9 +2068,8 @@ Portland, Oregon</p>
       document.getElementById('addSchoolName').value = '';
       document.getElementById('addSchoolUsername').value = '';
       document.getElementById('addSchoolPassword').value = '';
-      document.getElementById('addStudentsPrimaria').value = '0';
-      document.getElementById('addStudentsSecundaria').value = '0';
-      document.getElementById('addStudentsPreparatoria').value = '0';
+      if (addSchoolCountry) addSchoolCountry.value = 'MX';
+      renderEnrollmentFields('MX');
       document.getElementById('addEncFirstName').value = '';
       document.getElementById('addEncPatLastName').value = '';
       document.getElementById('addEncMatLastName').value = '';
@@ -2022,42 +2083,51 @@ Portland, Oregon</p>
 
     function validateStep1() {
       const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
-      const username = document.getElementById('addSchoolUsername')?.value?.trim() || '';
-      const password = document.getElementById('addSchoolPassword')?.value?.trim() || '';
-      const studentsPrimaria = document.getElementById('addStudentsPrimaria')?.value?.trim() || '';
-      const studentsSecundaria = document.getElementById('addStudentsSecundaria')?.value?.trim() || '';
-      const studentsPreparatoria = document.getElementById('addStudentsPreparatoria')?.value?.trim() || '';
+      const username   = document.getElementById('addSchoolUsername')?.value?.trim() || '';
+      const password   = document.getElementById('addSchoolPassword')?.value?.trim() || '';
+      const country    = addSchoolCountry?.value || 'MX';
 
       if (!schoolName) { addSchoolMsg1.textContent = 'School name is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (!username) { addSchoolMsg1.textContent = 'Username is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (!password) { addSchoolMsg1.textContent = 'Password is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (!username)   { addSchoolMsg1.textContent = 'Username is required';    addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
+      if (!password)   { addSchoolMsg1.textContent = 'Password is required';    addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
       if (password.length < 6) { addSchoolMsg1.textContent = 'Password must be at least 6 characters'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (studentsPrimaria === '') { addSchoolMsg1.textContent = 'Students Primaria is required (0 is allowed)'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (studentsSecundaria === '') { addSchoolMsg1.textContent = 'Students Secundaria is required (0 is allowed)'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (studentsPreparatoria === '') { addSchoolMsg1.textContent = 'Students Preparatoria is required (0 is allowed)'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
 
-      schoolFormData = {
-        schoolName, username, password,
-        studentsPrimaria: parseInt(studentsPrimaria),
-        studentsSecundaria: parseInt(studentsSecundaria),
-        studentsPreparatoria: parseInt(studentsPreparatoria)
-      };
+      // Collect enrollment fields dynamically
+      const enrollmentInputs = enrollmentFields.querySelectorAll('input[data-key]');
+      const enrollmentData = {};
+      for (const input of enrollmentInputs) {
+        enrollmentData[input.dataset.key] = parseInt(input.value) || 0;
+      }
+      // Fill missing keys with 0
+      enrollmentData.studentsPrimaria    = enrollmentData.studentsPrimaria    ?? 0;
+      enrollmentData.studentsSecundaria  = enrollmentData.studentsSecundaria  ?? 0;
+      enrollmentData.studentsPreparatoria= enrollmentData.studentsPreparatoria?? 0;
+
+      schoolFormData = { schoolName, username, password, country, ...enrollmentData };
       addSchoolMsg1.textContent = '';
       return true;
     }
 
-    function openModal2() { addSchoolModal1.style.display = 'none'; addSchoolModal2.style.display = 'flex'; setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100); }
+    function openModal2() {
+      addSchoolModal1.style.display = 'none';
+      addSchoolModal2.style.display = 'flex';
+      setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100);
+    }
 
     function backToModal1() {
       addSchoolModal2.style.display = 'none';
       addSchoolModal1.style.display = 'flex';
       if (schoolFormData.schoolName) {
-        document.getElementById('addSchoolName').value = schoolFormData.schoolName;
+        document.getElementById('addSchoolName').value     = schoolFormData.schoolName;
         document.getElementById('addSchoolUsername').value = schoolFormData.username;
         document.getElementById('addSchoolPassword').value = schoolFormData.password;
-        document.getElementById('addStudentsPrimaria').value = schoolFormData.studentsPrimaria;
-        document.getElementById('addStudentsSecundaria').value = schoolFormData.studentsSecundaria;
-        document.getElementById('addStudentsPreparatoria').value = schoolFormData.studentsPreparatoria;
+        if (addSchoolCountry) addSchoolCountry.value       = schoolFormData.country || 'MX';
+        renderEnrollmentFields(schoolFormData.country || 'MX');
+        // Restore enrollment values
+        const inputs = enrollmentFields.querySelectorAll('input[data-key]');
+        for (const input of inputs) {
+          input.value = schoolFormData[input.dataset.key] ?? 0;
+        }
       }
     }
 
@@ -2075,12 +2145,12 @@ Portland, Oregon</p>
     btnBackToSchoolInfo?.addEventListener('click', backToModal1);
 
     btnCreateSchool?.addEventListener('click', async () => {
-      const encFirstName = document.getElementById('addEncFirstName')?.value?.trim() || '';
+      const encFirstName   = document.getElementById('addEncFirstName')?.value?.trim() || '';
       const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
       const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
 
-      if (!encFirstName) { addSchoolMsg2.textContent = 'Encargado first name is required'; addSchoolMsg2.className = 'statusMsg statusErr'; return; }
-      if (!encPatLastName) { addSchoolMsg2.textContent = 'Encargado paternal last name is required'; addSchoolMsg2.className = 'statusMsg statusErr'; return; }
+      if (!encFirstName)   { addSchoolMsg2.textContent = 'Encargado first name is required';          addSchoolMsg2.className = 'statusMsg statusErr'; return; }
+      if (!encPatLastName) { addSchoolMsg2.textContent = 'Encargado paternal last name is required';  addSchoolMsg2.className = 'statusMsg statusErr'; return; }
 
       const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName };
 
@@ -2096,9 +2166,14 @@ Portland, Oregon</p>
         });
         const data = await res.json().catch(() => ({}));
 
-        if (!res.ok || !data.ok) { addSchoolMsg2.textContent = data.error || 'Failed to create school'; addSchoolMsg2.className = 'statusMsg statusErr'; btnCreateSchool.disabled = false; return; }
+        if (!res.ok || !data.ok) {
+          addSchoolMsg2.textContent = data.error || 'Failed to create school';
+          addSchoolMsg2.className = 'statusMsg statusErr';
+          btnCreateSchool.disabled = false;
+          return;
+        }
 
-        addSchoolMsg2.textContent = `✅ School "${data.school.name}" created successfully!`;
+        addSchoolMsg2.textContent = `✅ School "${data.school.name}" (${data.school.country}) created successfully!`;
         addSchoolMsg2.className = 'statusMsg statusOk';
         setTimeout(() => closeAllModals(), 2000);
       } catch (e) {
@@ -2139,22 +2214,21 @@ Portland, Oregon</p>
           <label class="fieldLabel" for="addSchoolPassword">Password *</label><br />
           <input id="addSchoolPassword" class="textInput" type="password" placeholder="Minimum 6 characters" autocomplete="new-password" style="width:100%; max-width:100%;" />
         </div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addSchoolCountry">Country *</label><br />
+          <select id="addSchoolCountry" class="textInput" style="width:100%; max-width:100%;">
+            <option value="MX">🇲🇽 Mexico</option>
+            <option value="CL">🇨🇱 Chile</option>
+            <option value="CR">🇨🇷 Costa Rica</option>
+            <option value="DO">🇩🇴 República Dominicana</option>
+            <option value="US">🇺🇸 United States</option>
+          </select>
+        </div>
       </div>
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
-          <div class="fieldBlock">
-            <label class="fieldLabel" for="addStudentsPrimaria">Primaria (1-6) *</label><br />
-            <input id="addStudentsPrimaria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
-          </div>
-          <div class="fieldBlock">
-            <label class="fieldLabel" for="addStudentsSecundaria">Secundaria (7-9) *</label><br />
-            <input id="addStudentsSecundaria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
-          </div>
-          <div class="fieldBlock">
-            <label class="fieldLabel" for="addStudentsPreparatoria">Preparatoria (10-12) *</label><br />
-            <input id="addStudentsPreparatoria" class="textInput" type="number" min="0" value="0" style="width:100%;" />
-          </div>
+        <div id="enrollmentFields" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+          <!-- Filled dynamically based on country -->
         </div>
       </div>
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
