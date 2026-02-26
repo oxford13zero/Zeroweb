@@ -1486,7 +1486,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En el aula durante las clases",
+      "text": "Has sufrido bullying o cyberbullying en el aula durante las clases",
       "reference": "Bronfenbrenner (1979); Astor et al. (2004); Roland (2000)",
       "options": [
         {
@@ -1521,7 +1521,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En el patio o áreas de recreo",
+      "text": "Has sufrido bullying o cyberbullying en el patio o áreas de recreo",
       "reference": "Roland (2000); Astor et al. (2004)",
       "options": [
         {
@@ -1556,7 +1556,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En pasillos, escaleras o baños",
+      "text": "Has sufrido bullying o cyberbullying en pasillos, escaleras o baños",
       "reference": "Astor et al. (2004)",
       "options": [
         {
@@ -1591,7 +1591,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En la entrada/salida de la escuela o calles cercanas",
+      "text": "Has sufrido bullying o cyberbullying en la entrada/salida de la escuela o calles cercanas",
       "reference": "Astor et al. (2004)",
       "options": [
         {
@@ -1626,7 +1626,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En el transporte escolar (camión, combi, metro, etc.)",
+      "text": "Has sufrido bullying o cyberbullying en el transporte escolar (camión, micro, combi, metro, etc.)",
       "notes": "Adaptación específica México — transporte escolar mexicano",
       "reference": "Lucio López & Gómez Triana (2020)",
       "options": [
@@ -1662,7 +1662,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En la casa de compañeros (para hacer tareas o reuniones)",
+      "text": "Has sufrido bullying o cyberbullying en la casa de compañeros (cuando hacen tareas o reuniones)",
       "notes": "Adaptación específica México",
       "reference": "Lucio López & Gómez Triana (2020)",
       "options": [
@@ -1698,7 +1698,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En la cafetería o comedor escolar",
+      "text": "Has sufrido bullying o cyberbullying en la cafetería o comedor escolar",
       "reference": "Astor et al. (2004)",
       "options": [
         {
@@ -1733,7 +1733,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_risk",
       "type": "single_choice",
-      "text": "En línea (WhatsApp, Facebook, Instagram, TikTok, juegos, etc.)",
+      "text": "Has sufrido cyberbullying por WhatsApp, Facebook, Instagram, TikTok, juegos, etc.",
       "notes": "Adaptación específica México — extensión digital de Ortega-Ruiz (2016)",
       "reference": "Ortega-Ruiz et al. (2016); Lucio López & Gómez Triana (2020)",
       "options": [
@@ -1769,7 +1769,7 @@
       "scale_type": "likert_0_4",
       "score_direction": "higher_means_more_protective",
       "type": "single_choice",
-      "text": "Cuando reporto problemas a un adulto de la escuela, recibo ayuda efectiva",
+      "text": "Recibo ayuda cuando reporto problemas a un adulto de la escuela?",
       "reference": "ZERO-R Roland (2000); Cohen & Wills (1985)",
       "options": [
         {
@@ -2042,3 +2042,4 @@
     }
   ]
 }
+
