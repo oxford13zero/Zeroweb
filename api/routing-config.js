@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const { data: school, error: schoolError } = await supabaseAdmin
     .from("schools")
     .select("country")
-    .eq("id", auth.school_id)
+    .eq("id", auth.school.id)
     .maybeSingle();
 
   if (schoolError || !school) {
