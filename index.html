@@ -2047,9 +2047,9 @@ Portland, Oregon</p>
         .filter(f => !f.hidden)
         .map(f => `
           <div class="fieldBlock">
-            <label class="fieldLabel" for="${f.id}">${f.label} *</label><br />
+            <label class="fieldLabel" for="${f.id}" style="font-size:12px;">${f.label} *</label><br />
             <input id="${f.id}" class="textInput" type="number" min="0" value="0"
-              data-key="${f.key}" style="width:100%;" />
+              data-key="${f.key}" style="width:100%; max-width:110px;" />
           </div>
         `).join('');
     }
@@ -2227,7 +2227,7 @@ Portland, Oregon</p>
       </div>
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
-        <div id="enrollmentFields" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+        <div id="enrollmentFields" style="display:grid; grid-template-columns:repeat(3, 110px); gap:12px;">
           <!-- Filled dynamically based on country -->
         </div>
       </div>
