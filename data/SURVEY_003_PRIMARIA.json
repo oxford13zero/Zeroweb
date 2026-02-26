@@ -31,9 +31,9 @@
       "text": "¿Te gusta venir a la escuela? 🎒",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -43,8 +43,8 @@
       "text": "¿Tienes amigos en la escuela? 👫",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "si", "text": "👍 Sí"},
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -55,8 +55,8 @@
       "help_text": "Por ejemplo: te pega, te quita cosas, te dice cosas feas, no te deja jugar",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "si", "text": " Sí"},
+        {"code": "no", "text": " No"}
       ]
     },
     {
@@ -107,8 +107,8 @@
       "text": "¿Has visto cuando molestan a otros niños? 👀",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "si", "text": "👍 Sí"},
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -131,9 +131,9 @@
       "text": "¿Te sientes seguro en la escuela? 🛡️",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -143,9 +143,9 @@
       "text": "¿Te sientes seguro en el recreo? 🏃",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -155,9 +155,9 @@
       "text": "¿Te sientes seguro en el baño? 🚻",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -167,9 +167,9 @@
       "text": "¿Tus maestros te cuidan y te ayudan? 👨‍🏫👩‍🏫",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -179,9 +179,9 @@
       "text": "¿Tus maestros paran a los niños que molestan a otros? ✋",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -191,9 +191,9 @@
       "text": "¿Hay reglas claras sobre cómo portarse en la escuela? 📋",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -203,9 +203,9 @@
       "text": "¿Las reglas son justas para todos? ⚖️",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -216,9 +216,9 @@
       "help_text": "Los niños de grados más grandes",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -228,8 +228,8 @@
       "text": "¿Usas internet, tablet o celular en la escuela? 📱",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "si", "text": "👍 Sí"},
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -239,8 +239,8 @@
       "text": "¿Alguien te ha molestado por internet o WhatsApp? 💬",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "si", "text": " Sí"},
+        {"code": "no", "text": " No"}
       ]
     },
     {
@@ -315,8 +315,8 @@
       "text": "¿Hay algún lugar en la escuela donde NO te gusta estar? 🚫",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "si", "text": " Sí"},
+        {"code": "no", "text": " No"}
       ]
     },
     {
@@ -326,8 +326,8 @@
       "text": "Si te molestan, ¿sabes a quién pedirle ayuda? 🆘",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "si", "text": "👍 Sí"},
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -337,9 +337,9 @@
       "text": "¿Te gustan las actividades que hacen en la escuela? 🎨",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -349,9 +349,9 @@
       "text": "¿Sientes que puedes aprender bien en tu escuela? 📚",
       "required": true,
       "options": [
-        {"code": "si", "text": "✅ Sí"},
+        {"code": "si", "text": "👍 Sí"},
         {"code": "a_veces", "text": "🤔 A veces"},
-        {"code": "no", "text": "❌ No"}
+        {"code": "no", "text": "👎 No"}
       ]
     },
     {
@@ -377,4 +377,5 @@
     }
   ]
 }
+
 
