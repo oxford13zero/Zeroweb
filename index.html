@@ -4,513 +4,105 @@
   <meta charset="UTF-8" />
   <title>TECH4ZERO – Educational Designs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-
   <style>
     body { margin:0; font-family:'Open Sans', Arial, sans-serif; background-color:#1E2F3F; color:#ffffff; }
-
     header { padding:40px 20px; text-align:center; background:linear-gradient(180deg, #1E2F3F, #16222D); }
     header h1 { font-family:'Playfair Display', serif; font-size:48px; margin:0; }
     header p { color:#D6A21C; letter-spacing:2px; margin-top:10px; font-size:14px; }
-
     nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; flex-wrap:wrap; align-items:center; }
     nav a { background-color:#1E2F3F; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
     nav a:hover { background-color:#D6A21C; color:#16222D; }
-
-    /* Buttons */
-    .btnPrimary {
-      padding:10px 16px;
-      font-weight:700;
-      border-radius:6px;
-      border:1px solid #D6A21C;
-      cursor:pointer;
-      background:#D6A21C;
-      color:#16222D;
-    }
-    .btnSecondary {
-      padding:10px 16px;
-      font-weight:600;
-      border-radius:6px;
-      border:1px solid #D6A21C;
-      background:transparent;
-      color:#D6A21C;
-      cursor:pointer;
-    }
-    .btnPrimary:disabled, .btnSecondary:disabled {
-      opacity:0.45;
-      cursor:not-allowed;
-    }
-
-    /* Session bar */
-    .sessionBar {
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:12px;
-      padding:10px 15px;
-      background:#0f1d27;
-      border-bottom:1px solid #365468;
-      flex-wrap:wrap;
-    }
-    .sessionBadge {
-      padding:6px 12px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:700;
-      border:1px solid #365468;
-      background:#1E2F3F;
-    }
+    .btnPrimary { padding:10px 16px; font-weight:700; border-radius:6px; border:1px solid #D6A21C; cursor:pointer; background:#D6A21C; color:#16222D; }
+    .btnSecondary { padding:10px 16px; font-weight:600; border-radius:6px; border:1px solid #D6A21C; background:transparent; color:#D6A21C; cursor:pointer; }
+    .btnPrimary:disabled, .btnSecondary:disabled { opacity:0.45; cursor:not-allowed; }
+    .sessionBar { display:flex; justify-content:center; align-items:center; gap:12px; padding:10px 15px; background:#0f1d27; border-bottom:1px solid #365468; flex-wrap:wrap; }
+    .sessionBadge { padding:6px 12px; border-radius:999px; font-size:13px; font-weight:700; border:1px solid #365468; background:#1E2F3F; }
     .badgeOk { color:#b9ffcf; }
     .badgeNo { color:#ffdca8; }
-
     section { display:none; padding:50px 20px; max-width:1000px; margin:auto; }
     section.active { display:block; }
-
     h2 { font-family:'Playfair Display', serif; color:#D6A21C; font-size:32px; margin-top:0; }
-
     .card { background-color:#243A4B; padding:25px; border-radius:8px; margin-top:25px; }
-
     footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
-
-    /* Compact panel + stacked inputs */
-    .formPanel {
-      margin-top: 18px;
-      background: #1E2F3F;
-      padding: 16px;
-      border-radius: 8px;
-      max-width: 520px;
-      border: 1px solid #365468;
-    }
-    .fieldBlock { margin-bottom: 14px; }
+    .formPanel { margin-top:18px; background:#1E2F3F; padding:16px; border-radius:8px; max-width:520px; border:1px solid #365468; }
+    .fieldBlock { margin-bottom:14px; }
     .fieldLabel { font-weight:600; display:inline-block; margin-bottom:6px; }
-    .textInput {
-      width:100%;
-      max-width:380px;
-      padding:8px;
-      border-radius:6px;
-      border:1px solid #365468;
-      background:#0f1d27;
-      color:#ffffff;
-      outline:none;
-    }
+    .textInput { width:100%; max-width:380px; padding:8px; border-radius:6px; border:1px solid #365468; background:#0f1d27; color:#ffffff; outline:none; }
     .textInput::placeholder { color:#a9c0d3; }
-
     .statusMsg { margin-top:12px; font-weight:600; min-height:18px; }
     .statusOk { color:#b9ffcf; }
     .statusWarn { color:#ffdca8; }
     .statusErr { color:#ffb4b4; }
-
-    /* Modal */
-    .modalOverlay {
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.65);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
+    .modalOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:18px; }
+    .modalBox { width:min(620px, 95vw); background:#16222D; border:1px solid #365468; border-radius:12px; padding:18px; box-shadow:0 20px 60px rgba(0,0,0,0.35); }
+    .modalHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; }
+    .modalTitle { font-family:'Playfair Display', serif; color:#D6A21C; font-size:22px; margin:0; }
+    .modalClose { background:transparent; border:1px solid #365468; color:#fff; border-radius:8px; padding:6px 10px; cursor:pointer; font-weight:700; }
+    .navAccess { margin-left:40px; }
+    .video-container { position:relative; width:65%; padding-top:45%; margin:16px auto; border-radius:12px; overflow:hidden; }
+    .video-container iframe { position:absolute; inset:0; width:100%; height:100%; }
+    .programa-content { width:65%; margin:0 auto; }
+    .programa-content p, .programa-content ul, .programa-content .nota { margin-left:0; margin-right:0; }
+    @media (max-width:768px) {
+      .programa-content { width:100%; }
+      .video-container { width:100%; padding-top:56.25%; }
+      .offices-grid { grid-template-columns:repeat(2,1fr) !important; }
+      .overlayGrid { grid-template-columns:1fr !important; }
+      .statsGrid { grid-template-columns:1fr !important; }
     }
-    .modalBox {
-      width:min(620px, 95vw);
-      background:#16222D;
-      border:1px solid #365468;
-      border-radius:12px;
-      padding:18px;
-      box-shadow:0 20px 60px rgba(0,0,0,0.35);
-    }
-    .modalHeader {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .modalTitle {
-      font-family:'Playfair Display', serif;
-      color:#D6A21C;
-      font-size:22px;
-      margin:0;
-    }
-    .modalClose {
-      background:transparent;
-      border:1px solid #365468;
-      color:#fff;
-      border-radius:8px;
-      padding:6px 10px;
-      cursor:pointer;
-      font-weight:700;
-    }
+    .bullets-programa .num { color:#D6A21C; font-weight:800; font-size:calc(1em + 1px); }
+    .highlight { color:#D6A21C; font-weight:700; }
 
-    .navAccess { margin-left: 40px; }
+    /* ── HERO ── */
+    .heroSection { position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; padding:100px 20px 80px; text-align:center; overflow:hidden; background:linear-gradient(180deg,#0a1520 0%,#1E2F3F 100%); }
+    .heroSection::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.04) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
+    .heroGlow { position:absolute; top:50%; left:50%; transform:translate(-50%,-60%); width:700px; height:500px; background:radial-gradient(ellipse at center,rgba(56,152,255,0.18) 0%,rgba(56,152,255,0.06) 45%,transparent 70%); pointer-events:none; border-radius:50%; }
+    .heroContent { position:relative; z-index:1; max-width:820px; margin:0 auto; }
+    .heroHeadline { font-family:'Playfair Display',serif; font-size:clamp(32px,5vw,56px); font-weight:600; color:#ffffff; line-height:1.2; margin:0 0 24px 0; letter-spacing:-0.5px; }
+    .heroSubheadline { font-size:clamp(15px,2vw,19px); color:#d9e6f2; line-height:1.7; margin:0 auto 36px; max-width:680px; font-weight:300; }
+    .heroCTA { display:inline-block; background:#D6A21C; color:#16222D; font-size:13px; font-weight:700; padding:9px 22px; border-radius:8px; border:none; cursor:default; letter-spacing:0.3px; box-shadow:0 4px 24px rgba(214,162,28,0.35); }
+    .heroCTANote { display:block; margin-top:12px; font-size:12px; color:#7a8e9e; letter-spacing:0.3px; }
 
-    .video-container {
-      position: relative;
-      width: 65%;
-      padding-top: 45%;
-      margin: 16px auto;
-      border-radius: 12px;
-      overflow: hidden;
-    }
+    /* ── CREDIBILITY BAR ── */
+    .credibilityBar { width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; position:relative; background:#16222D; border-top:1px solid #243A4B; border-bottom:1px solid #243A4B; padding:16px 20px; text-align:center; font-size:14px; color:#a9c0d3; font-weight:600; letter-spacing:0.3px; }
 
-    .video-container iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
+    /* ── PROGRAMA SECTIONS ── */
+    .programaSection { width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; position:relative; padding:72px 20px; }
+    .programaSection .sectionInner { max-width:960px; margin:0 auto; }
+    .programaSection h3 { font-family:'Playfair Display',serif; font-size:clamp(26px,3.5vw,38px); font-weight:600; color:#ffffff; margin:0 0 16px 0; line-height:1.3; }
+    .programaSection .sectionBody { font-size:16px; line-height:1.8; color:#a9c0d3; margin:0 0 40px 0; max-width:780px; }
 
-    .programa-content{
-      width: 65%;
-      margin: 0 auto;
-    }
+    /* ── OPCIÓN B: foto fondo overlay ── */
+    .overlayGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .overlayCard { position:relative; border-radius:14px; overflow:hidden; aspect-ratio:3/4; cursor:default; }
+    .overlayCard img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s ease; }
+    .overlayCard:hover img { transform:scale(1.05); }
+    .overlayCard .overlayDark { position:absolute; inset:0; background:linear-gradient(to top, rgba(6,14,22,0.97) 0%, rgba(6,14,22,0.72) 50%, rgba(6,14,22,0.25) 100%); transition:background 0.3s; }
+    .overlayCard:hover .overlayDark { background:linear-gradient(to top, rgba(6,14,22,0.99) 0%, rgba(6,14,22,0.82) 55%, rgba(6,14,22,0.35) 100%); }
+    .overlayCard .overlayContent { position:absolute; bottom:0; left:0; right:0; padding:28px 22px; z-index:1; }
+    .overlayCard .oIcon { font-size:26px; display:block; margin-bottom:10px; }
+    .overlayCard .oLine { width:30px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:12px; }
+    .overlayCard .oTitle { font-size:16px; font-weight:700; color:#ffffff; line-height:1.4; margin-bottom:8px; }
+    .overlayCard .oText { font-size:13px; color:#a9c0d3; line-height:1.6; }
+    .overlayCard .oTag { display:inline-block; margin-top:12px; font-size:11px; font-weight:700; color:#D6A21C; border:1px solid rgba(214,162,28,0.4); border-radius:4px; padding:3px 8px; }
 
-    .programa-content p,
-    .programa-content ul,
-    .programa-content .nota{
-      margin-left: 0;
-      margin-right: 0;
-    }
+    /* ── SECCIÓN 4: Stats ── */
+    .statsGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:8px 0 28px; }
+    .statCard { text-align:center; padding:40px 20px; background:rgba(255,255,255,0.03); border:1px solid #243A4B; border-radius:14px; }
+    .statCard .statNumber { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,68px); font-weight:600; color:#D6A21C; line-height:1; margin-bottom:12px; }
+    .statCard .statDesc { font-size:14px; color:#a9c0d3; line-height:1.6; }
+    .statsNote { font-size:12px; color:#4a6070; text-align:center; margin:0; }
 
-    @media (max-width: 768px){
-      .programa-content{
-        width: 100%;
-      }
-
-      .video-container{
-        width: 100%;
-        padding-top: 56.25%;
-      }
-
-      .offices-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-    }
-
-    .bullets-programa .num{
-      color:#D6A21C;
-      font-weight:800;
-      font-size: calc(1em + 1px);
-    }
-
-    .highlight {
-      color:#D6A21C;
-      font-weight:700;
-    }
-
-/* ── HERO SECTION ── */
-.heroSection {
-  position: relative;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  padding: 100px 20px 80px;
-  text-align: center;
-  overflow: hidden;
-  background: linear-gradient(180deg, #0a1520 0%, #1E2F3F 100%);
-}
-
-/* dot pattern overlay */
-.heroSection::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-}
-
-/* glow */
-.heroGlow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  width: 700px;
-  height: 500px;
-  background: radial-gradient(ellipse at center, rgba(56, 152, 255, 0.18) 0%, rgba(56, 152, 255, 0.06) 45%, transparent 70%);
-  pointer-events: none;
-  border-radius: 50%;
-}
-
-.heroContent {
-  position: relative;
-  z-index: 1;
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-.heroHeadline {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 600;
-  color: #ffffff;
-  line-height: 1.2;
-  margin: 0 0 24px 0;
-  letter-spacing: -0.5px;
-}
-
-.heroSubheadline {
-  font-size: clamp(15px, 2vw, 19px);
-  color: #a9c0d3;
-  line-height: 1.7;
-  margin: 0 auto 36px;
-  max-width: 680px;
-  font-weight: 300;
-}
-
-.heroCTA {
-  display: inline-block;
-  background: #D6A21C;
-  color: #16222D;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 9px 22px;
-  border-radius: 8px;
-  border: none;
-  cursor: default;
-  letter-spacing: 0.3px;
-  box-shadow: 0 4px 24px rgba(214, 162, 28, 0.35);
-}
-
-.heroCTANote {
-  display: block;
-  margin-top: 12px;
-  font-size: 12px;
-  color: #7a8e9e;
-  letter-spacing: 0.3px;
-}
-
-/* ── CREDIBILITY BAR ── */
-.credibilityBar {
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  position: relative;
-  background: #16222D;
-  border-top: 1px solid #243A4B;
-  border-bottom: 1px solid #243A4B;
-  padding: 16px 20px;
-  text-align: center;
-  font-size: 14px;
-  color: #a9c0d3;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-/* ── PROGRAMA SECTIONS ── */
-.programaSection {
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  position: relative;
-  padding: 64px 20px;
-}
-
-.programaSection .sectionInner {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.programaSection h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(24px, 3.5vw, 36px);
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0 0 20px 0;
-  line-height: 1.3;
-}
-
-.programaSection .sectionBody {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #a9c0d3;
-  margin: 0 0 36px 0;
-  max-width: 780px;
-}
-
-/* Section 2 & 3 — photo + text alternating layout */
-.photoRow {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  margin-bottom: 36px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid #243A4B;
-}
-
-.photoRow.reverse {
-  flex-direction: row-reverse;
-}
-
-.photoRow .rowImg {
-  width: 38%;
-  flex-shrink: 0;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  display: block;
-}
-
-.photoRow .rowText {
-  flex: 1;
-  padding: 24px 28px 24px 0;
-}
-
-.photoRow.reverse .rowText {
-  padding: 24px 0 24px 28px;
-}
-
-.photoRow .rowText .rowIcon {
-  font-size: 26px;
-  margin-bottom: 10px;
-  display: block;
-}
-
-.photoRow .rowText strong {
-  display: block;
-  font-size: 16px;
-  color: #ffffff;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-
-.photoRow .rowText p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #a9c0d3;
-  margin: 0;
-}
-
-.photoRow .rowText em {
-  font-size: 12px;
-  color: #4a6070;
-}
-
-@media (max-width: 768px) {
-  .photoRow, .photoRow.reverse { flex-direction: column; }
-  .photoRow .rowImg { width: 100%; aspect-ratio: 16/9; }
-  .photoRow .rowText { padding: 20px !important; }
-}
-
-/* Section 4 — Stats */
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin: 8px 0 28px;
-}
-
-.statCard {
-  text-align: center;
-  padding: 32px 16px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid #243A4B;
-  border-radius: 12px;
-}
-
-.statCard .statNumber {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(44px, 6vw, 64px);
-  font-weight: 600;
-  color: #D6A21C;
-  line-height: 1;
-  margin-bottom: 10px;
-}
-
-.statCard .statDesc {
-  font-size: 14px;
-  color: #a9c0d3;
-  line-height: 1.5;
-}
-
-.statsNote {
-  font-size: 12px;
-  color: #4a6070;
-  text-align: center;
-  margin: 0;
-}
-
-@media (max-width: 768px) {
-  .statsGrid { grid-template-columns: 1fr; }
-}
-
-/* ── PROGRAMA SECTIONS END ── */
-
-/* Admin icon - top right corner */
-.adminIcon {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 10000;
-  background: transparent;
-  color: #7a8e9e;
-  border: 2px solid #7a8e9e;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.adminIcon:hover {
-  border-color: #D6A21C;
-  color: #D6A21C;
-  transform: scale(1.1);
-}
-
-.adminIcon.authenticated {
-  border-color: #4CAF50;
-  color: #4CAF50;
-}
-
-/* Admin buttons in navbar */
-.adminNavButtons {
-  display: none;
-  gap: 10px;
-  margin-left: 20px;
-}
-
-.adminNavButtons.show {
-  display: flex;
-}
-
-/* Admin buttons styling - yellow circle borders */
-#btnAddSchool,
-#btnApproveSurvey {
-  background-color: #1E2F3F;
-  color: white;
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: 1px solid rgba(214, 162, 28, 0.0);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#btnAddSchool:hover,
-#btnApproveSurvey:hover {
-  background-color: #D6A21C;
-  color: #16222D;
-}
-
+    /* ── ADMIN ── */
+    .adminIcon { position:fixed; top:20px; right:20px; z-index:10000; background:transparent; color:#7a8e9e; border:2px solid #7a8e9e; border-radius:50%; width:40px; height:40px; font-size:20px; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; }
+    .adminIcon:hover { border-color:#D6A21C; color:#D6A21C; transform:scale(1.1); }
+    .adminIcon.authenticated { border-color:#4CAF50; color:#4CAF50; }
+    .adminNavButtons { display:none; gap:10px; margin-left:20px; }
+    .adminNavButtons.show { display:flex; }
+    #btnAddSchool, #btnApproveSurvey { background-color:#1E2F3F; color:white; padding:8px 18px; border-radius:20px; border:1px solid rgba(214,162,28,0.0); text-decoration:none; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.3s ease; }
+    #btnAddSchool:hover, #btnApproveSurvey:hover { background-color:#D6A21C; color:#16222D; }
   </style>
-
   <script>
     function showTab(tabId) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
@@ -519,7 +111,6 @@
     }
   </script>
 </head>
-
 <body>
 
 <header>
@@ -527,13 +118,8 @@
   <p>EDUCATION+IA</p>
 </header>
 
-<!-- ADMIN ICON - Top Right Corner -->
-<button id="adminIcon" class="adminIcon" type="button" title="Admin Access">
-  🔐
-</button>
+<button id="adminIcon" class="adminIcon" type="button" title="Admin Access">🔐</button>
 
-
-  
 <nav>
   <a href="#" onclick="showTab('home'); return false;">INICIO</a>
   <a href="#" onclick="showTab('programa'); return false;">PROGRAMA</a>
@@ -541,61 +127,44 @@
   <a href="#" onclick="showTab('resultados'); return false;">RESULTADOS</a>
   <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
   <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
-
   <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button">ACCESO USUARIOS</button>
-  
-  <!-- ADMIN BUTTONS (hidden by default) -->
   <div id="adminNavButtons" class="adminNavButtons">
     <button id="btnAddSchool" class="btnPrimary" type="button">Add School</button>
     <button id="btnApproveSurvey" class="btnPrimary" type="button">Approve Survey</button>
   </div>
 </nav>
 
-<!-- BARRA GLOBAL DE SESIÓN -->
 <div class="sessionBar">
   <span id="sessionBadge" class="sessionBadge badgeNo">No autenticado</span>
 </div>
 
+<!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
 <section id="home" class="active">
-
-  <!-- HERO -->
   <div class="heroSection">
     <div class="heroGlow"></div>
     <div class="heroContent">
       <h1 class="heroHeadline">¿Sabes realmente lo que está<br>pasando en tu escuela?</h1>
-      <p class="heroSubheadline">En menos de 48 horas, TECH4ZERO te entrega un diagnóstico completo del clima escolar — con inteligencia artificial, respaldado por UNESCO y ESSA, listo para actuar.</p>
-      <button class="heroCTA" type="button">🔵 Solicita conversar con uno de nuestros expertos</button>
-      <span class="heroCTANote">Sin compromiso. Resultados en 48 horas.</span>
+      <p class="heroSubheadline">En menos de 48 horas te entregamos un diagnóstico completo del clima escolar y un Plan de Accion 
+       respaldado por UNESCO y ESSA, listo para implementar.<br>
+      Identificamos acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.</p><br>
+      <button class="heroCTA" type="button">Solicita conversar con uno de nuestros expertos</button>
     </div>
   </div>
 
-  <!-- CREDIBILITY BAR -->
-  <div class="credibilityBar">
-    ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
-  </div>
-
-  <!-- INTRO TEXT -->
-  <div style="max-width:720px; margin:48px auto 0; text-align:center; padding:0 20px;">
-    <p style="font-size:18px; line-height:1.8; color:#d9e6f2; margin:0;">
-      <strong style="color:#ffffff;">TECH4ZERO</strong> convierte datos en decisiones. Evaluamos el 100% de tu comunidad escolar en menos de 48 horas — identificando acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.
-    </p>
-    <p style="font-size:18px; line-height:1.8; color:#D6A21C; font-weight:700; margin:20px 0 0 0;">
-      No te entregamos un reporte. Te entregamos un plan listo para actuar.
-    </p>
-  </div>
-
-  <div class="card" style="margin-top:30px; text-align:center;">
+  <div class="card" style="margin-top:20px; text-align:center;">
     <iframe width="560" height="315"
       src="https://www.youtube.com/embed/iBO4YijRYbs"
-      title="Programa ZERO"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
+      title="Programa ZERO" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
   </div>
 
+  <div class="credibilityBar">
+    ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
+  </div>
 </section>
 
+<!-- ═══════════════════════════════ PROGRAMA ═══════════════════════════════ -->
 <section id="programa">
   <h2>Programa Antibullying TECH4ZERO</h2>
 
@@ -607,31 +176,41 @@
         La mayoría de los incidentes de violencia escolar nunca llegan a tu escritorio. Los estudiantes no reportan. Los docentes no siempre identifican las señales. Y cuando el problema se hace visible, ya escaló.<br><br>
         Mientras tanto, tú eres responsable de lo que ocurre en cada salón, en cada pasillo, en cada espacio digital de tu comunidad escolar.
       </p>
-
-      <div class="photoRow">
-        <img class="rowImg" src="img/s2_acoso.jpeg" alt="Estudiante aislado" />
-        <div class="rowText">
-          <strong>El 70% del acoso ocurre fuera del aula</strong>
-          <p>En pasillos, baños y entornos digitales que no supervisas.</p>
+      <div class="overlayGrid">
+        <div class="overlayCard">
+          <img src="img/s2_acoso.jpg" alt="Acoso escolar" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">🔍</span>
+            <div class="oLine"></div>
+            <div class="oTitle">El 70% del acoso ocurre fuera del aula</div>
+            <div class="oText">En pasillos, baños y entornos digitales que no supervisas.</div>
+            <span class="oTag">📍 Zona ciega</span>
+          </div>
+        </div>
+        <div class="overlayCard">
+          <img src="img/s2_rendimiento.jpg" alt="Bajo rendimiento" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">📉</span>
+            <div class="oLine"></div>
+            <div class="oTitle">Rinden hasta 18 puntos menos en matemáticas y lectura</div>
+            <div class="oText">Los estudiantes afectados. <em style="color:#4a6070;">(Fuente: UNESCO/TERCE, 16 países)</em></div>
+            <span class="oTag">📊 Impacto académico</span>
+          </div>
+        </div>
+        <div class="overlayCard">
+          <img src="img/s2_legal.jpg" alt="Consecuencias legales" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">⚖️</span>
+            <div class="oLine"></div>
+            <div class="oTitle">Una denuncia mal gestionada puede escalar</div>
+            <div class="oText">Consecuencias legales, mediáticas y reputacionales para tu institución.</div>
+            <span class="oTag">⚠️ Riesgo institucional</span>
+          </div>
         </div>
       </div>
-
-      <div class="photoRow reverse">
-        <img class="rowImg" src="img/s2_rendimiento.jpeg" alt="Bajo rendimiento" />
-        <div class="rowText">
-          <strong>Los estudiantes afectados rinden hasta 18 puntos menos</strong>
-          <p>En matemáticas y lectura. <em>(Fuente: UNESCO/TERCE, 16 países)</em></p>
-        </div>
-      </div>
-
-      <div class="photoRow">
-        <img class="rowImg" src="img/s2_legal.jpeg" alt="Consecuencias institucionales" />
-        <div class="rowText">
-          <strong>Una sola denuncia mal gestionada</strong>
-          <p>Puede derivar en consecuencias legales, mediáticas y reputacionales para tu institución.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -642,47 +221,58 @@
       <p class="sectionBody">
         TECH4ZERO aplica una encuesta online anónima y confidencial a toda tu comunidad escolar — estudiantes y docentes — y analiza los resultados con estadística avanzada e inteligencia artificial.
       </p>
-
-      <div class="photoRow reverse">
-        <img class="rowImg" src="img/s3_mapa.jpeg" alt="Mapa de zonas de riesgo" />
-        <div class="rowText">
-          <strong>Mapa de zonas de riesgo</strong>
-          <p>Físicas y digitales, identificadas por salón, nivel y área del establecimiento.</p>
+      <div class="overlayGrid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="overlayCard">
+          <img src="img/s3_mapa.jpg" alt="Mapa de riesgo" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">🗺️</span>
+            <div class="oLine"></div>
+            <div class="oTitle">Mapa de zonas de riesgo</div>
+            <div class="oText">Físicas y digitales, identificadas por salón, nivel y área del establecimiento.</div>
+          </div>
+        </div>
+        <div class="overlayCard">
+          <img src="img/s3_clima.jpg" alt="Clima escolar" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">👥</span>
+            <div class="oLine"></div>
+            <div class="oTitle">Perfil completo de clima escolar</div>
+            <div class="oText">Por curso, por docente, por nivel.</div>
+          </div>
+        </div>
+        <div class="overlayCard">
+          <img src="img/s3_alertas.jpg" alt="Alertas tempranas" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">🚨</span>
+            <div class="oLine"></div>
+            <div class="oTitle">Alertas tempranas</div>
+            <div class="oText">Situaciones críticas identificadas antes de que escalen.</div>
+          </div>
+        </div>
+        <div class="overlayCard">
+          <img src="img/s3_plan.jpg" alt="Plan de intervención" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">📋</span>
+            <div class="oLine"></div>
+            <div class="oTitle">Plan de intervención</div>
+            <div class="oText">Listo para presentar a tu equipo y ejecutar de inmediato.</div>
+          </div>
+        </div>
+        <div class="overlayCard">
+          <img src="img/s3_resultados.jpg" alt="Resultados rápidos" />
+          <div class="overlayDark"></div>
+          <div class="overlayContent">
+            <span class="oIcon">⏱️</span>
+            <div class="oLine"></div>
+            <div class="oTitle">Resultados en 48 horas</div>
+            <div class="oText">Desde que tus estudiantes completan la encuesta.</div>
+          </div>
         </div>
       </div>
-
-      <div class="photoRow">
-        <img class="rowImg" src="img/s3_clima.jpeg" alt="Clima escolar" />
-        <div class="rowText">
-          <strong>Perfil completo de clima escolar</strong>
-          <p>Por curso, por docente, por nivel.</p>
-        </div>
-      </div>
-
-      <div class="photoRow reverse">
-        <img class="rowImg" src="img/s3_alertas.jpeg" alt="Alertas tempranas" />
-        <div class="rowText">
-          <strong>Alertas tempranas</strong>
-          <p>Situaciones críticas identificadas antes de que escalen.</p>
-        </div>
-      </div>
-
-      <div class="photoRow">
-        <img class="rowImg" src="img/s3_plan.jpeg" alt="Plan de intervención" />
-        <div class="rowText">
-          <strong>Plan de intervención</strong>
-          <p>Listo para presentar a tu equipo y ejecutar de inmediato.</p>
-        </div>
-      </div>
-
-      <div class="photoRow reverse">
-        <img class="rowImg" src="img/s3_resultados.jpeg" alt="Resultados en 48 horas" />
-        <div class="rowText">
-          <strong>Resultados en 48 horas</strong>
-          <p>Desde que tus estudiantes completan la encuesta.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -708,100 +298,58 @@
     </div>
   </div>
 
+  <!-- CONTENIDO EXISTENTE -->
   <div class="card">
-<div class="programa-content">
-  <p>
-    <br>
-    TECH4ZERO ofrece una solución de alto impacto para prevenir y reducir la violencia escolar, 
-    fortaleciendo al mismo tiempo el bienestar socioemocional de estudiantes y docentes en todo el establecimiento.
-  </p>
-<br>
-  <ul class="bullets-programa">
-    <li><span class="num">300+</span> escuelas implementadas en: <br>México, Chile, Costa Rica, República Dominicana, EE.UU.</li>
-    <li><span class="num">37%</span> reducción promedio en incidentes reportados a los 90 días</li>
-    <li><span class="num">4.2x</span> más intervenciones preventivas vs. reactivas</li>
-    <li><span class="num">92%</span> de docentes reportan mayor confianza para identificar señales tempranas</li>
-  </ul>
-
-  <br><br>
-</div>
-
-    <!-- VIDEO1 -->
-<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/zw1zTrZn2ic"
-    title="Video 1"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<!-- VIDEO2 -->
-<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/rC_xEqFqZ_s?start=1"
-    title="Video TECH4ZERO"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-<!-- VIDEO3 -->
-<div class="video-container">
-  <iframe
-    src="https://www.youtube.com/embed/vLFFojLhCZs?start=1"
-    title="Video TECH4ZERO"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
-    
-    <p class="nota">
-      Datos consolidados de cohortes 2023-2025. Resultados varían según contexto institucional.
-    </p>
+    <div class="programa-content">
+      <p><br>TECH4ZERO ofrece una solución de alto impacto para prevenir y reducir la violencia escolar, 
+      fortaleciendo al mismo tiempo el bienestar socioemocional de estudiantes y docentes en todo el establecimiento.</p>
+      <br>
+      <ul class="bullets-programa">
+        <li><span class="num">300+</span> escuelas implementadas en: <br>México, Chile, Costa Rica, República Dominicana, EE.UU.</li>
+        <li><span class="num">37%</span> reducción promedio en incidentes reportados a los 90 días</li>
+        <li><span class="num">4.2x</span> más intervenciones preventivas vs. reactivas</li>
+        <li><span class="num">92%</span> de docentes reportan mayor confianza para identificar señales tempranas</li>
+      </ul>
+      <br><br>
+    </div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/zw1zTrZn2ic" title="Video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/rC_xEqFqZ_s?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/vLFFojLhCZs?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="nota">Datos consolidados de cohortes 2023-2025. Resultados varían según contexto institucional.</p>
   </div>
 </section>
 
+<!-- ═══════════════════════════════ ENCUESTA ═══════════════════════════════ -->
 <section id="encuesta">
   <h2>Encuesta Escolar</h2>
-
   <div class="card">
-    <p>
-      Para ingresar a la encuesta y solicitar análisis, debe estar autenticado desde <b>ACCESO USUARIOS</b>.
-    </p>
-
+    <p>Para ingresar a la encuesta y solicitar análisis, debe estar autenticado desde <b>ACCESO USUARIOS</b>.</p>
     <div id="encuestaOK" class="formPanel" style="display:block; max-width:520px;">
       <p id="schoolWelcome" style="margin:0 0 12px 0;">Estado de sesión: No autenticado.</p>
-
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
         <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Ingresar a la encuesta</button>
         <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Solicitar analisis de la encuesta</button>
       </div>
-
       <div id="encuestaNeedLogin" class="statusMsg statusWarn" style="display:none;">
         Debe iniciar sesión con <b>ACCESO USUARIOS</b> para continuar.
       </div>
     </div>
-
     <div id="analisisWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
       <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
       <div style="margin-bottom:14px;">
-        El sistema realizara un analisis estadistico detallado del ambiente escolar con las encuestas introducidas en el sistema para su escuela, pero no podra adicionar nuevas encuestas.
-        <br /><br />
-        Desea continuar?
+        El sistema realizara un analisis estadistico detallado del ambiente escolar con las encuestas introducidas en el sistema para su escuela, pero no podra adicionar nuevas encuestas.<br /><br />Desea continuar?
       </div>
-
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continuar</button>
         <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancelar</button>
       </div>
     </div>
-
-    <!-- ROUTING QUESTION BOX: shown before survey loads -->
     <div id="routingBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Pregunta inicial</div>
       <div id="routingText" style="margin-bottom:12px;"></div>
@@ -811,255 +359,137 @@
       </div>
       <div id="routingMsg" class="statusMsg statusWarn"></div>
     </div>
-
     <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
       <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
       <div id="qText" style="margin-bottom:12px;"></div>
       <div id="qOptions"></div>
-
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <button id="btnQPrev" class="btnSecondary" type="button">Anterior</button>
         <button id="btnQNext" class="btnPrimary" type="button">Siguiente</button>
       </div>
-
       <div id="surveyMsg" class="statusMsg statusWarn"></div>
     </div>
-
   </div>
 </section>
 
+<!-- ═══════════════════════════════ RESULTADOS ═══════════════════════════════ -->
 <section id="resultados">
   <h2>Resultados Encuesta</h2>
-
   <div class="card">
-    <p>
-      Para ver resultados debe estar autenticado desde <b>ACCESO USUARIOS</b>.
-    </p>
-
+    <p>Para ver resultados debe estar autenticado desde <b>ACCESO USUARIOS</b>.</p>
     <div class="formPanel" style="display:block; max-width:520px;">
       <div id="resultadosNeedLogin" class="statusMsg statusWarn" style="display:none;">
         Debe iniciar sesión con <b>ACCESO USUARIOS</b> para mostrar resultados.
       </div>
-
       <div style="margin-top:10px;">
-        <button id="btnMostrarResultados" class="btnPrimary" type="button">
-          Mostrar resultados encuesta
-        </button>
+        <button id="btnMostrarResultados" class="btnPrimary" type="button">Mostrar resultados encuesta</button>
       </div>
     </div>
-
   </div>
 </section>
 
+<!-- ═══════════════════════════════ DATOS ═══════════════════════════════ -->
 <section id="datos">
   <h2>Datos</h2>
-
   <div class="card">
-    <p>
-      Esta sección lee datos desde Supabase (tabla <b>encargado_escolar</b>) para verificar conexión.
-    </p>
-
+    <p>Esta sección lee datos desde Supabase (tabla <b>encargado_escolar</b>) para verificar conexión.</p>
     <div class="formPanel">
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_nombre">Nombre</label><br />
-        <input id="d_nombre" class="textInput" type="text" placeholder="Nombre" readonly />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_ap_paterno">Apellido Paterno</label><br />
-        <input id="d_ap_paterno" class="textInput" type="text" placeholder="Apellido Paterno" readonly />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_ap_materno">Apellido Materno</label><br />
-        <input id="d_ap_materno" class="textInput" type="text" placeholder="Apellido Materno" readonly />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="d_establecimiento">Establecimiento</label><br />
-        <input id="d_establecimiento" class="textInput" type="text" placeholder="Establecimiento" readonly />
-      </div>
-
+      <div class="fieldBlock"><label class="fieldLabel" for="d_nombre">Nombre</label><br /><input id="d_nombre" class="textInput" type="text" placeholder="Nombre" readonly /></div>
+      <div class="fieldBlock"><label class="fieldLabel" for="d_ap_paterno">Apellido Paterno</label><br /><input id="d_ap_paterno" class="textInput" type="text" placeholder="Apellido Paterno" readonly /></div>
+      <div class="fieldBlock"><label class="fieldLabel" for="d_ap_materno">Apellido Materno</label><br /><input id="d_ap_materno" class="textInput" type="text" placeholder="Apellido Materno" readonly /></div>
+      <div class="fieldBlock"><label class="fieldLabel" for="d_establecimiento">Establecimiento</label><br /><input id="d_establecimiento" class="textInput" type="text" placeholder="Establecimiento" readonly /></div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
         <button id="btnPrev" class="btnSecondary" type="button">Retroceder</button>
         <button id="btnNext" class="btnPrimary" type="button">Avanzar</button>
       </div>
-
       <div id="datosStatus" class="statusMsg statusWarn"></div>
     </div>
   </div>
 </section>
 
+<!-- ═══════════════════════════════ EQUIPO ═══════════════════════════════ -->
 <section id="equipo">
   <h2>Nuestro Equipo</h2>
-
   <div class="card">
-    <p>
-      Equipo interdisciplinario de especialistas en educación, psicología y tecnología
-      comprometidos con comunidades escolares seguras.
-    </p>
+    <p>Equipo interdisciplinario de especialistas en educación, psicología y tecnología comprometidos con comunidades escolares seguras.</p>
   </div>
-
   <div class="card" style="margin-top:18px;">
-    <div style="
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:16px;
-    ">
-      <!-- Rodolfo -->
+    <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
-        <img
-          src="Rodyfoto77.png"
-          alt="Foto Integrante 1"
-          style="width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;"
-        />
+        <img src="Rodyfoto77.png" alt="Foto Integrante 1" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Rodolfo Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">
-          Master en Psicologia de la Educacion - Profesor de Historia y Geografía.
-        </div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">
-          Rodolfo enseña habilidades socioemocionales en el mundo educativo. 
-          Ha sido invitado por la ciudad de Neuss, en Alemania, para liderar el programa Die Welt Erziehung Und Die Neuerung 
-          (Educación e Innovación Mundial) y ha implementado exitosamente el programa Zero en Chile, México, Costa Rica, República Dominicana y Estados Unidos.
-        </p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Psicologia de la Educacion - Profesor de Historia y Geografía.</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Rodolfo enseña habilidades socioemocionales en el mundo educativo. Ha sido invitado por la ciudad de Neuss, en Alemania, para liderar el programa Die Welt Erziehung Und Die Neuerung (Educación e Innovación Mundial) y ha implementado exitosamente el programa Zero en Chile, México, Costa Rica, República Dominicana y Estados Unidos.</p>
       </div>
-
-      <!-- Marcos -->
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
-        <img
-          src="Marcos.png"
-          alt="Foto Integrante 2"
-          style="width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;"
-        />
+        <img src="Marcos.png" alt="Foto Integrante 2" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Marcos Miranda</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">
-          Doctor en Educacion
-        </div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">
-          Marcos convierte ambientes escolares desafiantes en espacios de pertenencia, respeto y alto rendimiento. Su enfoque único combina ciencia, equidad y liderazgo para generar cambios reales y 
-          duraderos en la cultura escolar. Su idea es lograr instituciones que florecen y donde los estudiantes alcanzan su verdadero potencial.
-        </p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Doctor en Educacion</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Marcos convierte ambientes escolares desafiantes en espacios de pertenencia, respeto y alto rendimiento. Su enfoque único combina ciencia, equidad y liderazgo para generar cambios reales y duraderos en la cultura escolar.</p>
       </div>
-
-      <!-- Lester -->
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
-        <img
-          src="Lesterfoto55.png"
-          alt="Foto Integrante 3"
-          style="width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;"
-        />
+        <img src="Lesterfoto55.png" alt="Foto Integrante 3" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Lester Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">
-          Master en Ingenieria en Computacion
-        </div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">
-          Consultor senior en datos, inteligencia artificial y tecnología, modernizando y asegurando sistemas de 
-          misión crítica en los sectores de educación, salud y minería. Experto en interacción humano-tecnologíca en entornos de alto riesgo.
-        </p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Ingenieria en Computacion</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Consultor senior en datos, inteligencia artificial y tecnología, modernizando y asegurando sistemas de misión crítica en los sectores de educación, salud y minería. Experto en interacción humano-tecnologíca en entornos de alto riesgo.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ═══════════════════════════════ CONTACTO ═══════════════════════════════ -->
 <section id="contacto">
   <h2>Contáctenos</h2>
-
   <div class="card">
     <p><span class="highlight">Somos de Portland. Enfocados en lo que viene.</span><br><br>
-Somos un equipo de profesionales que trabaja en la frontera de la tecnología, con base en Portland, Oregon — una ciudad que alberga líderes globales como Intel, Nike y Columbia Sportswear. <br><br>
-      Ayudamos a las insituciones educacionales a adoptar inteligencia artificial con claridad, responsabilidad y control.
-</p>
-
-    <!-- OFFICES GRID -->
+    Somos un equipo de profesionales que trabaja en la frontera de la tecnología, con base en Portland, Oregon — una ciudad que alberga líderes globales como Intel, Nike y Columbia Sportswear. <br><br>
+    Ayudamos a las insituciones educacionales a adoptar inteligencia artificial con claridad, responsabilidad y control.</p>
     <div class="offices-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:24px 0;">
-
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
         <div style="font-size:22px; margin-bottom:6px;">🇺🇸</div>
         <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Portland, Oregon</div>
-        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
-          851 SW 6th Ave<br>
-          Portland, OR 97204<br>
-          +1 (503) 555-0192
-        </div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">851 SW 6th Ave<br>Portland, OR 97204<br>+1 (503) 555-0192</div>
       </div>
-
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
         <div style="font-size:22px; margin-bottom:6px;">🇲🇽</div>
         <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Ciudad de México</div>
-        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
-          Av. Insurgentes Sur 1234<br>
-          Col. Del Valle, CDMX 03100<br>
-          +52 55 5555 0147
-        </div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">Av. Insurgentes Sur 1234<br>Col. Del Valle, CDMX 03100<br>+52 55 5555 0147</div>
       </div>
-
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
         <div style="font-size:22px; margin-bottom:6px;">🇨🇱</div>
         <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Santiago, Chile</div>
-        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
-          Av. Providencia 2340<br>
-          Providencia, Santiago<br>
-          +56 2 2555 0183
-        </div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">Av. Providencia 2340<br>Providencia, Santiago<br>+56 2 2555 0183</div>
       </div>
-
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
         <div style="font-size:22px; margin-bottom:6px;">🇨🇴</div>
         <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Bogotá, Colombia</div>
-        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
-          Cra. 7 No. 32-16<br>
-          Chapinero, Bogotá<br>
-          +57 1 555 0174
-        </div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">Cra. 7 No. 32-16<br>Chapinero, Bogotá<br>+57 1 555 0174</div>
       </div>
-
     </div>
-
     <div class="formPanel" style="max-width:640px;">
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="c_nombre">Nombre</label><br />
-        <input id="c_nombre" class="textInput" type="text" placeholder="Tu nombre" />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="c_email">Email</label><br />
-        <input id="c_email" class="textInput" type="email" placeholder="tu@email.com" />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="c_asunto">Asunto</label><br />
-        <input id="c_asunto" class="textInput" type="text" placeholder="Asunto" />
-      </div>
-
-      <div class="fieldBlock">
-        <label class="fieldLabel" for="c_mensaje">Mensaje</label><br />
-        <textarea id="c_mensaje" class="textInput" rows="6" placeholder="Escribe tu mensaje..."></textarea>
-      </div>
-
+      <div class="fieldBlock"><label class="fieldLabel" for="c_nombre">Nombre</label><br /><input id="c_nombre" class="textInput" type="text" placeholder="Tu nombre" /></div>
+      <div class="fieldBlock"><label class="fieldLabel" for="c_email">Email</label><br /><input id="c_email" class="textInput" type="email" placeholder="tu@email.com" /></div>
+      <div class="fieldBlock"><label class="fieldLabel" for="c_asunto">Asunto</label><br /><input id="c_asunto" class="textInput" type="text" placeholder="Asunto" /></div>
+      <div class="fieldBlock"><label class="fieldLabel" for="c_mensaje">Mensaje</label><br /><textarea id="c_mensaje" class="textInput" rows="6" placeholder="Escribe tu mensaje..."></textarea></div>
       <input id="c_company" type="text" style="display:none" tabindex="-1" autocomplete="off" />
-
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnEnviarContacto" class="btnPrimary" type="button">Enviar</button>
         <button id="btnLimpiarContacto" class="btnSecondary" type="button">Limpiar</button>
       </div>
-
       <div id="contactoMsg" class="statusMsg statusWarn"></div>
     </div>
   </div>
 </section>
 
-<footer>
-  © 2025 TECH4ZERO – EDUCATION+AI
-</footer>
+<footer>© 2025 TECH4ZERO – EDUCATION+AI</footer>
 
-<!-- MODAL GLOBAL: ACCESO USUARIOS -->
+<!-- ═══════════════════════════════ MODALS ═══════════════════════════════ -->
 <div id="globalModal" class="modalOverlay">
   <div class="modalBox">
     <div class="modalHeader">
       <h3 class="modalTitle">Acceso Usuarios</h3>
       <button id="modalClose" class="modalClose" type="button">X</button>
     </div>
-
     <div id="modalSessionOn" style="display:none;">
       <div class="statusMsg statusOk" id="modalSessionText"></div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
@@ -1067,114 +497,62 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
         <button id="btnCerrarModal1" class="btnPrimary" type="button">Cerrar</button>
       </div>
     </div>
-
     <div id="modalSessionOff" style="display:none;">
       <div class="formPanel" style="margin-top:10px; max-width:100%;">
-        <div class="fieldBlock">
-          <label for="globalUser" class="fieldLabel">Usuario</label><br />
-          <input id="globalUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
-        </div>
-
-        <div class="fieldBlock">
-          <label for="globalPass" class="fieldLabel">Contraseña</label><br />
-          <input id="globalPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
-        </div>
-
+        <div class="fieldBlock"><label for="globalUser" class="fieldLabel">Usuario</label><br /><input id="globalUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" /></div>
+        <div class="fieldBlock"><label for="globalPass" class="fieldLabel">Contraseña</label><br /><input id="globalPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" /></div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <button id="btnDoLogin" class="btnPrimary" type="button">Entrar</button>
           <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancelar</button>
         </div>
-
         <div id="globalLoginMsg" class="statusMsg statusErr"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL: PRIVACIDAD ENCUESTA -->
 <div id="privacyModal" class="modalOverlay">
   <div class="modalBox" style="max-width:580px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">🔒 Tu privacidad está protegida</h3>
-    </div>
-
+    <div class="modalHeader"><h3 class="modalTitle">🔒 Tu privacidad está protegida</h3></div>
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
-        <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;">
-          <strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>
-        </p>
-        
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ No guardamos tu nombre, ni preguntamos quién eres.
-        </p>
-        
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ Nadie -ni profesores, ni directores, ni otros estudiantes- pueden conocer tus respuestas.
-        </p>
-        
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ Tu sinceridad ayuda a crear una escuela más segura para todos.  
-        </p>
-        <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
-          <em><strong>Gracias por participar</strong></em>
-        </p>
-        
+        <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;"><strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong></p>
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">✅ No guardamos tu nombre, ni preguntamos quién eres.</p>
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">✅ Nadie -ni profesores, ni directores, ni otros estudiantes- pueden conocer tus respuestas.</p>
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">✅ Tu sinceridad ayuda a crear una escuela más segura para todos.</p>
+        <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;"><em><strong>Gracias por participar</strong></em></p>
       </div>
-
       <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
         <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
           <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
           <span>He leído y entiendo que esta encuesta es anónima y confidencial</span>
         </label>
       </div>
-
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
-          Continuar con la encuesta
-        </button>
-        <button id="btnPrivacyCancel" class="btnSecondary" type="button">
-          Cancelar
-        </button>
+        <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>Continuar con la encuesta</button>
+        <button id="btnPrivacyCancel" class="btnSecondary" type="button">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL: ADMIN LOGIN -->
 <div id="adminModal" class="modalOverlay">
   <div class="modalBox" style="max-width:450px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">🔐 Admin Access</h3>
-      <button id="adminModalClose" class="modalClose" type="button">X</button>
-    </div>
-
-    <!-- LOGGED OUT STATE -->
+    <div class="modalHeader"><h3 class="modalTitle">🔐 Admin Access</h3><button id="adminModalClose" class="modalClose" type="button">X</button></div>
     <div id="adminLoginForm" style="display:block;">
       <div class="formPanel" style="margin-top:10px; max-width:100%;">
-        <div class="fieldBlock">
-          <label for="adminUsername" class="fieldLabel">Username</label><br />
-          <input id="adminUsername" class="textInput" type="text" placeholder="admin" autocomplete="off" />
-        </div>
-
-        <div class="fieldBlock">
-          <label for="adminPassword" class="fieldLabel">Password</label><br />
-          <input id="adminPassword" class="textInput" type="password" placeholder="Password" />
-        </div>
-
+        <div class="fieldBlock"><label for="adminUsername" class="fieldLabel">Username</label><br /><input id="adminUsername" class="textInput" type="text" placeholder="admin" autocomplete="off" /></div>
+        <div class="fieldBlock"><label for="adminPassword" class="fieldLabel">Password</label><br /><input id="adminPassword" class="textInput" type="password" placeholder="Password" /></div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
           <button id="btnAdminLogin" class="btnPrimary" type="button">Login</button>
           <button id="btnAdminCancel" class="btnSecondary" type="button">Cancel</button>
         </div>
-
         <div id="adminLoginMsg" class="statusMsg statusErr"></div>
       </div>
     </div>
-
-    <!-- LOGGED IN STATE -->
     <div id="adminLoggedIn" style="display:none;">
       <div style="padding:20px; text-align:center;">
         <div class="statusMsg statusOk" id="adminWelcomeMsg">Welcome, Admin!</div>
-        
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; justify-content:center;">
           <button id="btnAdminLogout" class="btnSecondary" type="button">Logout</button>
           <button id="btnAdminClose" class="btnPrimary" type="button">Close</button>
@@ -1184,1513 +562,56 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   </div>
 </div>
 
-<!-- MODAL: SELECT ANALYSIS TO VIEW -->
 <div id="selectAnalysisModal" class="modalOverlay">
   <div class="modalBox" style="max-width:700px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Seleccionar Análisis</h3>
-      <button id="selectAnalysisClose" class="modalClose" type="button">X</button>
-    </div>
-
+    <div class="modalHeader"><h3 class="modalTitle">Seleccionar Análisis</h3><button id="selectAnalysisClose" class="modalClose" type="button">X</button></div>
     <div style="padding:8px 0;">
-      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
-        Selecciona el análisis que deseas visualizar:
-      </p>
-
-      <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
-        <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
-      </div>
-
+      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">Selecciona el análisis que deseas visualizar:</p>
+      <div id="analysesLoading" style="display:none; text-align:center; padding:20px;"><div class="statusMsg statusWarn">Cargando análisis disponibles...</div></div>
       <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
         <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
-          <p style="margin:0; font-size:15px; color:#ffdca8;">
-            No hay análisis aprobados disponibles.
-          </p>
-          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
-            Solicite un análisis o espere la aprobación.
-          </p>
+          <p style="margin:0; font-size:15px; color:#ffdca8;">No hay análisis aprobados disponibles.</p>
+          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">Solicite un análisis o espere la aprobación.</p>
         </div>
       </div>
-
       <div id="analysesList" style="max-height:400px; overflow-y:auto; margin-bottom:16px;"></div>
-
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>
-          Ver Análisis Seleccionado
-        </button>
-        <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
-          Cancelar
-        </button>
+        <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>Ver Análisis Seleccionado</button>
+        <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
 
-<style>
-.analysisCard {
-  background: #1E2F3F;
-  border: 2px solid #365468;
-  border-radius: 8px;
-  padding: 14px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.analysisCard:hover { border-color: #D6A21C; background: #243A4B; }
-.analysisCard.selected { border-color: #D6A21C; background: #243A4B; box-shadow: 0 0 0 2px rgba(214, 162, 28, 0.2); }
-.analysisCard label { display: flex; align-items: start; gap: 12px; cursor: pointer; width: 100%; }
-.analysisCard input[type="radio"] { margin-top: 4px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
-.analysisInfo { flex: 1; }
-.analysisDate { font-size: 16px; font-weight: 700; color: #D6A21C; margin-bottom: 6px; }
-.analysisStats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; }
-.analysisStat { display: flex; align-items: center; gap: 4px; }
-.statLabel { color: #7a8e9e; }
-.statValue { color: #ffffff; font-weight: 600; }
-.statusBadge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: #b9ffcf; color: #0f1d27; }
-</style>  
-
-<!-- MODAL: APPROVE SURVEYS -->
 <div id="approveSurveysModal" class="modalOverlay">
   <div class="modalBox" style="max-width:800px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Approve Surveys</h3>
-      <button id="approveSurveysClose" class="modalClose" type="button">X</button>
-    </div>
-
+    <div class="modalHeader"><h3 class="modalTitle">Approve Surveys</h3><button id="approveSurveysClose" class="modalClose" type="button">X</button></div>
     <div style="padding:8px 0;">
-      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
-        Review and approve pending surveys:
-      </p>
-
-      <div id="pendingSurveysLoading" style="display:none; text-align:center; padding:20px;">
-        <div class="statusMsg statusWarn">Loading pending surveys...</div>
-      </div>
-
+      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">Review and approve pending surveys:</p>
+      <div id="pendingSurveysLoading" style="display:none; text-align:center; padding:20px;"><div class="statusMsg statusWarn">Loading pending surveys...</div></div>
       <div id="pendingSurveysEmpty" style="display:none; padding:20px; text-align:center;">
         <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
           <p style="margin:0; font-size:15px; color:#b9ffcf;">✅ All surveys approved!</p>
           <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">No pending surveys at this time.</p>
         </div>
       </div>
-
       <div id="pendingSurveysList" style="max-height:500px; overflow-y:auto; margin-bottom:16px;"></div>
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnClosePendingSurveys" class="btnSecondary" type="button">Close</button>
-      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;"><button id="btnClosePendingSurveys" class="btnSecondary" type="button">Close</button></div>
     </div>
   </div>
 </div>
 
-<style>
-/* ── PRIMARIA MODE: larger text and icons for young children ── */
-#surveyBox.primaria-mode #qTitle {
-  font-size: 22px;
-}
-#surveyBox.primaria-mode #qText {
-  font-size: 26px;
-  line-height: 1.5;
-  font-weight: 600;
-  color: #ffffff;
-}
-#surveyBox.primaria-mode #qOptions label {
-  font-size: 24px;
-  line-height: 1.6;
-  margin-bottom: 14px !important;
-  padding: 10px 14px;
-  background: #16222D;
-  border-radius: 10px;
-  border: 1px solid #365468;
-  display: flex !important;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-#surveyBox.primaria-mode #qOptions label:hover {
-  background: #243A4B;
-  border-color: #D6A21C;
-}
-#surveyBox.primaria-mode #qOptions input[type="radio"] {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-#surveyBox.primaria-mode .btnPrimary,
-#surveyBox.primaria-mode .btnSecondary {
-  font-size: 18px;
-  padding: 14px 24px;
-}
-#surveyBox.primaria-mode {
-  max-width: 680px;
-  padding: 24px;
-}
-
-.pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
-.pendingSurveyCard:hover { border-color: #D6A21C; background: #243A4B; }
-.surveyHeader { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; gap: 10px; }
-.surveySchoolName { font-size: 18px; font-weight: 700; color: #D6A21C; flex: 1; }
-.surveyMeta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; margin-bottom: 14px; }
-.surveyMetaItem { display: flex; align-items: center; gap: 6px; }
-.surveyActions { display: flex; gap: 8px; flex-wrap: wrap; }
-.btnApprove { background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btnApprove:hover { background: #45a049; }
-.btnApprove:disabled { opacity: 0.5; cursor: not-allowed; }
-.btnReject { background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btnReject:hover { background: #ff6b6b; color: white; }
-.btnReject:disabled { opacity: 0.5; cursor: not-allowed; }
-.btnPreview { background: transparent; color: #D6A21C; border: 1px solid #D6A21C; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btnPreview:hover { background: #D6A21C; color: #16222D; }
-</style>
-
-<script>
-  // === DEBUG ===
-  window.onerror = function (msg, src, line, col) {
-    alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
-  };
-  window.onunhandledrejection = function (e) {
-    const reason = e?.reason;
-    const msg = (reason && (reason.message || String(reason))) || 'Unhandled promise rejection';
-    alert('PROMISE ERROR: ' + msg);
-  };
-
-  // === SESSION STATE ===
-  window.sessionState = { ok:false, school_id:null, school_name:null };
-  window.currentResponseId = null;
-
-  const sessionBadge = document.getElementById('sessionBadge');
-  const btnAccesoUsuarios = document.getElementById('btnAccesoUsuarios');
-  const encuestaNeedLogin = document.getElementById('encuestaNeedLogin');
-  const resultadosNeedLogin = document.getElementById('resultadosNeedLogin');
-  const encuestaOK = document.getElementById('encuestaOK');
-  const schoolWelcome = document.getElementById('schoolWelcome');
-  const btnIngresarEncuesta = document.getElementById('btnIngresarEncuesta');
-  const btnSolicitarAnalisis = document.getElementById('btnSolicitarAnalisis');
-  const analisisWarnPanel = document.getElementById('analisisWarnPanel');
-  const btnAnalisisContinuar = document.getElementById('btnAnalisisContinuar');
-  const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
-  const surveyBox = document.getElementById('surveyBox');
-  const btnMostrarResultados = document.getElementById('btnMostrarResultados');
-
-  // === ROUTING BOX elements ===
-  const routingBox = document.getElementById('routingBox');
-  const routingTitle = document.getElementById('routingTitle');
-  const routingText = document.getElementById('routingText');
-  const routingOptions = document.getElementById('routingOptions');
-  const btnRoutingNext = document.getElementById('btnRoutingNext');
-  const routingMsg = document.getElementById('routingMsg');
-
-  async function refreshSession() {
-    try {
-      const res = await fetch('/api/me', { credentials:'include' });
-      const data = await res.json().catch(() => ({}));
-      window.sessionState = {
-        ok: !!data?.ok,
-        school_id: data?.school_id || null,
-        school_name: data?.school_name || null,
-        country: data?.country || 'MX'
-      };
-    } catch (e) {
-      window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
-    }
-    applySessionToUI();
-  }
-
-  function applySessionToUI() {
-    const ok = window.sessionState.ok;
-    const schoolName = window.sessionState.school_name || '';
-
-    if (window.adminState && window.adminState.authenticated) {
-      sessionBadge.textContent = `Admin: ${window.adminState.username}`;
-      sessionBadge.classList.remove('badgeNo');
-      sessionBadge.classList.add('badgeOk');
-    } else if (ok) {
-      sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
-      sessionBadge.classList.remove('badgeNo');
-      sessionBadge.classList.add('badgeOk');
-    } else {
-      sessionBadge.textContent = 'No autenticado';
-      sessionBadge.classList.remove('badgeOk');
-      sessionBadge.classList.add('badgeNo');
-    }
-
-    if (schoolWelcome) {
-      schoolWelcome.textContent = ok
-        ? `Estado de sesión: Autenticado. Escuela: ${schoolName}`.trim()
-        : 'Estado de sesión: No autenticado.';
-    }
-
-    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = !ok;
-    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = !ok;
-    if (btnMostrarResultados) btnMostrarResultados.disabled = !ok;
-
-    if (encuestaNeedLogin) encuestaNeedLogin.style.display = ok ? 'none' : 'block';
-    if (resultadosNeedLogin) resultadosNeedLogin.style.display = ok ? 'none' : 'block';
-
-    if (!ok) {
-      if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-      if (routingBox) routingBox.style.display = 'none';
-      if (surveyBox) surveyBox.style.display = 'none';
-    }
-
-    if (ok) {
-      if (encuestaOK) {
-        encuestaOK.style.pointerEvents = 'auto';
-        encuestaOK.style.opacity = '';
-      }
-    }
-  }
-
-  // === MODAL LOGIN ===
-  const globalModal = document.getElementById('globalModal');
-  const modalClose = document.getElementById('modalClose');
-  const modalSessionOn = document.getElementById('modalSessionOn');
-  const modalSessionOff = document.getElementById('modalSessionOff');
-  const modalSessionText = document.getElementById('modalSessionText');
-  const btnCerrarSesion = document.getElementById('btnCerrarSesion');
-  const btnCerrarModal1 = document.getElementById('btnCerrarModal1');
-  const btnCerrarModal2 = document.getElementById('btnCerrarModal2');
-  const globalUser = document.getElementById('globalUser');
-  const globalPass = document.getElementById('globalPass');
-  const btnDoLogin = document.getElementById('btnDoLogin');
-  const globalLoginMsg = document.getElementById('globalLoginMsg');
-
-  function openModal() {
-    const ok = window.sessionState.ok;
-    if (globalLoginMsg) globalLoginMsg.textContent = '';
-    if (globalUser) globalUser.value = '';
-    if (globalPass) globalPass.value = '';
-
-    if (ok) {
-      modalSessionOff.style.display = 'none';
-      modalSessionOn.style.display = 'block';
-      modalSessionText.textContent = `Sesión activa. Escuela: ${window.sessionState.school_name || ''}`.trim();
-    } else {
-      modalSessionOn.style.display = 'none';
-      modalSessionOff.style.display = 'block';
-      setTimeout(() => globalUser?.focus(), 50);
-    }
-
-    globalModal.style.display = 'flex';
-  }
-
-  function closeModal() { globalModal.style.display = 'none'; }
-
-  btnAccesoUsuarios?.addEventListener('click', openModal);
-  modalClose?.addEventListener('click', closeModal);
-  btnCerrarModal1?.addEventListener('click', closeModal);
-  btnCerrarModal2?.addEventListener('click', closeModal);
-  globalModal?.addEventListener('click', (e) => { if (e.target === globalModal) closeModal(); });
-
-  btnDoLogin?.addEventListener('click', async () => {
-    const u = globalUser?.value?.trim() || '';
-    const p = globalPass?.value?.trim() || '';
-    if (!u || !p) { globalLoginMsg.textContent = 'Por favor ingrese usuario y contraseña.'; return; }
-
-    try {
-      globalLoginMsg.textContent = 'Validando...';
-      const res = await fetch('/api/login', {
-        method:'POST', credentials:'include',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ username:u, password:p })
-      });
-      const raw = await res.text();
-      let data = {};
-      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
-
-      if (!res.ok || !data.ok) {
-        globalLoginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
-        return;
-      }
-      globalLoginMsg.textContent = '';
-      closeModal();
-      await refreshSession();
-    } catch (e) {
-      globalLoginMsg.textContent = 'Error de conexión.';
-    }
-  });
-
-  btnCerrarSesion?.addEventListener('click', async () => {
-    await fetch('/api/logout', { method:'POST', credentials:'include' }).catch(() => {});
-    closeModal();
-    await refreshSession();
-  });
-
-  // === MODAL PRIVACIDAD ===
-  const privacyModal = document.getElementById('privacyModal');
-  const privacyAccept = document.getElementById('privacyAccept');
-  const btnPrivacyContinue = document.getElementById('btnPrivacyContinue');
-  const btnPrivacyCancel = document.getElementById('btnPrivacyCancel');
-
-  function openPrivacyModal() {
-    if (privacyAccept) privacyAccept.checked = false;
-    if (btnPrivacyContinue) btnPrivacyContinue.disabled = true;
-    privacyModal.style.display = 'flex';
-  }
-
-  function closePrivacyModal() { privacyModal.style.display = 'none'; }
-
-  privacyAccept?.addEventListener('change', (e) => {
-    if (btnPrivacyContinue) btnPrivacyContinue.disabled = !e.target.checked;
-  });
-
-  btnPrivacyContinue?.addEventListener('click', async () => {
-    closePrivacyModal();
-    await showRoutingQuestion();
-  });
-
-  btnPrivacyCancel?.addEventListener('click', closePrivacyModal);
-  privacyModal?.addEventListener('click', (e) => { if (e.target === privacyModal) closePrivacyModal(); });
-
-  // === ACCIONES ENCUESTA ===
-  btnIngresarEncuesta?.addEventListener('click', async () => {
-    if (!window.sessionState.ok) { openModal(); return; }
-    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    openPrivacyModal();
-  });
-
-  btnSolicitarAnalisis?.addEventListener('click', () => {
-    if (!window.sessionState.ok) { openModal(); return; }
-    if (analisisWarnPanel) analisisWarnPanel.style.display = 'block';
-  });
-
-  btnAnalisisCancelar?.addEventListener('click', () => {
-    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-  });
-
-  btnAnalisisContinuar?.addEventListener('click', async () => {
-    try {
-      const meRes = await fetch('/api/me', { credentials: 'include' });
-      const meData = await meRes.json().catch(() => ({}));
-      if (!meRes.ok || !meData.ok) { openModal(); return; }
-
-      const res = await fetch('/api/request-analysis', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const raw = await res.text();
-      let data = {};
-      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
-
-      if (!res.ok || !data.ok) {
-        alert('No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'sin detalle'));
-        return;
-      }
-
-      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
-      if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    } catch (e) {
-      alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
-    }
-  });
-
-  btnMostrarResultados?.addEventListener('click', async () => {
-    if (!window.sessionState.ok) { openModal(); return; }
-    openSelectAnalysisModal();
-  });
-
-
-  // ════════════════════════════════════════════════════════════
-  // STEP 1 — ROUTING QUESTION (grade selector, outside surveys)
-  // ════════════════════════════════════════════════════════════
-
-  let ROUTING_QUESTION = null;  // loaded once from /data/ROUTING_QUESTION.json
-
-  async function loadRoutingQuestion() {
-    if (ROUTING_QUESTION) return;
-    const res = await fetch('/api/routing-config', { credentials: 'include' });
-    if (!res.ok) { alert(`ERROR: No se pudo cargar la configuración de grados (HTTP ${res.status})`); return; }
-    const data = await res.json();
-    if (!data.ok) { alert(`ERROR: ${data.error || 'No se pudo cargar routing-config'}`); return; }
-    // Normalize to the same shape the rest of the code expects
-    ROUTING_QUESTION = {
-      question_id: "zero_general_grado",
-      text: data.question_text,
-      routing_rules: data.routing_rules,
-      options: data.options
-    };
-  }
-
-  async function showRoutingQuestion() {
-    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = true;
-    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = true;
-    if (encuestaOK) { encuestaOK.style.pointerEvents = 'none'; encuestaOK.style.opacity = '0.6'; }
-
-    await loadRoutingQuestion();
-    if (!ROUTING_QUESTION) return;
-
-    routingTitle.textContent = 'Pregunta 0 — Información General';
-    routingText.textContent = ROUTING_QUESTION.text;
-
-    routingOptions.innerHTML = ROUTING_QUESTION.options.map(o => `
-      <label style="display:block; margin-bottom:8px; cursor:pointer;">
-        <input type="radio" name="routingAnswer" value="${o.code}" style="margin-right:8px;">
-        ${o.text}
-      </label>
-    `).join('');
-
-    routingMsg.textContent = '';
-    routingBox.style.display = 'block';
-  }
-
-  // Handle "Siguiente" on the routing question
-  btnRoutingNext?.addEventListener('click', async () => {
-    const checked = document.querySelector('input[name="routingAnswer"]:checked');
-    if (!checked) {
-      routingMsg.textContent = 'Selecciona tu grado para continuar.';
-      return;
-    }
-
-    const selectedCode = checked.value;
-    const routingRules = ROUTING_QUESTION.routing_rules;
-
-    // Find which route_key this grade belongs to
-    let targetSurveyFile = null;
-    for (const [routeKey, config] of Object.entries(routingRules)) {
-      if (config.grade_codes.includes(selectedCode)) {
-        targetSurveyFile = `/data/${config.survey_file}`;
-        break;
-      }
-    }
-
-    if (!targetSurveyFile) {
-      routingMsg.textContent = 'Grado no reconocido. Contacta al administrador.';
-      return;
-    }
-
-    routingMsg.textContent = 'Cargando encuesta...';
-    btnRoutingNext.disabled = true;
-
-    try {
-      // Load the correct survey
-      const surveyRes = await fetch(targetSurveyFile, { cache: 'no-store' });
-      if (!surveyRes.ok) { alert('No se pudo cargar la encuesta'); btnRoutingNext.disabled = false; return; }
-      SURVEY = await surveyRes.json();
-
-      targetSurveyId = SURVEY.survey?.survey_uuid;
-      if (!targetSurveyId) { alert('Error: survey_uuid no encontrado en el archivo de encuesta.'); btnRoutingNext.disabled = false; return; }
-
-      // Create the response now that we know which survey
-      const startRes = await fetch('/api/start-response', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: targetSurveyId })
-      });
-      const startData = await startRes.json().catch(() => ({}));
-      if (!startData.ok) {
-        alert('Error al iniciar respuesta: ' + (startData.error || 'sin detalle'));
-        btnRoutingNext.disabled = false;
-        return;
-      }
-
-      window.currentResponseId = startData.responseId;
-      sessionStorage.setItem('currentResponseId', startData.responseId);
-
-      // Save the grade answer to this response using the routing question's question_id
-      // We need the DB questionId for zero_general_grado — fetch from questions-map of the selected survey
-      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
-      const mapData = await mapRes.json().catch(() => ({}));
-      if (!mapData.ok) {
-        alert('No se pudo cargar mapa de preguntas: ' + (mapData.error || 'sin detalle'));
-        btnRoutingNext.disabled = false;
-        return;
-      }
-      QUESTION_ID_MAP = mapData.map || {};
-
-      // Look up the DB id for zero_general_grado by scanning the map for that external_id
-      // The map is { "questionNumber": "dbUUID" } keyed by question number.
-      // Since zero_general_grado is NOT in either survey anymore, we need to get its DB id
-      // via a dedicated endpoint or by passing the external_id directly.
-      // We use a separate lightweight call to resolve it by external_id.
-      const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_grado`, { credentials: 'include' });
-      const gradeQData = await gradeQRes.json().catch(() => ({}));
-
-      if (gradeQData.ok && gradeQData.questionId) {
-        // Save grade answer
-        await fetch('/api/save-answer', {
-          method: 'POST', credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            responseId: window.currentResponseId,
-            questionId: gradeQData.questionId,
-            answerText: null,
-            selectedOptionIds: [selectedCode]   // selectedCode is the option code (e.g. "1","7", etc.)
-          })
-        });
-      }
-      // Note: if the endpoint doesn't exist yet, the grade answer save is skipped gracefully
-      // but the survey still proceeds correctly.
-
-      // Hide routing box, start the actual survey
-      routingBox.style.display = 'none';
-      routingMsg.textContent = '';
-
-      // Clear options cache so any DB changes are picked up fresh
-      OPTIONS_CACHE = {};
-
-      // Detect primaria survey and apply large-font mode
-      IS_PRIMARIA = (SURVEY.survey?.code === 'SURVEY_003_PRIMARIA');
-      if (IS_PRIMARIA) {
-        surveyBox.classList.add('primaria-mode');
-      } else {
-        surveyBox.classList.remove('primaria-mode');
-      }
-
-      currentQuestionIndex = 0;
-      surveyBox.style.display = 'block';
-      renderCurrentQuestion();
-
-    } catch (e) {
-      routingMsg.textContent = 'Error de conexión. Intenta de nuevo.';
-      console.error(e);
-    } finally {
-      btnRoutingNext.disabled = false;
-    }
-  });
-
-
-  // ════════════════════════════════════════════════════════════
-  // SURVEY ENGINE (unchanged except routing logic removed)
-  // ════════════════════════════════════════════════════════════
-
-  let SURVEY_UUID = null;
-  let SURVEY = null;
-  let currentQuestionIndex = 0;
-  let QUESTION_ID_MAP = {};
-  let IS_PRIMARIA = false;
-  let OPTIONS_CACHE = {}; // cleared at start of each new survey session
-
-  function isDemographicExternalId(ext) {
-    return ext === 'zero_general_curso'
-        || ext === 'zero_general_edad'
-        || ext === 'zero_general_genero'
-        || ext === 'zero_general_tiempo';
-  }
-
-  async function getOptionsForQuestion(questionId) {
-    if (!questionId) return [];
-    if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
-
-    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`, { credentials: "include" });
-    const raw = await res.text();
-    let data = {};
-    try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
-
-    if (!res.ok || !data.ok) {
-      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "sin detalle"}`);
-    }
-
-    OPTIONS_CACHE[questionId] = Array.isArray(data.options) ? data.options : [];
-    return OPTIONS_CACHE[questionId];
-  }
-
-  function getDbQuestionIdByNumber(n) {
-    return QUESTION_ID_MAP[String(n)] || null;
-  }
-
-  function getExternalIdFromSurveyQuestion(q) {
-    return (q && typeof q.question_id === 'string') ? q.question_id : '';
-  }
-
-  function renderCurrentQuestion() {
-    const question = SURVEY.questions[currentQuestionIndex];
-    document.getElementById('qTitle').textContent =
-      `Pregunta ${currentQuestionIndex + 1} de ${SURVEY.questions.length}`;
-    document.getElementById('qText').textContent = question.text;
-
-    const optionsDiv = document.getElementById('qOptions');
-    optionsDiv.innerHTML = '';
-
-    const dbQid = getDbQuestionIdByNumber(question.number);
-    const ext = getExternalIdFromSurveyQuestion(question);
-
-    if (question.type === 'single_choice') {
-      if (!dbQid) {
-        optionsDiv.innerHTML = `<div class="statusMsg statusErr">No se pudo resolver questionId (DB) para la pregunta #${question.number}.</div>`;
-        return;
-      }
-
-      if (isDemographicExternalId(ext)) {
-        optionsDiv.innerHTML = `
-          <select id="answerSelect" class="textInput">
-            <option value="">Cargando...</option>
-          </select>
-        `;
-
-        (async () => {
-          try {
-            const opts = await getOptionsForQuestion(dbQid);
-            const sel = document.getElementById("answerSelect");
-            if (!sel) return;
-            const placeholder = question.text || "-- Selecciona --";
-            sel.innerHTML =
-              `<option value="">${placeholder}</option>` +
-              opts.map(o => {
-                const txt = (o.option_text ?? o.option_code ?? "").toString();
-                return `<option value="${o.id}">${txt}</option>`;
-              }).join("");
-          } catch (e) {
-            optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
-          }
-        })();
-      } else {
-        optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
-
-        (async () => {
-          try {
-            const opts = await getOptionsForQuestion(dbQid);
-            if (!opts.length) {
-              optionsDiv.innerHTML = `<div class="statusMsg statusErr">Esta pregunta no tiene opciones en la base de datos.</div>`;
-              return;
-            }
-            optionsDiv.innerHTML = opts.map(o => {
-              const txt = (o.option_text ?? o.option_code ?? "").toString();
-              return `
-                <label style="display:block; margin-bottom:6px;">
-                  <input type="radio" name="answer" value="${o.id}">
-                  ${txt}
-                </label>
-              `;
-            }).join("");
-          } catch (e) {
-            optionsDiv.innerHTML = `<div class="statusMsg statusErr">${e.message || "Error cargando opciones."}</div>`;
-          }
-        })();
-      }
-
-      document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
-      document.getElementById('btnQNext').textContent =
-        (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
-      return;
-    }
-
-    if (question.type === 'text') {
-      optionsDiv.innerHTML =
-        `<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
-    }
-
-    document.getElementById('btnQPrev').disabled = (currentQuestionIndex === 0);
-    document.getElementById('btnQNext').textContent =
-      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar' : 'Siguiente';
-  }
-
-  async function saveCurrentAnswerOrStop() {
-    const q = SURVEY?.questions?.[currentQuestionIndex];
-    if (!q) { alert('No hay pregunta actual'); return false; }
-
-    const questionId = getDbQuestionIdByNumber(q.number);
-    if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
-
-    let answerText = null;
-    let selectedOptionIds = [];
-
-    if (q.type === 'single_choice') {
-      const ext = getExternalIdFromSurveyQuestion(q);
-      if (isDemographicExternalId(ext)) {
-        const v = document.getElementById('answerSelect')?.value || "";
-        if (v) selectedOptionIds = [v];
-      } else {
-        const checked = document.querySelector('input[name="answer"]:checked');
-        if (checked) selectedOptionIds = [checked.value];
-      }
-    } else if (q.type === 'text') {
-      answerText = document.getElementById('answerText')?.value?.trim() || null;
-    }
-
-    const required = (q.required === undefined) ? true : !!q.required;
-
-    if (required) {
-      if (q.type === 'text') {
-        if (!answerText) { alert('Escribe una respuesta para continuar.'); return false; }
-      } else {
-        if (selectedOptionIds.length === 0) { alert('Selecciona una opción para continuar.'); return false; }
-      }
-    }
-
-    // responseId must exist at this point (created during routing)
-    const responseId = window.currentResponseId;
-    if (!responseId) { alert('Falta responseId (inicia sesión y vuelve a intentar).'); return false; }
-
-    const r = await fetch('/api/save-answer', {
-      method: 'POST', credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ responseId, questionId, answerText, selectedOptionIds })
-    });
-
-    const raw = await r.text();
-    let j = {};
-    try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
-
-    if (!r.ok || !j.ok) {
-      alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
-      return false;
-    }
-    return true;
-  }
-
-  document.getElementById('btnQPrev')?.addEventListener('click', () => {
-    if (!SURVEY) return;
-    if (currentQuestionIndex > 0) {
-      currentQuestionIndex--;
-      renderCurrentQuestion();
-    }
-  });
-
-  document.getElementById('btnQNext')?.addEventListener('click', async () => {
-    const ok = await saveCurrentAnswerOrStop();
-    if (!ok) return;
-
-    if (currentQuestionIndex < SURVEY.questions.length - 1) {
-      currentQuestionIndex++;
-      renderCurrentQuestion();
-      return;
-    }
-
-    // Last question — submit
-    try {
-      const r3 = await fetch('/api/submit-response', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ responseId: window.currentResponseId })
-      });
-      const raw3 = await r3.text();
-      let j3 = {};
-      try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
-
-      if (!r3.ok || !j3.ok) {
-        alert('No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' + JSON.stringify(j3, null, 2));
-        return;
-      }
-    } catch (e) {
-      alert('Error de conexión al finalizar la encuesta.');
-      return;
-    }
-
-    // Reset everything
-    if (surveyBox) {
-      surveyBox.style.display = 'none';
-      surveyBox.classList.remove('primaria-mode');
-    }
-    window.currentResponseId = null;
-    sessionStorage.removeItem('currentResponseId');
-    SURVEY = null;
-    QUESTION_ID_MAP = {};
-    OPTIONS_CACHE = {};
-    currentQuestionIndex = 0;
-    IS_PRIMARIA = false;
-    ROUTING_QUESTION = null;
-
-    applySessionToUI();
-    alert('Encuesta finalizada.');
-  });
-
-  refreshSession();
-
-  // === DATOS ===
-  const SUPABASE_URL = "https://dthynoikkbmgulbrueya.supabase.co";
-  const SUPABASE_ANON_KEY = "REEMPLAZA_AQUI_SI_CAMBIA";
-
-  let datosIndex = 0;
-  let datosLoadedOnce = false;
-
-  const elNombre = document.getElementById('d_nombre');
-  const elApPaterno = document.getElementById('d_ap_paterno');
-  const elApMaterno = document.getElementById('d_ap_materno');
-  const elEst = document.getElementById('d_establecimiento');
-  const elStatus = document.getElementById('datosStatus');
-  const btnPrev = document.getElementById('btnPrev');
-  const btnNext = document.getElementById('btnNext');
-
-  function setStatus(text, type) {
-    elStatus.textContent = text || '';
-    elStatus.classList.remove('statusOk', 'statusWarn', 'statusErr');
-    elStatus.classList.add(type || 'statusWarn');
-  }
-
-  function fillFields(row) {
-    elNombre.value = row?.first_name ?? '';
-    elApPaterno.value = row?.pat_last_name ?? '';
-    elApMaterno.value = row?.mat_last_name ?? '';
-    elEst.value = row?.school_id ?? '';
-  }
-
-  async function fetchOneRow(offset) {
-    const url = `${SUPABASE_URL}/rest/v1/encargado_escolar?select=first_name,pat_last_name,mat_last_name,school_id&limit=1&offset=${offset}`;
-    const res = await fetch(url, {
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": "Bearer " + SUPABASE_ANON_KEY,
-        "Accept": "application/json"
-      }
-    });
-    const text = await res.text();
-    let json;
-    try { json = text ? JSON.parse(text) : null; } catch { json = null; }
-    return { ok: res.ok, status: res.status, json };
-  }
-
-  async function loadCurrent() {
-    setStatus("Cargando datos...", "statusWarn");
-    try {
-      const result = await fetchOneRow(datosIndex);
-      if (!result.ok) { setStatus(`No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr"); fillFields(null); return; }
-      const arr = Array.isArray(result.json) ? result.json : [];
-      if (arr.length === 0) {
-        if (datosIndex === 0) { setStatus("La tabla encargado_escolar está vacía.", "statusWarn"); }
-        else { setStatus("No hay más registros.", "statusWarn"); datosIndex = Math.max(0, datosIndex - 1); }
-        fillFields(null); return;
-      }
-      fillFields(arr[0]);
-      setStatus(`Mostrando registro #${datosIndex + 1}`, "statusOk");
-    } catch (e) {
-      setStatus("Error de conexión con Supabase.", "statusErr"); fillFields(null);
-    }
-  }
-
-  btnPrev?.addEventListener('click', async () => { datosIndex = Math.max(0, datosIndex - 1); await loadCurrent(); });
-  btnNext?.addEventListener('click', async () => { datosIndex = datosIndex + 1; await loadCurrent(); });
-
-  window.loadDatosIfNeeded = async () => {
-    if (datosLoadedOnce) return;
-    datosLoadedOnce = true;
-    datosIndex = 0;
-    await loadCurrent();
-  };
-
-  // === CONTACTO ===
-  const cNombre = document.getElementById('c_nombre');
-  const cEmail  = document.getElementById('c_email');
-  const cAsunto = document.getElementById('c_asunto');
-  const cMensaje= document.getElementById('c_mensaje');
-  const cCompany= document.getElementById('c_company');
-  const btnEnviarContacto = document.getElementById('btnEnviarContacto');
-  const btnLimpiarContacto = document.getElementById('btnLimpiarContacto');
-  const contactoMsg = document.getElementById('contactoMsg');
-
-  function setContactoMsg(text, type) {
-    if (!contactoMsg) return;
-    contactoMsg.textContent = text || '';
-    contactoMsg.classList.remove('statusOk', 'statusWarn', 'statusErr');
-    contactoMsg.classList.add(type || 'statusWarn');
-  }
-
-  btnLimpiarContacto?.addEventListener('click', () => {
-    if (cNombre) cNombre.value = '';
-    if (cEmail) cEmail.value = '';
-    if (cAsunto) cAsunto.value = '';
-    if (cMensaje) cMensaje.value = '';
-    if (cCompany) cCompany.value = '';
-    setContactoMsg('', 'statusWarn');
-  });
-
-  btnEnviarContacto?.addEventListener('click', async () => {
-    const name = cNombre?.value?.trim() || '';
-    const email = cEmail?.value?.trim() || '';
-    const subject = cAsunto?.value?.trim() || '';
-    const message = cMensaje?.value?.trim() || '';
-    const hp = cCompany?.value?.trim() || '';
-
-    if (!name || !email || !subject || !message) {
-      setContactoMsg('Por favor completa nombre, email, asunto y mensaje.', 'statusWarn'); return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setContactoMsg('Email inválido. Revisa el formato.', 'statusWarn'); return;
-    }
-
-    try {
-      btnEnviarContacto.disabled = true;
-      setContactoMsg('Enviando...', 'statusWarn');
-
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, subject, message, hp })
-      });
-
-      const raw = await res.text();
-      let data = {};
-      try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
-
-      if (!res.ok || !data.ok) {
-        setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`, 'statusErr'); return;
-      }
-
-      setContactoMsg('Mensaje enviado. ¡Gracias!', 'statusOk');
-      btnLimpiarContacto?.click();
-    } catch (e) {
-      setContactoMsg('Error de conexión al enviar el mensaje.', 'statusErr');
-    } finally {
-      btnEnviarContacto.disabled = false;
-    }
-  });
-
-  // === ANALYSIS SELECTION MODAL ===
-  const selectAnalysisModal = document.getElementById('selectAnalysisModal');
-  const selectAnalysisClose = document.getElementById('selectAnalysisClose');
-  const analysesLoading = document.getElementById('analysesLoading');
-  const analysesEmpty = document.getElementById('analysesEmpty');
-  const analysesList = document.getElementById('analysesList');
-  const btnViewSelectedAnalysis = document.getElementById('btnViewSelectedAnalysis');
-  const btnCancelSelectAnalysis = document.getElementById('btnCancelSelectAnalysis');
-
-  let selectedAnalysisData = null;
-
-  function openSelectAnalysisModal() {
-    selectAnalysisModal.style.display = 'flex';
-    loadApprovedAnalyses();
-  }
-
-  function closeSelectAnalysisModal() {
-    selectAnalysisModal.style.display = 'none';
-    analysesList.innerHTML = '';
-    selectedAnalysisData = null;
-    if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = true;
-  }
-
-  async function loadApprovedAnalyses() {
-    analysesLoading.style.display = 'block';
-    analysesEmpty.style.display = 'none';
-    analysesList.innerHTML = '';
-
-    try {
-      const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) throw new Error(data.error || 'Error al cargar análisis');
-
-      analysesLoading.style.display = 'none';
-      if (!data.analyses || data.analyses.length === 0) { analysesEmpty.style.display = 'block'; return; }
-      renderAnalysesList(data.analyses);
-    } catch (e) {
-      console.error('Error loading analyses:', e);
-      analysesLoading.style.display = 'none';
-      analysesEmpty.style.display = 'block';
-    }
-  }
-
-  function renderAnalysesList(analyses) {
-    analysesList.innerHTML = '';
-    analyses.forEach((analysis) => {
-      const card = document.createElement('div');
-      card.className = 'analysisCard';
-      const analysisDate = formatDateTime(analysis.analysis_date);
-      const dateRange = formatDateRange(analysis.earliest_response, analysis.latest_response);
-      card.innerHTML = `
-        <label>
-          <input type="radio" name="selectedAnalysis" value="${analysis.analysis_date}" data-analysis='${JSON.stringify(analysis)}' />
-          <div class="analysisInfo">
-            <div class="analysisDate">${analysisDate}</div>
-            <div class="analysisStats">
-              <div class="analysisStat"><span class="statLabel">Estudiantes:</span><span class="statValue">${analysis.total_students}</span></div>
-              <div class="analysisStat"><span class="statLabel">Rango:</span><span class="statValue">${dateRange}</span></div>
-              <span class="statusBadge">Aprobado</span>
-            </div>
-          </div>
-        </label>
-      `;
-      const radio = card.querySelector('input[type="radio"]');
-      radio.addEventListener('change', (e) => {
-        document.querySelectorAll('.analysisCard').forEach(c => c.classList.remove('selected'));
-        if (e.target.checked) {
-          card.classList.add('selected');
-          selectedAnalysisData = JSON.parse(e.target.dataset.analysis);
-          if (btnViewSelectedAnalysis) btnViewSelectedAnalysis.disabled = false;
-        }
-      });
-      card.addEventListener('click', (e) => { if (e.target.tagName !== 'INPUT') radio.click(); });
-      analysesList.appendChild(card);
-    });
-  }
-
-  function formatDateTime(isoString) {
-    if (!isoString) return 'N/A';
-    try {
-      return new Date(isoString).toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
-    } catch (e) { return isoString; }
-  }
-
-  function formatDateRange(earliest, latest) {
-    if (!earliest || !latest) return 'N/A';
-    try {
-      const startStr = new Date(earliest).toLocaleDateString('es-MX', { day:'numeric', month:'short', year:'numeric' });
-      const endStr   = new Date(latest).toLocaleDateString('es-MX', { day:'numeric', month:'short', year:'numeric' });
-      return startStr === endStr ? startStr : `${startStr} - ${endStr}`;
-    } catch (e) { return 'N/A'; }
-  }
-
-  selectAnalysisClose?.addEventListener('click', closeSelectAnalysisModal);
-  btnCancelSelectAnalysis?.addEventListener('click', closeSelectAnalysisModal);
-  selectAnalysisModal?.addEventListener('click', (e) => { if (e.target === selectAnalysisModal) closeSelectAnalysisModal(); });
-
-  btnViewSelectedAnalysis?.addEventListener('click', () => {
-    if (!selectedAnalysisData) { alert('Por favor selecciona un análisis'); return; }
-    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
-    const url = `${baseUrl}?school_id=${encodeURIComponent(window.sessionState.school_id)}&analysis_dt=${encodeURIComponent(selectedAnalysisData.analysis_date)}`;
-    window.location.href = url;
-  });
-
-  // === ADMIN LOGIN SYSTEM ===
-  window.adminState = { authenticated: false, username: null, role: null };
-
-  const adminIcon = document.getElementById('adminIcon');
-  const adminModal = document.getElementById('adminModal');
-  const adminModalClose = document.getElementById('adminModalClose');
-  const adminLoginForm = document.getElementById('adminLoginForm');
-  const adminLoggedIn = document.getElementById('adminLoggedIn');
-  const adminNavButtons = document.getElementById('adminNavButtons');
-  const adminUsername = document.getElementById('adminUsername');
-  const adminPassword = document.getElementById('adminPassword');
-  const btnAdminLogin = document.getElementById('btnAdminLogin');
-  const btnAdminCancel = document.getElementById('btnAdminCancel');
-  const btnAdminLogout = document.getElementById('btnAdminLogout');
-  const btnAdminClose = document.getElementById('btnAdminClose');
-  const adminLoginMsg = document.getElementById('adminLoginMsg');
-  const adminWelcomeMsg = document.getElementById('adminWelcomeMsg');
-
-  async function checkAdminSession() {
-    try {
-      const res = await fetch('/api/admin-me', { credentials: 'include' });
-      const data = await res.json().catch(() => ({}));
-      if (data.ok && data.admin) {
-        window.adminState = { authenticated: true, username: data.admin.username, role: data.admin.role };
-        updateAdminUI();
-        if (sessionBadge) {
-          sessionBadge.textContent = `Admin: ${data.admin.username}`;
-          sessionBadge.classList.remove('badgeNo');
-          sessionBadge.classList.add('badgeOk');
-        }
-      } else {
-        window.adminState = { authenticated: false, username: null, role: null };
-        updateAdminUI();
-      }
-    } catch (e) { console.error('Admin session check failed:', e); }
-  }
-
-  function updateAdminUI() {
-    if (window.adminState.authenticated) {
-      adminIcon.classList.add('authenticated');
-      adminIcon.title = `Admin: ${window.adminState.username}`;
-      if (sessionBadge) {
-        sessionBadge.textContent = `Admin: ${window.adminState.username}`;
-        sessionBadge.classList.remove('badgeNo');
-        sessionBadge.classList.add('badgeOk');
-      }
-      if (adminNavButtons) adminNavButtons.classList.add('show');
-    } else {
-      adminIcon.classList.remove('authenticated');
-      adminIcon.title = 'Admin Access';
-      if (!window.sessionState.ok && sessionBadge) {
-        sessionBadge.textContent = 'No autenticado';
-        sessionBadge.classList.remove('badgeOk');
-        sessionBadge.classList.add('badgeNo');
-      }
-      if (adminNavButtons) adminNavButtons.classList.remove('show');
-    }
-  }
-
-  function openAdminModal() {
-    if (window.adminState.authenticated) {
-      adminLoginForm.style.display = 'none';
-      adminLoggedIn.style.display = 'block';
-      adminWelcomeMsg.textContent = `Welcome, ${window.adminState.username}!`;
-    } else {
-      adminLoginForm.style.display = 'block';
-      adminLoggedIn.style.display = 'none';
-      adminUsername.value = '';
-      adminPassword.value = '';
-      adminLoginMsg.textContent = '';
-    }
-    adminModal.style.display = 'flex';
-    setTimeout(() => adminUsername?.focus(), 100);
-  }
-
-  function closeAdminModal() { adminModal.style.display = 'none'; }
-
-  adminIcon?.addEventListener('click', openAdminModal);
-  adminModalClose?.addEventListener('click', closeAdminModal);
-  btnAdminCancel?.addEventListener('click', closeAdminModal);
-  btnAdminClose?.addEventListener('click', closeAdminModal);
-  adminModal?.addEventListener('click', (e) => { if (e.target === adminModal) closeAdminModal(); });
-
-  btnAdminLogin?.addEventListener('click', async () => {
-    const username = adminUsername?.value?.trim() || '';
-    const password = adminPassword?.value?.trim() || '';
-    if (!username || !password) { adminLoginMsg.textContent = 'Please enter username and password'; return; }
-
-    try {
-      adminLoginMsg.textContent = 'Authenticating...';
-      btnAdminLogin.disabled = true;
-
-      const res = await fetch('/api/admin-login', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok) { adminLoginMsg.textContent = data.error || 'Login failed'; btnAdminLogin.disabled = false; return; }
-
-      window.adminState = { authenticated: true, username: data.admin.username, role: data.admin.role };
-      adminLoginMsg.textContent = '';
-      updateAdminUI();
-      if (sessionBadge) {
-        sessionBadge.textContent = `Admin: ${data.admin.username}`;
-        sessionBadge.classList.remove('badgeNo');
-        sessionBadge.classList.add('badgeOk');
-      }
-      closeAdminModal();
-      alert(`✅ Admin login successful!\n\nWelcome, ${data.admin.full_name || data.admin.username}`);
-    } catch (e) {
-      adminLoginMsg.textContent = 'Connection error';
-      console.error('Admin login error:', e);
-    } finally {
-      btnAdminLogin.disabled = false;
-    }
-  });
-
-  btnAdminLogout?.addEventListener('click', async () => {
-    try {
-      await fetch('/api/admin-logout', { method: 'POST', credentials: 'include' });
-      window.adminState = { authenticated: false, username: null, role: null };
-      updateAdminUI();
-      closeAdminModal();
-      alert('✅ Logged out successfully');
-    } catch (e) { console.error('Logout error:', e); }
-  });
-
-  adminPassword?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnAdminLogin?.click(); });
-
-  checkAdminSession();
-
-  // === APPROVE SURVEYS MODAL ===
-  const approveSurveysModal = document.getElementById('approveSurveysModal');
-  const approveSurveysClose = document.getElementById('approveSurveysClose');
-  const pendingSurveysLoading = document.getElementById('pendingSurveysLoading');
-  const pendingSurveysEmpty = document.getElementById('pendingSurveysEmpty');
-  const pendingSurveysList = document.getElementById('pendingSurveysList');
-  const btnClosePendingSurveys = document.getElementById('btnClosePendingSurveys');
-  const btnApproveSurvey = document.getElementById('btnApproveSurvey');
-
-  function openApproveSurveysModal() { approveSurveysModal.style.display = 'flex'; loadPendingSurveys(); }
-  function closeApproveSurveysModal() { approveSurveysModal.style.display = 'none'; pendingSurveysList.innerHTML = ''; }
-
-  async function loadPendingSurveys() {
-    pendingSurveysLoading.style.display = 'block';
-    pendingSurveysEmpty.style.display = 'none';
-    pendingSurveysList.innerHTML = '';
-
-    try {
-      const res = await fetch('/api/list-pending-surveys', { credentials: 'include' });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) throw new Error(data.error || 'Failed to load pending surveys');
-
-      pendingSurveysLoading.style.display = 'none';
-      if (!data.pending || data.pending.length === 0) { pendingSurveysEmpty.style.display = 'block'; return; }
-      renderPendingSurveys(data.pending);
-    } catch (e) {
-      console.error('Error loading pending surveys:', e);
-      pendingSurveysLoading.style.display = 'none';
-      pendingSurveysEmpty.style.display = 'block';
-    }
-  }
-
-  function renderPendingSurveys(surveys) {
-    pendingSurveysList.innerHTML = '';
-    surveys.forEach(survey => {
-      const card = document.createElement('div');
-      card.className = 'pendingSurveyCard';
-      card.id = `survey-${survey.school_id}-${survey.analysis_date}`;
-      const analysisDate = formatDateTime(survey.analysis_date);
-      const dateRange = formatDateRange(survey.earliest_response, survey.latest_response);
-      card.innerHTML = `
-        <div class="surveyHeader"><div class="surveySchoolName">${survey.school_name}</div></div>
-        <div class="surveyMeta">
-          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Students:</span><span style="color:#fff; font-weight:600;">${survey.total_students}</span></div>
-          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Requested:</span><span style="color:#fff;">${analysisDate}</span></div>
-          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Range:</span><span style="color:#fff;">${dateRange}</span></div>
-        </div>
-        <div class="surveyActions">
-          <button class="btnApprove" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Approve</button>
-          <button class="btnReject" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Re-open</button>
-          <button class="btnPreview" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Preview</button>
-        </div>
-      `;
-      card.querySelector('.btnApprove').addEventListener('click', () => approveSurvey(survey.school_id, survey.analysis_date, survey.school_name));
-      card.querySelector('.btnReject').addEventListener('click', () => rejectSurvey(survey.school_id, survey.analysis_date, survey.school_name));
-      card.querySelector('.btnPreview').addEventListener('click', () => previewSurvey(survey.school_id, survey.analysis_date));
-      pendingSurveysList.appendChild(card);
-    });
-  }
-
-  async function approveSurvey(schoolId, analysisDate, schoolName) {
-    if (!confirm(`Approve survey for ${schoolName}?`)) return;
-    try {
-      const res = await fetch('/api/approve-survey', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ school_id: schoolId, analysis_dt: analysisDate })
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) { alert('Failed to approve: ' + (data.error || 'Unknown error')); return; }
-      alert(`✅ Survey approved for ${schoolName}!`);
-      const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
-      if (card) card.remove();
-      if (pendingSurveysList.children.length === 0) pendingSurveysEmpty.style.display = 'block';
-    } catch (e) { console.error('Approve error:', e); alert('Error approving survey'); }
-  }
-
-  async function rejectSurvey(schoolId, analysisDate, schoolName) {
-    if (!confirm(`Reject survey for ${schoolName}?\n\nThis will remove the analysis request.`)) return;
-    try {
-      const res = await fetch('/api/reject-survey', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ school_id: schoolId, analysis_dt: analysisDate })
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) { alert('Failed to re-open: ' + (data.error || 'Unknown error')); return; }
-      alert(`❌ Survey re-open for ${schoolName}`);
-      const card = document.getElementById(`survey-${schoolId}-${analysisDate}`);
-      if (card) card.remove();
-      if (pendingSurveysList.children.length === 0) pendingSurveysEmpty.style.display = 'block';
-    } catch (e) { console.error('Re-open error:', e); alert('Error rejecting survey'); }
-  }
-
-  function previewSurvey(schoolId, analysisDate) {
-    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
-    const url = `${baseUrl}?school_id=${encodeURIComponent(schoolId)}&analysis_dt=${encodeURIComponent(analysisDate)}&preview=true`;
-    window.open(url, '_blank');
-  }
-
-  approveSurveysClose?.addEventListener('click', closeApproveSurveysModal);
-  btnClosePendingSurveys?.addEventListener('click', closeApproveSurveysModal);
-  approveSurveysModal?.addEventListener('click', (e) => { if (e.target === approveSurveysModal) closeApproveSurveysModal(); });
-  btnApproveSurvey?.addEventListener('click', () => {
-    if (!window.adminState.authenticated) { alert('Please login as admin first'); return; }
-    openApproveSurveysModal();
-  });
-
-  // === ADD SCHOOL MODAL - TWO STEP SYSTEM ===
-  document.addEventListener('DOMContentLoaded', () => {
-    const addSchoolModal1 = document.getElementById('addSchoolModal1');
-    const addSchoolModal2 = document.getElementById('addSchoolModal2');
-    const addSchoolClose1 = document.getElementById('addSchoolClose1');
-    const addSchoolClose2 = document.getElementById('addSchoolClose2');
-    const btnAddSchool = document.getElementById('btnAddSchool');
-    const btnCancelAddSchool1 = document.getElementById('btnCancelAddSchool1');
-    const btnNextToEncargado = document.getElementById('btnNextToEncargado');
-    const btnBackToSchoolInfo = document.getElementById('btnBackToSchoolInfo');
-    const btnCreateSchool = document.getElementById('btnCreateSchool');
-    const addSchoolMsg1 = document.getElementById('addSchoolMsg1');
-    const addSchoolMsg2 = document.getElementById('addSchoolMsg2');
-    const addSchoolCountry = document.getElementById('addSchoolCountry');
-    const enrollmentFields = document.getElementById('enrollmentFields');
-
-    if (!addSchoolModal1 || !addSchoolModal2) { console.error('❌ Add School modals not found'); return; }
-
-    // Enrollment config per country
-    const ENROLLMENT_CONFIG = {
-      MX: [
-        { id: 'addStudentsGroup1', label: 'Primaria (1°–6°)',      key: 'studentsPrimaria' },
-        { id: 'addStudentsGroup2', label: 'Secundaria (7°–9°)',     key: 'studentsSecundaria' },
-        { id: 'addStudentsGroup3', label: 'Preparatoria (10°–12°)', key: 'studentsPreparatoria' }
-      ],
-      CL: [
-        { id: 'addStudentsGroup1', label: 'Básica (1°–8°)',  key: 'studentsPrimaria' },
-        { id: 'addStudentsGroup2', label: 'Media (9°–12°)',  key: 'studentsSecundaria' },
-        { id: 'addStudentsGroup3', label: '',                key: 'studentsPreparatoria', hidden: true }
-      ],
-      CR: [
-        { id: 'addStudentsGroup1', label: 'Primaria (1°–6°)',    key: 'studentsPrimaria' },
-        { id: 'addStudentsGroup2', label: 'Secundaria (7°–11°)', key: 'studentsSecundaria' },
-        { id: 'addStudentsGroup3', label: '',                    key: 'studentsPreparatoria', hidden: true }
-      ],
-      DO: [
-        { id: 'addStudentsGroup1', label: 'Primaria (1°–6°)',    key: 'studentsPrimaria' },
-        { id: 'addStudentsGroup2', label: 'Secundaria (7°–12°)', key: 'studentsSecundaria' },
-        { id: 'addStudentsGroup3', label: '',                    key: 'studentsPreparatoria', hidden: true }
-      ],
-      US: [
-        { id: 'addStudentsGroup1', label: 'Elementary (K–5)', key: 'studentsPrimaria' },
-        { id: 'addStudentsGroup2', label: 'Middle (6–8)',      key: 'studentsSecundaria' },
-        { id: 'addStudentsGroup3', label: 'High (9–12)',       key: 'studentsPreparatoria' }
-      ]
-    };
-
-    function renderEnrollmentFields(country) {
-      const config = ENROLLMENT_CONFIG[country] || ENROLLMENT_CONFIG['MX'];
-      enrollmentFields.innerHTML = config
-        .filter(f => !f.hidden)
-        .map(f => `
-          <div class="fieldBlock">
-            <label class="fieldLabel" for="${f.id}" style="font-size:12px;">${f.label} *</label><br />
-            <input id="${f.id}" class="textInput" type="number" min="0" value="0"
-              data-key="${f.key}" style="width:100%; max-width:110px;" />
-          </div>
-        `).join('');
-    }
-
-    // Render on country change
-    addSchoolCountry?.addEventListener('change', () => {
-      renderEnrollmentFields(addSchoolCountry.value);
-    });
-
-    // Initial render
-    renderEnrollmentFields('MX');
-
-    let schoolFormData = {};
-
-    function clearAllFields() {
-      document.getElementById('addSchoolName').value = '';
-      document.getElementById('addSchoolUsername').value = '';
-      document.getElementById('addSchoolPassword').value = '';
-      if (addSchoolCountry) addSchoolCountry.value = 'MX';
-      renderEnrollmentFields('MX');
-      document.getElementById('addEncFirstName').value = '';
-      document.getElementById('addEncPatLastName').value = '';
-      document.getElementById('addEncMatLastName').value = '';
-      addSchoolMsg1.textContent = '';
-      addSchoolMsg2.textContent = '';
-      schoolFormData = {};
-    }
-
-    function openModal1() { clearAllFields(); addSchoolModal1.style.display = 'flex'; addSchoolModal2.style.display = 'none'; }
-    function closeAllModals() { addSchoolModal1.style.display = 'none'; addSchoolModal2.style.display = 'none'; }
-
-    function validateStep1() {
-      const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
-      const username   = document.getElementById('addSchoolUsername')?.value?.trim() || '';
-      const password   = document.getElementById('addSchoolPassword')?.value?.trim() || '';
-      const country    = addSchoolCountry?.value || 'MX';
-
-      if (!schoolName) { addSchoolMsg1.textContent = 'School name is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (!username)   { addSchoolMsg1.textContent = 'Username is required';    addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (!password)   { addSchoolMsg1.textContent = 'Password is required';    addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-      if (password.length < 6) { addSchoolMsg1.textContent = 'Password must be at least 6 characters'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
-
-      // Collect enrollment fields dynamically
-      const enrollmentInputs = enrollmentFields.querySelectorAll('input[data-key]');
-      const enrollmentData = {};
-      for (const input of enrollmentInputs) {
-        enrollmentData[input.dataset.key] = parseInt(input.value) || 0;
-      }
-      // Fill missing keys with 0
-      enrollmentData.studentsPrimaria    = enrollmentData.studentsPrimaria    ?? 0;
-      enrollmentData.studentsSecundaria  = enrollmentData.studentsSecundaria  ?? 0;
-      enrollmentData.studentsPreparatoria= enrollmentData.studentsPreparatoria?? 0;
-
-      schoolFormData = { schoolName, username, password, country, ...enrollmentData };
-      addSchoolMsg1.textContent = '';
-      return true;
-    }
-
-    function openModal2() {
-      addSchoolModal1.style.display = 'none';
-      addSchoolModal2.style.display = 'flex';
-      setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100);
-    }
-
-    function backToModal1() {
-      addSchoolModal2.style.display = 'none';
-      addSchoolModal1.style.display = 'flex';
-      if (schoolFormData.schoolName) {
-        document.getElementById('addSchoolName').value     = schoolFormData.schoolName;
-        document.getElementById('addSchoolUsername').value = schoolFormData.username;
-        document.getElementById('addSchoolPassword').value = schoolFormData.password;
-        if (addSchoolCountry) addSchoolCountry.value       = schoolFormData.country || 'MX';
-        renderEnrollmentFields(schoolFormData.country || 'MX');
-        // Restore enrollment values
-        const inputs = enrollmentFields.querySelectorAll('input[data-key]');
-        for (const input of inputs) {
-          input.value = schoolFormData[input.dataset.key] ?? 0;
-        }
-      }
-    }
-
-    btnAddSchool?.addEventListener('click', () => {
-      if (!window.adminState?.authenticated) { alert('Please login as admin first'); return; }
-      openModal1();
-    });
-
-    addSchoolClose1?.addEventListener('click', closeAllModals);
-    addSchoolClose2?.addEventListener('click', closeAllModals);
-    btnCancelAddSchool1?.addEventListener('click', closeAllModals);
-    addSchoolModal1?.addEventListener('click', (e) => { if (e.target === addSchoolModal1) closeAllModals(); });
-    addSchoolModal2?.addEventListener('click', (e) => { if (e.target === addSchoolModal2) closeAllModals(); });
-    btnNextToEncargado?.addEventListener('click', () => { if (validateStep1()) openModal2(); });
-    btnBackToSchoolInfo?.addEventListener('click', backToModal1);
-
-    btnCreateSchool?.addEventListener('click', async () => {
-      const encFirstName   = document.getElementById('addEncFirstName')?.value?.trim() || '';
-      const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
-      const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
-
-      if (!encFirstName)   { addSchoolMsg2.textContent = 'Encargado first name is required';          addSchoolMsg2.className = 'statusMsg statusErr'; return; }
-      if (!encPatLastName) { addSchoolMsg2.textContent = 'Encargado paternal last name is required';  addSchoolMsg2.className = 'statusMsg statusErr'; return; }
-
-      const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName };
-
-      try {
-        btnCreateSchool.disabled = true;
-        addSchoolMsg2.textContent = 'Creating school...';
-        addSchoolMsg2.className = 'statusMsg statusWarn';
-
-        const res = await fetch('/api/add-school', {
-          method: 'POST', credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(finalData)
-        });
-        const data = await res.json().catch(() => ({}));
-
-        if (!res.ok || !data.ok) {
-          addSchoolMsg2.textContent = data.error || 'Failed to create school';
-          addSchoolMsg2.className = 'statusMsg statusErr';
-          btnCreateSchool.disabled = false;
-          return;
-        }
-
-        addSchoolMsg2.textContent = `✅ School "${data.school.name}" (${data.school.country}) created successfully!`;
-        addSchoolMsg2.className = 'statusMsg statusOk';
-        setTimeout(() => closeAllModals(), 2000);
-      } catch (e) {
-        console.error('Error creating school:', e);
-        addSchoolMsg2.textContent = 'Connection error';
-        addSchoolMsg2.className = 'statusMsg statusErr';
-      } finally {
-        btnCreateSchool.disabled = false;
-      }
-    });
-
-    document.getElementById('addSchoolPassword')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnNextToEncargado?.click(); });
-    document.getElementById('addEncPatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
-    document.getElementById('addEncMatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
-  });
-
-</script>
-
 <!-- ADD SCHOOL MODAL - STEP 1 -->
 <div id="addSchoolModal1" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Add New School - Step 1 of 2</h3>
-      <button id="addSchoolClose1" class="modalClose" type="button">X</button>
-    </div>
+    <div class="modalHeader"><h3 class="modalTitle">Add New School - Step 1 of 2</h3><button id="addSchoolClose1" class="modalClose" type="button">X</button></div>
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
-        <div class="fieldBlock">
-          <label class="fieldLabel" for="addSchoolName">School Name *</label><br />
-          <input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Escuela Primaria Benito Juárez" style="width:100%; max-width:100%;" />
-        </div>
-        <div class="fieldBlock">
-          <label class="fieldLabel" for="addSchoolUsername">Username *</label><br />
-          <input id="addSchoolUsername" class="textInput" type="text" placeholder="e.g., escuela_benito" autocomplete="off" style="width:100%; max-width:100%;" />
-        </div>
-        <div class="fieldBlock">
-          <label class="fieldLabel" for="addSchoolPassword">Password *</label><br />
-          <input id="addSchoolPassword" class="textInput" type="password" placeholder="Minimum 6 characters" autocomplete="new-password" style="width:100%; max-width:100%;" />
-        </div>
-        <div class="fieldBlock">
-          <label class="fieldLabel" for="addSchoolCountry">Country *</label><br />
+        <div class="fieldBlock"><label class="fieldLabel" for="addSchoolName">School Name *</label><br /><input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Escuela Primaria Benito Juárez" style="width:100%; max-width:100%;" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="addSchoolUsername">Username *</label><br /><input id="addSchoolUsername" class="textInput" type="text" placeholder="e.g., escuela_benito" autocomplete="off" style="width:100%; max-width:100%;" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="addSchoolPassword">Password *</label><br /><input id="addSchoolPassword" class="textInput" type="password" placeholder="Minimum 6 characters" autocomplete="new-password" style="width:100%; max-width:100%;" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="addSchoolCountry">Country *</label><br />
           <select id="addSchoolCountry" class="textInput" style="width:100%; max-width:100%;">
             <option value="MX">🇲🇽 Mexico</option>
             <option value="CL">🇨🇱 Chile</option>
@@ -2702,9 +623,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
       </div>
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
-        <div id="enrollmentFields" style="display:grid; grid-template-columns:repeat(3, 110px); gap:12px;">
-          <!-- Filled dynamically based on country -->
-        </div>
+        <div id="enrollmentFields" style="display:grid; grid-template-columns:repeat(3,110px); gap:12px;"></div>
       </div>
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnCancelAddSchool1" class="btnSecondary" type="button">Cancel</button>
@@ -2718,25 +637,13 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 <!-- ADD SCHOOL MODAL - STEP 2 -->
 <div id="addSchoolModal2" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Add New School - Step 2 of 2</h3>
-      <button id="addSchoolClose2" class="modalClose" type="button">X</button>
-    </div>
+    <div class="modalHeader"><h3 class="modalTitle">Add New School - Step 2 of 2</h3><button id="addSchoolClose2" class="modalClose" type="button">X</button></div>
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
-        <div class="fieldBlock">
-          <label class="fieldLabel" for="addEncFirstName">First Name *</label><br />
-          <input id="addEncFirstName" class="textInput" type="text" placeholder="e.g., María" style="width:100%; max-width:100%;" />
-        </div>
-        <div class="fieldBlock">
-          <label class="fieldLabel" for="addEncPatLastName">Paternal Last Name *</label><br />
-          <input id="addEncPatLastName" class="textInput" type="text" placeholder="e.g., García" style="width:100%; max-width:100%;" />
-        </div>
-        <div class="fieldBlock">
-          <label class="fieldLabel" for="addEncMatLastName">Maternal Last Name</label><br />
-          <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López (optional)" style="width:100%; max-width:100%;" />
-        </div>
+        <div class="fieldBlock"><label class="fieldLabel" for="addEncFirstName">First Name *</label><br /><input id="addEncFirstName" class="textInput" type="text" placeholder="e.g., María" style="width:100%; max-width:100%;" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="addEncPatLastName">Paternal Last Name *</label><br /><input id="addEncPatLastName" class="textInput" type="text" placeholder="e.g., García" style="width:100%; max-width:100%;" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="addEncMatLastName">Maternal Last Name</label><br /><input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López (optional)" style="width:100%; max-width:100%;" /></div>
       </div>
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnBackToSchoolInfo" class="btnSecondary" type="button">&lt; Back</button>
@@ -2747,7 +654,374 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   </div>
 </div>
 
+<style>
+.analysisCard { background:#1E2F3F; border:2px solid #365468; border-radius:8px; padding:14px; margin-bottom:10px; cursor:pointer; transition:all 0.2s ease; }
+.analysisCard:hover { border-color:#D6A21C; background:#243A4B; }
+.analysisCard.selected { border-color:#D6A21C; background:#243A4B; box-shadow:0 0 0 2px rgba(214,162,28,0.2); }
+.analysisCard label { display:flex; align-items:start; gap:12px; cursor:pointer; width:100%; }
+.analysisCard input[type="radio"] { margin-top:4px; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.analysisInfo { flex:1; }
+.analysisDate { font-size:16px; font-weight:700; color:#D6A21C; margin-bottom:6px; }
+.analysisStats { display:flex; gap:16px; flex-wrap:wrap; font-size:13px; color:#a9c0d3; }
+.analysisStat { display:flex; align-items:center; gap:4px; }
+.statLabel { color:#7a8e9e; }
+.statValue { color:#ffffff; font-weight:600; }
+.statusBadge { display:inline-block; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; background:#b9ffcf; color:#0f1d27; }
+.pendingSurveyCard { background:#1E2F3F; border:2px solid #365468; border-radius:8px; padding:16px; margin-bottom:12px; transition:all 0.2s ease; }
+.pendingSurveyCard:hover { border-color:#D6A21C; background:#243A4B; }
+.surveyHeader { display:flex; justify-content:space-between; align-items:start; margin-bottom:12px; gap:10px; }
+.surveySchoolName { font-size:18px; font-weight:700; color:#D6A21C; flex:1; }
+.surveyMeta { display:flex; gap:20px; flex-wrap:wrap; font-size:13px; color:#a9c0d3; margin-bottom:14px; }
+.surveyMetaItem { display:flex; align-items:center; gap:6px; }
+.surveyActions { display:flex; gap:8px; flex-wrap:wrap; }
+.btnApprove { background:#4CAF50; color:white; border:none; padding:8px 16px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s ease; }
+.btnApprove:hover { background:#45a049; }
+.btnApprove:disabled { opacity:0.5; cursor:not-allowed; }
+.btnReject { background:transparent; color:#ff6b6b; border:1px solid #ff6b6b; padding:8px 16px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s ease; }
+.btnReject:hover { background:#ff6b6b; color:white; }
+.btnReject:disabled { opacity:0.5; cursor:not-allowed; }
+.btnPreview { background:transparent; color:#D6A21C; border:1px solid #D6A21C; padding:8px 16px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s ease; }
+.btnPreview:hover { background:#D6A21C; color:#16222D; }
+#surveyBox.primaria-mode #qTitle { font-size:22px; }
+#surveyBox.primaria-mode #qText { font-size:26px; line-height:1.5; font-weight:600; color:#ffffff; }
+#surveyBox.primaria-mode #qOptions label { font-size:24px; line-height:1.6; margin-bottom:14px !important; padding:10px 14px; background:#16222D; border-radius:10px; border:1px solid #365468; display:flex !important; align-items:center; gap:10px; cursor:pointer; transition:background 0.15s; }
+#surveyBox.primaria-mode #qOptions label:hover { background:#243A4B; border-color:#D6A21C; }
+#surveyBox.primaria-mode #qOptions input[type="radio"] { width:22px; height:22px; flex-shrink:0; }
+#surveyBox.primaria-mode .btnPrimary, #surveyBox.primaria-mode .btnSecondary { font-size:18px; padding:14px 24px; }
+#surveyBox.primaria-mode { max-width:680px; padding:24px; }
+</style>
+
+<script>
+  window.onerror = function(msg,src,line,col){ alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`); };
+  window.onunhandledrejection = function(e){ const reason=e?.reason; const msg=(reason&&(reason.message||String(reason)))||'Unhandled promise rejection'; alert('PROMISE ERROR: '+msg); };
+
+  window.sessionState={ok:false,school_id:null,school_name:null};
+  window.currentResponseId=null;
+
+  const sessionBadge=document.getElementById('sessionBadge');
+  const btnAccesoUsuarios=document.getElementById('btnAccesoUsuarios');
+  const encuestaNeedLogin=document.getElementById('encuestaNeedLogin');
+  const resultadosNeedLogin=document.getElementById('resultadosNeedLogin');
+  const encuestaOK=document.getElementById('encuestaOK');
+  const schoolWelcome=document.getElementById('schoolWelcome');
+  const btnIngresarEncuesta=document.getElementById('btnIngresarEncuesta');
+  const btnSolicitarAnalisis=document.getElementById('btnSolicitarAnalisis');
+  const analisisWarnPanel=document.getElementById('analisisWarnPanel');
+  const btnAnalisisContinuar=document.getElementById('btnAnalisisContinuar');
+  const btnAnalisisCancelar=document.getElementById('btnAnalisisCancelar');
+  const surveyBox=document.getElementById('surveyBox');
+  const btnMostrarResultados=document.getElementById('btnMostrarResultados');
+  const routingBox=document.getElementById('routingBox');
+  const routingTitle=document.getElementById('routingTitle');
+  const routingText=document.getElementById('routingText');
+  const routingOptions=document.getElementById('routingOptions');
+  const btnRoutingNext=document.getElementById('btnRoutingNext');
+  const routingMsg=document.getElementById('routingMsg');
+
+  async function refreshSession(){
+    try{const res=await fetch('/api/me',{credentials:'include'});const data=await res.json().catch(()=>({}));window.sessionState={ok:!!data?.ok,school_id:data?.school_id||null,school_name:data?.school_name||null,country:data?.country||'MX'};}
+    catch(e){window.sessionState={ok:false,school_id:null,school_name:null,country:'MX'};}
+    applySessionToUI();
+  }
+
+  function applySessionToUI(){
+    const ok=window.sessionState.ok;const schoolName=window.sessionState.school_name||'';
+    if(window.adminState&&window.adminState.authenticated){sessionBadge.textContent=`Admin: ${window.adminState.username}`;sessionBadge.classList.remove('badgeNo');sessionBadge.classList.add('badgeOk');}
+    else if(ok){sessionBadge.textContent=`Autenticado: ${schoolName||'OK'}`;sessionBadge.classList.remove('badgeNo');sessionBadge.classList.add('badgeOk');}
+    else{sessionBadge.textContent='No autenticado';sessionBadge.classList.remove('badgeOk');sessionBadge.classList.add('badgeNo');}
+    if(schoolWelcome)schoolWelcome.textContent=ok?`Estado de sesión: Autenticado. Escuela: ${schoolName}`.trim():'Estado de sesión: No autenticado.';
+    if(btnIngresarEncuesta)btnIngresarEncuesta.disabled=!ok;
+    if(btnSolicitarAnalisis)btnSolicitarAnalisis.disabled=!ok;
+    if(btnMostrarResultados)btnMostrarResultados.disabled=!ok;
+    if(encuestaNeedLogin)encuestaNeedLogin.style.display=ok?'none':'block';
+    if(resultadosNeedLogin)resultadosNeedLogin.style.display=ok?'none':'block';
+    if(!ok){if(analisisWarnPanel)analisisWarnPanel.style.display='none';if(routingBox)routingBox.style.display='none';if(surveyBox)surveyBox.style.display='none';}
+    if(ok){if(encuestaOK){encuestaOK.style.pointerEvents='auto';encuestaOK.style.opacity='';}}
+  }
+
+  const globalModal=document.getElementById('globalModal');
+  const modalClose=document.getElementById('modalClose');
+  const modalSessionOn=document.getElementById('modalSessionOn');
+  const modalSessionOff=document.getElementById('modalSessionOff');
+  const modalSessionText=document.getElementById('modalSessionText');
+  const btnCerrarSesion=document.getElementById('btnCerrarSesion');
+  const btnCerrarModal1=document.getElementById('btnCerrarModal1');
+  const btnCerrarModal2=document.getElementById('btnCerrarModal2');
+  const globalUser=document.getElementById('globalUser');
+  const globalPass=document.getElementById('globalPass');
+  const btnDoLogin=document.getElementById('btnDoLogin');
+  const globalLoginMsg=document.getElementById('globalLoginMsg');
+
+  function openModal(){
+    const ok=window.sessionState.ok;
+    if(globalLoginMsg)globalLoginMsg.textContent='';
+    if(globalUser)globalUser.value='';if(globalPass)globalPass.value='';
+    if(ok){modalSessionOff.style.display='none';modalSessionOn.style.display='block';modalSessionText.textContent=`Sesión activa. Escuela: ${window.sessionState.school_name||''}`.trim();}
+    else{modalSessionOn.style.display='none';modalSessionOff.style.display='block';setTimeout(()=>globalUser?.focus(),50);}
+    globalModal.style.display='flex';
+  }
+  function closeModal(){globalModal.style.display='none';}
+  btnAccesoUsuarios?.addEventListener('click',openModal);
+  modalClose?.addEventListener('click',closeModal);
+  btnCerrarModal1?.addEventListener('click',closeModal);
+  btnCerrarModal2?.addEventListener('click',closeModal);
+  globalModal?.addEventListener('click',(e)=>{if(e.target===globalModal)closeModal();});
+
+  btnDoLogin?.addEventListener('click',async()=>{
+    const u=globalUser?.value?.trim()||'';const p=globalPass?.value?.trim()||'';
+    if(!u||!p){globalLoginMsg.textContent='Por favor ingrese usuario y contraseña.';return;}
+    try{
+      globalLoginMsg.textContent='Validando...';
+      const res=await fetch('/api/login',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+      const raw=await res.text();let data={};try{data=raw?JSON.parse(raw):{};}catch{data={raw};}
+      if(!res.ok||!data.ok){globalLoginMsg.textContent=`Login falló (HTTP ${res.status}): ${data.error||data.raw||'sin detalle'}`;return;}
+      globalLoginMsg.textContent='';closeModal();await refreshSession();
+    }catch(e){globalLoginMsg.textContent='Error de conexión.';}
+  });
+
+  btnCerrarSesion?.addEventListener('click',async()=>{
+    await fetch('/api/logout',{method:'POST',credentials:'include'}).catch(()=>{});closeModal();await refreshSession();
+  });
+
+  const privacyModal=document.getElementById('privacyModal');
+  const privacyAccept=document.getElementById('privacyAccept');
+  const btnPrivacyContinue=document.getElementById('btnPrivacyContinue');
+  const btnPrivacyCancel=document.getElementById('btnPrivacyCancel');
+  function openPrivacyModal(){if(privacyAccept)privacyAccept.checked=false;if(btnPrivacyContinue)btnPrivacyContinue.disabled=true;privacyModal.style.display='flex';}
+  function closePrivacyModal(){privacyModal.style.display='none';}
+  privacyAccept?.addEventListener('change',(e)=>{if(btnPrivacyContinue)btnPrivacyContinue.disabled=!e.target.checked;});
+  btnPrivacyContinue?.addEventListener('click',async()=>{closePrivacyModal();await showRoutingQuestion();});
+  btnPrivacyCancel?.addEventListener('click',closePrivacyModal);
+  privacyModal?.addEventListener('click',(e)=>{if(e.target===privacyModal)closePrivacyModal();});
+
+  btnIngresarEncuesta?.addEventListener('click',async()=>{if(!window.sessionState.ok){openModal();return;}if(analisisWarnPanel)analisisWarnPanel.style.display='none';openPrivacyModal();});
+  btnSolicitarAnalisis?.addEventListener('click',()=>{if(!window.sessionState.ok){openModal();return;}if(analisisWarnPanel)analisisWarnPanel.style.display='block';});
+  btnAnalisisCancelar?.addEventListener('click',()=>{if(analisisWarnPanel)analisisWarnPanel.style.display='none';});
+
+  btnAnalisisContinuar?.addEventListener('click',async()=>{
+    try{
+      const meRes=await fetch('/api/me',{credentials:'include'});const meData=await meRes.json().catch(()=>({}));
+      if(!meRes.ok||!meData.ok){openModal();return;}
+      const res=await fetch('/api/request-analysis',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'}});
+      const raw=await res.text();let data={};try{data=raw?JSON.parse(raw):{};}catch{data={raw};}
+      if(!res.ok||!data.ok){alert('No se pudo solicitar el análisis (HTTP '+res.status+'):\n'+(data.error||data.raw||'sin detalle'));return;}
+      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
+      if(analisisWarnPanel)analisisWarnPanel.style.display='none';
+    }catch(e){alert('Error de conexión al solicitar el análisis.\n\n'+(e?.message||String(e)));}
+  });
+
+  btnMostrarResultados?.addEventListener('click',async()=>{if(!window.sessionState.ok){openModal();return;}openSelectAnalysisModal();});
+
+  let ROUTING_QUESTION=null;
+
+  async function loadRoutingQuestion(){
+    if(ROUTING_QUESTION)return;
+    const res=await fetch('/api/routing-config',{credentials:'include'});
+    if(!res.ok){alert(`ERROR: No se pudo cargar la configuración de grados (HTTP ${res.status})`);return;}
+    const data=await res.json();
+    if(!data.ok){alert(`ERROR: ${data.error||'No se pudo cargar routing-config'}`);return;}
+    ROUTING_QUESTION={question_id:"zero_general_grado",text:data.question_text,routing_rules:data.routing_rules,options:data.options};
+  }
+
+  async function showRoutingQuestion(){
+    if(btnIngresarEncuesta)btnIngresarEncuesta.disabled=true;
+    if(btnSolicitarAnalisis)btnSolicitarAnalisis.disabled=true;
+    if(encuestaOK){encuestaOK.style.pointerEvents='none';encuestaOK.style.opacity='0.6';}
+    await loadRoutingQuestion();if(!ROUTING_QUESTION)return;
+    routingTitle.textContent='Pregunta 0 — Información General';
+    routingText.textContent=ROUTING_QUESTION.text;
+    routingOptions.innerHTML=ROUTING_QUESTION.options.map(o=>`<label style="display:block;margin-bottom:8px;cursor:pointer;"><input type="radio" name="routingAnswer" value="${o.code}" style="margin-right:8px;">${o.text}</label>`).join('');
+    routingMsg.textContent='';routingBox.style.display='block';
+  }
+
+  btnRoutingNext?.addEventListener('click',async()=>{
+    const checked=document.querySelector('input[name="routingAnswer"]:checked');
+    if(!checked){routingMsg.textContent='Selecciona tu grado para continuar.';return;}
+    const selectedCode=checked.value;const routingRules=ROUTING_QUESTION.routing_rules;
+    let targetSurveyFile=null;
+    for(const[routeKey,config]of Object.entries(routingRules)){if(config.grade_codes.includes(selectedCode)){targetSurveyFile=`/data/${config.survey_file}`;break;}}
+    if(!targetSurveyFile){routingMsg.textContent='Grado no reconocido. Contacta al administrador.';return;}
+    routingMsg.textContent='Cargando encuesta...';btnRoutingNext.disabled=true;
+    try{
+      const surveyRes=await fetch(targetSurveyFile,{cache:'no-store'});
+      if(!surveyRes.ok){alert('No se pudo cargar la encuesta');btnRoutingNext.disabled=false;return;}
+      SURVEY=await surveyRes.json();
+      targetSurveyId=SURVEY.survey?.survey_uuid;
+      if(!targetSurveyId){alert('Error: survey_uuid no encontrado en el archivo de encuesta.');btnRoutingNext.disabled=false;return;}
+      const startRes=await fetch('/api/start-response',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({surveyId:targetSurveyId})});
+      const startData=await startRes.json().catch(()=>({}));
+      if(!startData.ok){alert('Error al iniciar respuesta: '+(startData.error||'sin detalle'));btnRoutingNext.disabled=false;return;}
+      window.currentResponseId=startData.responseId;sessionStorage.setItem('currentResponseId',startData.responseId);
+      const mapRes=await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`,{credentials:'include'});
+      const mapData=await mapRes.json().catch(()=>({}));
+      if(!mapData.ok){alert('No se pudo cargar mapa de preguntas: '+(mapData.error||'sin detalle'));btnRoutingNext.disabled=false;return;}
+      QUESTION_ID_MAP=mapData.map||{};
+      const gradeQRes=await fetch(`/api/question-id-by-external?externalId=zero_general_grado`,{credentials:'include'});
+      const gradeQData=await gradeQRes.json().catch(()=>({}));
+      if(gradeQData.ok&&gradeQData.questionId){await fetch('/api/save-answer',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({responseId:window.currentResponseId,questionId:gradeQData.questionId,answerText:null,selectedOptionIds:[selectedCode]})});}
+      routingBox.style.display='none';routingMsg.textContent='';
+      OPTIONS_CACHE={};
+      IS_PRIMARIA=(SURVEY.survey?.code==='SURVEY_003_PRIMARIA');
+      if(IS_PRIMARIA){surveyBox.classList.add('primaria-mode');}else{surveyBox.classList.remove('primaria-mode');}
+      currentQuestionIndex=0;surveyBox.style.display='block';renderCurrentQuestion();
+    }catch(e){routingMsg.textContent='Error de conexión. Intenta de nuevo.';console.error(e);}
+    finally{btnRoutingNext.disabled=false;}
+  });
+
+  let SURVEY_UUID=null,SURVEY=null,currentQuestionIndex=0,QUESTION_ID_MAP={},IS_PRIMARIA=false;
+  let OPTIONS_CACHE={};
+
+  function isDemographicExternalId(ext){return ext==='zero_general_curso'||ext==='zero_general_edad'||ext==='zero_general_genero'||ext==='zero_general_tiempo';}
+
+  async function getOptionsForQuestion(questionId){
+    if(!questionId)return[];if(OPTIONS_CACHE[questionId])return OPTIONS_CACHE[questionId];
+    const res=await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`,{credentials:"include"});
+    const raw=await res.text();let data={};try{data=raw?JSON.parse(raw):{};}catch{data={raw};}
+    if(!res.ok||!data.ok)throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error||data.raw||"sin detalle"}`);
+    OPTIONS_CACHE[questionId]=Array.isArray(data.options)?data.options:[];return OPTIONS_CACHE[questionId];
+  }
+
+  function getDbQuestionIdByNumber(n){return QUESTION_ID_MAP[String(n)]||null;}
+  function getExternalIdFromSurveyQuestion(q){return(q&&typeof q.question_id==='string')?q.question_id:'';}
+
+  function renderCurrentQuestion(){
+    const question=SURVEY.questions[currentQuestionIndex];
+    document.getElementById('qTitle').textContent=`Pregunta ${currentQuestionIndex+1} de ${SURVEY.questions.length}`;
+    document.getElementById('qText').textContent=question.text;
+    const optionsDiv=document.getElementById('qOptions');optionsDiv.innerHTML='';
+    const dbQid=getDbQuestionIdByNumber(question.number);const ext=getExternalIdFromSurveyQuestion(question);
+    if(question.type==='single_choice'){
+      if(!dbQid){optionsDiv.innerHTML=`<div class="statusMsg statusErr">No se pudo resolver questionId (DB) para la pregunta #${question.number}.</div>`;return;}
+      if(isDemographicExternalId(ext)){
+        optionsDiv.innerHTML=`<select id="answerSelect" class="textInput"><option value="">Cargando...</option></select>`;
+        (async()=>{try{const opts=await getOptionsForQuestion(dbQid);const sel=document.getElementById("answerSelect");if(!sel)return;const placeholder=question.text||"-- Selecciona --";sel.innerHTML=`<option value="">${placeholder}</option>`+opts.map(o=>{const txt=(o.option_text??o.option_code??"").toString();return`<option value="${o.id}">${txt}</option>`;}).join("");}catch(e){optionsDiv.innerHTML=`<div class="statusMsg statusErr">${e.message||"Error cargando opciones."}</div>`;}})();
+      }else{
+        optionsDiv.innerHTML=`<div class="statusMsg statusWarn">Cargando opciones...</div>`;
+        (async()=>{try{const opts=await getOptionsForQuestion(dbQid);if(!opts.length){optionsDiv.innerHTML=`<div class="statusMsg statusErr">Esta pregunta no tiene opciones en la base de datos.</div>`;return;}optionsDiv.innerHTML=opts.map(o=>{const txt=(o.option_text??o.option_code??"").toString();return`<label style="display:block;margin-bottom:6px;"><input type="radio" name="answer" value="${o.id}">${txt}</label>`;}).join("");}catch(e){optionsDiv.innerHTML=`<div class="statusMsg statusErr">${e.message||"Error cargando opciones."}</div>`;}})();
+      }
+      document.getElementById('btnQPrev').disabled=(currentQuestionIndex===0);
+      document.getElementById('btnQNext').textContent=(currentQuestionIndex===SURVEY.questions.length-1)?'Finalizar':'Siguiente';return;
+    }
+    if(question.type==='text'){optionsDiv.innerHTML=`<input class="textInput" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;}
+    document.getElementById('btnQPrev').disabled=(currentQuestionIndex===0);
+    document.getElementById('btnQNext').textContent=(currentQuestionIndex===SURVEY.questions.length-1)?'Finalizar':'Siguiente';
+  }
+
+  async function saveCurrentAnswerOrStop(){
+    const q=SURVEY?.questions?.[currentQuestionIndex];if(!q){alert('No hay pregunta actual');return false;}
+    const questionId=getDbQuestionIdByNumber(q.number);if(!questionId){alert('No se pudo resolver questionId para number: '+q.number);return false;}
+    let answerText=null,selectedOptionIds=[];
+    if(q.type==='single_choice'){const ext=getExternalIdFromSurveyQuestion(q);if(isDemographicExternalId(ext)){const v=document.getElementById('answerSelect')?.value||"";if(v)selectedOptionIds=[v];}else{const checked=document.querySelector('input[name="answer"]:checked');if(checked)selectedOptionIds=[checked.value];}}
+    else if(q.type==='text'){answerText=document.getElementById('answerText')?.value?.trim()||null;}
+    const required=(q.required===undefined)?true:!!q.required;
+    if(required){if(q.type==='text'){if(!answerText){alert('Escribe una respuesta para continuar.');return false;}}else{if(selectedOptionIds.length===0){alert('Selecciona una opción para continuar.');return false;}}}
+    const responseId=window.currentResponseId;if(!responseId){alert('Falta responseId (inicia sesión y vuelve a intentar).');return false;}
+    const r=await fetch('/api/save-answer',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({responseId,questionId,answerText,selectedOptionIds})});
+    const raw=await r.text();let j={};try{j=raw?JSON.parse(raw):{};}catch{j={raw};}
+    if(!r.ok||!j.ok){alert('No se pudo guardar (HTTP '+r.status+'):\n'+JSON.stringify(j,null,2));return false;}
+    return true;
+  }
+
+  document.getElementById('btnQPrev')?.addEventListener('click',()=>{if(!SURVEY)return;if(currentQuestionIndex>0){currentQuestionIndex--;renderCurrentQuestion();}});
+
+  document.getElementById('btnQNext')?.addEventListener('click',async()=>{
+    const ok=await saveCurrentAnswerOrStop();if(!ok)return;
+    if(currentQuestionIndex<SURVEY.questions.length-1){currentQuestionIndex++;renderCurrentQuestion();return;}
+    try{
+      const r3=await fetch('/api/submit-response',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({responseId:window.currentResponseId})});
+      const raw3=await r3.text();let j3={};try{j3=raw3?JSON.parse(raw3):{};}catch{j3={raw3};}
+      if(!r3.ok||!j3.ok){alert('No se pudo finalizar la encuesta (HTTP '+r3.status+'):\n'+JSON.stringify(j3,null,2));return;}
+    }catch(e){alert('Error de conexión al finalizar la encuesta.');return;}
+    if(surveyBox){surveyBox.style.display='none';surveyBox.classList.remove('primaria-mode');}
+    window.currentResponseId=null;sessionStorage.removeItem('currentResponseId');
+    SURVEY=null;QUESTION_ID_MAP={};OPTIONS_CACHE={};currentQuestionIndex=0;IS_PRIMARIA=false;ROUTING_QUESTION=null;
+    applySessionToUI();alert('Encuesta finalizada.');
+  });
+
+  refreshSession();
+
+  const SUPABASE_URL="https://dthynoikkbmgulbrueya.supabase.co";
+  const SUPABASE_ANON_KEY="REEMPLAZA_AQUI_SI_CAMBIA";
+  let datosIndex=0,datosLoadedOnce=false;
+  const elNombre=document.getElementById('d_nombre'),elApPaterno=document.getElementById('d_ap_paterno'),elApMaterno=document.getElementById('d_ap_materno'),elEst=document.getElementById('d_establecimiento'),elStatus=document.getElementById('datosStatus'),btnPrev=document.getElementById('btnPrev'),btnNext=document.getElementById('btnNext');
+  function setStatus(text,type){elStatus.textContent=text||'';elStatus.classList.remove('statusOk','statusWarn','statusErr');elStatus.classList.add(type||'statusWarn');}
+  function fillFields(row){elNombre.value=row?.first_name??'';elApPaterno.value=row?.pat_last_name??'';elApMaterno.value=row?.mat_last_name??'';elEst.value=row?.school_id??'';}
+  async function fetchOneRow(offset){const url=`${SUPABASE_URL}/rest/v1/encargado_escolar?select=first_name,pat_last_name,mat_last_name,school_id&limit=1&offset=${offset}`;const res=await fetch(url,{headers:{"apikey":SUPABASE_ANON_KEY,"Authorization":"Bearer "+SUPABASE_ANON_KEY,"Accept":"application/json"}});const text=await res.text();let json;try{json=text?JSON.parse(text):null;}catch{json=null;}return{ok:res.ok,status:res.status,json};}
+  async function loadCurrent(){setStatus("Cargando datos...","statusWarn");try{const result=await fetchOneRow(datosIndex);if(!result.ok){setStatus(`No se pudo leer encargado_escolar (HTTP ${result.status??""}).`,"statusErr");fillFields(null);return;}const arr=Array.isArray(result.json)?result.json:[];if(arr.length===0){if(datosIndex===0){setStatus("La tabla encargado_escolar está vacía.","statusWarn");}else{setStatus("No hay más registros.","statusWarn");datosIndex=Math.max(0,datosIndex-1);}fillFields(null);return;}fillFields(arr[0]);setStatus(`Mostrando registro #${datosIndex+1}`,"statusOk");}catch(e){setStatus("Error de conexión con Supabase.","statusErr");fillFields(null);}}
+  btnPrev?.addEventListener('click',async()=>{datosIndex=Math.max(0,datosIndex-1);await loadCurrent();});
+  btnNext?.addEventListener('click',async()=>{datosIndex=datosIndex+1;await loadCurrent();});
+  window.loadDatosIfNeeded=async()=>{if(datosLoadedOnce)return;datosLoadedOnce=true;datosIndex=0;await loadCurrent();};
+
+  const cNombre=document.getElementById('c_nombre'),cEmail=document.getElementById('c_email'),cAsunto=document.getElementById('c_asunto'),cMensaje=document.getElementById('c_mensaje'),cCompany=document.getElementById('c_company'),btnEnviarContacto=document.getElementById('btnEnviarContacto'),btnLimpiarContacto=document.getElementById('btnLimpiarContacto'),contactoMsg=document.getElementById('contactoMsg');
+  function setContactoMsg(text,type){if(!contactoMsg)return;contactoMsg.textContent=text||'';contactoMsg.classList.remove('statusOk','statusWarn','statusErr');contactoMsg.classList.add(type||'statusWarn');}
+  btnLimpiarContacto?.addEventListener('click',()=>{if(cNombre)cNombre.value='';if(cEmail)cEmail.value='';if(cAsunto)cAsunto.value='';if(cMensaje)cMensaje.value='';if(cCompany)cCompany.value='';setContactoMsg('','statusWarn');});
+  btnEnviarContacto?.addEventListener('click',async()=>{
+    const name=cNombre?.value?.trim()||'',email=cEmail?.value?.trim()||'',subject=cAsunto?.value?.trim()||'',message=cMensaje?.value?.trim()||'',hp=cCompany?.value?.trim()||'';
+    if(!name||!email||!subject||!message){setContactoMsg('Por favor completa nombre, email, asunto y mensaje.','statusWarn');return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setContactoMsg('Email inválido. Revisa el formato.','statusWarn');return;}
+    try{btnEnviarContacto.disabled=true;setContactoMsg('Enviando...','statusWarn');const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,subject,message,hp})});const raw=await res.text();let data={};try{data=raw?JSON.parse(raw):{};}catch{data={raw};}if(!res.ok||!data.ok){setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error||data.raw||'sin detalle'}`,'statusErr');return;}setContactoMsg('Mensaje enviado. ¡Gracias!','statusOk');btnLimpiarContacto?.click();}
+    catch(e){setContactoMsg('Error de conexión al enviar el mensaje.','statusErr');}finally{btnEnviarContacto.disabled=false;}
+  });
+
+  const selectAnalysisModal=document.getElementById('selectAnalysisModal'),selectAnalysisClose=document.getElementById('selectAnalysisClose'),analysesLoading=document.getElementById('analysesLoading'),analysesEmpty=document.getElementById('analysesEmpty'),analysesList=document.getElementById('analysesList'),btnViewSelectedAnalysis=document.getElementById('btnViewSelectedAnalysis'),btnCancelSelectAnalysis=document.getElementById('btnCancelSelectAnalysis');
+  let selectedAnalysisData=null;
+  function openSelectAnalysisModal(){selectAnalysisModal.style.display='flex';loadApprovedAnalyses();}
+  function closeSelectAnalysisModal(){selectAnalysisModal.style.display='none';analysesList.innerHTML='';selectedAnalysisData=null;if(btnViewSelectedAnalysis)btnViewSelectedAnalysis.disabled=true;}
+  async function loadApprovedAnalyses(){analysesLoading.style.display='block';analysesEmpty.style.display='none';analysesList.innerHTML='';try{const res=await fetch('/api/list-approved-analyses',{credentials:'include'});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok)throw new Error(data.error||'Error al cargar análisis');analysesLoading.style.display='none';if(!data.analyses||data.analyses.length===0){analysesEmpty.style.display='block';return;}renderAnalysesList(data.analyses);}catch(e){console.error('Error loading analyses:',e);analysesLoading.style.display='none';analysesEmpty.style.display='block';}}
+  function renderAnalysesList(analyses){analysesList.innerHTML='';analyses.forEach((analysis)=>{const card=document.createElement('div');card.className='analysisCard';const analysisDate=formatDateTime(analysis.analysis_date);const dateRange=formatDateRange(analysis.earliest_response,analysis.latest_response);card.innerHTML=`<label><input type="radio" name="selectedAnalysis" value="${analysis.analysis_date}" data-analysis='${JSON.stringify(analysis)}' /><div class="analysisInfo"><div class="analysisDate">${analysisDate}</div><div class="analysisStats"><div class="analysisStat"><span class="statLabel">Estudiantes:</span><span class="statValue">${analysis.total_students}</span></div><div class="analysisStat"><span class="statLabel">Rango:</span><span class="statValue">${dateRange}</span></div><span class="statusBadge">Aprobado</span></div></div></label>`;const radio=card.querySelector('input[type="radio"]');radio.addEventListener('change',(e)=>{document.querySelectorAll('.analysisCard').forEach(c=>c.classList.remove('selected'));if(e.target.checked){card.classList.add('selected');selectedAnalysisData=JSON.parse(e.target.dataset.analysis);if(btnViewSelectedAnalysis)btnViewSelectedAnalysis.disabled=false;}});card.addEventListener('click',(e)=>{if(e.target.tagName!=='INPUT')radio.click();});analysesList.appendChild(card);});}
+  function formatDateTime(isoString){if(!isoString)return'N/A';try{return new Date(isoString).toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return isoString;}}
+  function formatDateRange(earliest,latest){if(!earliest||!latest)return'N/A';try{const startStr=new Date(earliest).toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});const endStr=new Date(latest).toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});return startStr===endStr?startStr:`${startStr} - ${endStr}`;}catch(e){return'N/A';}}
+  selectAnalysisClose?.addEventListener('click',closeSelectAnalysisModal);
+  btnCancelSelectAnalysis?.addEventListener('click',closeSelectAnalysisModal);
+  selectAnalysisModal?.addEventListener('click',(e)=>{if(e.target===selectAnalysisModal)closeSelectAnalysisModal();});
+  btnViewSelectedAnalysis?.addEventListener('click',()=>{if(!selectedAnalysisData){alert('Por favor selecciona un análisis');return;}const baseUrl='https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';const url=`${baseUrl}?school_id=${encodeURIComponent(window.sessionState.school_id)}&analysis_dt=${encodeURIComponent(selectedAnalysisData.analysis_date)}`;window.location.href=url;});
+
+  window.adminState={authenticated:false,username:null,role:null};
+  const adminIcon=document.getElementById('adminIcon'),adminModal=document.getElementById('adminModal'),adminModalClose=document.getElementById('adminModalClose'),adminLoginForm=document.getElementById('adminLoginForm'),adminLoggedIn=document.getElementById('adminLoggedIn'),adminNavButtons=document.getElementById('adminNavButtons'),adminUsername=document.getElementById('adminUsername'),adminPassword=document.getElementById('adminPassword'),btnAdminLogin=document.getElementById('btnAdminLogin'),btnAdminCancel=document.getElementById('btnAdminCancel'),btnAdminLogout=document.getElementById('btnAdminLogout'),btnAdminClose=document.getElementById('btnAdminClose'),adminLoginMsg=document.getElementById('adminLoginMsg'),adminWelcomeMsg=document.getElementById('adminWelcomeMsg');
+
+  async function checkAdminSession(){try{const res=await fetch('/api/admin-me',{credentials:'include'});const data=await res.json().catch(()=>({}));if(data.ok&&data.admin){window.adminState={authenticated:true,username:data.admin.username,role:data.admin.role};updateAdminUI();if(sessionBadge){sessionBadge.textContent=`Admin: ${data.admin.username}`;sessionBadge.classList.remove('badgeNo');sessionBadge.classList.add('badgeOk');}}else{window.adminState={authenticated:false,username:null,role:null};updateAdminUI();}}catch(e){console.error('Admin session check failed:',e);}}
+  function updateAdminUI(){if(window.adminState.authenticated){adminIcon.classList.add('authenticated');adminIcon.title=`Admin: ${window.adminState.username}`;if(sessionBadge){sessionBadge.textContent=`Admin: ${window.adminState.username}`;sessionBadge.classList.remove('badgeNo');sessionBadge.classList.add('badgeOk');}if(adminNavButtons)adminNavButtons.classList.add('show');}else{adminIcon.classList.remove('authenticated');adminIcon.title='Admin Access';if(!window.sessionState.ok&&sessionBadge){sessionBadge.textContent='No autenticado';sessionBadge.classList.remove('badgeOk');sessionBadge.classList.add('badgeNo');}if(adminNavButtons)adminNavButtons.classList.remove('show');}}
+  function openAdminModal(){if(window.adminState.authenticated){adminLoginForm.style.display='none';adminLoggedIn.style.display='block';adminWelcomeMsg.textContent=`Welcome, ${window.adminState.username}!`;}else{adminLoginForm.style.display='block';adminLoggedIn.style.display='none';adminUsername.value='';adminPassword.value='';adminLoginMsg.textContent='';}adminModal.style.display='flex';setTimeout(()=>adminUsername?.focus(),100);}
+  function closeAdminModal(){adminModal.style.display='none';}
+  adminIcon?.addEventListener('click',openAdminModal);adminModalClose?.addEventListener('click',closeAdminModal);btnAdminCancel?.addEventListener('click',closeAdminModal);btnAdminClose?.addEventListener('click',closeAdminModal);adminModal?.addEventListener('click',(e)=>{if(e.target===adminModal)closeAdminModal();});
+  btnAdminLogin?.addEventListener('click',async()=>{const username=adminUsername?.value?.trim()||'';const password=adminPassword?.value?.trim()||'';if(!username||!password){adminLoginMsg.textContent='Please enter username and password';return;}try{adminLoginMsg.textContent='Authenticating...';btnAdminLogin.disabled=true;const res=await fetch('/api/admin-login',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok){adminLoginMsg.textContent=data.error||'Login failed';btnAdminLogin.disabled=false;return;}window.adminState={authenticated:true,username:data.admin.username,role:data.admin.role};adminLoginMsg.textContent='';updateAdminUI();if(sessionBadge){sessionBadge.textContent=`Admin: ${data.admin.username}`;sessionBadge.classList.remove('badgeNo');sessionBadge.classList.add('badgeOk');}closeAdminModal();alert(`✅ Admin login successful!\n\nWelcome, ${data.admin.full_name||data.admin.username}`);}catch(e){adminLoginMsg.textContent='Connection error';console.error('Admin login error:',e);}finally{btnAdminLogin.disabled=false;}});
+  btnAdminLogout?.addEventListener('click',async()=>{try{await fetch('/api/admin-logout',{method:'POST',credentials:'include'});window.adminState={authenticated:false,username:null,role:null};updateAdminUI();closeAdminModal();alert('✅ Logged out successfully');}catch(e){console.error('Logout error:',e);}});
+  adminPassword?.addEventListener('keypress',(e)=>{if(e.key==='Enter')btnAdminLogin?.click();});
+  checkAdminSession();
+
+  const approveSurveysModal=document.getElementById('approveSurveysModal'),approveSurveysClose=document.getElementById('approveSurveysClose'),pendingSurveysLoading=document.getElementById('pendingSurveysLoading'),pendingSurveysEmpty=document.getElementById('pendingSurveysEmpty'),pendingSurveysList=document.getElementById('pendingSurveysList'),btnClosePendingSurveys=document.getElementById('btnClosePendingSurveys'),btnApproveSurvey=document.getElementById('btnApproveSurvey');
+  function openApproveSurveysModal(){approveSurveysModal.style.display='flex';loadPendingSurveys();}
+  function closeApproveSurveysModal(){approveSurveysModal.style.display='none';pendingSurveysList.innerHTML='';}
+  async function loadPendingSurveys(){pendingSurveysLoading.style.display='block';pendingSurveysEmpty.style.display='none';pendingSurveysList.innerHTML='';try{const res=await fetch('/api/list-pending-surveys',{credentials:'include'});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok)throw new Error(data.error||'Failed to load pending surveys');pendingSurveysLoading.style.display='none';if(!data.pending||data.pending.length===0){pendingSurveysEmpty.style.display='block';return;}renderPendingSurveys(data.pending);}catch(e){console.error('Error loading pending surveys:',e);pendingSurveysLoading.style.display='none';pendingSurveysEmpty.style.display='block';}}
+  function renderPendingSurveys(surveys){pendingSurveysList.innerHTML='';surveys.forEach(survey=>{const card=document.createElement('div');card.className='pendingSurveyCard';card.id=`survey-${survey.school_id}-${survey.analysis_date}`;const analysisDate=formatDateTime(survey.analysis_date);const dateRange=formatDateRange(survey.earliest_response,survey.latest_response);card.innerHTML=`<div class="surveyHeader"><div class="surveySchoolName">${survey.school_name}</div></div><div class="surveyMeta"><div class="surveyMetaItem"><span style="color:#7a8e9e;">Students:</span><span style="color:#fff;font-weight:600;">${survey.total_students}</span></div><div class="surveyMetaItem"><span style="color:#7a8e9e;">Requested:</span><span style="color:#fff;">${analysisDate}</span></div><div class="surveyMetaItem"><span style="color:#7a8e9e;">Range:</span><span style="color:#fff;">${dateRange}</span></div></div><div class="surveyActions"><button class="btnApprove" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Approve</button><button class="btnReject" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Re-open</button><button class="btnPreview" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Preview</button></div>`;card.querySelector('.btnApprove').addEventListener('click',()=>approveSurvey(survey.school_id,survey.analysis_date,survey.school_name));card.querySelector('.btnReject').addEventListener('click',()=>rejectSurvey(survey.school_id,survey.analysis_date,survey.school_name));card.querySelector('.btnPreview').addEventListener('click',()=>previewSurvey(survey.school_id,survey.analysis_date));pendingSurveysList.appendChild(card);});}
+  async function approveSurvey(schoolId,analysisDate,schoolName){if(!confirm(`Approve survey for ${schoolName}?`))return;try{const res=await fetch('/api/approve-survey',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({school_id:schoolId,analysis_dt:analysisDate})});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok){alert('Failed to approve: '+(data.error||'Unknown error'));return;}alert(`✅ Survey approved for ${schoolName}!`);const card=document.getElementById(`survey-${schoolId}-${analysisDate}`);if(card)card.remove();if(pendingSurveysList.children.length===0)pendingSurveysEmpty.style.display='block';}catch(e){console.error('Approve error:',e);alert('Error approving survey');}}
+  async function rejectSurvey(schoolId,analysisDate,schoolName){if(!confirm(`Reject survey for ${schoolName}?\n\nThis will remove the analysis request.`))return;try{const res=await fetch('/api/reject-survey',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({school_id:schoolId,analysis_dt:analysisDate})});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok){alert('Failed to re-open: '+(data.error||'Unknown error'));return;}alert(`❌ Survey re-open for ${schoolName}`);const card=document.getElementById(`survey-${schoolId}-${analysisDate}`);if(card)card.remove();if(pendingSurveysList.children.length===0)pendingSurveysEmpty.style.display='block';}catch(e){console.error('Re-open error:',e);alert('Error rejecting survey');}}
+  function previewSurvey(schoolId,analysisDate){const baseUrl='https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';const url=`${baseUrl}?school_id=${encodeURIComponent(schoolId)}&analysis_dt=${encodeURIComponent(analysisDate)}&preview=true`;window.open(url,'_blank');}
+  approveSurveysClose?.addEventListener('click',closeApproveSurveysModal);btnClosePendingSurveys?.addEventListener('click',closeApproveSurveysModal);approveSurveysModal?.addEventListener('click',(e)=>{if(e.target===approveSurveysModal)closeApproveSurveysModal();});
+  btnApproveSurvey?.addEventListener('click',()=>{if(!window.adminState.authenticated){alert('Please login as admin first');return;}openApproveSurveysModal();});
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const addSchoolModal1=document.getElementById('addSchoolModal1'),addSchoolModal2=document.getElementById('addSchoolModal2'),addSchoolClose1=document.getElementById('addSchoolClose1'),addSchoolClose2=document.getElementById('addSchoolClose2'),btnAddSchool=document.getElementById('btnAddSchool'),btnCancelAddSchool1=document.getElementById('btnCancelAddSchool1'),btnNextToEncargado=document.getElementById('btnNextToEncargado'),btnBackToSchoolInfo=document.getElementById('btnBackToSchoolInfo'),btnCreateSchool=document.getElementById('btnCreateSchool'),addSchoolMsg1=document.getElementById('addSchoolMsg1'),addSchoolMsg2=document.getElementById('addSchoolMsg2'),addSchoolCountry=document.getElementById('addSchoolCountry'),enrollmentFields=document.getElementById('enrollmentFields');
+    if(!addSchoolModal1||!addSchoolModal2){console.error('❌ Add School modals not found');return;}
+    const ENROLLMENT_CONFIG={MX:[{id:'addStudentsGroup1',label:'Primaria (1°–6°)',key:'studentsPrimaria'},{id:'addStudentsGroup2',label:'Secundaria (7°–9°)',key:'studentsSecundaria'},{id:'addStudentsGroup3',label:'Preparatoria (10°–12°)',key:'studentsPreparatoria'}],CL:[{id:'addStudentsGroup1',label:'Básica (1°–8°)',key:'studentsPrimaria'},{id:'addStudentsGroup2',label:'Media (9°–12°)',key:'studentsSecundaria'},{id:'addStudentsGroup3',label:'',key:'studentsPreparatoria',hidden:true}],CR:[{id:'addStudentsGroup1',label:'Primaria (1°–6°)',key:'studentsPrimaria'},{id:'addStudentsGroup2',label:'Secundaria (7°–11°)',key:'studentsSecundaria'},{id:'addStudentsGroup3',label:'',key:'studentsPreparatoria',hidden:true}],DO:[{id:'addStudentsGroup1',label:'Primaria (1°–6°)',key:'studentsPrimaria'},{id:'addStudentsGroup2',label:'Secundaria (7°–12°)',key:'studentsSecundaria'},{id:'addStudentsGroup3',label:'',key:'studentsPreparatoria',hidden:true}],US:[{id:'addStudentsGroup1',label:'Elementary (K–5)',key:'studentsPrimaria'},{id:'addStudentsGroup2',label:'Middle (6–8)',key:'studentsSecundaria'},{id:'addStudentsGroup3',label:'High (9–12)',key:'studentsPreparatoria'}]};
+    function renderEnrollmentFields(country){const config=ENROLLMENT_CONFIG[country]||ENROLLMENT_CONFIG['MX'];enrollmentFields.innerHTML=config.filter(f=>!f.hidden).map(f=>`<div class="fieldBlock"><label class="fieldLabel" for="${f.id}" style="font-size:12px;">${f.label} *</label><br /><input id="${f.id}" class="textInput" type="number" min="0" value="0" data-key="${f.key}" style="width:100%;max-width:110px;" /></div>`).join('');}
+    addSchoolCountry?.addEventListener('change',()=>{renderEnrollmentFields(addSchoolCountry.value);});
+    renderEnrollmentFields('MX');
+    let schoolFormData={};
+    function clearAllFields(){document.getElementById('addSchoolName').value='';document.getElementById('addSchoolUsername').value='';document.getElementById('addSchoolPassword').value='';if(addSchoolCountry)addSchoolCountry.value='MX';renderEnrollmentFields('MX');document.getElementById('addEncFirstName').value='';document.getElementById('addEncPatLastName').value='';document.getElementById('addEncMatLastName').value='';addSchoolMsg1.textContent='';addSchoolMsg2.textContent='';schoolFormData={};}
+    function openModal1(){clearAllFields();addSchoolModal1.style.display='flex';addSchoolModal2.style.display='none';}
+    function closeAllModals(){addSchoolModal1.style.display='none';addSchoolModal2.style.display='none';}
+    function validateStep1(){const schoolName=document.getElementById('addSchoolName')?.value?.trim()||'';const username=document.getElementById('addSchoolUsername')?.value?.trim()||'';const password=document.getElementById('addSchoolPassword')?.value?.trim()||'';const country=addSchoolCountry?.value||'MX';if(!schoolName){addSchoolMsg1.textContent='School name is required';addSchoolMsg1.className='statusMsg statusErr';return false;}if(!username){addSchoolMsg1.textContent='Username is required';addSchoolMsg1.className='statusMsg statusErr';return false;}if(!password){addSchoolMsg1.textContent='Password is required';addSchoolMsg1.className='statusMsg statusErr';return false;}if(password.length<6){addSchoolMsg1.textContent='Password must be at least 6 characters';addSchoolMsg1.className='statusMsg statusErr';return false;}const enrollmentInputs=enrollmentFields.querySelectorAll('input[data-key]');const enrollmentData={};for(const input of enrollmentInputs){enrollmentData[input.dataset.key]=parseInt(input.value)||0;}enrollmentData.studentsPrimaria=enrollmentData.studentsPrimaria??0;enrollmentData.studentsSecundaria=enrollmentData.studentsSecundaria??0;enrollmentData.studentsPreparatoria=enrollmentData.studentsPreparatoria??0;schoolFormData={schoolName,username,password,country,...enrollmentData};addSchoolMsg1.textContent='';return true;}
+    function openModal2(){addSchoolModal1.style.display='none';addSchoolModal2.style.display='flex';setTimeout(()=>document.getElementById('addEncFirstName')?.focus(),100);}
+    function backToModal1(){addSchoolModal2.style.display='none';addSchoolModal1.style.display='flex';if(schoolFormData.schoolName){document.getElementById('addSchoolName').value=schoolFormData.schoolName;document.getElementById('addSchoolUsername').value=schoolFormData.username;document.getElementById('addSchoolPassword').value=schoolFormData.password;if(addSchoolCountry)addSchoolCountry.value=schoolFormData.country||'MX';renderEnrollmentFields(schoolFormData.country||'MX');const inputs=enrollmentFields.querySelectorAll('input[data-key]');for(const input of inputs){input.value=schoolFormData[input.dataset.key]??0;}}}
+    btnAddSchool?.addEventListener('click',()=>{if(!window.adminState?.authenticated){alert('Please login as admin first');return;}openModal1();});
+    addSchoolClose1?.addEventListener('click',closeAllModals);addSchoolClose2?.addEventListener('click',closeAllModals);btnCancelAddSchool1?.addEventListener('click',closeAllModals);addSchoolModal1?.addEventListener('click',(e)=>{if(e.target===addSchoolModal1)closeAllModals();});addSchoolModal2?.addEventListener('click',(e)=>{if(e.target===addSchoolModal2)closeAllModals();});
+    btnNextToEncargado?.addEventListener('click',()=>{if(validateStep1())openModal2();});btnBackToSchoolInfo?.addEventListener('click',backToModal1);
+    btnCreateSchool?.addEventListener('click',async()=>{const encFirstName=document.getElementById('addEncFirstName')?.value?.trim()||'';const encPatLastName=document.getElementById('addEncPatLastName')?.value?.trim()||'';const encMatLastName=document.getElementById('addEncMatLastName')?.value?.trim()||'';if(!encFirstName){addSchoolMsg2.textContent='Encargado first name is required';addSchoolMsg2.className='statusMsg statusErr';return;}if(!encPatLastName){addSchoolMsg2.textContent='Encargado paternal last name is required';addSchoolMsg2.className='statusMsg statusErr';return;}const finalData={...schoolFormData,encFirstName,encPatLastName,encMatLastName};try{btnCreateSchool.disabled=true;addSchoolMsg2.textContent='Creating school...';addSchoolMsg2.className='statusMsg statusWarn';const res=await fetch('/api/add-school',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(finalData)});const data=await res.json().catch(()=>({}));if(!res.ok||!data.ok){addSchoolMsg2.textContent=data.error||'Failed to create school';addSchoolMsg2.className='statusMsg statusErr';btnCreateSchool.disabled=false;return;}addSchoolMsg2.textContent=`✅ School "${data.school.name}" (${data.school.country}) created successfully!`;addSchoolMsg2.className='statusMsg statusOk';setTimeout(()=>closeAllModals(),2000);}catch(e){console.error('Error creating school:',e);addSchoolMsg2.textContent='Connection error';addSchoolMsg2.className='statusMsg statusErr';}finally{btnCreateSchool.disabled=false;}});
+    document.getElementById('addSchoolPassword')?.addEventListener('keypress',(e)=>{if(e.key==='Enter')btnNextToEncargado?.click();});
+    document.getElementById('addEncPatLastName')?.addEventListener('keypress',(e)=>{if(e.key==='Enter')btnCreateSchool?.click();});
+    document.getElementById('addEncMatLastName')?.addEventListener('keypress',(e)=>{if(e.key==='Enter')btnCreateSchool?.click();});
+  });
+</script>
 </body>
 </html>
-
-
