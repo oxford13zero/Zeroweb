@@ -766,6 +766,8 @@
         Sin tecnicismos. Sin trampa. Al final, un diagnóstico honesto
         de cuánto estás viendo — y cuánto se te está escapando.
       </p>
+
+      <!--
       <div class="quiz-intro-meta">
         <div class="quiz-intro-meta-item">
           <div class="quiz-intro-meta-icon">🔍</div>
@@ -780,6 +782,8 @@
           <span>Capacidad de respuesta</span>
         </div>
       </div>
+       -->
+      
       <button class="quiz-btn-primary" onclick="startQuiz()" type="button" style="font-size:15px;padding:13px 30px;">
         Comenzar diagnóstico →
       </button>
@@ -853,7 +857,7 @@
 
       <div class="quiz-divider"></div>
 
-      <div class="quiz-email-section">
+      <!-- <div class="quiz-email-section">
         <div class="quiz-email-title">📄 Recibe el informe completo en PDF</div>
         <div class="quiz-email-desc" id="quizEmailDesc">
           El PDF incluye tu diagnóstico detallado, estadísticas comparativas con escuelas similares
@@ -866,7 +870,7 @@
         <p style="font-size:11px;color:#4a6070;margin-top:10px;">
           🔒 Sin spam. Solo el informe y una llamada de seguimiento si lo deseas.
         </p>
-      </div>
+      </div>  -->
 
       <div class="quiz-btn-row">
         <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Cerrar</button>
@@ -893,20 +897,20 @@
   ];
 
   var QUIZ_OPTIONS = [
-    { value:'yes', label:'Sí, lo tenemos claro', icon:'✅' },
-    { value:'no',  label:'No, no lo tenemos',    icon:'❌' },
-    { value:'idk', label:'No estoy seguro/a',     icon:'🤔' }
+    { value:'yes', label:'Sí, lo tenemos claro', icon:'' },
+    { value:'no',  label:'No, no lo tenemos',    icon:'' },
+    { value:'idk', label:'No estoy seguro/a',     icon:'' }
   ];
 
   var QUIZ_FINDINGS = [
     { q:0, type:'danger',  icon:'🚨', title:'Sin visibilidad en zonas no supervisadas',   text:'El 70% del acoso ocurre en pasillos, baños y recreos. No tienes datos de esas zonas.' },
-    { q:1, type:'danger',  icon:'👁️', title:'No identificas a los estudiantes en riesgo', text:'Sin ese dato, actúas después del incidente — no antes.' },
-    { q:2, type:'warning', icon:'📊', title:'Sin clima emocional por salón',               text:'Sin datos por curso, las intervenciones son genéricas y menos efectivas.' },
-    { q:3, type:'warning', icon:'🏫', title:'Docentes sin capacitación reciente',          text:'Los profesores son tu primera línea. Sin herramientas, las señales pasan desapercibidas.' },
-    { q:4, type:'danger',  icon:'⚠️', title:'Sin protocolo unificado',                    text:'Cada profesor responde diferente, lo que crea inconsistencia y riesgo legal.' },
+    { q:1, type:'danger',  icon:'🚨', title:'No identificas a los estudiantes en riesgo', text:'Sin ese dato, actúas después del incidente — no antes.' },
+    { q:2, type:'warning', icon:'⚠️', title:'Sin clima emocional por salón',               text:'Sin datos por curso, las intervenciones son genéricas y menos efectivas.' },
+    { q:3, type:'warning', icon:'⚠️', title:'Docentes sin capacitación reciente',          text:'Los profesores son tu primera línea. Sin herramientas, las señales pasan desapercibidas.' },
+    { q:4, type:'danger',  icon:'🚨', title:'Sin protocolo unificado',                    text:'Cada profesor responde diferente, lo que crea inconsistencia y riesgo legal.' },
     { q:5, type:'info',    icon:'📋', title:'Sin métricas de impacto',                    text:'Estás invirtiendo en prevención sin saber si funciona.' },
-    { q:6, type:'warning', icon:'⏱️', title:'Tiempos de respuesta no medidos',             text:'La velocidad ante un incidente es clave para el bienestar del estudiante y la protección legal.' },
-    { q:7, type:'danger',  icon:'⚖️', title:'Sin respaldo legal documentado',             text:'Una sola denuncia sin documentación puede escalar a consecuencias legales y mediáticas.' }
+    { q:6, type:'warning', icon:'⚠️', title:'Tiempos de respuesta no medidos',             text:'La velocidad ante un incidente es clave para el bienestar del estudiante y la protección legal.' },
+    { q:7, type:'danger',  icon:'🚨', title:'Sin respaldo legal documentado',             text:'Una sola denuncia sin documentación puede escalar a consecuencias legales y mediáticas.' }
   ];
 
   var quizCurrentQ   = 0;
@@ -1110,3 +1114,4 @@
 
 </body>
 </html>
+
