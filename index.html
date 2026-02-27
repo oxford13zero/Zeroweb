@@ -74,7 +74,7 @@
 
     footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
 
-    /* Compact panel + stacked inputs -- no mas*/
+    /* Compact panel + stacked inputs */
     .formPanel {
       margin-top: 18px;
       background: #1E2F3F;
@@ -182,6 +182,10 @@
       .video-container{
         width: 100%;
         padding-top: 56.25%;
+      }
+
+      .offices-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
       }
     }
 
@@ -596,9 +600,52 @@ te entregamos un perfil completo de tu escuela, junto con un plan de intervenci�
     <p><span class="highlight">Somos de Portland. Enfocados en lo que viene.</span><br><br>
 Somos un equipo de profesionales que trabaja en la frontera de la tecnología, con base en Portland, Oregon — una ciudad que alberga líderes globales como Intel, Nike y Columbia Sportswear. <br><br>
       Ayudamos a las insituciones educacionales a adoptar inteligencia artificial con claridad, responsabilidad y control.
-<br><br>
-851 SW 6th Ave <br>
-Portland, Oregon</p>
+</p>
+
+    <!-- OFFICES GRID -->
+    <div class="offices-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:24px 0;">
+
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+        <div style="font-size:22px; margin-bottom:6px;">🇺🇸</div>
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Portland, Oregon</div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
+          851 SW 6th Ave<br>
+          Portland, OR 97204<br>
+          +1 (503) 555-0192
+        </div>
+      </div>
+
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+        <div style="font-size:22px; margin-bottom:6px;">🇲🇽</div>
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Ciudad de México</div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
+          Av. Insurgentes Sur 1234<br>
+          Col. Del Valle, CDMX 03100<br>
+          +52 55 5555 0147
+        </div>
+      </div>
+
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+        <div style="font-size:22px; margin-bottom:6px;">🇨🇱</div>
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Santiago, Chile</div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
+          Av. Providencia 2340<br>
+          Providencia, Santiago<br>
+          +56 2 2555 0183
+        </div>
+      </div>
+
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+        <div style="font-size:22px; margin-bottom:6px;">🇨🇴</div>
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Bogotá, Colombia</div>
+        <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
+          Cra. 7 No. 32-16<br>
+          Chapinero, Bogotá<br>
+          +57 1 555 0174
+        </div>
+      </div>
+
+    </div>
 
     <div class="formPanel" style="max-width:640px;">
       <div class="fieldBlock">
@@ -911,6 +958,7 @@ Portland, Oregon</p>
   padding: 24px;
 }
 
+.pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
 .pendingSurveyCard:hover { border-color: #D6A21C; background: #243A4B; }
 .surveyHeader { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; gap: 10px; }
 .surveySchoolName { font-size: 18px; font-weight: 700; color: #D6A21C; flex: 1; }
@@ -1309,6 +1357,9 @@ Portland, Oregon</p>
       routingBox.style.display = 'none';
       routingMsg.textContent = '';
 
+      // Clear options cache so any DB changes are picked up fresh
+      OPTIONS_CACHE = {};
+
       // Detect primaria survey and apply large-font mode
       IS_PRIMARIA = (SURVEY.survey?.code === 'SURVEY_003_PRIMARIA');
       if (IS_PRIMARIA) {
@@ -1339,7 +1390,7 @@ Portland, Oregon</p>
   let currentQuestionIndex = 0;
   let QUESTION_ID_MAP = {};
   let IS_PRIMARIA = false;
-  const OPTIONS_CACHE = {};
+  let OPTIONS_CACHE = {}; // cleared at start of each new survey session
 
   function isDemographicExternalId(ext) {
     return ext === 'zero_general_curso'
@@ -1556,6 +1607,7 @@ Portland, Oregon</p>
     sessionStorage.removeItem('currentResponseId');
     SURVEY = null;
     QUESTION_ID_MAP = {};
+    OPTIONS_CACHE = {};
     currentQuestionIndex = 0;
     IS_PRIMARIA = false;
     ROUTING_QUESTION = null;
@@ -2329,4 +2381,3 @@ Portland, Oregon</p>
 
 </body>
 </html>
-
