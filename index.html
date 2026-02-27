@@ -147,7 +147,7 @@
       <p class="heroSubheadline">En menos de 48 horas te entregamos un diagnóstico completo del clima escolar y un Plan de Accion 
        respaldado por UNESCO y ESSA, listo para implementar.<br>
       Identificamos acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.</p><br>
-      <button class="heroCTA" type="button">Solicita conversar con uno de nuestros expertos</button>
+      <button class="heroCTA" type="button" onclick="openQuiz()">¿Qué tan bien conoces tu escuela? — Descúbrelo en 2 minutos</button>
     </div>
   </div>
 
@@ -181,7 +181,7 @@
           <img src="img/s2_acoso.jpeg" alt="Acoso escolar" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-            <span class="oIcon">⚠️</span>
+            <span class="oIcon">🔍</span>
             <div class="oLine"></div>
             <div class="oTitle">El 70% del acoso ocurre fuera del aula</div>
             <div class="oText">En pasillos, baños y entornos digitales que no supervisas.</div>
@@ -223,55 +223,55 @@
       </p>
       <div class="overlayGrid" style="grid-template-columns:repeat(3,1fr);">
         <div class="overlayCard">
-          <img src="img/s3_mapa.jpeg" alt="Mapa de riesgo" />
+          <img src="img/s3_mapa.jpg" alt="Mapa de riesgo" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-            <span class="oIcon">✅</span>
+            <span class="oIcon">🗺️</span>
             <div class="oLine"></div>
             <div class="oTitle">Mapa de zonas de riesgo</div>
             <div class="oText">Físicas y digitales, identificadas por salón, nivel y área del establecimiento.</div>
           </div>
         </div>
         <div class="overlayCard">
-          <img src="img/s3_clima.jpeg" alt="Clima escolar" />
+          <img src="img/s3_clima.jpg" alt="Clima escolar" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-             <span class="oIcon">✅</span>
+            <span class="oIcon">👥</span>
             <div class="oLine"></div>
             <div class="oTitle">Perfil completo de clima escolar</div>
             <div class="oText">Por curso, por docente, por nivel.</div>
           </div>
         </div>
-        <!-- <div class="overlayCard">
-          <img src="img/s3_alertas.jpeg" alt="Alertas tempranas" />
+        <div class="overlayCard">
+          <img src="img/s3_alertas.jpg" alt="Alertas tempranas" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-             <span class="oIcon">✅</span>
+            <span class="oIcon">🚨</span>
             <div class="oLine"></div>
             <div class="oTitle">Alertas tempranas</div>
             <div class="oText">Situaciones críticas identificadas antes de que escalen.</div>
           </div>
-        </div> -->
+        </div>
         <div class="overlayCard">
-          <img src="img/s3_plan.jpeg" alt="Plan de intervención" />
+          <img src="img/s3_plan.jpg" alt="Plan de intervención" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-            <span class="oIcon">✅</span>
+            <span class="oIcon">📋</span>
             <div class="oLine"></div>
             <div class="oTitle">Plan de intervención</div>
             <div class="oText">Listo para presentar a tu equipo y ejecutar de inmediato.</div>
           </div>
         </div>
-        <!--<div class="overlayCard">
-          <img src="img/s3_resultados.jpeg" alt="Resultados rápidos" />
+        <div class="overlayCard">
+          <img src="img/s3_resultados.jpg" alt="Resultados rápidos" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
+            <span class="oIcon">⏱️</span>
             <div class="oLine"></div>
             <div class="oTitle">Resultados en 48 horas</div>
             <div class="oText">Desde que tus estudiantes completan la encuesta.</div>
           </div>
-        </div> -->
-        
+        </div>
       </div>
     </div>
   </div>
@@ -466,7 +466,6 @@
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">Cra. 7 No. 32-16<br>Chapinero, Bogotá<br>+57 1 555 0174</div>
       </div>
     </div>
-
     <!-- FORMULARIO + FOTO -->
     <div style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; margin-top:8px;">
 
@@ -486,7 +485,7 @@
 
       <!-- FOTO — ocupa el resto del espacio -->
       <div style="position:relative; flex:1; min-width:200px; align-self:stretch; border-radius:12px; overflow:hidden;">
-        <img src="img/contact_picture2.jpg" <!--alt="Madre e hija" style=" -->
+        <img src="img/contact_picture2.jpg" alt="Madre e hija" style="
           position:absolute; inset:0;
           width:100%; height:100%;
           object-fit:cover;
@@ -498,7 +497,7 @@
           <div>
             <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:16px;"></div>
             <p style="font-family:'Playfair Display',serif; font-size:18px; line-height:1.7; color:#ffffff; margin:0 0 16px 0; font-style:italic;">"No necesitas tener todo claro antes de escribirnos. Cuéntanos qué está pasando en tu escuela y juntos encontramos el camino."</p>
-            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;"></div>
+            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;">— Equipo TECH4ZERO</div>
           </div>
         </div>
       </div>
@@ -715,6 +714,96 @@
 #surveyBox.primaria-mode #qOptions input[type="radio"] { width:22px; height:22px; flex-shrink:0; }
 #surveyBox.primaria-mode .btnPrimary, #surveyBox.primaria-mode .btnSecondary { font-size:18px; padding:14px 24px; }
 #surveyBox.primaria-mode { max-width:680px; padding:24px; }
+
+  /* ── QUIZ MODAL ── */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(6,14,22,0.92); z-index:19999; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(6px); }
+  .modal-overlay.open { display:flex; }
+  .modal-box { width:min(680px,100%); background:linear-gradient(160deg,#16222D 0%,#0f1d27 100%); border:1px solid #365468; border-radius:20px; overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,0.6); position:relative; }
+  .progress-bar-wrap { height:4px; background:rgba(255,255,255,0.07); width:100%; }
+  .progress-bar-fill { height:4px; background:linear-gradient(90deg,#D6A21C,#f0c040); border-radius:0 4px 4px 0; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); width:0%; }
+  .modal-header { padding:24px 28px 0; display:flex; justify-content:space-between; align-items:flex-start; }
+  .modal-brand { display:flex; align-items:center; gap:10px; }
+  .modal-brand-dot { width:8px; height:8px; background:#D6A21C; border-radius:50%; animation:qpulse 2s infinite; }
+  @keyframes qpulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);} }
+  .modal-brand-name { font-size:11px; font-weight:700; letter-spacing:2px; color:#D6A21C; text-transform:uppercase; }
+  .modal-close { background:transparent; border:1px solid #365468; color:#a9c0d3; width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+  .modal-close:hover { border-color:#D6A21C; color:#D6A21C; }
+  .screen { display:none; padding:28px 28px 32px; animation:fadeSlideIn 0.35s ease; }
+  .screen.active { display:block; }
+  @keyframes fadeSlideIn { from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);} }
+  .intro-label { display:inline-flex; align-items:center; gap:6px; background:rgba(214,162,28,0.12); border:1px solid rgba(214,162,28,0.3); border-radius:999px; padding:4px 12px; font-size:11px; font-weight:700; color:#D6A21C; letter-spacing:1px; text-transform:uppercase; margin-bottom:20px; }
+  .intro-title { font-family:'Playfair Display',serif; font-size:clamp(24px,4vw,34px); font-weight:600; line-height:1.25; margin-bottom:16px; color:#fff; }
+  .intro-title em { color:#D6A21C; font-style:normal; }
+  .intro-desc { font-size:15px; color:#a9c0d3; line-height:1.7; margin-bottom:28px; max-width:500px; }
+  .intro-meta { display:flex; gap:20px; margin-bottom:28px; flex-wrap:wrap; }
+  .intro-meta-item { display:flex; align-items:center; gap:8px; font-size:13px; color:#a9c0d3; }
+  .intro-meta-icon { width:28px; height:28px; background:rgba(214,162,28,0.1); border:1px solid rgba(214,162,28,0.25); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; }
+  .q-counter { font-size:11px; font-weight:700; letter-spacing:2px; color:#D6A21C; text-transform:uppercase; margin-bottom:8px; }
+  .q-category { display:inline-block; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#a9c0d3; background:rgba(255,255,255,0.05); border-radius:4px; padding:3px 8px; margin-bottom:20px; }
+  .q-text { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,24px); font-weight:600; line-height:1.4; color:#fff; margin-bottom:32px; }
+  .q-options { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+  .q-option { display:flex; align-items:center; gap:14px; padding:14px 18px; background:rgba(255,255,255,0.03); border:1.5px solid #365468; border-radius:12px; cursor:pointer; transition:all 0.2s; font-size:15px; color:#fff; font-weight:400; }
+  .q-option:hover { border-color:#D6A21C; background:rgba(214,162,28,0.08); }
+  .q-option.selected { border-color:#D6A21C; background:rgba(214,162,28,0.12); font-weight:600; }
+  .q-option-icon { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; background:rgba(255,255,255,0.05); border:1px solid #365468; flex-shrink:0; transition:all 0.2s; }
+  .q-option.selected .q-option-icon { background:#D6A21C; border-color:#D6A21C; }
+  .q-nav { display:flex; justify-content:space-between; align-items:center; }
+  .q-nav-dots { display:flex; gap:5px; }
+  .q-dot { width:6px; height:6px; border-radius:50%; background:#365468; transition:all 0.3s; }
+  .q-dot.done { background:#D6A21C; }
+  .q-dot.current { background:#D6A21C; width:18px; border-radius:3px; }
+  .result-header { text-align:center; padding:8px 0 24px; border-bottom:1px solid #365468; margin-bottom:24px; }
+  .result-score-wrap { position:relative; width:140px; height:140px; margin:0 auto 16px; }
+  .result-score-svg { transform:rotate(-90deg); }
+  .score-track { fill:none; stroke:rgba(255,255,255,0.06); stroke-width:8; }
+  .score-fill { fill:none; stroke:#D6A21C; stroke-width:8; stroke-linecap:round; stroke-dasharray:345; stroke-dashoffset:345; transition:stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1); filter:drop-shadow(0 0 6px rgba(214,162,28,0.5)); }
+  .score-fill.critical { stroke:#ff6b6b; filter:drop-shadow(0 0 6px rgba(255,107,107,0.5)); }
+  .score-fill.low { stroke:#ffa94d; filter:drop-shadow(0 0 6px rgba(255,169,77,0.5)); }
+  .score-fill.medium { stroke:#D6A21C; filter:drop-shadow(0 0 6px rgba(214,162,28,0.5)); }
+  .score-fill.high { stroke:#69db7c; filter:drop-shadow(0 0 6px rgba(105,219,124,0.5)); }
+  .score-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .score-number { font-family:'Playfair Display',serif; font-size:38px; font-weight:700; color:#fff; line-height:1; }
+  .score-label { font-size:11px; color:#a9c0d3; letter-spacing:1px; text-transform:uppercase; }
+  .result-level { font-family:'Playfair Display',serif; font-size:22px; font-weight:600; margin-bottom:8px; }
+  .result-level.critical { color:#ff6b6b; } .result-level.low { color:#ffa94d; } .result-level.medium { color:#D6A21C; } .result-level.high { color:#69db7c; }
+  .result-subtitle { font-size:14px; color:#a9c0d3; max-width:420px; margin:0 auto; line-height:1.6; }
+  .findings-title { font-size:11px; font-weight:700; letter-spacing:2px; color:#a9c0d3; text-transform:uppercase; margin-bottom:14px; }
+  .findings-list { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
+  .finding-item { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; background:rgba(255,255,255,0.03); border-radius:10px; border-left:3px solid; }
+  .finding-item.danger { border-color:#ff6b6b; } .finding-item.warning { border-color:#ffa94d; } .finding-item.info { border-color:#D6A21C; }
+  .finding-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+  .finding-text { font-size:14px; color:#a9c0d3; line-height:1.5; }
+  .finding-text strong { color:#fff; display:block; margin-bottom:2px; font-size:14px; }
+  .share-card { background:linear-gradient(135deg,#0a1520 0%,#1E2F3F 60%,#162535 100%); border:1px solid #365468; border-radius:16px; padding:24px; margin-bottom:20px; position:relative; overflow:hidden; }
+  .share-card::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; background:radial-gradient(circle,rgba(214,162,28,0.12) 0%,transparent 70%); border-radius:50%; }
+  .share-card-brand { font-size:10px; font-weight:700; letter-spacing:2.5px; color:#D6A21C; text-transform:uppercase; margin-bottom:14px; opacity:0.8; }
+  .share-card-headline { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; color:#fff; margin-bottom:16px; line-height:1.35; }
+  .share-card-score-row { display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
+  .share-big-num { font-family:'Playfair Display',serif; font-size:52px; font-weight:700; line-height:1; }
+  .share-big-num.critical { color:#ff6b6b; } .share-big-num.low { color:#ffa94d; } .share-big-num.medium { color:#D6A21C; } .share-big-num.high { color:#69db7c; }
+  .share-score-label { font-size:13px; color:#a9c0d3; line-height:1.5; }
+  .share-dots { display:flex; gap:5px; margin-top:14px; }
+  .share-dot { flex:1; height:4px; border-radius:2px; background:rgba(255,255,255,0.1); }
+  .share-dot.filled { background:#D6A21C; } .share-dot.filled.critical { background:#ff6b6b; } .share-dot.filled.low { background:#ffa94d; } .share-dot.filled.high { background:#69db7c; }
+  .share-footer { display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:11px; color:#a9c0d3; }
+  .share-footer-logo { font-weight:700; color:#D6A21C; letter-spacing:1px; font-size:11px; }
+  .email-section { background:rgba(214,162,28,0.06); border:1px solid rgba(214,162,28,0.2); border-radius:12px; padding:18px; margin-bottom:20px; }
+  .email-section-title { font-size:14px; font-weight:700; color:#fff; margin-bottom:4px; }
+  .email-section-desc { font-size:13px; color:#a9c0d3; margin-bottom:14px; line-height:1.5; }
+  .email-row { display:flex; gap:10px; flex-wrap:wrap; }
+  .email-input { flex:1; min-width:200px; padding:10px 14px; background:rgba(0,0,0,0.3); border:1px solid #365468; border-radius:8px; color:#fff; font-size:14px; outline:none; transition:border-color 0.2s; font-family:'Open Sans',sans-serif; }
+  .email-input:focus { border-color:#D6A21C; }
+  .email-input::placeholder { color:#4a6070; }
+  .btn-quiz-primary { padding:11px 22px; background:#D6A21C; color:#16222D; font-weight:700; font-size:14px; border:none; border-radius:8px; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:'Open Sans',sans-serif; }
+  .btn-quiz-primary:hover { background:#f0c040; transform:translateY(-1px); }
+  .btn-quiz-primary:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+  .btn-quiz-secondary { padding:11px 22px; background:transparent; color:#a9c0d3; font-weight:600; font-size:14px; border:1px solid #365468; border-radius:8px; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:'Open Sans',sans-serif; }
+  .btn-quiz-secondary:hover { border-color:#D6A21C; color:#D6A21C; }
+  .btn-whatsapp { display:flex; align-items:center; gap:8px; padding:11px 22px; background:#25D366; color:#fff; font-weight:700; font-size:14px; border:none; border-radius:8px; cursor:pointer; transition:all 0.2s; font-family:'Open Sans',sans-serif; }
+  .btn-whatsapp:hover { background:#20bd5a; transform:translateY(-1px); }
+  .btn-quiz-row { display:flex; gap:10px; flex-wrap:wrap; }
+  .quiz-divider { height:1px; background:#365468; margin:20px 0; }
+  @media (max-width:480px) { .modal-box{border-radius:16px;} .screen{padding:20px 18px 24px;} .intro-meta{gap:12px;} }
 </style>
 
 <script>
@@ -1049,24 +1138,252 @@
     document.getElementById('addEncMatLastName')?.addEventListener('keypress',(e)=>{if(e.key==='Enter')btnCreateSchool?.click();});
   });
 </script>
+<!-- ═══════════════════════════════ QUIZ MODAL ═══════════════════════════════ -->
+<div id="quizModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+    <div class="modal-header">
+      <div class="modal-brand">
+        <div class="modal-brand-dot"></div>
+        <span class="modal-brand-name">Tech4Zero · Autodiagnóstico</span>
+      </div>
+      <button class="modal-close" onclick="closeQuiz()">✕</button>
+    </div>
+
+    <!-- SCREEN 0: INTRO -->
+    <div class="screen active" id="screen-intro">
+      <div style="height:16px;"></div>
+      <div class="intro-label">⏱ 2 minutos · 8 preguntas</div>
+      <h2 class="intro-title">¿Qué tan bien conoces<br><em>tu escuela?</em></h2>
+      <p class="intro-desc">8 preguntas directas sobre lo que ocurre en tu institución. Sin tecnicismos. Sin trampa. Al final, un diagnóstico honesto de cuánto estás viendo — y cuánto se te está escapando.</p>
+      <div class="intro-meta">
+        <div class="intro-meta-item"><div class="intro-meta-icon">🔍</div><span>Visibilidad escolar</span></div>
+        <div class="intro-meta-item"><div class="intro-meta-icon">🛡️</div><span>Prevención activa</span></div>
+        <div class="intro-meta-item"><div class="intro-meta-icon">⚡</div><span>Capacidad de respuesta</span></div>
+      </div>
+      <button class="btn-quiz-primary" onclick="startQuiz()" style="font-size:15px;padding:13px 30px;">Comenzar diagnóstico →</button>
+    </div>
+
+    <!-- SCREEN 1-8: QUESTIONS -->
+    <div class="screen" id="screen-questions">
+      <div style="height:8px;"></div>
+      <div class="q-counter" id="qCounter">Pregunta 1 de 8</div>
+      <div class="q-category" id="qCategory">VISIBILIDAD</div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-options" id="qOptions"></div>
+      <div class="q-nav">
+        <div class="q-nav-dots" id="qDots"></div>
+        <button class="btn-quiz-primary" id="btnNext" onclick="nextQuestion()" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- SCREEN: RESULT -->
+    <div class="screen" id="screen-result">
+      <div class="result-header">
+        <div class="result-score-wrap">
+          <svg class="result-score-svg" width="140" height="140" viewBox="0 0 140 140">
+            <circle class="score-track" cx="70" cy="70" r="55"/>
+            <circle class="score-fill" id="scoreFill" cx="70" cy="70" r="55"/>
+          </svg>
+          <div class="score-center">
+            <div class="score-number" id="scoreNumber">0</div>
+            <div class="score-label">/ 100</div>
+          </div>
+        </div>
+        <div class="result-level" id="resultLevel"></div>
+        <p class="result-subtitle" id="resultSubtitle"></p>
+      </div>
+      <div class="findings-title">🔎 Tus principales brechas</div>
+      <div class="findings-list" id="findingsList"></div>
+      <button class="btn-quiz-primary" onclick="showShare()" style="width:100%;font-size:15px;padding:14px;">Ver mi tarjeta de resultado →</button>
+    </div>
+
+    <!-- SCREEN: SHARE + EMAIL -->
+    <div class="screen" id="screen-share">
+      <div class="share-card">
+        <div class="share-card-brand">TECH4ZERO · AUTODIAGNÓSTICO ESCOLAR</div>
+        <div class="share-card-headline">Evalué mi escuela.<br>Este es mi resultado de visibilidad.</div>
+        <div class="share-card-score-row">
+          <div class="share-big-num" id="shareScore">0</div>
+          <div class="share-score-label">de 100 puntos<br><strong id="shareLevelText"></strong></div>
+        </div>
+        <div class="share-dots" id="shareDots"></div>
+        <div class="share-footer"><span>¿Cuál es el tuyo?</span><span class="share-footer-logo">TECH4ZERO.COM</span></div>
+      </div>
+      <div class="btn-quiz-row" style="margin-bottom:20px;">
+        <button class="btn-whatsapp" onclick="shareWhatsApp()"><span style="font-size:18px;">💬</span> Compartir por WhatsApp</button>
+        <button class="btn-quiz-secondary" onclick="copyLink()">🔗 Copiar enlace</button>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="email-section">
+        <div class="email-section-title">📄 Recibe el informe completo en PDF</div>
+        <div class="email-section-desc" id="emailSectionDesc">El PDF incluye tu diagnóstico detallado por área, estadísticas comparativas con escuelas similares en tu país, y un plan de primeros pasos concreto para tu institución.</div>
+        <div class="email-row">
+          <input class="email-input" type="email" id="emailInput" placeholder="tu@colegio.edu.mx" />
+          <button class="btn-quiz-primary" id="btnSendPDF" onclick="requestPDF()">Enviar PDF →</button>
+        </div>
+        <p style="font-size:11px;color:#4a6070;margin-top:10px;">🔒 Sin spam. Solo el informe y una llamada de seguimiento si lo deseas.</p>
+      </div>
+      <div class="btn-quiz-row">
+        <button class="btn-quiz-secondary" onclick="closeQuiz()" style="flex:1;">Cerrar</button>
+        <button class="btn-quiz-primary" onclick="restartQuiz()" style="flex:1;">↺ Reiniciar diagnóstico</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── QUIZ ──
+const QUESTIONS = [
+  { category:"VISIBILIDAD", text:"¿Sabes qué ocurre en los pasillos y baños de tu escuela durante los recreos?" },
+  { category:"VISIBILIDAD", text:"¿Puedes identificar hoy a los 3 estudiantes con mayor riesgo de ser víctimas de acoso en tu escuela?" },
+  { category:"VISIBILIDAD", text:"¿Tienes datos sobre el clima emocional en cada salón de clases de forma individual?" },
+  { category:"PREVENCIÓN",  text:"¿Tu cuerpo docente recibió capacitación formal en detección de bullying durante este año escolar?" },
+  { category:"PREVENCIÓN",  text:"¿Tienes un protocolo antibullying claro que todos los profesores conocen y aplican de forma consistente?" },
+  { category:"PREVENCIÓN",  text:"¿Mides con datos concretos si tus acciones de prevención están funcionando?" },
+  { category:"RESPUESTA",   text:"¿El último incidente de acoso reportado en tu escuela fue resuelto en menos de 48 horas?" },
+  { category:"RESPUESTA",   text:"¿Tienes documentación institucional que te proteja legalmente ante una denuncia formal por bullying?" }
+];
+const OPTIONS = [
+  { value:'yes', label:'Sí, lo tenemos claro', icon:'✅' },
+  { value:'no',  label:'No, no lo tenemos',    icon:'❌' },
+  { value:'idk', label:'No estoy seguro/a',     icon:'🤔' }
+];
+const FINDINGS_DB = [
+  { q:0, type:'danger',  icon:'🚨', title:'Sin visibilidad en zonas no supervisadas',   text:'El 70% del acoso ocurre en pasillos, baños y recreos. No tienes datos de esas zonas.' },
+  { q:1, type:'danger',  icon:'👁️', title:'No identificas a los estudiantes en riesgo',  text:'Sin ese dato, actúas después del incidente — no antes. La prevención requiere identificar el riesgo con anticipación.' },
+  { q:2, type:'warning', icon:'📊', title:'Sin clima emocional por salón',               text:'Cada salón tiene su propia dinámica. Sin datos por curso, las intervenciones son genéricas y menos efectivas.' },
+  { q:3, type:'warning', icon:'🏫', title:'Docentes sin capacitación reciente',          text:'Los profesores son tu primera línea. Sin herramientas actualizadas, las señales tempranas pasan desapercibidas.' },
+  { q:4, type:'danger',  icon:'⚠️', title:'Sin protocolo unificado',                    text:'Sin un protocolo compartido, cada profesor responde diferente — lo que crea inconsistencia y riesgo legal.' },
+  { q:5, type:'info',    icon:'📋', title:'Sin métricas de impacto',                    text:'Estás invirtiendo en prevención sin saber si funciona. Los datos te dirían exactamente dónde actuar.' },
+  { q:6, type:'warning', icon:'⏱️', title:'Tiempos de respuesta no medidos',            text:'La velocidad de respuesta ante un incidente es clave tanto para el bienestar del estudiante como para la protección legal.' },
+  { q:7, type:'danger',  icon:'⚖️', title:'Sin respaldo legal documentado',             text:'Una sola denuncia sin documentación puede escalar a consecuencias mediáticas y legales para tu institución.' }
+];
+
+let currentQ=0, quizAnswers=[], finalScore=0;
+
+function openQuiz(){
+  document.getElementById('quizModal').classList.add('open');
+  showQuizScreen('intro');
+}
+function closeQuiz(){ document.getElementById('quizModal').classList.remove('open'); }
+document.getElementById('quizModal').addEventListener('click', e => { if(e.target===document.getElementById('quizModal')) closeQuiz(); });
+
+function showQuizScreen(name){
+  document.querySelectorAll('#quizModal .screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+function startQuiz(){ currentQ=0; quizAnswers=[]; showQuizScreen('questions'); renderQuestion(); updateProgress(0); }
+
+function renderQuestion(){
+  const q=QUESTIONS[currentQ];
+  document.getElementById('qCounter').textContent=`Pregunta ${currentQ+1} de ${QUESTIONS.length}`;
+  document.getElementById('qCategory').textContent=q.category;
+  document.getElementById('qText').textContent=q.text;
+  document.getElementById('qOptions').innerHTML=OPTIONS.map(opt=>`
+    <div class="q-option q-option-${opt.value}" onclick="selectOption('${opt.value}',this)">
+      <div class="q-option-icon">${opt.icon}</div><span>${opt.label}</span>
+    </div>`).join('');
+  if(quizAnswers[currentQ]){
+    const prev=quizAnswers[currentQ];
+    document.querySelectorAll('.q-option').forEach(el=>{
+      if(el.querySelector('span').textContent===OPTIONS.find(o=>o.value===prev)?.label) el.classList.add('selected');
+    });
+    document.getElementById('btnNext').disabled=false;
+  } else { document.getElementById('btnNext').disabled=true; }
+  document.getElementById('qDots').innerHTML=QUESTIONS.map((_,i)=>{
+    let cls='q-dot'; if(i<currentQ)cls+=' done'; if(i===currentQ)cls+=' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+  document.getElementById('btnNext').textContent=currentQ===QUESTIONS.length-1?'Ver resultado →':'Siguiente →';
+}
+
+function selectOption(value,el){
+  document.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected'); quizAnswers[currentQ]=value;
+  document.getElementById('btnNext').disabled=false;
+}
+
+function nextQuestion(){
+  if(!quizAnswers[currentQ])return;
+  updateProgress((currentQ+1)/QUESTIONS.length*80);
+  if(currentQ<QUESTIONS.length-1){ currentQ++; renderQuestion(); }
+  else { calculateResult(); }
+}
+
+function calculateResult(){
+  const pts={yes:100,idk:30,no:0};
+  finalScore=Math.round(quizAnswers.reduce((s,a)=>s+(pts[a]||0),0)/QUESTIONS.length);
+  updateProgress(100);
+  setTimeout(showResult,400);
+}
+
+function showResult(){
+  showQuizScreen('result');
+  let level,cls,subtitle;
+  if(finalScore<=25){level='Visibilidad Crítica';cls='critical';subtitle='Tu escuela tiene puntos ciegos graves. Sin datos, no puedes prevenir lo que no ves. Esto representa un riesgo real e inmediato para tus estudiantes y tu institución.';}
+  else if(finalScore<=50){level='Visibilidad Baja';cls='low';subtitle='Tienes algo de control, pero hay áreas significativas que se te escapan. Lo que no estás midiendo, no lo puedes mejorar — y alguien está pagando ese costo.';}
+  else if(finalScore<=75){level='Visibilidad Media';cls='medium';subtitle='Estás por sobre el promedio regional, pero todavía hay brechas importantes. Una intervención focalizada podría marcar una diferencia significativa.';}
+  else{level='Visibilidad Alta';cls='high';subtitle='Tu escuela tiene buenas prácticas de visibilidad. TECH4ZERO puede llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.';}
+  const fill=document.getElementById('scoreFill');
+  fill.className=`score-fill ${cls}`;
+  const levelEl=document.getElementById('resultLevel');
+  levelEl.className=`result-level ${cls}`; levelEl.textContent=level;
+  document.getElementById('resultSubtitle').textContent=subtitle;
+  setTimeout(()=>{ fill.style.strokeDashoffset=345-(finalScore/100)*345; },100);
+  let c=0; const iv=setInterval(()=>{ c+=2; if(c>=finalScore){c=finalScore;clearInterval(iv);} document.getElementById('scoreNumber').textContent=c; },25);
+  const wrongs=quizAnswers.map((a,i)=>({...FINDINGS_DB[i],answered:a})).filter(f=>f.answered==='no'||f.answered==='idk').slice(0,3);
+  document.getElementById('findingsList').innerHTML=wrongs.map(f=>`
+    <div class="finding-item ${f.type}">
+      <div class="finding-icon">${f.icon}</div>
+      <div class="finding-text"><strong>${f.title}</strong>${f.text}</div>
+    </div>`).join('');
+}
+
+function showShare(){
+  showQuizScreen('share');
+  let cls,level;
+  if(finalScore<=25){cls='critical';level='Visibilidad Crítica';}
+  else if(finalScore<=50){cls='low';level='Visibilidad Baja';}
+  else if(finalScore<=75){cls='medium';level='Visibilidad Media';}
+  else{cls='high';level='Visibilidad Alta';}
+  document.getElementById('shareScore').textContent=finalScore;
+  document.getElementById('shareScore').className=`share-big-num ${cls}`;
+  const lvlEl=document.getElementById('shareLevelText');
+  lvlEl.textContent=level;
+  lvlEl.style.color=cls==='critical'?'#ff6b6b':cls==='low'?'#ffa94d':cls==='medium'?'#D6A21C':'#69db7c';
+  const filled=Math.round(finalScore/10);
+  document.getElementById('shareDots').innerHTML=Array.from({length:10},(_,i)=>`<div class="share-dot ${i<filled?'filled '+cls:''}"></div>`).join('');
+}
+
+function shareWhatsApp(){
+  const msg=`Acabo de hacer el autodiagnóstico de TECH4ZERO para mi escuela.\n\n📊 Mi índice de visibilidad: *${finalScore}/100*\n\nCon este dato pienso que deberíamos conversar sobre cómo mejorar esto.\n\n🔗 Haz el tuyo en: https://tech4zero.com`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+function copyLink(){ navigator.clipboard.writeText('https://tech4zero.com').then(()=>alert('¡Enlace copiado!')); }
+
+async function requestPDF(){
+  const email=document.getElementById('emailInput').value.trim();
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    document.getElementById('emailInput').style.borderColor='#ff6b6b';
+    setTimeout(()=>document.getElementById('emailInput').style.borderColor='',2000);
+    return;
+  }
+  const btn=document.getElementById('btnSendPDF');
+  btn.disabled=true; btn.textContent='Enviando...';
+  try{
+    const res=await fetch('/api/quiz-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,score:finalScore,level:document.getElementById('shareLevelText').textContent,answers:quizAnswers})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok||!data.ok){btn.textContent='Error — intenta de nuevo';btn.disabled=false;return;}
+    btn.textContent='✅ ¡Enviado!';
+    document.getElementById('emailSectionDesc').textContent='Revisa tu bandeja de entrada. Si no llega en 5 minutos, revisa tu carpeta de spam.';
+  }catch(e){btn.textContent='Error de conexión';btn.disabled=false;}
+}
+
+function updateProgress(pct){ document.getElementById('progressBar').style.width=pct+'%'; }
+function restartQuiz(){ startQuiz(); }
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
