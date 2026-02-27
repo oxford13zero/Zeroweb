@@ -506,6 +506,1112 @@
   </div>
 </section>
 
+
+<!-- ═══════════════ QUIZ AUTODIAGNÓSTICO ═══════════════ -->
+<style>
+/* ── QUIZ MODAL ── */
+:root {
+    --navy: #1E2F3F;
+    --navy-dark: #16222D;
+    --navy-deeper: #0a1520;
+    --gold: #D6A21C;
+    --gold-light: #f0c040;
+    --text-muted: #a9c0d3;
+    --border: #365468;
+    --card-bg: #243A4B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: var(--navy-deeper);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  /* ── FAKE HERO BUTTON ── */
+  .hero-preview {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .hero-preview h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .hero-preview p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .btn-hero {
+    background: var(--gold);
+    color: var(--navy-dark);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 24px rgba(214,162,28,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-hero:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(214,162,28,0.5);
+  }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 14, 22, 0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(6px);
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    width: min(680px, 100%);
+    background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    position: relative;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap {
+    height: 4px;
+    background: rgba(255,255,255,0.07);
+    width: 100%;
+  }
+  .progress-bar-fill {
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 0 4px 4px 0;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* ── MODAL HEADER ── */
+  .modal-header {
+    padding: 24px 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .modal-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .modal-brand-dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(1.4); }
+  }
+  .modal-brand-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .modal-close {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SCREEN CONTAINER ── */
+  .screens { position: relative; }
+
+  .screen {
+    display: none;
+    padding: 28px 28px 32px;
+    animation: fadeSlideIn 0.35s ease;
+  }
+  .screen.active { display: block; }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── INTRO SCREEN ── */
+  .intro-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(214,162,28,0.12);
+    border: 1px solid rgba(214,162,28,0.3);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+  .intro-title em { color: var(--gold); font-style: normal; }
+  .intro-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 500px;
+  }
+  .intro-meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .intro-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .intro-meta-icon {
+    width: 28px; height: 28px;
+    background: rgba(214,162,28,0.1);
+    border: 1px solid rgba(214,162,28,0.25);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+
+  /* ── QUESTION SCREEN ── */
+  .q-counter {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .q-category {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-bottom: 20px;
+  }
+  .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 600;
+    line-height: 1.4;
+    color: #fff;
+    margin-bottom: 32px;
+  }
+  .q-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .q-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 400;
+  }
+  .q-option:hover {
+    border-color: var(--gold);
+    background: rgba(214,162,28,0.08);
+  }
+  .q-option.selected {
+    border-color: var(--gold);
+    background: rgba(214,162,28,0.12);
+    color: #fff;
+    font-weight: 600;
+  }
+  .q-option-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .q-option.selected .q-option-icon {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .q-option-yes .q-option-icon { }
+  .q-option-no .q-option-icon { }
+  .q-option-idk .q-option-icon { }
+
+  .q-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .q-nav-dots {
+    display: flex;
+    gap: 5px;
+  }
+  .q-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: all 0.3s;
+  }
+  .q-dot.done { background: var(--gold); }
+  .q-dot.current { background: var(--gold); width: 18px; border-radius: 3px; }
+
+  /* ── RESULT SCREEN ── */
+  .result-header {
+    text-align: center;
+    padding: 8px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .result-score-wrap {
+    position: relative;
+    width: 140px; height: 140px;
+    margin: 0 auto 16px;
+  }
+  .result-score-svg { transform: rotate(-90deg); }
+  .score-track {
+    fill: none;
+    stroke: rgba(255,255,255,0.06);
+    stroke-width: 8;
+  }
+  .score-fill {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 345;
+    stroke-dashoffset: 345;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 6px rgba(214,162,28,0.5));
+  }
+  .score-fill.critical { stroke: #ff6b6b; filter: drop-shadow(0 0 6px rgba(255,107,107,0.5)); }
+  .score-fill.low { stroke: #ffa94d; filter: drop-shadow(0 0 6px rgba(255,169,77,0.5)); }
+  .score-fill.medium { stroke: #D6A21C; filter: drop-shadow(0 0 6px rgba(214,162,28,0.5)); }
+  .score-fill.high { stroke: #69db7c; filter: drop-shadow(0 0 6px rgba(105,219,124,0.5)); }
+
+  .score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .score-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .result-level {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .result-level.critical { color: #ff6b6b; }
+  .result-level.low { color: #ffa94d; }
+  .result-level.medium { color: var(--gold); }
+  .result-level.high { color: #69db7c; }
+  .result-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── FINDINGS ── */
+  .findings-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .findings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .finding-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    border-left: 3px solid;
+  }
+  .finding-item.danger { border-color: #ff6b6b; }
+  .finding-item.warning { border-color: #ffa94d; }
+  .finding-item.info { border-color: var(--gold); }
+  .finding-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .finding-text { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+  .finding-text strong { color: #fff; display: block; margin-bottom: 2px; font-size: 14px; }
+
+  /* ── SHARE CARD PREVIEW ── */
+  .share-card {
+    background: linear-gradient(135deg, #0a1520 0%, #1E2F3F 60%, #162535 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .share-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(214,162,28,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .share-card-brand {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.8;
+  }
+  .share-card-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.35;
+  }
+  .share-card-score-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .share-big-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .share-big-num.critical { color: #ff6b6b; }
+  .share-big-num.low { color: #ffa94d; }
+  .share-big-num.medium { color: var(--gold); }
+  .share-big-num.high { color: #69db7c; }
+  .share-score-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .share-dots {
+    display: flex;
+    gap: 5px;
+    margin-top: 14px;
+  }
+  .share-dot {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.1);
+  }
+  .share-dot.filled { background: var(--gold); }
+  .share-dot.filled.critical { background: #ff6b6b; }
+  .share-dot.filled.low { background: #ffa94d; }
+  .share-dot.filled.medium { background: var(--gold); }
+  .share-dot.filled.high { background: #69db7c; }
+  .share-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .share-footer-logo {
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    font-size: 11px;
+  }
+
+  /* ── EMAIL CAPTURE ── */
+  .email-section {
+    background: rgba(214,162,28,0.06);
+    border: 1px solid rgba(214,162,28,0.2);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+  }
+  .email-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .email-section-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .email-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .email-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 14px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .email-input:focus { border-color: var(--gold); }
+  .email-input::placeholder { color: #4a6070; }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    padding: 11px 22px;
+    background: var(--gold);
+    color: var(--navy-dark);
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .btn-secondary {
+    padding: 11px 22px;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  .btn-whatsapp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: #25D366;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-whatsapp:hover { background: #20bd5a; transform: translateY(-1px); }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* ── MISC ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .screen-note {
+    background: rgba(255,107,107,0.08);
+    border: 1px dashed rgba(255,107,107,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #ff9999;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  /* ── DEMO NAVIGATION ── */
+  .demo-nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .demo-nav-btn {
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .demo-nav-btn:hover, .demo-nav-btn.active { 
+    border-color: var(--gold); 
+    color: var(--gold);
+    background: rgba(214,162,28,0.08);
+  }
+
+  @media (max-width: 480px) {
+    .modal-box { border-radius: 16px; }
+    .screen { padding: 20px 18px 24px; }
+    .intro-meta { gap: 12px; }
+  }
+</style>
+
+<!-- MODAL -->
+<div id="quizModal" class="modal-overlay">
+  <div class="modal-box">
+    
+    <!-- Progress Bar -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-brand">
+        <div class="modal-brand-dot"></div>
+        <span class="modal-brand-name">Tech4Zero · Autodiagnóstico</span>
+      </div>
+      <button class="modal-close" onclick="closeQuiz()">✕</button>
+    </div>
+
+    <!-- SCREEN 0: INTRO -->
+    <div class="screen active" id="screen-intro">
+      <div style="height:16px;"></div>
+      <div class="intro-label">⏱ 2 minutos · 8 preguntas</div>
+      <h2 class="intro-title">¿Qué tan bien conoces<br><em>tu escuela?</em></h2>
+      <p class="intro-desc">
+        8 preguntas directas sobre lo que ocurre en tu institución. 
+        Sin tecnicismos. Sin trampa. Al final, un diagnóstico honesto 
+        de cuánto estás viendo — y cuánto se te está escapando.
+      </p>
+      <div class="intro-meta">
+        <div class="intro-meta-item">
+          <div class="intro-meta-icon">🔍</div>
+          <span>Visibilidad escolar</span>
+        </div>
+        <div class="intro-meta-item">
+          <div class="intro-meta-icon">🛡️</div>
+          <span>Prevención activa</span>
+        </div>
+        <div class="intro-meta-item">
+          <div class="intro-meta-icon">⚡</div>
+          <span>Capacidad de respuesta</span>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="startQuiz()" style="font-size:15px; padding:13px 30px;">
+        Comenzar diagnóstico →
+      </button>
+    </div>
+
+    <!-- SCREEN 1-8: QUESTIONS (generated by JS) -->
+    <div class="screen" id="screen-questions">
+      <div style="height:8px;"></div>
+      <div class="q-counter" id="qCounter">Pregunta 1 de 8</div>
+      <div class="q-category" id="qCategory">VISIBILIDAD</div>
+      <div class="q-text" id="qText">Texto de la pregunta</div>
+      <div class="q-options" id="qOptions"></div>
+      <div class="q-nav">
+        <div class="q-nav-dots" id="qDots"></div>
+        <button class="btn-primary" id="btnNext" onclick="nextQuestion()" disabled>
+          Siguiente →
+        </button>
+      </div>
+    </div>
+
+    <!-- SCREEN: RESULT -->
+    <div class="screen" id="screen-result">
+      <div class="screen-note">
+        📊 Mockup — el resultado real se calcula con tus respuestas
+      </div>
+      <div class="result-header">
+        <div class="result-score-wrap">
+          <svg class="result-score-svg" width="140" height="140" viewBox="0 0 140 140">
+            <circle class="score-track" cx="70" cy="70" r="55"/>
+            <circle class="score-fill low" id="scoreFill" cx="70" cy="70" r="55"/>
+          </svg>
+          <div class="score-center">
+            <div class="score-number" id="scoreNumber">0</div>
+            <div class="score-label">/ 100</div>
+          </div>
+        </div>
+        <div class="result-level low" id="resultLevel">Visibilidad Baja</div>
+        <p class="result-subtitle" id="resultSubtitle">
+          Tu escuela tiene puntos ciegos significativos. Lo que no ves no puedes prevenirlo — y eso representa un riesgo real para tus estudiantes y tu institución.
+        </p>
+      </div>
+
+      <div class="findings-title">🔎 Tus principales brechas</div>
+      <div class="findings-list">
+        <div class="finding-item danger">
+          <div class="finding-icon">🚨</div>
+          <div class="finding-text">
+            <strong>Sin visibilidad en espacios no supervisados</strong>
+            El 70% del acoso ocurre en pasillos, baños y recreos. No tienes datos de esas zonas.
+          </div>
+        </div>
+        <div class="finding-item warning">
+          <div class="finding-icon">⚠️</div>
+          <div class="finding-text">
+            <strong>Docentes sin protocolo claro</strong>
+            Sin un protocolo compartido, cada profesor responde diferente — lo que crea inconsistencia y riesgo legal.
+          </div>
+        </div>
+        <div class="finding-item info">
+          <div class="finding-icon">📋</div>
+          <div class="finding-text">
+            <strong>Sin métricas de impacto de tus acciones</strong>
+            Estás invirtiendo en prevención sin saber si funciona. Los datos te dirían exactamente dónde actuar.
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="showShare()" style="width:100%; font-size:15px; padding:14px;">
+        Ver mi tarjeta de resultado →
+      </button>
+    </div>
+
+    <!-- SCREEN: SHARE + EMAIL -->
+    <div class="screen" id="screen-share">
+
+      <!-- SHARE CARD PREVIEW -->
+      <div class="share-card" id="shareCard">
+        <div class="share-card-brand">TECH4ZERO · AUTODIAGNÓSTICO ESCOLAR</div>
+        <div class="share-card-headline">
+          Evalué mi escuela.<br>Este es mi resultado de visibilidad.
+        </div>
+        <div class="share-card-score-row">
+          <div class="share-big-num low" id="shareScore">31</div>
+          <div class="share-score-label">
+            de 100 puntos<br>
+            <strong style="color:#ffa94d;">Visibilidad Baja</strong>
+          </div>
+        </div>
+        <div class="share-dots" id="shareDots">
+          <!-- generated by JS -->
+        </div>
+        <div class="share-footer">
+          <span>¿Cuál es el tuyo?</span>
+          <span class="share-footer-logo">TECH4ZERO.COM</span>
+        </div>
+      </div>
+
+      <!-- SHARE BUTTONS -->
+      <div class="btn-row" style="margin-bottom:20px;">
+        <button class="btn-whatsapp" onclick="shareWhatsApp()">
+          <span style="font-size:18px;">💬</span> Compartir por WhatsApp
+        </button>
+        <button class="btn-secondary" onclick="copyLink()">
+          🔗 Copiar enlace
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- EMAIL FOR PDF -->
+      <div class="email-section">
+        <div class="email-section-title">📄 Recibe el informe completo en PDF</div>
+        <div class="email-section-desc">
+          El PDF incluye tu diagnóstico detallado por área, estadísticas comparativas con escuelas similares en tu país, y un plan de primeros pasos concreto para tu institución.
+        </div>
+        <div class="email-row">
+          <input class="email-input" type="email" id="emailInput" placeholder="tu@colegio.edu.mx" />
+          <button class="btn-primary" onclick="requestPDF()">Enviar PDF →</button>
+        </div>
+        <p style="font-size:11px; color:#4a6070; margin-top:10px;">
+          🔒 Sin spam. Solo el informe y una llamada de seguimiento si lo deseas.
+        </p>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="closeQuiz()" style="flex:1;">
+          Cerrar
+        </button>
+        <button class="btn-primary" onclick="restartQuiz()" style="flex:1;">
+          ↺ Reiniciar diagnóstico
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ── QUIZ LOGIC ── */
+const QUESTIONS = [
+  {
+    category: "VISIBILIDAD",
+    text: "¿Sabes qué ocurre en los pasillos y baños de tu escuela durante los recreos?"
+  },
+  {
+    category: "VISIBILIDAD",
+    text: "¿Puedes identificar hoy a los 3 estudiantes con mayor riesgo de ser víctimas de acoso en tu escuela?"
+  },
+  {
+    category: "VISIBILIDAD",
+    text: "¿Tienes datos sobre el clima emocional en cada salón de clases de forma individual?"
+  },
+  {
+    category: "PREVENCIÓN",
+    text: "¿Tu cuerpo docente recibió capacitación formal en detección de bullying durante este año escolar?"
+  },
+  {
+    category: "PREVENCIÓN",
+    text: "¿Tienes un protocolo antibullying claro que todos los profesores conocen y aplican de forma consistente?"
+  },
+  {
+    category: "PREVENCIÓN",
+    text: "¿Mides con datos concretos si tus acciones de prevención están funcionando?"
+  },
+  {
+    category: "RESPUESTA",
+    text: "¿El último incidente de acoso reportado en tu escuela fue resuelto en menos de 48 horas?"
+  },
+  {
+    category: "RESPUESTA",
+    text: "¿Tienes documentación institucional que te proteja legalmente ante una denuncia formal por bullying?"
+  }
+];
+
+const OPTIONS = [
+  { value: 'yes', label: 'Sí, lo tenemos claro', icon: '✅' },
+  { value: 'no',  label: 'No, no lo tenemos',    icon: '❌' },
+  { value: 'idk', label: 'No estoy seguro/a',     icon: '🤔' }
+];
+
+let currentQ = 0;
+let answers = [];
+let finalScore = 0;
+
+function openQuiz() {
+  document.getElementById('quizModal').classList.add('open');
+  showScreen('intro');
+}
+function closeQuiz() {
+  document.getElementById('quizModal').classList.remove('open');
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+}
+
+function startQuiz() {
+  currentQ = 0;
+  answers = [];
+  showScreen('questions');
+  renderQuestion();
+  updateProgress(0);
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  if (!q) return;
+
+  // Update counter, category, question text
+  document.getElementById('qCounter').textContent = `Pregunta ${currentQ + 1} de ${QUESTIONS.length}`;
+  document.getElementById('qCategory').textContent = q.category;
+  document.getElementById('qText').textContent = q.text;
+
+  // Render options — always render all 3 fresh
+  const optDiv = document.getElementById('qOptions');
+  optDiv.innerHTML = '';
+  OPTIONS.forEach(opt => {
+    const div = document.createElement('div');
+    div.className = `q-option q-option-${opt.value}`;
+    div.innerHTML = `<div class="q-option-icon">${opt.icon}</div><span>${opt.label}</span>`;
+    div.addEventListener('click', function() { selectOption(opt.value, div); });
+    // Restore selected state if coming back to this question
+    if (answers[currentQ] === opt.value) {
+      div.classList.add('selected');
+    }
+    optDiv.appendChild(div);
+  });
+
+  // Next button state
+  const btn = document.getElementById('btnNext');
+  btn.disabled = !answers[currentQ];
+  btn.textContent = currentQ === QUESTIONS.length - 1 ? 'Ver resultado →' : 'Siguiente →';
+
+  // Progress dots
+  const dotsDiv = document.getElementById('qDots');
+  dotsDiv.innerHTML = QUESTIONS.map((_, i) => {
+    let cls = 'q-dot';
+    if (i < currentQ) cls += ' done';
+    if (i === currentQ) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function selectOption(value, el) {
+  document.querySelectorAll('#qOptions .q-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[currentQ] = value;
+  const btn = document.getElementById('btnNext');
+  btn.disabled = false;
+}
+
+function nextQuestion() {
+  if (!answers[currentQ]) return;
+
+  updateProgress((currentQ + 1) / QUESTIONS.length * 80);
+
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    calculateResult();
+  }
+}
+
+function calculateResult() {
+  // Score: yes=100, idk=30, no=0
+  const points = { yes: 100, idk: 30, no: 0 };
+  const total = answers.reduce((sum, a) => sum + (points[a] || 0), 0);
+  finalScore = Math.round(total / QUESTIONS.length);
+
+  updateProgress(100);
+  setTimeout(() => {
+    showResult();
+  }, 400);
+}
+
+function showResult() {
+  showScreen('result');
+
+  const fill = document.getElementById('scoreFill');
+  const numEl = document.getElementById('scoreNumber');
+  const levelEl = document.getElementById('resultLevel');
+  const subtitleEl = document.getElementById('resultSubtitle');
+
+  // Determine level
+  let level, levelClass, subtitle;
+  if (finalScore <= 25) {
+    level = 'Visibilidad Crítica';
+    levelClass = 'critical';
+    subtitle = 'Tu escuela tiene puntos ciegos graves. Sin datos, no puedes prevenir lo que no ves. Esto representa un riesgo real e inmediato para tus estudiantes y tu institución.';
+  } else if (finalScore <= 50) {
+    level = 'Visibilidad Baja';
+    levelClass = 'low';
+    subtitle = 'Tienes algo de control, pero hay áreas significativas que se te escapan. Lo que no estás midiendo, no lo puedes mejorar — y alguien está pagando ese costo.';
+  } else if (finalScore <= 75) {
+    level = 'Visibilidad Media';
+    levelClass = 'medium';
+    subtitle = 'Estás por sobre el promedio regional, pero todavía hay brechas importantes. Una intervención focalizada podría marcar una diferencia significativa.';
+  } else {
+    level = 'Visibilidad Alta';
+    levelClass = 'high';
+    subtitle = 'Tu escuela tiene buenas prácticas de visibilidad. TECH4ZERO puede llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.';
+  }
+
+  // Remove old class, add new
+  fill.className = `score-fill ${levelClass}`;
+  levelEl.className = `result-level ${levelClass}`;
+  levelEl.textContent = level;
+  subtitleEl.textContent = subtitle;
+
+  // Animate circle
+  const circumference = 345;
+  const offset = circumference - (finalScore / 100) * circumference;
+  setTimeout(() => {
+    fill.style.strokeDashoffset = offset;
+  }, 100);
+
+  // Animate number
+  let count = 0;
+  const interval = setInterval(() => {
+    count += 2;
+    if (count >= finalScore) {
+      count = finalScore;
+      clearInterval(interval);
+    }
+    numEl.textContent = count;
+  }, 25);
+
+  // Build dynamic findings based on wrong answers
+  buildFindings();
+}
+
+function buildFindings() {
+  const FINDINGS = [
+    { q: 0, type: 'danger', icon: '🚨', title: 'Sin visibilidad en zonas no supervisadas', text: 'El 70% del acoso ocurre en pasillos, baños y recreos. No tienes datos de esas zonas.' },
+    { q: 1, type: 'danger', icon: '👁️', title: 'No identificas a los estudiantes en riesgo', text: 'Sin ese dato, actúas después del incidente — no antes. La prevención requiere identificar el riesgo con anticipación.' },
+    { q: 2, type: 'warning', icon: '📊', title: 'Sin clima emocional por salón', text: 'Cada salón tiene su propia dinámica. Sin datos por curso, las intervenciones son genéricas y menos efectivas.' },
+    { q: 3, type: 'warning', icon: '🏫', title: 'Docentes sin capacitación reciente', text: 'Los profesores son tu primera línea. Sin herramientas actualizadas, las señales tempranas pasan desapercibidas.' },
+    { q: 4, type: 'danger', icon: '⚠️', title: 'Sin protocolo unificado', text: 'Sin un protocolo compartido, cada profesor responde diferente — lo que crea inconsistencia y riesgo legal.' },
+    { q: 5, type: 'info', icon: '📋', title: 'Sin métricas de impacto', text: 'Estás invirtiendo en prevención sin saber si funciona. Los datos te dirían exactamente dónde actuar.' },
+    { q: 6, type: 'warning', icon: '⏱️', title: 'Tiempos de respuesta no medidos', text: 'La velocidad de respuesta ante un incidente es clave tanto para el bienestar del estudiante como para la protección legal de tu institución.' },
+    { q: 7, type: 'danger', icon: '⚖️', title: 'Sin respaldo legal documentado', text: 'Una sola denuncia sin documentación puede escalar a consecuencias mediáticas y legales para tu institución.' },
+  ];
+
+  const wrongAnswers = answers
+    .map((a, i) => ({ ...FINDINGS[i], answered: a }))
+    .filter(f => f.answered === 'no' || f.answered === 'idk')
+    .slice(0, 3);
+
+  if (wrongAnswers.length === 0) return;
+
+  const container = document.querySelector('.findings-list');
+  container.innerHTML = wrongAnswers.map(f => `
+    <div class="finding-item ${f.type}">
+      <div class="finding-icon">${f.icon}</div>
+      <div class="finding-text">
+        <strong>${f.title}</strong>
+        ${f.text}
+      </div>
+    </div>
+  `).join('');
+}
+
+function showShare() {
+  showScreen('share');
+
+  // Set share card values
+  let levelClass, levelName;
+  if (finalScore <= 25) { levelClass='critical'; levelName='Visibilidad Crítica'; }
+  else if (finalScore <= 50) { levelClass='low'; levelName='Visibilidad Baja'; }
+  else if (finalScore <= 75) { levelClass='medium'; levelName='Visibilidad Media'; }
+  else { levelClass='high'; levelName='Visibilidad Alta'; }
+
+  document.getElementById('shareScore').textContent = finalScore;
+  document.getElementById('shareScore').className = `share-big-num ${levelClass}`;
+  document.querySelector('.share-score-label strong').textContent = levelName;
+  document.querySelector('.share-score-label strong').style.color = 
+    levelClass === 'critical' ? '#ff6b6b' :
+    levelClass === 'low' ? '#ffa94d' :
+    levelClass === 'medium' ? '#D6A21C' : '#69db7c';
+
+  // Dots
+  const dots = document.getElementById('shareDots');
+  const filled = Math.round(finalScore / 10);
+  dots.innerHTML = Array.from({length:10}, (_,i) => 
+    `<div class="share-dot ${i < filled ? 'filled ' + levelClass : ''}"></div>`
+  ).join('');
+}
+
+function shareWhatsApp() {
+  const msg = `Acabo de hacer el autodiagnóstico de TECH4ZERO para mi escuela.\n\n📊 Mi índice de visibilidad: *${finalScore}/100*\n\nCon este dato pienso que deberíamos conversar sobre cómo mejorar esto.\n\n🔗 Haz el tuyo en: https://tech4zero.com`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function copyLink() {
+  navigator.clipboard.writeText('https://tech4zero.com').then(() => {
+    alert('¡Enlace copiado! Compártelo con tu equipo.');
+  });
+}
+
+function requestPDF() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('emailInput').style.borderColor = '#ff6b6b';
+    setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 2000);
+    return;
+  }
+  // In real implementation: POST to /api/send-pdf with email + score + answers
+  alert(`✅ ¡Listo! El informe completo se enviará a:\n${email}\n\nEn implementación real, aquí se dispara el envío automático del PDF + notificación al equipo de ventas con el score y las respuestas.`);
+}
+
+function updateProgress(pct) {
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function restartQuiz() {
+  startQuiz();
+}
+</script>
+<!-- ═══════════════ FIN QUIZ ═══════════════ -->
+
+
+  
+
 <footer>© 2025 TECH4ZERO – EDUCATION+AI</footer>
 
 <!-- ═══════════════════════════════ MODALS ═══════════════════════════════ -->
@@ -1387,3 +2493,4 @@ function restartQuiz(){ startQuiz(); }
 </script>
 </body>
 </html>
+
