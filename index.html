@@ -466,6 +466,41 @@
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">Cra. 7 No. 32-16<br>Chapinero, Bogotá<br>+57 1 555 0174</div>
       </div>
     </div>
+
+    <!-- FOTO + FORMULARIO SIDE BY SIDE -->
+    <div style="display:flex; gap:24px; align-items:stretch; flex-wrap:wrap; margin-top:8px;">
+
+      <!-- FOTO CON DUOTONO -->
+      <div style="position:relative; flex:1; min-width:280px; min-height:380px; border-radius:12px; overflow:hidden;">
+        <img src="img/contact_picture.jpg" alt="Madre e hija" style="
+          position:absolute; inset:0;
+          width:100%; height:100%;
+          object-fit:cover;
+          object-position:center top;
+          filter: grayscale(40%) brightness(0.75);
+        "/>
+        <div style="
+          position:absolute; inset:0;
+          background: linear-gradient(to top, rgba(14,28,40,0.97) 0%, rgba(22,34,45,0.75) 50%, rgba(30,47,63,0.45) 100%);
+        "></div>
+        <div style="position:absolute; inset:0; display:flex; align-items:flex-end; z-index:1; padding:28px 26px;">
+          <div>
+            <div style="width:32px;height:2px;background:#D6A21C;border-radius:2px;margin-bottom:16px;"></div>
+            <p style="
+              font-family:'Playfair Display',serif;
+              font-size:18px;
+              line-height:1.7;
+              color:#ffffff;
+              margin:0 0 16px 0;
+              font-style:italic;
+            ">"No necesitas tener todo claro antes de escribirnos. Cuéntanos qué está pasando en tu escuela y juntos encontramos el camino."</p>
+            <div style="font-size:13px;color:#D6A21C;font-weight:700;letter-spacing:0.5px;">— Equipo TECH4ZERO</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMULARIO -->
+    
     <div class="formPanel" style="max-width:340px%;">
       <div class="fieldBlock"><label class="fieldLabel" for="c_nombre">Nombre</label><br /><input id="c_nombre" class="textInput" type="text" placeholder="Tu nombre" /></div>
       <div class="fieldBlock"><label class="fieldLabel" for="c_email">Email</label><br /><input id="c_email" class="textInput" type="email" placeholder="tu@email.com" /></div>
@@ -1025,6 +1060,7 @@
 </script>
 </body>
 </html>
+
 
 
 
