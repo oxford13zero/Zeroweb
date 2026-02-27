@@ -467,51 +467,42 @@
       </div>
     </div>
 
-    <!-- FOTO + FORMULARIO SIDE BY SIDE -->
+    <!-- FORMULARIO + FOTO -->
     <div style="display:flex; gap:24px; align-items:stretch; flex-wrap:wrap; margin-top:8px;">
 
-      <!-- FOTO CON DUOTONO -->
-      <div style="position:relative; flex:1; min-width:280px; min-height:380px; border-radius:12px; overflow:hidden;">
-        <img src="img/contact_picture.jpg" alt="Madre e hija" style="
+      <!-- FORMULARIO — ancho fijo 640px -->
+      <div class="formPanel" style="width:640px; flex-shrink:0; max-width:100%;">
+        <div class="fieldBlock"><label class="fieldLabel" for="c_nombre">Nombre</label><br /><input id="c_nombre" class="textInput" type="text" placeholder="Tu nombre" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="c_email">Email</label><br /><input id="c_email" class="textInput" type="email" placeholder="tu@email.com" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="c_asunto">Asunto</label><br /><input id="c_asunto" class="textInput" type="text" placeholder="Asunto" /></div>
+        <div class="fieldBlock"><label class="fieldLabel" for="c_mensaje">Mensaje</label><br /><textarea id="c_mensaje" class="textInput" rows="6" placeholder="Escribe tu mensaje..."></textarea></div>
+        <input id="c_company" type="text" style="display:none" tabindex="-1" autocomplete="off" />
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnEnviarContacto" class="btnPrimary" type="button">Enviar</button>
+          <button id="btnLimpiarContacto" class="btnSecondary" type="button">Limpiar</button>
+        </div>
+        <div id="contactoMsg" class="statusMsg statusWarn"></div>
+      </div>
+
+      <!-- FOTO — ocupa el resto del espacio -->
+      <div style="position:relative; flex:1; min-width:200px; min-height:380px; border-radius:12px; overflow:hidden;">
+        <img src="contact_picture.jpg" alt="Madre e hija" style="
           position:absolute; inset:0;
           width:100%; height:100%;
           object-fit:cover;
           object-position:center top;
-          filter: grayscale(40%) brightness(0.75);
+          filter:grayscale(40%) brightness(0.75);
         "/>
-        <div style="
-          position:absolute; inset:0;
-          background: linear-gradient(to top, rgba(14,28,40,0.97) 0%, rgba(22,34,45,0.75) 50%, rgba(30,47,63,0.45) 100%);
-        "></div>
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(14,28,40,0.97) 0%, rgba(22,34,45,0.75) 50%, rgba(30,47,63,0.45) 100%);"></div>
         <div style="position:absolute; inset:0; display:flex; align-items:flex-end; z-index:1; padding:28px 26px;">
           <div>
-            <div style="width:32px;height:2px;background:#D6A21C;border-radius:2px;margin-bottom:16px;"></div>
-            <p style="
-              font-family:'Playfair Display',serif;
-              font-size:18px;
-              line-height:1.7;
-              color:#ffffff;
-              margin:0 0 16px 0;
-              font-style:italic;
-            ">"No necesitas tener todo claro antes de escribirnos. Cuéntanos qué está pasando en tu escuela y juntos encontramos el camino."</p>
-            <div style="font-size:13px;color:#D6A21C;font-weight:700;letter-spacing:0.5px;">— Equipo TECH4ZERO</div>
+            <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:16px;"></div>
+            <p style="font-family:'Playfair Display',serif; font-size:18px; line-height:1.7; color:#ffffff; margin:0 0 16px 0; font-style:italic;">"No necesitas tener todo claro antes de escribirnos. Cuéntanos qué está pasando en tu escuela y juntos encontramos el camino."</p>
+            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;">— Equipo TECH4ZERO</div>
           </div>
         </div>
       </div>
 
-      <!-- FORMULARIO -->
-    
-    <div class="formPanel" style="max-width:340px%;">
-      <div class="fieldBlock"><label class="fieldLabel" for="c_nombre">Nombre</label><br /><input id="c_nombre" class="textInput" type="text" placeholder="Tu nombre" /></div>
-      <div class="fieldBlock"><label class="fieldLabel" for="c_email">Email</label><br /><input id="c_email" class="textInput" type="email" placeholder="tu@email.com" /></div>
-      <div class="fieldBlock"><label class="fieldLabel" for="c_asunto">Asunto</label><br /><input id="c_asunto" class="textInput" type="text" placeholder="Asunto" /></div>
-      <div class="fieldBlock"><label class="fieldLabel" for="c_mensaje">Mensaje</label><br /><textarea id="c_mensaje" class="textInput" rows="6" placeholder="Escribe tu mensaje..."></textarea></div>
-      <input id="c_company" type="text" style="display:none" tabindex="-1" autocomplete="off" />
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnEnviarContacto" class="btnPrimary" type="button">Enviar</button>
-        <button id="btnLimpiarContacto" class="btnSecondary" type="button">Limpiar</button>
-      </div>
-      <div id="contactoMsg" class="statusMsg statusWarn"></div>
     </div>
   </div>
 </section>
@@ -1060,6 +1051,7 @@
 </script>
 </body>
 </html>
+
 
 
 
