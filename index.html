@@ -256,7 +256,7 @@
 
 .heroSubheadline {
   font-size: clamp(15px, 2vw, 19px);
-  color: #d9e6f2;
+  color: #a9c0d3;
   line-height: 1.7;
   margin: 0 auto 36px;
   max-width: 680px;
@@ -303,6 +303,148 @@
   font-weight: 600;
   letter-spacing: 0.3px;
 }
+
+/* ── PROGRAMA SECTIONS ── */
+.programaSection {
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  position: relative;
+  padding: 64px 20px;
+}
+
+.programaSection .sectionInner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.programaSection h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  line-height: 1.3;
+}
+
+.programaSection .sectionBody {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #a9c0d3;
+  margin: 0 0 36px 0;
+  max-width: 780px;
+}
+
+/* Section 2 & 3 — photo + text alternating layout */
+.photoRow {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 36px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #243A4B;
+}
+
+.photoRow.reverse {
+  flex-direction: row-reverse;
+}
+
+.photoRow .rowImg {
+  width: 38%;
+  flex-shrink: 0;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+
+.photoRow .rowText {
+  flex: 1;
+  padding: 24px 28px 24px 0;
+}
+
+.photoRow.reverse .rowText {
+  padding: 24px 0 24px 28px;
+}
+
+.photoRow .rowText .rowIcon {
+  font-size: 26px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.photoRow .rowText strong {
+  display: block;
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.photoRow .rowText p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #a9c0d3;
+  margin: 0;
+}
+
+.photoRow .rowText em {
+  font-size: 12px;
+  color: #4a6070;
+}
+
+@media (max-width: 768px) {
+  .photoRow, .photoRow.reverse { flex-direction: column; }
+  .photoRow .rowImg { width: 100%; aspect-ratio: 16/9; }
+  .photoRow .rowText { padding: 20px !important; }
+}
+
+/* Section 4 — Stats */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 8px 0 28px;
+}
+
+.statCard {
+  text-align: center;
+  padding: 32px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #243A4B;
+  border-radius: 12px;
+}
+
+.statCard .statNumber {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(44px, 6vw, 64px);
+  font-weight: 600;
+  color: #D6A21C;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.statCard .statDesc {
+  font-size: 14px;
+  color: #a9c0d3;
+  line-height: 1.5;
+}
+
+.statsNote {
+  font-size: 12px;
+  color: #4a6070;
+  text-align: center;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .statsGrid { grid-template-columns: 1fr; }
+}
+
+/* ── PROGRAMA SECTIONS END ── */
 
 /* Admin icon - top right corner */
 .adminIcon {
@@ -421,27 +563,28 @@
     <div class="heroGlow"></div>
     <div class="heroContent">
       <h1 class="heroHeadline">¿Sabes realmente lo que está<br>pasando en tu escuela?</h1>
-      <p class="heroSubheadline">En menos de 48 horas te entregamos un diagnóstico completo del clima escolar y un Plan de Accion 
-       respaldado por UNESCO y ESSA, listo para implementar.<br>
-      Identificamos acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.</p><br>
-      <button class="heroCTA" type="button">Solicita conversar con uno de nuestros expertos</button>
-      <!-- <span class="heroCTANote">Sin compromiso. Resultados en 48 horas.</span>  -->
+      <p class="heroSubheadline">En menos de 48 horas, TECH4ZERO te entrega un diagnóstico completo del clima escolar — con inteligencia artificial, respaldado por UNESCO y ESSA, listo para actuar.</p>
+      <button class="heroCTA" type="button">🔵 Solicita conversar con uno de nuestros expertos</button>
+      <span class="heroCTANote">Sin compromiso. Resultados en 48 horas.</span>
     </div>
   </div>
 
+  <!-- CREDIBILITY BAR -->
+  <div class="credibilityBar">
+    ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
+  </div>
 
-  <!-- INTRO TEXT 
-  <div style="max-width:720px; margin:6px auto 0; text-align:center; padding:0 20px;">
+  <!-- INTRO TEXT -->
+  <div style="max-width:720px; margin:48px auto 0; text-align:center; padding:0 20px;">
     <p style="font-size:18px; line-height:1.8; color:#d9e6f2; margin:0;">
-      <strong style="color:#ffffff;">TECH4ZERO</strong> convierte datos en decisiones. 
-      Evaluamos el 100% de tu comunidad escolar identificando acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.
+      <strong style="color:#ffffff;">TECH4ZERO</strong> convierte datos en decisiones. Evaluamos el 100% de tu comunidad escolar en menos de 48 horas — identificando acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.
     </p>
     <p style="font-size:18px; line-height:1.8; color:#D6A21C; font-weight:700; margin:20px 0 0 0;">
       No te entregamos un reporte. Te entregamos un plan listo para actuar.
     </p>
-  </div> -->
-  
-  <div class="card" style="margin-top:20px; text-align:center;">
+  </div>
+
+  <div class="card" style="margin-top:30px; text-align:center;">
     <iframe width="560" height="315"
       src="https://www.youtube.com/embed/iBO4YijRYbs"
       title="Programa ZERO"
@@ -451,16 +594,127 @@
     </iframe>
   </div>
 
-  <!-- CREDIBILITY BAR -->
-  <div class="credibilityBar">
-    ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
-  </div>
-
-  
 </section>
 
 <section id="programa">
   <h2>Programa Antibullying TECH4ZERO</h2>
+
+  <!-- SECCIÓN 2 — EL PROBLEMA -->
+  <div class="programaSection" style="background:#0a1520;">
+    <div class="sectionInner">
+      <h3>El bullying que no ves es el más peligroso</h3>
+      <p class="sectionBody">
+        La mayoría de los incidentes de violencia escolar nunca llegan a tu escritorio. Los estudiantes no reportan. Los docentes no siempre identifican las señales. Y cuando el problema se hace visible, ya escaló.<br><br>
+        Mientras tanto, tú eres responsable de lo que ocurre en cada salón, en cada pasillo, en cada espacio digital de tu comunidad escolar.
+      </p>
+
+      <div class="photoRow">
+        <img class="rowImg" src="img/s2_acoso.jpg" alt="Estudiante aislado" />
+        <div class="rowText">
+          <span class="rowIcon">🔍</span>
+          <strong>El 70% del acoso ocurre fuera del aula</strong>
+          <p>En pasillos, baños y entornos digitales que no supervisas.</p>
+        </div>
+      </div>
+
+      <div class="photoRow reverse">
+        <img class="rowImg" src="img/s2_rendimiento.jpg" alt="Bajo rendimiento" />
+        <div class="rowText">
+          <span class="rowIcon">📉</span>
+          <strong>Los estudiantes afectados rinden hasta 18 puntos menos</strong>
+          <p>En matemáticas y lectura. <em>(Fuente: UNESCO/TERCE, 16 países)</em></p>
+        </div>
+      </div>
+
+      <div class="photoRow">
+        <img class="rowImg" src="img/s2_legal.jpg" alt="Consecuencias institucionales" />
+        <div class="rowText">
+          <span class="rowIcon">⚖️</span>
+          <strong>Una sola denuncia mal gestionada</strong>
+          <p>Puede derivar en consecuencias legales, mediáticas y reputacionales para tu institución.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3 — LA SOLUCIÓN -->
+  <div class="programaSection" style="background:#1E2F3F;">
+    <div class="sectionInner">
+      <h3>Un diagnóstico completo. Un plan listo para implementar.</h3>
+      <p class="sectionBody">
+        TECH4ZERO aplica una encuesta online anónima y confidencial a toda tu comunidad escolar — estudiantes y docentes — y analiza los resultados con estadística avanzada e inteligencia artificial.
+      </p>
+
+      <div class="photoRow reverse">
+        <img class="rowImg" src="img/s3_mapa.jpg" alt="Mapa de zonas de riesgo" />
+        <div class="rowText">
+          <span class="rowIcon">🗺️</span>
+          <strong>Mapa de zonas de riesgo</strong>
+          <p>Físicas y digitales, identificadas por salón, nivel y área del establecimiento.</p>
+        </div>
+      </div>
+
+      <div class="photoRow">
+        <img class="rowImg" src="img/s3_clima.jpg" alt="Clima escolar" />
+        <div class="rowText">
+          <span class="rowIcon">👥</span>
+          <strong>Perfil completo de clima escolar</strong>
+          <p>Por curso, por docente, por nivel.</p>
+        </div>
+      </div>
+
+      <div class="photoRow reverse">
+        <img class="rowImg" src="img/s3_alertas.jpg" alt="Alertas tempranas" />
+        <div class="rowText">
+          <span class="rowIcon">🚨</span>
+          <strong>Alertas tempranas</strong>
+          <p>Situaciones críticas identificadas antes de que escalen.</p>
+        </div>
+      </div>
+
+      <div class="photoRow">
+        <img class="rowImg" src="img/s3_plan.jpg" alt="Plan de intervención" />
+        <div class="rowText">
+          <span class="rowIcon">📋</span>
+          <strong>Plan de intervención</strong>
+          <p>Listo para presentar a tu equipo y ejecutar de inmediato.</p>
+        </div>
+      </div>
+
+      <div class="photoRow reverse">
+        <img class="rowImg" src="img/s3_resultados.jpg" alt="Resultados en 48 horas" />
+        <div class="rowText">
+          <span class="rowIcon">⏱️</span>
+          <strong>Resultados en 48 horas</strong>
+          <p>Desde que tus estudiantes completan la encuesta.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4 — RESULTADOS REALES -->
+  <div class="programaSection" style="background:#16222D;">
+    <div class="sectionInner">
+      <h3>Los números hablan por sí solos</h3>
+      <div class="statsGrid">
+        <div class="statCard">
+          <div class="statNumber">37%</div>
+          <div class="statDesc">reducción promedio de incidentes reportados a los 90 días</div>
+        </div>
+        <div class="statCard">
+          <div class="statNumber">92%</div>
+          <div class="statDesc">de docentes reportan mayor confianza para identificar señales tempranas</div>
+        </div>
+        <div class="statCard">
+          <div class="statNumber">4.2x</div>
+          <div class="statDesc">más intervenciones preventivas vs. reactivas en escuelas implementadas</div>
+        </div>
+      </div>
+      <p class="statsNote">Datos consolidados de cohortes 2023–2025. Resultados varían según contexto institucional.</p>
+    </div>
+  </div>
 
   <div class="card">
 <div class="programa-content">
@@ -2503,13 +2757,3 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
