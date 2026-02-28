@@ -136,7 +136,7 @@
        respaldado por UNESCO y ESSA, listo para implementar.<br>
       Identificamos acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.</p><br>
       <!-- CHANGE 1: quiz trigger -->
-      <button class="heroCTA" type="button" onclick="openQuiz()">¿Quieres ver tu escuela con los ojos de tus estudiantes? — Descúbrelo en 2 minutos</button>
+      <button class="heroCTA" type="button" onclick="openQuiz()">¿Quieres ver tu escuela con los ojos de tus estudiantes? — Mini evaluación en 2 minutos</button>
     </div>
   </div>
 
@@ -759,7 +759,7 @@
     <!-- PANTALLA: INTRO -->
     <div class="quiz-screen active" id="quiz-screen-intro">
       <div style="height:16px;"></div>
-      <div class="quiz-intro-label">⏱ 2 minutos · 8 preguntas</div>
+      <div class="quiz-intro-label">⏱ 2 minutos · 11 preguntas</div>
       <h2 class="quiz-intro-title">¿Quieres ver la escuela con los ojos de<br><em>tus estudiantes?</em></h2>
       <p class="quiz-intro-desc">
         11 preguntas directas para saber qué tan lejos estás de la realidad de tus estudiantes — incluyendo si tienes la documentación para defenderte legalmente, 
@@ -890,7 +890,7 @@
     { category:'SU DIA', text:'¿Sabes que tan seguros se sienten tus estudiantes cuando cruzan la puerta de tu escuela cada mañana?' },
     { category:'SU MUNDO', text:'¿Conoces los lugares de tu escuela donde tus estudiantes se sienten solos o con miedo?' },
     { category:'SU VOZ', text:'¿Saben tus estudiantes a quién acudir cuando algo malo les pasa — y confían en que los escucharán?' },
-    { category:'SU SILENCIO',  text:'¿Puedes identificar a los estudiantes que sufren en silencio?' },
+    { category:'SU SILENCIO',  text:'¿Tu escuela tiene identificados a los estudiantes que estadísticamente concentran el mayor riesgo de ser víctimas de acoso?' },
     { category:'SU AULA',  text:'¿Sabes en qué salones tus estudiantes se sienten seguros — y en cuáles no?' },
     { category:'SUS DOCENTES',  text:'¿Tus profesores saben escuchar lo que los estudiantes no dicen con palabras?' },
     { category:'SU CONFIANZA',   text:'¿Alguno de tus estudiantes siente que tu escuela es el lugar más seguro de su día?' },
@@ -909,20 +909,50 @@
   ];
 
   var QUIZ_FINDINGS = [
-    { q:0, type:'danger',  icon:'🚨', title:'No conoces su punto de partida',   text:'Un estudiante que llega con miedo aprende diferente. Sin saber cómo llegan, no puedes saber por qué algunos se quedan atrás.' },
-    { q:1, type:'danger',  icon:'🚨', title:'Hay zonas de tu escuela que no existen para ti', text:'Los espacios donde los estudiantes se sienten solos son exactamente donde ocurre lo que nadie reporta.' },
-    { q:2, type:'warning', icon:'⚠️', title:'Tus estudiantes no saben a quién abrir la puerta', text:'Sin un adulto de confianza claro, el silencio se convierte en la única opción disponible.' },
-    { q:3, type:'warning', icon:'⚠️', title:'Los invisibles siguen invisibles', text:'Los estudiantes que más sufren son los que mejor aprenden a no mostrar que sufren.' },
-    { q:4, type:'danger',  icon:'🚨', title:'No todos tus salones son el mismo lugar', text:'El clima emocional varía por curso, por docente, por hora del día. Sin esos datos, intervienes donde no es y no intervienes donde sí.' },
-    { q:5, type:'info',    icon:'📋', title:'Tus docentes ven — pero no siempre saben leer', text:'Detectar lo no dicho es una habilidad. Sin entrenamiento, las señales pasan frente a los ojos sin ser reconocidas.' },
-    { q:6, type:'warning', icon:'⚠️', title:'Tu escuela aún no es refugio para todos', text:'Cuando la escuela no es el lugar más seguro del día de un niño, algo fundamental en su desarrollo se interrumpe.' },
-    { q:7, type:'danger',  icon:'🚨', title:'La justicia también necesita ser visible', text:'No basta con resolver los casos — tus estudiantes necesitan saber que se resuelven. Sin esa certeza, el silencio sigue siendo más seguro que hablar.' },
-    { q:8, type:'danger', icon:'🚨', title:'Sin segmentación, no hay intervención precisa', text:'El análisis por género, edad y salón no es un detalle — es la diferencia entre una intervención focalizada y un programa genérico que no mueve la aguja en ningún grupo específico.' },
-    { q:9, type:'danger', icon:'🚨', title:'Sin registro sistemático, no hay defensa institucional', text:'Los protocolos de prevención solo tienen valor legal si están documentados, fechados y son demostrablemente anteriores al incidente. Un expediente reactivo construido después del hecho no constituye evidencia de gestión preventiva.' },
-    { q:10, type:'warning', icon:'⚠️', title:'La detección temprana requiere competencias específicas', text:'Identificar señales de riesgo psicosocial antes de que escalen exige formación en observación conductual, manejo de grupos y protocolos de intervención. Sin esa capacitación certificada, la primera línea opera sin herramientas clínicas.' },
-    { q:11, type:'danger', icon:'🚨', title:'Los datos agregados ocultan los casos más críticos', text:'Un índice general de bienestar escolar puede mostrar resultados aceptables mientras subgrupos específicos — por género, ciclo o salón — registran niveles críticos. Sin desagregación, los promedios protegen el problema en vez de exponerlo.' }  
-  
-  ];
+  { q:0, type:'danger', icon:'🚨', 
+    title:'Sin datos de percepción de seguridad, no hay línea base',
+    text:'Si no mides cómo llegan tus estudiantes, no puedes saber si tu escuela es parte de la solución o parte del problema.' },
+
+  { q:1, type:'danger', icon:'🚨', 
+    title:'Los espacios no supervisados son zonas de riesgo activo',
+    text:'Sin un mapeo de puntos críticos, los recursos de supervisión se distribuyen donde se ven — no donde se necesitan.' },
+
+  { q:2, type:'warning', icon:'⚠️', 
+    title:'Sin canal de reporte confiable, el silencio es la norma',
+    text:'Un estudiante que no sabe a quién acudir — o que no confía en ser escuchado — no reporta. Y lo que no se reporta no se interviene.' },
+
+  { q:3, type:'danger', icon:'🚨', 
+    title:'Sin identificación de riesgo, la prevención es reactiva',
+    text:'Intervenir después del incidente cuesta entre 4 y 7 veces más que prevenirlo. Sin un perfil de vulnerabilidad por estudiante, siempre llegas tarde.' },
+
+  { q:4, type:'warning', icon:'⚠️', 
+    title:'El clima varía por salón — los promedios lo ocultan',
+    text:'Un índice general puede mostrar resultados aceptables mientras salones específicos registran niveles críticos. Sin datos por aula, el promedio protege el problema.' },
+
+  { q:5, type:'warning', icon:'⚠️', 
+    title:'La detección temprana es una competencia — no una intuición',
+    text:'Sin formación específica en observación conductual, los docentes responden a lo que ya escaló. Las señales tempranas requieren un protocolo, no solo sensibilidad.' },
+
+  { q:6, type:'danger', icon:'🚨', 
+    title:'Una escuela que no es refugio activa el modo de supervivencia',
+    text:'Cuando el entorno escolar no se percibe como seguro, el sistema nervioso del estudiante prioriza alerta sobre aprendizaje. El impacto académico es medible y directo.' },
+
+  { q:7, type:'danger', icon:'🚨', 
+    title:'La percepción de justicia define si los estudiantes hablan o callan',
+    text:'Si los estudiantes no creen que los casos se resuelven con equidad y rapidez, el subregistro aumenta. Los incidentes no reportados son los de mayor riesgo institucional.' },
+
+  { q:8, type:'danger', icon:'🚨', 
+    title:'Sin documentación preventiva, la exposición legal es total',
+    text:'Un expediente construido después del incidente no constituye evidencia de gestión preventiva. Los protocolos solo tienen valor legal si son anteriores, sistemáticos y verificables.' },
+
+  { q:9, type:'warning', icon:'⚠️', 
+    title:'Docentes sin herramientas específicas operan en modo reactivo',
+    text:'Reconocer bullying en fase temprana requiere competencias en detección de dinámicas grupales y señales de riesgo psicosocial. Sin esa formación, la intervención llega cuando el daño ya está hecho.' },
+
+  { q:10, type:'danger', icon:'🚨', 
+    title:'Sin desagregación, los datos generales son clínicamente inútiles',
+    text:'Género, edad y salón no son variables demográficas — son los ejes donde se concentra el riesgo diferencial. Un diagnóstico sin esa desagregación no permite focalizar ninguna intervención.' }
+];
 
   var quizCurrentQ   = 0;
   var quizAnswers    = [];
@@ -1144,6 +1174,7 @@
 
 </body>
 </html>
+
 
 
 
