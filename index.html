@@ -985,302 +985,6 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </section>
 
-
-  
-<footer>
-  © 2025 TECH4ZERO – EDUCATION+AI
-</footer>
-
-<!-- MODAL GLOBAL: ACCESO USUARIOS -->
-<div id="globalModal" class="modalOverlay">
-  <div class="modalBox">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Acceso Usuarios</h3>
-      <button id="modalClose" class="modalClose" type="button">X</button>
-    </div>
-
-    <div id="modalSessionOn" style="display:none;">
-      <div class="statusMsg statusOk" id="modalSessionText"></div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-        <button id="btnCerrarSesion" class="btnSecondary" type="button">Cerrar sesión</button>
-        <button id="btnCerrarModal1" class="btnPrimary" type="button">Cerrar</button>
-      </div>
-    </div>
-
-    <div id="modalSessionOff" style="display:none;">
-      <div class="formPanel" style="margin-top:10px; max-width:100%;">
-        <div class="fieldBlock">
-          <label for="globalUser" class="fieldLabel">Usuario</label><br />
-          <input id="globalUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
-        </div>
-
-        <div class="fieldBlock">
-          <label for="globalPass" class="fieldLabel">Contraseña</label><br />
-          <input id="globalPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
-        </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button id="btnDoLogin" class="btnPrimary" type="button">Entrar</button>
-          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancelar</button>
-        </div>
-
-        <div id="globalLoginMsg" class="statusMsg statusErr"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: PRIVACIDAD ENCUESTA -->
-<div id="privacyModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:580px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">🔒 Tu privacidad está protegida</h3>
-    </div>
-
-    <div style="padding:8px 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
-        <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;">
-          <strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>
-        </p>
-        
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ No guardamos tu nombre, ni preguntamos quién eres.
-        </p>
-        
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ Nadie -ni profesores, ni directores, ni otros estudiantes- pueden conocer tus respuestas.
-        </p>
-        
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ Tu sinceridad ayuda a crear una escuela más segura para todos.  
-        </p>
-        <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
-          <em><strong>Gracias por participar</strong></em>
-        </p>
-        
-      </div>
-
-      <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
-        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
-          <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
-          <span>He leído y entiendo que esta encuesta es anónima y confidencial</span>
-        </label>
-      </div>
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
-          Continuar con la encuesta
-        </button>
-        <button id="btnPrivacyCancel" class="btnSecondary" type="button">
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: ADMIN LOGIN -->
-<div id="adminModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:450px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">🔐 Admin Access</h3>
-      <button id="adminModalClose" class="modalClose" type="button">X</button>
-    </div>
-
-    <!-- LOGGED OUT STATE -->
-    <div id="adminLoginForm" style="display:block;">
-      <div class="formPanel" style="margin-top:10px; max-width:100%;">
-        <div class="fieldBlock">
-          <label for="adminUsername" class="fieldLabel">Username</label><br />
-          <input id="adminUsername" class="textInput" type="text" placeholder="admin" autocomplete="off" />
-        </div>
-
-        <div class="fieldBlock">
-          <label for="adminPassword" class="fieldLabel">Password</label><br />
-          <input id="adminPassword" class="textInput" type="password" placeholder="Password" />
-        </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
-          <button id="btnAdminLogin" class="btnPrimary" type="button">Login</button>
-          <button id="btnAdminCancel" class="btnSecondary" type="button">Cancel</button>
-        </div>
-
-        <div id="adminLoginMsg" class="statusMsg statusErr"></div>
-      </div>
-    </div>
-
-    <!-- LOGGED IN STATE -->
-    <div id="adminLoggedIn" style="display:none;">
-      <div style="padding:20px; text-align:center;">
-        <div class="statusMsg statusOk" id="adminWelcomeMsg">Welcome, Admin!</div>
-        
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; justify-content:center;">
-          <button id="btnAdminLogout" class="btnSecondary" type="button">Logout</button>
-          <button id="btnAdminClose" class="btnPrimary" type="button">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: SELECT ANALYSIS TO VIEW -->
-<div id="selectAnalysisModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:700px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Seleccionar Análisis</h3>
-      <button id="selectAnalysisClose" class="modalClose" type="button">X</button>
-    </div>
-
-    <div style="padding:8px 0;">
-      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
-        Selecciona el análisis que deseas visualizar:
-      </p>
-
-      <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
-        <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
-      </div>
-
-      <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
-        <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
-          <p style="margin:0; font-size:15px; color:#ffdca8;">
-            No hay análisis aprobados disponibles.
-          </p>
-          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
-            Solicite un análisis o espere la aprobación.
-          </p>
-        </div>
-      </div>
-
-      <div id="analysesList" style="max-height:400px; overflow-y:auto; margin-bottom:16px;"></div>
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>
-          Ver Análisis Seleccionado
-        </button>
-        <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<style>
-.analysisCard {
-  background: #1E2F3F;
-  border: 2px solid #365468;
-  border-radius: 8px;
-  padding: 14px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.analysisCard:hover { border-color: #D6A21C; background: #243A4B; }
-.analysisCard.selected { border-color: #D6A21C; background: #243A4B; box-shadow: 0 0 0 2px rgba(214, 162, 28, 0.2); }
-.analysisCard label { display: flex; align-items: start; gap: 12px; cursor: pointer; width: 100%; }
-.analysisCard input[type="radio"] { margin-top: 4px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
-.analysisInfo { flex: 1; }
-.analysisDate { font-size: 16px; font-weight: 700; color: #D6A21C; margin-bottom: 6px; }
-.analysisStats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; }
-.analysisStat { display: flex; align-items: center; gap: 4px; }
-.statLabel { color: #7a8e9e; }
-.statValue { color: #ffffff; font-weight: 600; }
-.statusBadge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: #b9ffcf; color: #0f1d27; }
-</style>  
-
-<!-- MODAL: APPROVE SURVEYS -->
-<div id="approveSurveysModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:800px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Approve Surveys</h3>
-      <button id="approveSurveysClose" class="modalClose" type="button">X</button>
-    </div>
-
-    <div style="padding:8px 0;">
-      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
-        Review and approve pending surveys:
-      </p>
-
-      <div id="pendingSurveysLoading" style="display:none; text-align:center; padding:20px;">
-        <div class="statusMsg statusWarn">Loading pending surveys...</div>
-      </div>
-
-      <div id="pendingSurveysEmpty" style="display:none; padding:20px; text-align:center;">
-        <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
-          <p style="margin:0; font-size:15px; color:#b9ffcf;">✅ All surveys approved!</p>
-          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">No pending surveys at this time.</p>
-        </div>
-      </div>
-
-      <div id="pendingSurveysList" style="max-height:500px; overflow-y:auto; margin-bottom:16px;"></div>
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnClosePendingSurveys" class="btnSecondary" type="button">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<style>
-/* ── PRIMARIA MODE: larger text and icons for young children ── */
-#surveyBox.primaria-mode #qTitle {
-  font-size: 22px;
-}
-#surveyBox.primaria-mode #qText {
-  font-size: 26px;
-  line-height: 1.5;
-  font-weight: 600;
-  color: #ffffff;
-}
-#surveyBox.primaria-mode #qOptions label {
-  font-size: 24px;
-  line-height: 1.6;
-  margin-bottom: 14px !important;
-  padding: 10px 14px;
-  background: #16222D;
-  border-radius: 10px;
-  border: 1px solid #365468;
-  display: flex !important;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-#surveyBox.primaria-mode #qOptions label:hover {
-  background: #243A4B;
-  border-color: #D6A21C;
-}
-#surveyBox.primaria-mode #qOptions input[type="radio"] {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-#surveyBox.primaria-mode .btnPrimary,
-#surveyBox.primaria-mode .btnSecondary {
-  font-size: 18px;
-  padding: 14px 24px;
-}
-#surveyBox.primaria-mode {
-  max-width: 680px;
-  padding: 24px;
-}
-
-.pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
-.pendingSurveyCard:hover { border-color: #D6A21C; background: #243A4B; }
-.surveyHeader { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; gap: 10px; }
-.surveySchoolName { font-size: 18px; font-weight: 700; color: #D6A21C; flex: 1; }
-.surveyMeta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; margin-bottom: 14px; }
-.surveyMetaItem { display: flex; align-items: center; gap: 6px; }
-.surveyActions { display: flex; gap: 8px; flex-wrap: wrap; }
-.btnApprove { background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btnApprove:hover { background: #45a049; }
-.btnApprove:disabled { opacity: 0.5; cursor: not-allowed; }
-.btnReject { background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btnReject:hover { background: #ff6b6b; color: white; }
-.btnReject:disabled { opacity: 0.5; cursor: not-allowed; }
-.btnPreview { background: transparent; color: #D6A21C; border: 1px solid #D6A21C; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btnPreview:hover { background: #D6A21C; color: #16222D; }
-
 <!--  ====================   ULTIMO BLOQUE PEGADO  ===============================  -->
 
 <!-- ═══════════════════════════════════════════════════════
@@ -1853,6 +1557,308 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
   
 <!-- =============== END ULTIMO BLOQUE PEGADO ========================================= -->
+
+
+
+
+
+  
+  
+<footer>
+  © 2025 TECH4ZERO – EDUCATION+AI
+</footer>
+
+<!-- MODAL GLOBAL: ACCESO USUARIOS -->
+<div id="globalModal" class="modalOverlay">
+  <div class="modalBox">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Acceso Usuarios</h3>
+      <button id="modalClose" class="modalClose" type="button">X</button>
+    </div>
+
+    <div id="modalSessionOn" style="display:none;">
+      <div class="statusMsg statusOk" id="modalSessionText"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+        <button id="btnCerrarSesion" class="btnSecondary" type="button">Cerrar sesión</button>
+        <button id="btnCerrarModal1" class="btnPrimary" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div id="modalSessionOff" style="display:none;">
+      <div class="formPanel" style="margin-top:10px; max-width:100%;">
+        <div class="fieldBlock">
+          <label for="globalUser" class="fieldLabel">Usuario</label><br />
+          <input id="globalUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
+        </div>
+
+        <div class="fieldBlock">
+          <label for="globalPass" class="fieldLabel">Contraseña</label><br />
+          <input id="globalPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnDoLogin" class="btnPrimary" type="button">Entrar</button>
+          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancelar</button>
+        </div>
+
+        <div id="globalLoginMsg" class="statusMsg statusErr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PRIVACIDAD ENCUESTA -->
+<div id="privacyModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:580px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">🔒 Tu privacidad está protegida</h3>
+    </div>
+
+    <div style="padding:8px 0;">
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;">
+          <strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>
+        </p>
+        
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+          ✅ No guardamos tu nombre, ni preguntamos quién eres.
+        </p>
+        
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+          ✅ Nadie -ni profesores, ni directores, ni otros estudiantes- pueden conocer tus respuestas.
+        </p>
+        
+        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+          ✅ Tu sinceridad ayuda a crear una escuela más segura para todos.  
+        </p>
+        <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
+          <em><strong>Gracias por participar</strong></em>
+        </p>
+        
+      </div>
+
+      <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
+          <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
+          <span>He leído y entiendo que esta encuesta es anónima y confidencial</span>
+        </label>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
+          Continuar con la encuesta
+        </button>
+        <button id="btnPrivacyCancel" class="btnSecondary" type="button">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ADMIN LOGIN -->
+<div id="adminModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:450px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">🔐 Admin Access</h3>
+      <button id="adminModalClose" class="modalClose" type="button">X</button>
+    </div>
+
+    <!-- LOGGED OUT STATE -->
+    <div id="adminLoginForm" style="display:block;">
+      <div class="formPanel" style="margin-top:10px; max-width:100%;">
+        <div class="fieldBlock">
+          <label for="adminUsername" class="fieldLabel">Username</label><br />
+          <input id="adminUsername" class="textInput" type="text" placeholder="admin" autocomplete="off" />
+        </div>
+
+        <div class="fieldBlock">
+          <label for="adminPassword" class="fieldLabel">Password</label><br />
+          <input id="adminPassword" class="textInput" type="password" placeholder="Password" />
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+          <button id="btnAdminLogin" class="btnPrimary" type="button">Login</button>
+          <button id="btnAdminCancel" class="btnSecondary" type="button">Cancel</button>
+        </div>
+
+        <div id="adminLoginMsg" class="statusMsg statusErr"></div>
+      </div>
+    </div>
+
+    <!-- LOGGED IN STATE -->
+    <div id="adminLoggedIn" style="display:none;">
+      <div style="padding:20px; text-align:center;">
+        <div class="statusMsg statusOk" id="adminWelcomeMsg">Welcome, Admin!</div>
+        
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; justify-content:center;">
+          <button id="btnAdminLogout" class="btnSecondary" type="button">Logout</button>
+          <button id="btnAdminClose" class="btnPrimary" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SELECT ANALYSIS TO VIEW -->
+<div id="selectAnalysisModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:700px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Seleccionar Análisis</h3>
+      <button id="selectAnalysisClose" class="modalClose" type="button">X</button>
+    </div>
+
+    <div style="padding:8px 0;">
+      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
+        Selecciona el análisis que deseas visualizar:
+      </p>
+
+      <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
+        <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
+      </div>
+
+      <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
+        <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
+          <p style="margin:0; font-size:15px; color:#ffdca8;">
+            No hay análisis aprobados disponibles.
+          </p>
+          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
+            Solicite un análisis o espere la aprobación.
+          </p>
+        </div>
+      </div>
+
+      <div id="analysesList" style="max-height:400px; overflow-y:auto; margin-bottom:16px;"></div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>
+          Ver Análisis Seleccionado
+        </button>
+        <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.analysisCard {
+  background: #1E2F3F;
+  border: 2px solid #365468;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.analysisCard:hover { border-color: #D6A21C; background: #243A4B; }
+.analysisCard.selected { border-color: #D6A21C; background: #243A4B; box-shadow: 0 0 0 2px rgba(214, 162, 28, 0.2); }
+.analysisCard label { display: flex; align-items: start; gap: 12px; cursor: pointer; width: 100%; }
+.analysisCard input[type="radio"] { margin-top: 4px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
+.analysisInfo { flex: 1; }
+.analysisDate { font-size: 16px; font-weight: 700; color: #D6A21C; margin-bottom: 6px; }
+.analysisStats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; }
+.analysisStat { display: flex; align-items: center; gap: 4px; }
+.statLabel { color: #7a8e9e; }
+.statValue { color: #ffffff; font-weight: 600; }
+.statusBadge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: #b9ffcf; color: #0f1d27; }
+</style>  
+
+<!-- MODAL: APPROVE SURVEYS -->
+<div id="approveSurveysModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:800px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Approve Surveys</h3>
+      <button id="approveSurveysClose" class="modalClose" type="button">X</button>
+    </div>
+
+    <div style="padding:8px 0;">
+      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
+        Review and approve pending surveys:
+      </p>
+
+      <div id="pendingSurveysLoading" style="display:none; text-align:center; padding:20px;">
+        <div class="statusMsg statusWarn">Loading pending surveys...</div>
+      </div>
+
+      <div id="pendingSurveysEmpty" style="display:none; padding:20px; text-align:center;">
+        <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
+          <p style="margin:0; font-size:15px; color:#b9ffcf;">✅ All surveys approved!</p>
+          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">No pending surveys at this time.</p>
+        </div>
+      </div>
+
+      <div id="pendingSurveysList" style="max-height:500px; overflow-y:auto; margin-bottom:16px;"></div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnClosePendingSurveys" class="btnSecondary" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── PRIMARIA MODE: larger text and icons for young children ── */
+#surveyBox.primaria-mode #qTitle {
+  font-size: 22px;
+}
+#surveyBox.primaria-mode #qText {
+  font-size: 26px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #ffffff;
+}
+#surveyBox.primaria-mode #qOptions label {
+  font-size: 24px;
+  line-height: 1.6;
+  margin-bottom: 14px !important;
+  padding: 10px 14px;
+  background: #16222D;
+  border-radius: 10px;
+  border: 1px solid #365468;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+#surveyBox.primaria-mode #qOptions label:hover {
+  background: #243A4B;
+  border-color: #D6A21C;
+}
+#surveyBox.primaria-mode #qOptions input[type="radio"] {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+#surveyBox.primaria-mode .btnPrimary,
+#surveyBox.primaria-mode .btnSecondary {
+  font-size: 18px;
+  padding: 14px 24px;
+}
+#surveyBox.primaria-mode {
+  max-width: 680px;
+  padding: 24px;
+}
+
+.pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
+.pendingSurveyCard:hover { border-color: #D6A21C; background: #243A4B; }
+.surveyHeader { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; gap: 10px; }
+.surveySchoolName { font-size: 18px; font-weight: 700; color: #D6A21C; flex: 1; }
+.surveyMeta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; margin-bottom: 14px; }
+.surveyMetaItem { display: flex; align-items: center; gap: 6px; }
+.surveyActions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btnApprove { background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btnApprove:hover { background: #45a049; }
+.btnApprove:disabled { opacity: 0.5; cursor: not-allowed; }
+.btnReject { background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btnReject:hover { background: #ff6b6b; color: white; }
+.btnReject:disabled { opacity: 0.5; cursor: not-allowed; }
+.btnPreview { background: transparent; color: #D6A21C; border: 1px solid #D6A21C; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btnPreview:hover { background: #D6A21C; color: #16222D; }
+
+
 
   
 </style>
@@ -3263,6 +3269,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
+
 
 
 
