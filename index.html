@@ -47,7 +47,6 @@
     @media (max-width:768px) {
       .programa-content { width:100%; }
       .video-container { width:100%; padding-top:56.25%; }
-      .video-grid { grid-template-columns:1fr !important; }
       .offices-grid { grid-template-columns:repeat(2,1fr) !important; }
       .overlayGrid { grid-template-columns:1fr !important; }
       .statsGrid { grid-template-columns:1fr !important; }
@@ -158,7 +157,7 @@
 
 <!-- ═══════════════════════════════ PROGRAMA ═══════════════════════════════ -->
 <section id="programa">
-  <h2>Programa Antibullying TECH4ZERO</h2>
+  <!-- <h2>Programa Antibullying TECH4ZERO</h2> -->
 
   <!-- SECCIÓN 2 — EL PROBLEMA -->
   <div class="programaSection" style="background:#0a1520;">
@@ -203,39 +202,61 @@
     </div>
   </div>
 
-  <!-- SECCIÓN 3 — LA SOLUCIÓN -->
+ <!-- SECCIÓN 3 — LA SOLUCIÓN -->
   <div class="programaSection" style="background:#1E2F3F;">
     <div class="sectionInner">
-      <h3>Un diagnóstico completo. Un plan listo para implementar.</h3>
+      <h3>Te entregamos: el diagnóstico exacto de tu escuela y el plan concreto para actuar.</h3>
       <p class="sectionBody">
-        TECH4ZERO aplica una encuesta online anónima y confidencial a toda tu comunidad escolar — estudiantes y docentes — y analiza los resultados con estadística avanzada e inteligencia artificial.
+        En 3 pasos y 48 horas, TECH4ZERO te entrega un diagnóstico completo de tu escuela y un plan de acción listo para implementar.
+        Primero, toda tu comunidad escolar — estudiantes y docentes — responde una encuesta online, anónima y confidencial. 
+        Luego, nuestros expertos analizan los resultados con estadística avanzada e inteligencia artificial, detectando patrones y 
+        predicciones que el ojo humano no puede ver. En 48 horas recibes dos documentos: 
+        el diagnóstico exacto de tu escuela y el plan de acción diseñado específicamente para ella.
       </p>
       <div class="overlayGrid" style="grid-template-columns:repeat(3,1fr);">
+
+<!-- PASO 1 -->
         <div class="overlayCard">
           <img src="img/s3_mapa.jpeg" alt="Mapa de riesgo" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-            <span class="oIcon">✅</span><div class="oLine"></div>
-            <div class="oTitle">Mapa de zonas de riesgo</div>
-            <div class="oText">Físicas y digitales, identificadas por salón, nivel y área del establecimiento.</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
+              <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">1</span>
+            </div>
+            <div class="oLine"></div>
+            <div class="oTitle">Tu comunidad responde</div>
+            <div class="oText">Estudiantes y docentes completan una encuesta online, anónima y confidencial — desde cualquier dispositivo.</div>
           </div>
         </div>
+
+        <!-- PASO 2 -->
         <div class="overlayCard">
           <img src="img/s3_clima.jpeg" alt="Clima escolar" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-            <span class="oIcon">✅</span><div class="oLine"></div>
-            <div class="oTitle">Perfil completo de clima escolar</div>
-            <div class="oText">Por curso, por docente, por nivel.</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
+              <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">2</span>
+            </div>
+            <div class="oLine"></div>
+            <div class="oTitle">Nuestros expertos analizan</div>
+            <div class="oText">Procesamos los resultados con estadística avanzada e IA — detectando patrones, zonas de riesgo y predicciones precisas.</div>
           </div>
         </div>
+
+        <!-- PASO 3 -->
         <div class="overlayCard">
           <img src="img/s3_plan.jpeg" alt="Plan de intervención" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
-            <span class="oIcon">✅</span><div class="oLine"></div>
-            <div class="oTitle">Plan de intervención</div>
-            <div class="oText">Listo para presentar a tu equipo y ejecutar de inmediato.</div>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
+              <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">3</span>
+            </div>
+            <div class="oLine"></div>
+            <div class="oTitle">Tú recibes en 48 horas</div>
+            <div class="oText">Dos documentos: el diagnóstico exacto de tu escuela y el plan de acción a la medida — listo para implementar de inmediato.</div>
           </div>
         </div>
       </div>
@@ -269,11 +290,9 @@
       </ul>
       <br><br>
     </div>
-    <div class="video-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin:16px 0;">
-      <div class="video-container" style="width:100%; margin:0;"><iframe src="https://www.youtube.com/embed/zw1zTrZn2ic" title="Video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-      <div class="video-container" style="width:100%; margin:0;"><iframe src="https://www.youtube.com/embed/rC_xEqFqZ_s?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-      <div class="video-container" style="width:100%; margin:0;"><iframe src="https://www.youtube.com/embed/vLFFojLhCZs?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-    </div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/zw1zTrZn2ic" title="Video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/rC_xEqFqZ_s?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/vLFFojLhCZs?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
     <p class="nota">Datos consolidados de cohortes 2023-2025. Resultados varían según contexto institucional.</p>
   </div>
 </section>
@@ -764,13 +783,16 @@
     <!-- PANTALLA: INTRO -->
     <div class="quiz-screen active" id="quiz-screen-intro">
       <div style="height:16px;"></div>
-      <div class="quiz-intro-label">⏱ 2 minutos · 8 preguntas</div>
-      <h2 class="quiz-intro-title">¿Qué tan bien conoces<br><em>tu escuela?</em></h2>
+      <div class="quiz-intro-label">⏱ 2 minutos · 11 preguntas</div>
+      <h2 class="quiz-intro-title">¿Quieres ver la escuela con los ojos de<br><em>tus estudiantes?</em></h2>
       <p class="quiz-intro-desc">
-        8 preguntas directas sobre lo que ocurre en tu institución.
+        11 preguntas directas para saber qué tan lejos estás de la realidad de tus estudiantes — incluyendo si tienes la documentación para defenderte legalmente, 
+        detección temprana docente y diagnóstico por salón, género y edad.
         Sin tecnicismos. Sin trampa. Al final, un diagnóstico honesto
         de cuánto estás viendo — y cuánto se te está escapando.
       </p>
+
+      <!--
       <div class="quiz-intro-meta">
         <div class="quiz-intro-meta-item">
           <div class="quiz-intro-meta-icon">🔍</div>
@@ -785,8 +807,10 @@
           <span>Capacidad de respuesta</span>
         </div>
       </div>
+       -->
+      
       <button class="quiz-btn-primary" onclick="startQuiz()" type="button" style="font-size:15px;padding:13px 30px;">
-        Comenzar diagnóstico →
+        Quiero saberlo →
       </button>
     </div>
 
@@ -832,7 +856,7 @@
     <div class="quiz-screen" id="quiz-screen-share">
       <div class="quiz-share-card">
         <div class="quiz-share-brand">TECH4ZERO · AUTODIAGNÓSTICO ESCOLAR</div>
-        <div class="quiz-share-headline">Evalué mi escuela.<br>Este es mi resultado de visibilidad.</div>
+        <div class="quiz-share-headline">Medí que tan lejos estoy de la realidad de mis estudiantes.<br>Este es el resultado.</div>
         <div class="quiz-share-score-row">
           <div class="quiz-share-big-num" id="quizShareScore">—</div>
           <div class="quiz-share-score-label">
@@ -842,11 +866,12 @@
         </div>
         <div class="quiz-share-dots" id="quizShareDots"></div>
         <div class="quiz-share-footer">
-          <span>¿Cuál es el tuyo?</span>
+         <!-- <span>¿Cuál es el tuyo?</span> -->
           <span class="quiz-share-footer-logo">TECH4ZERO.COM</span>
         </div>
       </div>
 
+      <!--
       <div class="quiz-btn-row" style="margin-bottom:20px;">
         <button class="quiz-btn-whatsapp" onclick="quizShareWhatsApp()" type="button">
           <span style="font-size:18px;">💬</span> Compartir por WhatsApp
@@ -855,10 +880,11 @@
           🔗 Copiar enlace
         </button>
       </div>
+      -->
 
-      <div class="quiz-divider"></div>
+      <!-- <div class="quiz-divider"></div>  -->
 
-      <div class="quiz-email-section">
+      <!-- <div class="quiz-email-section">
         <div class="quiz-email-title">📄 Recibe el informe completo en PDF</div>
         <div class="quiz-email-desc" id="quizEmailDesc">
           El PDF incluye tu diagnóstico detallado, estadísticas comparativas con escuelas similares
@@ -871,8 +897,31 @@
         <p style="font-size:11px;color:#4a6070;margin-top:10px;">
           🔒 Sin spam. Solo el informe y una llamada de seguimiento si lo deseas.
         </p>
-      </div>
+      </div>  -->
 
+    <!-- RECURSO UNESCO  
+      <div class="quiz-divider"></div> -->
+
+  <div style="background:rgba(255,255,255,0.03);border:1px solid #365468;border-radius:10px;padding:14px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#D6A21C;text-transform:uppercase;margin-bottom:8px;">
+      📚 Recurso UNESCO recomendado
+    </div>
+    <div style="font-size:14px;color:#fff;font-weight:600;margin-bottom:4px;line-height:1.4;">
+      Más allá de los números: Poner fin a la violencia y el acoso en el ámbito escolar
+    </div>
+    <div style="font-size:12px;color:#a9c0d3;margin-bottom:12px;line-height:1.5;">
+      Informe oficial UNESCO. Datos globales sobre prevalencia, impacto académico 
+      y estrategias de prevención basadas en evidencia.
+    </div>
+    <a href="data/378398spa.pdf" 
+       target="_blank"
+       style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:transparent;border:1px solid #D6A21C;border-radius:8px;color:#D6A21C;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;"
+       onmouseover="this.style.background='rgba(214,162,28,0.1)'"
+       onmouseout="this.style.background='transparent'">
+      ↓ Descargar PDF gratuito
+    </a>
+  </div>
+      <br>
       <div class="quiz-btn-row">
         <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Cerrar</button>
         <button class="quiz-btn-primary"   onclick="startQuiz()"  type="button" style="flex:1;">↺ Reiniciar</button>
@@ -887,32 +936,72 @@
 (function () {
 
   var QUIZ_QUESTIONS = [
-    { category:'VISIBILIDAD', text:'¿Sabes qué ocurre en los pasillos y baños de tu escuela durante los recreos?' },
-    { category:'VISIBILIDAD', text:'¿Puedes identificar hoy a los 3 estudiantes con mayor riesgo de ser víctimas de acoso en tu escuela?' },
-    { category:'VISIBILIDAD', text:'¿Tienes datos sobre el clima emocional en cada salón de clases de forma individual?' },
-    { category:'PREVENCIÓN',  text:'¿Tu cuerpo docente recibió capacitación formal en detección de bullying durante este año escolar?' },
-    { category:'PREVENCIÓN',  text:'¿Tienes un protocolo antibullying claro que todos los profesores conocen y aplican de forma consistente?' },
-    { category:'PREVENCIÓN',  text:'¿Mides con datos concretos si tus acciones de prevención están funcionando?' },
-    { category:'RESPUESTA',   text:'¿El último incidente de acoso reportado en tu escuela fue resuelto en menos de 48 horas?' },
-    { category:'RESPUESTA',   text:'¿Tienes documentación institucional que te proteja legalmente ante una denuncia formal por bullying?' }
+    { category:'SU DIA', text:'¿Sabes que tan seguros se sienten tus estudiantes cuando cruzan la puerta de tu escuela cada mañana?' },
+    { category:'SU MUNDO', text:'¿Conoces los lugares de tu escuela donde tus estudiantes se sienten solos o con miedo?' },
+    { category:'SU VOZ', text:'¿Saben tus estudiantes a quién acudir cuando algo malo les pasa — y confían en que los escucharán?' },
+    { category:'SU SILENCIO',  text:'¿Tu escuela tiene identificados a los estudiantes que estadísticamente concentran el mayor riesgo de ser víctimas de acoso?' },
+    { category:'SU AULA',  text:'¿Sabes en qué salones tus estudiantes se sienten seguros — y en cuáles no?' },
+    { category:'SUS DOCENTES',  text:'¿Tus profesores saben escuchar lo que los estudiantes no dicen con palabras?' },
+    { category:'SU CONFIANZA',   text:'¿Alguno de tus estudiantes siente que tu escuela es el lugar más seguro de su día?' },
+    { category:'SU FUTURO',   text:'¿Los estudiantes saben que los casos de agresiones se solucionan rapidamente y con justicia?' },
+    { category:'TU PROTECCION', text:'Si mañana una familia te demanda por un caso de acoso que ocurrió en tu escuela — ¿tienes documentación que demuestre que hiciste todo lo que estaba en tus manos para prevenirlo?' },
+    { category:'TUS DOCENTES', text:'¿Tus profesores tienen las herramientas para reconocer el bullying antes de que escale o están respondiendo a lo que ya explotó?' },
+    { category:'TU MAPA', text:'¿Sabes si el clima emocional de tus estudiantes cambia según el género, la edad o el salón — o tratas a toda tu escuela como si fuera una sola realidad?' }
+
+    
   ];
 
   var QUIZ_OPTIONS = [
-    { value:'yes', label:'Sí, lo tenemos claro', icon:'✅' },
-    { value:'no',  label:'No, no lo tenemos',    icon:'❌' },
-    { value:'idk', label:'No estoy seguro/a',     icon:'🤔' }
+    { value:'yes', label:'Si', icon:'A' },
+    { value:'no',  label:'No',    icon:'B' },
+    { value:'idk', label:'No estoy seguro/a',     icon:'C' }
   ];
 
   var QUIZ_FINDINGS = [
-    { q:0, type:'danger',  icon:'🚨', title:'Sin visibilidad en zonas no supervisadas',   text:'El 70% del acoso ocurre en pasillos, baños y recreos. No tienes datos de esas zonas.' },
-    { q:1, type:'danger',  icon:'👁️', title:'No identificas a los estudiantes en riesgo', text:'Sin ese dato, actúas después del incidente — no antes.' },
-    { q:2, type:'warning', icon:'📊', title:'Sin clima emocional por salón',               text:'Sin datos por curso, las intervenciones son genéricas y menos efectivas.' },
-    { q:3, type:'warning', icon:'🏫', title:'Docentes sin capacitación reciente',          text:'Los profesores son tu primera línea. Sin herramientas, las señales pasan desapercibidas.' },
-    { q:4, type:'danger',  icon:'⚠️', title:'Sin protocolo unificado',                    text:'Cada profesor responde diferente, lo que crea inconsistencia y riesgo legal.' },
-    { q:5, type:'info',    icon:'📋', title:'Sin métricas de impacto',                    text:'Estás invirtiendo en prevención sin saber si funciona.' },
-    { q:6, type:'warning', icon:'⏱️', title:'Tiempos de respuesta no medidos',             text:'La velocidad ante un incidente es clave para el bienestar del estudiante y la protección legal.' },
-    { q:7, type:'danger',  icon:'⚖️', title:'Sin respaldo legal documentado',             text:'Una sola denuncia sin documentación puede escalar a consecuencias legales y mediáticas.' }
-  ];
+  { q:0, type:'danger', icon:'🚨', 
+    title:'Sin datos de percepción de seguridad, no hay línea base',
+    text:'Si no mides cómo llegan tus estudiantes, no puedes saber si tu escuela es parte de la solución o parte del problema.' },
+
+  { q:1, type:'danger', icon:'🚨', 
+    title:'Los espacios no supervisados son zonas de riesgo activo',
+    text:'Sin un mapeo de puntos críticos, los recursos de supervisión se distribuyen donde se ven — no donde se necesitan.' },
+
+  { q:2, type:'warning', icon:'⚠️', 
+    title:'Sin canal de reporte confiable, el silencio es la norma',
+    text:'Un estudiante que no sabe a quién acudir — o que no confía en ser escuchado — no reporta. Y lo que no se reporta no se interviene.' },
+
+  { q:3, type:'danger', icon:'🚨', 
+    title:'Sin identificación de riesgo, la prevención es reactiva',
+    text:'Intervenir después del incidente cuesta entre 4 y 7 veces más que prevenirlo. Sin un perfil de vulnerabilidad por estudiante, siempre llegas tarde.' },
+
+  { q:4, type:'warning', icon:'⚠️', 
+    title:'El clima varía por salón — los promedios lo ocultan',
+    text:'Un índice general puede mostrar resultados aceptables mientras salones específicos registran niveles críticos. Sin datos por aula, el promedio protege el problema.' },
+
+  { q:5, type:'warning', icon:'⚠️', 
+    title:'La detección temprana es una competencia — no una intuición',
+    text:'Sin formación específica en observación conductual, los docentes responden a lo que ya escaló. Las señales tempranas requieren un protocolo, no solo sensibilidad.' },
+
+  { q:6, type:'danger', icon:'🚨', 
+    title:'Una escuela que no es refugio activa el modo de supervivencia',
+    text:'Cuando el entorno escolar no se percibe como seguro, el sistema nervioso del estudiante prioriza alerta sobre aprendizaje. El impacto académico es medible y directo.' },
+
+  { q:7, type:'danger', icon:'🚨', 
+    title:'La percepción de justicia define si los estudiantes hablan o callan',
+    text:'Si los estudiantes no creen que los casos se resuelven con equidad y rapidez, el subregistro aumenta. Los incidentes no reportados son los de mayor riesgo institucional.' },
+
+  { q:8, type:'danger', icon:'🚨', 
+    title:'Sin documentación preventiva, la exposición legal es total',
+    text:'Un expediente construido después del incidente no constituye evidencia de gestión preventiva. Los protocolos solo tienen valor legal si son anteriores, sistemáticos y verificables.' },
+
+  { q:9, type:'warning', icon:'⚠️', 
+    title:'Docentes sin herramientas específicas operan en modo reactivo',
+    text:'Reconocer bullying en fase temprana requiere competencias en detección de dinámicas grupales y señales de riesgo psicosocial. Sin esa formación, la intervención llega cuando el daño ya está hecho.' },
+
+  { q:10, type:'danger', icon:'🚨', 
+    title:'Sin desagregación, los datos generales son clínicamente inútiles',
+    text:'Género, edad y salón no son variables demográficas — son los ejes donde se concentra el riesgo diferencial. Un diagnóstico sin esa desagregación no permite focalizar ninguna intervención.' }
+];
 
   var quizCurrentQ   = 0;
   var quizAnswers    = [];
@@ -927,16 +1016,35 @@
     document.getElementById('quizProgressBar').style.width = pct + '%';
   }
 
+  //function quizGetLevelInfo(score) {
+  //  if (score <= 25) return { level:'Muy lejos', cls:'critical', color:'#ff6b6b',
+  //    subtitle:'Tu escuela tiene puntos ciegos graves. Sin datos, no puedes prevenir lo que no ves. Esto representa un riesgo real e inmediato para tus estudiantes y tu institución.' };
+  //  if (score <= 50) return { level:'Visibilidad Baja',    cls:'low',      color:'#ffa94d',
+  //    subtitle:'Tienes algo de control, pero hay áreas significativas que se te escapan. Lo que no estás midiendo no lo puedes mejorar — y alguien está pagando ese costo.' };
+  //  if (score <= 75) return { level:'Visibilidad Media',   cls:'medium',   color:'#D6A21C',
+  //    subtitle:'Estás por sobre el promedio regional, pero todavía hay brechas importantes. Una intervención focalizada podría marcar una diferencia significativa.' };
+  //  return               { level:'Visibilidad Alta',    cls:'high',     color:'#69db7c',
+  //    subtitle:'Tu escuela tiene buenas prácticas. TECH4ZERO puede llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.' };
+  //
+
   function quizGetLevelInfo(score) {
-    if (score <= 25) return { level:'Visibilidad Crítica', cls:'critical', color:'#ff6b6b',
-      subtitle:'Tu escuela tiene puntos ciegos graves. Sin datos, no puedes prevenir lo que no ves. Esto representa un riesgo real e inmediato para tus estudiantes y tu institución.' };
-    if (score <= 50) return { level:'Visibilidad Baja',    cls:'low',      color:'#ffa94d',
-      subtitle:'Tienes algo de control, pero hay áreas significativas que se te escapan. Lo que no estás midiendo no lo puedes mejorar — y alguien está pagando ese costo.' };
-    if (score <= 75) return { level:'Visibilidad Media',   cls:'medium',   color:'#D6A21C',
-      subtitle:'Estás por sobre el promedio regional, pero todavía hay brechas importantes. Una intervención focalizada podría marcar una diferencia significativa.' };
-    return               { level:'Visibilidad Alta',    cls:'high',     color:'#69db7c',
-      subtitle:'Tu escuela tiene buenas prácticas. TECH4ZERO puede llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.' };
-  }
+  if (score <= 25) return { 
+    level:'Muy lejos', cls:'critical', color:'#ff6b6b',
+    subtitle:'La realidad de tus estudiantes y lo que tú percibes son dos mundos distintos. Lo que no ves no es porque no exista — es porque todavía nadie te lo ha mostrado.' 
+  };
+  if (score <= 50) return { 
+    level:'Lejos', cls:'low', color:'#ffa94d',
+    subtitle:'Ves la superficie de tu escuela, pero la vida real de tus estudiantes ocurre en otro lugar. Estás más cerca de lo que crees — pero la distancia todavía importa.' 
+  };
+  if (score <= 75) return { 
+    level:'Cerca', cls:'medium', color:'#D6A21C',
+    subtitle:'Tienes intuición y sensibilidad, pero te faltan los ojos de ellos. Con las herramientas correctas, podrías cerrar esa distancia en semanas.' 
+  };
+  return { 
+    level:'Muy cerca', cls:'high', color:'#69db7c',
+    subtitle:'Empiezas a ver tu escuela como tus estudiantes la viven. Eso es extraordinariamente difícil de lograr — y es exactamente desde donde se construyen escuelas que transforman vidas.' 
+  };
+}
 
   function quizRenderQuestion() {
     var q = QUIZ_QUESTIONS[quizCurrentQ];
@@ -1115,3 +1223,25 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
