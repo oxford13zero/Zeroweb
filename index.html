@@ -155,7 +155,180 @@
     ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
   </div>
 </section>
+<!-- ═══════════════════════════════ TESTIMONIOS ═══════════════════════════════ -->
+<section id="testimonios">
 
+<style>
+  /* ── TESTIMONIOS ── */
+  .testi-hero { position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; padding:80px 20px 60px; background:linear-gradient(180deg,#0a1520 0%,#16222D 100%); text-align:center; overflow:hidden; }
+  .testi-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(214,162,28,0.06) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
+  .testi-hero-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; }
+  .testi-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(214,162,28,0.1); border:1px solid rgba(214,162,28,0.3); border-radius:999px; padding:5px 16px; font-size:11px; font-weight:700; color:#D6A21C; letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+  .testi-hero h2 { font-family:'Playfair Display',serif; font-size:clamp(30px,4.5vw,48px); font-weight:600; color:#fff; margin:0 0 16px 0; line-height:1.2; }
+  .testi-hero p { font-size:16px; color:#a9c0d3; line-height:1.7; margin:0; }
+
+  /* Grid 2×2 */
+  .testi-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; max-width:960px; margin:48px auto 0; padding:0 20px 60px; }
+  @media (max-width:700px) { .testi-grid { grid-template-columns:1fr; } }
+
+  /* Card base */
+  .testi-card { background:linear-gradient(160deg,#16222D 0%,#0f1d27 100%); border:1px solid #243A4B; border-radius:16px; padding:32px; position:relative; overflow:hidden; transition:border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+  .testi-card:hover { border-color:rgba(214,162,28,0.5); transform:translateY(-4px); box-shadow:0 20px 48px rgba(0,0,0,0.4); }
+  .testi-card::before { content:'"'; font-family:'Playfair Display',serif; font-size:120px; line-height:1; color:rgba(214,162,28,0.08); position:absolute; top:-10px; left:20px; pointer-events:none; }
+
+  /* Quote text */
+  .testi-quote { font-size:15px; color:#d9e6f2; line-height:1.75; margin:0 0 28px 0; position:relative; z-index:1; font-style:italic; }
+  .testi-quote em { color:#D6A21C; font-style:normal; font-weight:600; }
+
+  /* Author row */
+  .testi-author { display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
+  .testi-avatar { width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid rgba(214,162,28,0.4); flex-shrink:0; background:#243A4B; }
+  .testi-avatar-placeholder { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,#1E2F3F,#243A4B); border:2px solid rgba(214,162,28,0.3); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .testi-name { font-weight:700; font-size:14px; color:#fff; margin-bottom:3px; }
+  .testi-role { font-size:12px; color:#D6A21C; font-weight:600; margin-bottom:2px; }
+  .testi-institution { font-size:12px; color:#7a8e9e; }
+  .testi-divider { height:1px; background:linear-gradient(90deg,rgba(214,162,28,0.3),transparent); margin:24px 0; }
+
+  /* Video card variant */
+  .testi-card.has-video { padding:0; cursor:pointer; }
+  .testi-card.has-video .testi-thumb { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:16px 16px 0 0; }
+  .testi-card.has-video .testi-thumb img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; filter:brightness(0.8); }
+  .testi-card.has-video:hover .testi-thumb img { transform:scale(1.04); filter:brightness(0.65); }
+  .testi-play-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .testi-play-circle { width:60px; height:60px; background:rgba(214,162,28,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:transform 0.2s, background 0.2s; box-shadow:0 4px 24px rgba(214,162,28,0.4); }
+  .testi-card.has-video:hover .testi-play-circle { transform:scale(1.1); background:#D6A21C; }
+  .testi-play-arrow { width:0; height:0; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid #16222D; margin-left:4px; }
+  .testi-card-body { padding:24px 28px 28px; }
+  .testi-card-body .testi-card::before { display:none; }
+
+  /* Country flag badge */
+  .testi-flag { position:absolute; top:14px; right:14px; font-size:20px; z-index:2; }
+  .testi-card.has-video .testi-flag { top:10px; right:10px; background:rgba(6,14,22,0.7); border-radius:6px; padding:3px 6px; font-size:16px; }
+
+  /* Lightbox */
+  .testi-lightbox { display:none; position:fixed; inset:0; background:rgba(6,14,22,0.96); z-index:29999; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px); }
+  .testi-lightbox.open { display:flex; }
+  .testi-lightbox-inner { width:min(800px,100%); position:relative; }
+  .testi-lightbox-video { position:relative; width:100%; padding-top:56.25%; border-radius:12px; overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,0.7); }
+  .testi-lightbox-video iframe { position:absolute; inset:0; width:100%; height:100%; }
+  .testi-lightbox-close { position:absolute; top:-44px; right:0; background:transparent; border:1px solid #365468; color:#a9c0d3; width:36px; height:36px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+  .testi-lightbox-close:hover { border-color:#D6A21C; color:#D6A21C; }
+  .testi-lightbox-caption { text-align:center; margin-top:16px; font-size:14px; color:#a9c0d3; }
+</style>
+
+  <!-- Hero header -->
+  <div class="testi-hero">
+    <div class="testi-hero-inner">
+      <div class="testi-eyebrow">⭐ Voces de nuestra comunidad</div>
+      <h2>Lo que dicen quienes ya lo vivieron</h2>
+      <p>Directores, coordinadores y docentes que transformaron su institución con TECH4ZERO.</p>
+    </div>
+  </div>
+
+  <!-- 2×2 Grid -->
+  <div class="testi-grid">
+
+    <!-- TARJETA 1 — Video -->
+    <div class="testi-card has-video" onclick="testiOpenVideo('zw1zTrZn2ic','Testimonio — Directora, México')">
+      <div class="testi-thumb">
+        <img src="https://img.youtube.com/vi/zw1zTrZn2ic/maxresdefault.jpg" alt="Video testimonio" />
+        <div class="testi-play-btn"><div class="testi-play-circle"><div class="testi-play-arrow"></div></div></div>
+      </div>
+      <span class="testi-flag">🇲🇽</span>
+      <div class="testi-card-body">
+        <p class="testi-quote">"Un antes y un después para nuestra escuela. Por primera vez vimos los datos reales de lo que vivían nuestros estudiantes."</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar-placeholder">👩‍💼</div>
+          <div>
+            <div class="testi-name">María González</div>
+            <div class="testi-role">Directora General</div>
+            <div class="testi-institution">Colegio Benito Juárez · Ciudad de México</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA 2 — Texto -->
+    <div class="testi-card">
+      <span class="testi-flag">🇨🇱</span>
+      <p class="testi-quote">"En 48 horas teníamos un diagnóstico que nos habría tomado meses construir solos. El plan de acción era concreto, accionable y adaptado exactamente a nuestra realidad. <em>No un informe genérico — nuestro plan.</em>"</p>
+      <div class="testi-divider"></div>
+      <div class="testi-author">
+        <div class="testi-avatar-placeholder">👨‍🏫</div>
+        <div>
+          <div class="testi-name">Carlos Fuentes</div>
+          <div class="testi-role">Coordinador de Convivencia</div>
+          <div class="testi-institution">Liceo San Andrés · Santiago, Chile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA 3 — Texto -->
+    <div class="testi-card">
+      <span class="testi-flag">🇨🇷</span>
+      <p class="testi-quote">"Lo que más nos impactó fue ver el mapa de zonas de riesgo. Había lugares en nuestra escuela que pensábamos que eran seguros — y no lo eran. Ahora sí sabemos dónde actuar."</p>
+      <div class="testi-divider"></div>
+      <div class="testi-author">
+        <div class="testi-avatar-placeholder">👩‍💻</div>
+        <div>
+          <div class="testi-name">Ana Rodríguez</div>
+          <div class="testi-role">Psicóloga Escolar</div>
+          <div class="testi-institution">Centro Educativo La Salle · San José, Costa Rica</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA 4 — Video -->
+    <div class="testi-card has-video" onclick="testiOpenVideo('rC_xEqFqZ_s','Testimonio — Director, Chile')">
+      <div class="testi-thumb">
+        <img src="https://img.youtube.com/vi/rC_xEqFqZ_s/maxresdefault.jpg" alt="Video testimonio" />
+        <div class="testi-play-btn"><div class="testi-play-circle"><div class="testi-play-arrow"></div></div></div>
+      </div>
+      <span class="testi-flag">🇩🇴</span>
+      <div class="testi-card-body">
+        <p class="testi-quote">"Los docentes ahora tienen un lenguaje común para hablar del clima escolar. Eso solo ya cambió la dinámica de nuestros consejos de profesores."</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar-placeholder">👨‍💼</div>
+          <div>
+            <div class="testi-name">Roberto Marte</div>
+            <div class="testi-role">Director Académico</div>
+            <div class="testi-institution">Colegio Santo Tomás · Santo Domingo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div id="testiLightbox" class="testi-lightbox">
+    <div class="testi-lightbox-inner">
+      <button class="testi-lightbox-close" onclick="testiCloseVideo()" type="button">✕</button>
+      <div class="testi-lightbox-video">
+        <iframe id="testiLightboxFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="testi-lightbox-caption" id="testiLightboxCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    window.testiOpenVideo = function(videoId, caption) {
+      document.getElementById('testiLightboxFrame').src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+      document.getElementById('testiLightboxCaption').textContent = caption || '';
+      document.getElementById('testiLightbox').classList.add('open');
+    };
+    window.testiCloseVideo = function() {
+      document.getElementById('testiLightboxFrame').src = '';
+      document.getElementById('testiLightbox').classList.remove('open');
+    };
+    document.getElementById('testiLightbox').addEventListener('click', function(e) {
+      if (e.target === this) window.testiCloseVideo();
+    });
+  </script>
+
+</section>
 <!-- ═══════════════════════════════ PROGRAMA ═══════════════════════════════ -->
 <section id="programa">
   <!-- <h2>Programa Antibullying TECH4ZERO</h2> -->
@@ -1226,6 +1399,7 @@
 
 </body>
 </html>
+
 
 
 
