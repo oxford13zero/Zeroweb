@@ -1458,9 +1458,9 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
     var wrong = quizAnswers
       .map(function(a,i){ return Object.assign({}, QUIZ_FINDINGS[i], { answered:a }); })
       .filter(function(f){ return f.answered === 'no' || f.answered === 'idk'; })
-      .slice(0, 3);
+      .slice(0, 11);
 
-    var items = wrong.length ? wrong : QUIZ_FINDINGS.slice(0,3);
+    var items = wrong.length ? wrong : QUIZ_FINDINGS.slice(0,11);
     document.getElementById('quizFindingsList').innerHTML = items.map(function(f){
       return '<div class="quiz-finding-item ' + f.type + '">'
            + '<div class="quiz-finding-icon">' + f.icon + '</div>'
@@ -3282,6 +3282,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
+
 
 
 
