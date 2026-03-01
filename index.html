@@ -316,7 +316,7 @@
 </header>
 
 <!-- ADMIN ICON - Top Right Corner -->
-<button id="adminIcon" class="adminIcon" type="button" title="Admin Access">
+<button id="adminIcon" class="adminIcon" type="button" title="Admin Access" onclick="openAdminModal()">
   🔐
 </button>
 
@@ -331,8 +331,8 @@
   <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
   <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
 
-  <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button">ACCESO USUARIOS</button>
-  
+  <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button" onclick="openAccesoUsuarios()">ACCESO USUARIOS</button>
+
   <!-- ADMIN BUTTONS (hidden by default) -->
   <div id="adminNavButtons" class="adminNavButtons">
     <button id="btnAddSchool" class="btnPrimary" type="button">Add School</button>
@@ -2006,6 +2006,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   }
 
   function closeModal() { globalModal.style.display = 'none'; }
+  window.openAccesoUsuarios = openModal;
 
   btnAccesoUsuarios?.addEventListener('click', openModal);
   modalClose?.addEventListener('click', closeModal);
@@ -2835,6 +2836,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   }
 
   function closeAdminModal() { adminModal.style.display = 'none'; }
+  window.openAdminModal = openAdminModal;
 
   adminIcon?.addEventListener('click', openAdminModal);
   adminModalClose?.addEventListener('click', closeAdminModal);
@@ -3280,6 +3282,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
+
 
 
 
