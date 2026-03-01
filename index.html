@@ -1431,18 +1431,31 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
       numEl.textContent = c;
     }, 25);
 
+    
+    <!--  ANALISIS BRECHA MINI ENCUSTA ---------------------------- -->
     var wrong = quizAnswers
       .map(function(a,i){ return Object.assign({}, QUIZ_FINDINGS[i], { answered:a }); })
       .filter(function(f){ return f.answered === 'no' || f.answered === 'idk'; })
-      .slice(0, 11);
+      .slice(0, 3);
 
-    var items = wrong.length ? wrong : QUIZ_FINDINGS.slice(0,11);
-    document.getElementById('quizFindingsList').innerHTML = items.map(function(f){
-      return '<div class="quiz-finding-item ' + f.type + '">'
-           + '<div class="quiz-finding-icon">' + f.icon + '</div>'
-           + '<div class="quiz-finding-text"><strong>' + f.title + '</strong>' + f.text + '</div>'
-           + '</div>';
-    }).join('');
+    if (!wrong.length) {
+      document.getElementById('quizFindingsList').innerHTML =
+        '<div style="text-align:center; padding:20px; color:#69db7c; font-size:15px; line-height:1.6;">'
+        + '✅ No se detectaron brechas significativas.<br>'
+        + '<span style="font-size:13px; color:#a9c0d3;">Tu escuela muestra una visibilidad excepcional.</span>'
+        + '</div>';
+    } else {
+      document.getElementById('quizFindingsList').innerHTML = wrong.map(function(f){
+        return '<div class="quiz-finding-item ' + f.type + '">'
+             + '<div class="quiz-finding-icon">' + f.icon + '</div>'
+             + '<div class="quiz-finding-text"><strong>' + f.title + '</strong>' + f.text + '</div>'
+             + '</div>';
+      }).join('');
+    }
+
+    <!--  ENDS ANALISIS BRECHA MINI ENCUSTA ---------------------------- -->
+
+    
   }
 
   /* ── PUBLIC API ── */
@@ -3258,6 +3271,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
+
 
 
 
