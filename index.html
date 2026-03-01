@@ -1436,7 +1436,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
     var wrong = quizAnswers
       .map(function(a,i){ return Object.assign({}, QUIZ_FINDINGS[i], { answered:a }); })
       .filter(function(f){ return f.answered === 'no' || f.answered === 'idk'; })
-      .slice(0, 3);
+      .slice(0, 11);
 
     if (!wrong.length) {
       document.getElementById('quizFindingsList').innerHTML =
@@ -3271,6 +3271,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
+
 
 
 
