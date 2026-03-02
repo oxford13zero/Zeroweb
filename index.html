@@ -300,11 +300,24 @@
   </style>
 
   <script>
-    function showTab(tabId) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      if (tabId === 'datos') window.loadDatosIfNeeded?.();
-    }
+
+    
+function showTab(tabId) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  if (tabId === 'datos') window.loadDatosIfNeeded?.();
+  history.pushState({ tab: tabId }, '', '#' + tabId);
+}
+window.addEventListener('popstate', function(e) {
+  var tab = (e.state && e.state.tab) || location.hash.replace('#','') || 'home';
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  var el = document.getElementById(tab);
+  if (el) el.classList.add('active');
+});
+
+
+
+    
   </script>
 </head>
 
@@ -3721,6 +3734,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
+
 
 
 
