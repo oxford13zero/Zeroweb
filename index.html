@@ -338,8 +338,13 @@ window.addEventListener('popstate', function(e) {
 <nav>
   <a href="#" onclick="showTab('home'); return false;">INICIO</a>
   <a href="#" onclick="showTab('programa'); return false;">PROGRAMA</a>
-  <a href="#" onclick="showTab('encuesta'); return false;">ENCUESTA</a>
-  <a href="#" onclick="showTab('resultados'); return false;">RESULTADOS</a>
+
+<!--  <a href="#" onclick="showTab('encuesta'); return false;">ENCUESTA</a>   -->
+<!--  <a href="#" onclick="showTab('resultados'); return false;">RESULTADOS</a>   -->
+  <a id="navEncuesta" href="#" onclick="showTab('encuesta'); return false;" style="display:none;">ENCUESTA</a>
+  <a id="navResultados" href="#" onclick="showTab('resultados'); return false;" style="display:none;">RESULTADOS</a>
+  
+  
   <a href="#" onclick="showTab('testimonios'); return false;">TESTIMONIOS</a>
   <a href="#" onclick="showTab('inversion'); return false;">INVERSIÓN</a>
   <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
@@ -2410,6 +2415,15 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
     if (encuestaNeedLogin) encuestaNeedLogin.style.display = ok ? 'none' : 'block';
     if (resultadosNeedLogin) resultadosNeedLogin.style.display = ok ? 'none' : 'block';
 
+<!--   Este codigo desaparece botones para usuarios no autenticados -------->
+var navEnc = document.getElementById('navEncuesta');
+    var navRes = document.getElementById('navResultados');
+    if (navEnc) navEnc.style.display = ok ? '' : 'none';
+    if (navRes) navRes.style.display = ok ? '' : 'none';
+    if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
+ <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
+
+    
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
       if (routingBox) routingBox.style.display = 'none';
@@ -3734,6 +3748,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
 </body>
 </html>
+
 
 
 
