@@ -2823,6 +2823,8 @@ var navEnc = document.getElementById('navEncuesta');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    // Show welcome message first, then privacy modal
+    await showPauseModal(PAUSE_CONFIGS[0]);
     openPrivacyModal();
   });
 
@@ -3014,11 +3016,8 @@ var navEnc = document.getElementById('navEncuesta');
       }
 
       currentQuestionIndex = 0;
-      shownPauses = new Set([0]); // mark welcome as pending — show it now
+      shownPauses = new Set([0]); // welcome already shown before privacy modal
       surveyBox.style.display = 'block';
-
-      // Show welcome pause before first question
-      await showPauseModal(PAUSE_CONFIGS[0]);
       renderCurrentQuestion();
 
     } catch (e) {
