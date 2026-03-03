@@ -2035,6 +2035,37 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
   
   
+<!-- CANVAS: CONFETTI -->
+<canvas id="finishConfetti"></canvas>
+
+<!-- MODAL: SURVEY FINISH -->
+<div id="finishModal" class="finish-overlay">
+  <div class="finish-box">
+    <span class="finish-trophy">🏆</span>
+    <div class="finish-level-badge">💎 NIVEL LEYENDA DESBLOQUEADO</div>
+    <div class="finish-headline">¡Lo lograste!<br><em>Eres parte del cambio.</em></div>
+    <div class="finish-body">
+      Completaste la encuesta de principio a fin. Eso dice mucho de ti.<br>
+      Tus respuestas van a ayudar a hacer tu escuela un lugar mejor — aunque nunca lo sepas.
+    </div>
+    <div class="finish-stats">
+      <div class="finish-stat">
+        <span class="finish-stat-number" id="finishStatQuestions">56</span>
+        <span class="finish-stat-label">preguntas respondidas</span>
+      </div>
+      <div class="finish-stat">
+        <span class="finish-stat-number">4</span>
+        <span class="finish-stat-label">niveles alcanzados</span>
+      </div>
+      <div class="finish-stat">
+        <span class="finish-stat-number">100%</span>
+        <span class="finish-stat-label">completado</span>
+      </div>
+    </div>
+    <button class="finish-close-btn" id="finishCloseBtn" type="button">¡Gracias! Cerrar →</button>
+  </div>
+</div>
+
 <!-- MODAL: SURVEY PAUSE / LEVEL UP -->
 <div id="pauseModal" class="pause-overlay">
   <div class="pause-box">
@@ -2425,6 +2456,137 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   background: #f0c040;
   transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(214,162,28,0.45);
+}
+
+/* ── SURVEY FINISH MODAL ── */
+.finish-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(6,14,22,0.96);
+  z-index: 20000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.finish-overlay.open { display: flex; }
+.finish-box {
+  width: min(580px, 95vw);
+  background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
+  border: 1px solid rgba(214,162,28,0.4);
+  border-radius: 24px;
+  padding: 48px 36px 40px;
+  text-align: center;
+  box-shadow: 0 0 0 1px rgba(214,162,28,0.15), 0 40px 100px rgba(0,0,0,0.7);
+  position: relative;
+  z-index: 1;
+  animation: finishPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes finishPop {
+  from { opacity:0; transform:scale(0.8) translateY(30px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+.finish-trophy {
+  font-size: 72px;
+  display: block;
+  margin-bottom: 8px;
+  animation: finishBounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+}
+@keyframes finishBounce {
+  from { transform: scale(0) rotate(-20deg); opacity:0; }
+  to   { transform: scale(1) rotate(0deg);  opacity:1; }
+}
+.finish-level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, rgba(214,162,28,0.2), rgba(214,162,28,0.08));
+  border: 1px solid rgba(214,162,28,0.5);
+  border-radius: 999px;
+  padding: 7px 20px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #D6A21C;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  animation: finishFadeUp 0.4s ease 0.5s both;
+}
+.finish-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4.5vw, 36px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  animation: finishFadeUp 0.4s ease 0.6s both;
+}
+.finish-headline em { color: #D6A21C; font-style: normal; }
+.finish-body {
+  font-size: 15px;
+  color: #a9c0d3;
+  line-height: 1.75;
+  margin-bottom: 32px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: finishFadeUp 0.4s ease 0.7s both;
+}
+.finish-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 32px;
+  animation: finishFadeUp 0.4s ease 0.75s both;
+}
+.finish-stat { text-align: center; }
+.finish-stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #D6A21C;
+  line-height: 1;
+  display: block;
+}
+.finish-stat-label {
+  font-size: 12px;
+  color: #7a8e9e;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  display: block;
+}
+.finish-close-btn {
+  padding: 14px 44px;
+  background: #D6A21C;
+  color: #0f1d27;
+  font-weight: 800;
+  font-size: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 6px 24px rgba(214,162,28,0.4);
+  animation: finishFadeUp 0.4s ease 0.85s both;
+  letter-spacing: 0.3px;
+}
+.finish-close-btn:hover {
+  background: #f0c040;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(214,162,28,0.55);
+}
+@keyframes finishFadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+/* Confetti canvas */
+#finishConfetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 19999;
 }
 
 .pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
@@ -2869,8 +3031,100 @@ var navEnc = document.getElementById('navEncuesta');
 
 
   // ════════════════════════════════════════════════════════════
-  // SURVEY PAUSE MODALS (level-up messages)
+  // CONFETTI ENGINE
   // ════════════════════════════════════════════════════════════
+  (function() {
+    const canvas = document.getElementById('finishConfetti');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animId = null;
+
+    const COLORS = ['#D6A21C','#f0c040','#ffffff','#a9c0d3','#69db7c','#ff6b6b','#74c0fc'];
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticles() {
+      particles = [];
+      for (let i = 0; i < 160; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: -20 - Math.random() * 200,
+          w: 6 + Math.random() * 8,
+          h: 3 + Math.random() * 5,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          vx: (Math.random() - 0.5) * 3,
+          vy: 2.5 + Math.random() * 3.5,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * 0.15,
+          opacity: 1
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.06; // gravity
+        p.angle += p.spin;
+        if (p.y > canvas.height * 0.7) p.opacity -= 0.018;
+        if (p.opacity > 0 && p.y < canvas.height + 20) {
+          alive = true;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.opacity);
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+          ctx.restore();
+        }
+      });
+      if (alive) { animId = requestAnimationFrame(draw); }
+      else { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+    }
+
+    window.startConfetti = function() {
+      resize();
+      createParticles();
+      if (animId) cancelAnimationFrame(animId);
+      draw();
+    };
+
+    window.stopConfetti = function() {
+      if (animId) cancelAnimationFrame(animId);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = [];
+    };
+
+    window.addEventListener('resize', resize);
+    resize();
+  })();
+
+  // ════════════════════════════════════════════════════════════
+  // FINISH MODAL
+  // ════════════════════════════════════════════════════════════
+  function showFinishModal(totalQuestions) {
+    document.getElementById('finishStatQuestions').textContent = totalQuestions || 56;
+    document.getElementById('finishModal').classList.add('open');
+    startConfetti();
+    // Second burst after 1.2s
+    setTimeout(startConfetti, 1200);
+  }
+
+  function closeFinishModal() {
+    document.getElementById('finishModal').classList.remove('open');
+    stopConfetti();
+  }
+
+  document.getElementById('finishCloseBtn')?.addEventListener('click', closeFinishModal);
+  document.getElementById('finishModal')?.addEventListener('click', function(e) {
+    if (e.target === this) closeFinishModal();
+  });
 
   const PAUSE_CONFIGS = [
     {
@@ -3159,6 +3413,7 @@ var navEnc = document.getElementById('navEncuesta');
     }
 
     // Reset everything
+    const totalAnswered = SURVEY?.questions?.length || 56;
     if (surveyBox) {
       surveyBox.style.display = 'none';
       surveyBox.classList.remove('primaria-mode');
@@ -3174,7 +3429,7 @@ var navEnc = document.getElementById('navEncuesta');
     shownPauses = new Set();
 
     applySessionToUI();
-    alert('Encuesta finalizada.');
+    showFinishModal(totalAnswered);
   });
 
   refreshSession();
