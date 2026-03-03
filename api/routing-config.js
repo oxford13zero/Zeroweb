@@ -23,6 +23,7 @@ export default async function handler(req, res) {
     .from("survey_routing_configs")
     .select("route_key, label, grade_codes, survey_file, display_order")
     .eq("country", country)
+    .eq("is_active", true)          // solo el survey activo
     .order("display_order", { ascending: true });
 
   if (configError) {
@@ -62,3 +63,4 @@ function gradeLabel(code, groupLabel) {
   const groupName = groupLabel.split("(")[0].trim(); // e.g. "Primaria", "Básica"
   return `${code}° de ${groupName}`;
 }
+
