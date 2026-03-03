@@ -2,7 +2,7 @@
   "survey": {
     "id": "TECH4ZERO-MX-v2.0",
     "code": "SURVEY_004",
-    "survey_uuid": "9e26dfc3-8310-4192-a8fc-a02e72078060",
+    "survey_uuid": "PENDING-UUID-SURVEY-004",
     "title": "Encuesta de Clima Escolar, Bullying y Cyberbullying_TECH4ZERO_MX_v2",
     "version": "2.0",
     "date": "2025",
@@ -122,7 +122,7 @@
   "questions": [
     {
       "number": 2,
-      "question_id": "zero_general_edad",
+      "question_id": "zero_general_edad_v2",
       "section": "A",
       "section_name": "Información General",
       "construct": "demographic",
@@ -163,7 +163,7 @@
     },
     {
       "number": 3,
-      "question_id": "zero_general_genero",
+      "question_id": "zero_general_genero_v2",
       "section": "A",
       "section_name": "Información General",
       "construct": "demographic",
@@ -192,7 +192,7 @@
     },
     {
       "number": 4,
-      "question_id": "zero_general_lengua",
+      "question_id": "zero_general_lengua_v2",
       "section": "A",
       "section_name": "Información General",
       "construct": "demographic",
@@ -217,7 +217,7 @@
     },
     {
       "number": 5,
-      "question_id": "zero_general_tiempo",
+      "question_id": "zero_general_tiempo_v2",
       "section": "A",
       "section_name": "Información General",
       "construct": "demographic",
@@ -246,7 +246,7 @@
     },
     {
       "number": 6,
-      "question_id": "zero_general_tipo_escuela",
+      "question_id": "zero_general_tipo_escuela_v2",
       "section": "A",
       "section_name": "Información General",
       "construct": "demographic",
@@ -517,7 +517,7 @@
     },
     {
       "number": 14,
-      "question_id": "zero_normas_reaccion",
+      "question_id": "zero_normas_reaccion_v2",
       "section": "C",
       "section_name": "Normas Grupales",
       "construct": "normas_grupales",
@@ -619,7 +619,7 @@
     },
     {
       "number": 17,
-      "question_id": "zero_normas_intervencion_activa",
+      "question_id": "zero_normas_intervencion_activa_v2",
       "section": "C",
       "section_name": "Normas Grupales",
       "construct": "normas_grupales",
@@ -1028,7 +1028,7 @@
     },
     {
       "number": 29,
-      "question_id": "zero_victima_agresion_fisica",
+      "question_id": "zero_victima_agresion_fisica_v2",
       "section": "F",
       "section_name": "Victimización",
       "construct": "victimizacion",
@@ -1062,7 +1062,7 @@
     },
     {
       "number": 30,
-      "question_id": "zero_victima_amenazas",
+      "question_id": "zero_victima_amenazas_v2",
       "section": "F",
       "section_name": "Victimización",
       "construct": "victimizacion",
@@ -1096,7 +1096,7 @@
     },
     {
       "number": 31,
-      "question_id": "zero_victima_insultos",
+      "question_id": "zero_victima_insultos_v2",
       "section": "F",
       "section_name": "Victimización",
       "construct": "victimizacion",
@@ -1130,7 +1130,7 @@
     },
     {
       "number": 32,
-      "question_id": "zero_victima_rumores",
+      "question_id": "zero_victima_rumores_v2",
       "section": "F",
       "section_name": "Victimización",
       "construct": "victimizacion",
@@ -1164,7 +1164,7 @@
     },
     {
       "number": 33,
-      "question_id": "zero_victima_exclusion",
+      "question_id": "zero_victima_exclusion_v2",
       "section": "F",
       "section_name": "Victimización",
       "construct": "victimizacion",
@@ -1198,7 +1198,7 @@
     },
     {
       "number": 34,
-      "question_id": "zero_victima_coercion",
+      "question_id": "zero_victima_coercion_v2",
       "section": "F",
       "section_name": "Victimización",
       "construct": "victimizacion",
@@ -1232,7 +1232,7 @@
     },
     {
       "number": 35,
-      "question_id": "zero_victima_discriminacion",
+      "question_id": "zero_victima_discriminacion_v2",
       "section": "F",
       "section_name": "Victimización",
       "construct": "victimizacion",
@@ -1301,7 +1301,7 @@
     },
     {
       "number": 37,
-      "question_id": "zero_agresor_agresion_fisica",
+      "question_id": "zero_agresor_agresion_fisica_v2",
       "section": "G",
       "section_name": "Agresión",
       "construct": "perpetracion",
@@ -1335,7 +1335,7 @@
     },
     {
       "number": 38,
-      "question_id": "zero_agresor_amenazas",
+      "question_id": "zero_agresor_amenazas_v2",
       "section": "G",
       "section_name": "Agresión",
       "construct": "perpetracion",
@@ -1369,7 +1369,7 @@
     },
     {
       "number": 39,
-      "question_id": "zero_agresor_insultos",
+      "question_id": "zero_agresor_insultos_v2",
       "section": "G",
       "section_name": "Agresión",
       "construct": "perpetracion",
@@ -1403,7 +1403,7 @@
     },
     {
       "number": 40,
-      "question_id": "zero_agresor_rumores",
+      "question_id": "zero_agresor_rumores_v2",
       "section": "G",
       "section_name": "Agresión",
       "construct": "perpetracion",
@@ -1437,7 +1437,7 @@
     },
     {
       "number": 41,
-      "question_id": "zero_agresor_exclusion",
+      "question_id": "zero_agresor_exclusion_v2",
       "section": "G",
       "section_name": "Agresión",
       "construct": "perpetracion",
@@ -1471,7 +1471,7 @@
     },
     {
       "number": 42,
-      "question_id": "zero_agresor_coercion",
+      "question_id": "zero_agresor_coercion_v2",
       "section": "G",
       "section_name": "Agresión",
       "construct": "perpetracion",
@@ -1505,7 +1505,7 @@
     },
     {
       "number": 43,
-      "question_id": "zero_agresor_discriminacion",
+      "question_id": "zero_agresor_discriminacion_v2",
       "section": "G",
       "section_name": "Agresión",
       "construct": "perpetracion",
@@ -1811,7 +1811,7 @@
     },
     {
       "number": 52,
-      "question_id": "zero_ecologia_aula",
+      "question_id": "zero_ecologia_aula_v2",
       "section": "I",
       "section_name": "Ecología del Bullying",
       "construct": "mapa",
@@ -1846,7 +1846,7 @@
     },
     {
       "number": 53,
-      "question_id": "zero_ecologia_patio",
+      "question_id": "zero_ecologia_patio_v2",
       "section": "I",
       "section_name": "Ecología del Bullying",
       "construct": "mapa",
@@ -1914,7 +1914,7 @@
     },
     {
       "number": 55,
-      "question_id": "zero_ecologia_entrada_salida",
+      "question_id": "zero_ecologia_entrada_salida_v2",
       "section": "I",
       "section_name": "Ecología del Bullying",
       "construct": "mapa",
@@ -1948,7 +1948,7 @@
     },
     {
       "number": 56,
-      "question_id": "zero_ecologia_transporte",
+      "question_id": "zero_ecologia_transporte_v2",
       "section": "I",
       "section_name": "Ecología del Bullying",
       "construct": "mapa",
@@ -1982,7 +1982,7 @@
     },
     {
       "number": 57,
-      "question_id": "zero_ecologia_cafeteria",
+      "question_id": "zero_ecologia_cafeteria_v2",
       "section": "I",
       "section_name": "Ecología del Bullying",
       "construct": "mapa",
@@ -2015,5 +2015,4 @@
       ]
     }
   ]
-
 }
