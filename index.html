@@ -2035,6 +2035,23 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 
   
   
+<!-- MODAL: SURVEY PAUSE / LEVEL UP -->
+<div id="pauseModal" class="pause-overlay">
+  <div class="pause-box">
+    <div class="pause-badge">
+      <span class="pause-badge-icon" id="pauseBadgeIcon"></span>
+      <span class="pause-badge-text" id="pauseBadgeText"></span>
+    </div>
+    <div class="pause-headline" id="pauseHeadline"></div>
+    <div class="pause-body" id="pauseBody"></div>
+    <div class="pause-reminder">
+      <span class="pause-reminder-star">⭐</span>
+      <span>Recuerda responder solo sobre lo que pasó en los <strong>últimos dos meses</strong>.</span>
+    </div>
+    <button class="pause-continue-btn" id="pauseContinueBtn" type="button">Continuar →</button>
+  </div>
+</div>
+
 <footer>
   © 2025 TECH4ZERO – EDUCATION+AI
 </footer>
@@ -2311,6 +2328,103 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 #surveyBox.primaria-mode {
   max-width: 680px;
   padding: 24px;
+}
+
+/* ── SURVEY PAUSE MODAL ── */
+.pause-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(6,14,22,0.94);
+  z-index: 19998;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+}
+.pause-overlay.open { display: flex; }
+.pause-box {
+  width: min(560px, 95vw);
+  background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
+  border: 1px solid #365468;
+  border-radius: 20px;
+  padding: 40px 36px 36px;
+  text-align: center;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+  animation: pauseFadeUp 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes pauseFadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.pause-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(214,162,28,0.12);
+  border: 1px solid rgba(214,162,28,0.35);
+  border-radius: 999px;
+  padding: 8px 20px;
+  margin-bottom: 22px;
+}
+.pause-badge-icon { font-size: 26px; }
+.pause-badge-text {
+  font-size: 13px;
+  font-weight: 800;
+  color: #D6A21C;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.pause-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.pause-body {
+  font-size: 15px;
+  color: #a9c0d3;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pause-reminder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid #365468;
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: #d9e6f2;
+  line-height: 1.5;
+}
+.pause-reminder-star { font-size: 16px; flex-shrink: 0; }
+.pause-continue-btn {
+  display: inline-block;
+  padding: 13px 36px;
+  background: #D6A21C;
+  color: #0f1d27;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(214,162,28,0.3);
+}
+.pause-continue-btn:hover {
+  background: #f0c040;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(214,162,28,0.45);
 }
 
 .pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
@@ -2738,7 +2852,11 @@ var navEnc = document.getElementById('navEncuesta');
       }
 
       currentQuestionIndex = 0;
+      shownPauses = new Set([0]); // mark welcome as pending — show it now
       surveyBox.style.display = 'block';
+
+      // Show welcome pause before first question
+      await showPauseModal(PAUSE_CONFIGS[0]);
       renderCurrentQuestion();
 
     } catch (e) {
@@ -2749,6 +2867,66 @@ var navEnc = document.getElementById('navEncuesta');
     }
   });
 
+
+  // ════════════════════════════════════════════════════════════
+  // SURVEY PAUSE MODALS (level-up messages)
+  // ════════════════════════════════════════════════════════════
+
+  const PAUSE_CONFIGS = [
+    {
+      pct: 0,
+      badgeIcon: '',
+      badgeText: 'Bienvenida',
+      headline: 'Estás a punto de hacer algo importante.',
+      body: 'Esta encuesta es tu voz. Nadie más puede decir lo que tú viviste. No hay respuestas correctas ni incorrectas — solo tu experiencia real.'
+    },
+    {
+      pct: 0.20,
+      badgeIcon: '🥈',
+      badgeText: 'Nivel Plata',
+      headline: '¡Ya arrancaste! Llevas el 20% — vas bien.',
+      body: 'Cada respuesta que das construye un mapa real de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
+    },
+    {
+      pct: 0.55,
+      badgeIcon: '🥇',
+      badgeText: 'Nivel Oro',
+      headline: 'Más de la mitad. No cualquiera llega hasta aquí.',
+      body: 'Las próximas preguntas son las más importantes de toda la encuesta. Lo que respondas aquí es lo que más ayuda a cambiar las cosas en tu escuela.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
+    },
+    {
+      pct: 0.80,
+      badgeIcon: '💎',
+      badgeText: 'Nivel Platino',
+      headline: 'Casi estás. Solo falta un poco.',
+      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Nivel Platino desbloqueado! Ya casi eres una leyenda.'
+    }
+  ];
+
+  let shownPauses = new Set();
+  let pauseResolve = null;
+
+  function computePauseIndexes(total) {
+    return PAUSE_CONFIGS.map(c => Math.floor(c.pct * total));
+  }
+
+  function showPauseModal(config) {
+    return new Promise(resolve => {
+      pauseResolve = resolve;
+      document.getElementById('pauseBadgeIcon').textContent  = config.badgeIcon;
+      document.getElementById('pauseBadgeText').textContent  = config.badgeText;
+      document.getElementById('pauseHeadline').textContent   = config.headline;
+      // Support \n\n as paragraph breaks
+      const bodyEl = document.getElementById('pauseBody');
+      bodyEl.innerHTML = config.body.split('\n\n').map(p => `<p style="margin:0 0 10px 0;">${p}</p>`).join('');
+      document.getElementById('pauseModal').classList.add('open');
+    });
+  }
+
+  document.getElementById('pauseContinueBtn')?.addEventListener('click', () => {
+    document.getElementById('pauseModal').classList.remove('open');
+    if (pauseResolve) { pauseResolve(); pauseResolve = null; }
+  });
 
   // ════════════════════════════════════════════════════════════
   // SURVEY ENGINE (unchanged except routing logic removed)
@@ -2943,6 +3121,19 @@ var navEnc = document.getElementById('navEncuesta');
 
     if (currentQuestionIndex < SURVEY.questions.length - 1) {
       currentQuestionIndex++;
+
+      // Check if we need to show a pause modal at this index
+      const total = SURVEY.questions.length;
+      const pauseIndexes = computePauseIndexes(total);
+      // Skip index 0 (shown before survey starts, handled separately)
+      for (let i = 1; i < pauseIndexes.length; i++) {
+        if (currentQuestionIndex === pauseIndexes[i] && !shownPauses.has(i)) {
+          shownPauses.add(i);
+          await showPauseModal(PAUSE_CONFIGS[i]);
+          break;
+        }
+      }
+
       renderCurrentQuestion();
       return;
     }
@@ -2980,6 +3171,7 @@ var navEnc = document.getElementById('navEncuesta');
     currentQuestionIndex = 0;
     IS_PRIMARIA = false;
     ROUTING_QUESTION = null;
+    shownPauses = new Set();
 
     applySessionToUI();
     alert('Encuesta finalizada.');
@@ -3751,59 +3943,3 @@ var navEnc = document.getElementById('navEncuesta');
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
