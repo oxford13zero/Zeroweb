@@ -2045,8 +2045,8 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
     <div class="finish-level-badge">💎 NIVEL LEYENDA DESBLOQUEADO</div>
     <div class="finish-headline">¡Lo lograste!<br><em>Eres parte del cambio.</em></div>
     <div class="finish-body">
-      Completaste la encuesta de principio a fin. FELICITACIONES!<br>
-      Tus respuestas van a ayudar a hacer tu escuela un lugar mejor.
+      Completaste la encuesta de principio a fin. Eso dice mucho de ti.<br>
+      Tus respuestas van a ayudar a hacer tu escuela un lugar mejor — aunque nunca lo sepas.
     </div>
     <div class="finish-stats">
       <div class="finish-stat">
@@ -3016,8 +3016,14 @@ var navEnc = document.getElementById('navEncuesta');
       }
 
       currentQuestionIndex = 0;
-      shownPauses = new Set([0]); // welcome already shown before privacy modal
+      shownPauses = new Set([0]); // welcome already shown
       surveyBox.style.display = 'block';
+
+      // If primaria, show the superhero welcome now (after IS_PRIMARIA is set)
+      if (IS_PRIMARIA) {
+        await showPauseModal(PAUSE_CONFIGS_PRIMARIA[0]);
+      }
+
       renderCurrentQuestion();
 
     } catch (e) {
@@ -3109,9 +3115,19 @@ var navEnc = document.getElementById('navEncuesta');
   // ════════════════════════════════════════════════════════════
   function showFinishModal(totalQuestions) {
     document.getElementById('finishStatQuestions').textContent = totalQuestions || 56;
+    if (IS_PRIMARIA) {
+      document.querySelector('.finish-trophy').textContent       = '🦸';
+      document.querySelector('.finish-level-badge').innerHTML   = '🌟 ¡MISIÓN CUMPLIDA!';
+      document.querySelector('.finish-headline').innerHTML      = '¡Lo lograste!<br><em>¡Eres un verdadero superhéroe!</em>';
+      document.querySelector('.finish-body').innerHTML          = '¡Respondiste todas las preguntas! 🎉<br>Gracias por ayudar a hacer tu escuela mejor. 🌟';
+    } else {
+      document.querySelector('.finish-trophy').textContent       = '🏆';
+      document.querySelector('.finish-level-badge').innerHTML   = '💎 NIVEL LEYENDA DESBLOQUEADO';
+      document.querySelector('.finish-headline').innerHTML      = '¡Lo lograste!<br><em>Eres parte del cambio.</em>';
+      document.querySelector('.finish-body').innerHTML          = 'Completaste la encuesta de principio a fin. Eso dice mucho de ti.<br>Tus respuestas van a ayudar a hacer tu escuela un lugar mejor — aunque nunca lo sepas.';
+    }
     document.getElementById('finishModal').classList.add('open');
     startConfetti();
-    // Second burst after 1.2s
     setTimeout(startConfetti, 1200);
   }
 
@@ -3137,30 +3153,65 @@ var navEnc = document.getElementById('navEncuesta');
       pct: 0.20,
       badgeIcon: '🥈',
       badgeText: 'Nivel Plata',
-      headline: '¡Muy bien! Llevas el 20%',
-      body: 'Cada respuesta que das construye un mapa real de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Tienes Nivel Plata!'
+      headline: '¡Ya arrancaste! Llevas el 20% — vas bien.',
+      body: 'Cada respuesta que das construye un mapa real de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
     },
     {
       pct: 0.55,
       badgeIcon: '🥇',
       badgeText: 'Nivel Oro',
       headline: 'Más de la mitad. No cualquiera llega hasta aquí.',
-      body: 'Las próximas preguntas son muy importantes. Lo que respondas aquí es lo que más ayuda a cambiar las cosas en tu escuela.\n\n🥇 ¡Tienes Nivel Oro!'
+      body: 'Las próximas preguntas son las más importantes de toda la encuesta. Lo que respondas aquí es lo que más ayuda a cambiar las cosas en tu escuela.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
     },
     {
       pct: 0.80,
       badgeIcon: '💎',
       badgeText: 'Nivel Platino',
-      headline: 'Ya casi terminas. Solo falta un poco.',
-      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Tienes nivel Platino! Ya casi eres una leyenda.'
+      headline: 'Casi estás. Solo falta un poco.',
+      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Nivel Platino desbloqueado! Ya casi eres una leyenda.'
     }
   ];
+
+  const PAUSE_CONFIGS_PRIMARIA = [
+    {
+      pct: 0,
+      badgeIcon: '🦸',
+      badgeText: '¡Hoy eres un superhéroe!',
+      headline: '¡Hoy eres un superhéroe! 🦸',
+      body: 'Vas a responder preguntas sobre tu escuela.\n\n¡No hay respuestas malas — solo las tuyas!'
+    },
+    {
+      pct: 0.20,
+      badgeIcon: '⚡',
+      badgeText: '¡Poder desbloqueado!',
+      headline: '⚡ ¡Desbloqueaste tu primer poder!',
+      body: '¡Vas súper bien! Sigue así.'
+    },
+    {
+      pct: 0.55,
+      badgeIcon: '💪',
+      badgeText: '¡Super Fuerza activada!',
+      headline: '💪 ¡Activaste la Super Fuerza!',
+      body: '¡Ya vas por más de la mitad!\n\n¡Eres increíble!'
+    },
+    {
+      pct: 0.80,
+      badgeIcon: '🚀',
+      badgeText: '¡Modo Héroe activado!',
+      headline: '🚀 ¡Modo Héroe activado!',
+      body: '¡Casi terminas!\n\nUn poquito más y eres una leyenda.'
+    }
+  ];
+
+  function getActivePauseConfigs() {
+    return IS_PRIMARIA ? PAUSE_CONFIGS_PRIMARIA : PAUSE_CONFIGS;
+  }
 
   let shownPauses = new Set();
   let pauseResolve = null;
 
   function computePauseIndexes(total) {
-    return PAUSE_CONFIGS.map(c => Math.floor(c.pct * total));
+    return getActivePauseConfigs().map(c => Math.floor(c.pct * total));
   }
 
   function showPauseModal(config) {
@@ -3378,11 +3429,12 @@ var navEnc = document.getElementById('navEncuesta');
       // Check if we need to show a pause modal at this index
       const total = SURVEY.questions.length;
       const pauseIndexes = computePauseIndexes(total);
-      // Skip index 0 (shown before survey starts, handled separately)
+      const activeConfigs = getActivePauseConfigs();
+      // Skip index 0 (shown before privacy modal)
       for (let i = 1; i < pauseIndexes.length; i++) {
         if (currentQuestionIndex === pauseIndexes[i] && !shownPauses.has(i)) {
           shownPauses.add(i);
-          await showPauseModal(PAUSE_CONFIGS[i]);
+          await showPauseModal(activeConfigs[i]);
           break;
         }
       }
@@ -4197,4 +4249,3 @@ var navEnc = document.getElementById('navEncuesta');
 
 </body>
 </html>
-
