@@ -1,0 +1,966 @@
+{
+  "survey": {
+    "id": "TECH4ZERO-MX-PRIMARIA-v2.1",
+    "code": "SURVEY_004_PRIMARIA",
+    "survey_uuid": "PENDING-UUID-SURVEY-004-PRIMARIA",
+    "title": "Mi Escuela y Yo 🏫",
+    "version": "2.1",
+    "date": "2025",
+    "population": "Educación primaria (6-12 años), México",
+    "application_time": "15-20 minutos con apoyo del maestro",
+    "total_questions": 38,
+    "note": "Preguntas simplificadas para comprensión de 1° grado (6-7 años). El maestro debe leer en voz alta para grados 1-2."
+  },
+  "questions": [
+    {
+      "number": 1,
+      "question_id": "p4_edad",
+      "type": "single_choice",
+      "text": "¿Cuántos años tienes?",
+      "required": true,
+      "options": [
+        {
+          "code": "6",
+          "text": "6 años"
+        },
+        {
+          "code": "7",
+          "text": "7 años"
+        },
+        {
+          "code": "8",
+          "text": "8 años"
+        },
+        {
+          "code": "9",
+          "text": "9 años"
+        },
+        {
+          "code": "10",
+          "text": "10 años"
+        },
+        {
+          "code": "11",
+          "text": "11 años"
+        },
+        {
+          "code": "12",
+          "text": "12 años"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "question_id": "p4_genero",
+      "type": "single_choice",
+      "text": "¿Eres…?",
+      "required": true,
+      "options": [
+        {
+          "code": "F",
+          "text": "Niña"
+        },
+        {
+          "code": "M",
+          "text": "Niño"
+        },
+        {
+          "code": "NR",
+          "text": "Prefiero no decir"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "question_id": "p4_primer_anio",
+      "type": "single_choice",
+      "text": "¿Este es tu primer año en esta escuela?",
+      "required": true,
+      "options": [
+        {
+          "code": "si",
+          "text": "Sí, es mi primer año aquí"
+        },
+        {
+          "code": "no",
+          "text": "No, ya venía aquí antes"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "question_id": "p4_maestro_reglas",
+      "type": "single_choice",
+      "text": "Mi maestra o maestro explica claramente qué está permitido y qué no está permitido en el salón. 👩‍🏫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "question_id": "p4_maestro_detiene_bullying",
+      "type": "single_choice",
+      "text": "Cuando alguien molesta o lastima a un compañero, mi maestra o maestro lo detiene de inmediato. ✋",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "question_id": "p4_maestro_ayuda_conflictos",
+      "type": "single_choice",
+      "text": "Mi maestra o maestro me ayuda cuando tengo problemas con mis compañeros. 🤝",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "question_id": "p4_amigos_defienden",
+      "type": "single_choice",
+      "text": "Tengo amigos o amigas que me defienden cuando alguien me molesta. 👫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "question_id": "p4_pertenencia_grupo",
+      "type": "single_choice",
+      "text": "Cuando estoy en el salón de clases, me siento parte del grupo. 🏫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "question_id": "p4_apoyo_companeros",
+      "type": "single_choice",
+      "text": "Cuando estoy triste o me pasa algo malo, algún compañero o compañera me apoya. 💙",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "question_id": "p4_grupo_evita_bullying",
+      "type": "single_choice",
+      "text": "En mi salón, los compañeros se unen para evitar que alguien sea molestado. 👀",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "question_id": "p4_apoyo_al_defender",
+      "type": "single_choice",
+      "text": "Si yo defiendo a alguien que está siendo molestado, mis compañeros me apoyan. 🦸",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "question_id": "p4_adultos_ayudan",
+      "type": "single_choice",
+      "text": "Si le digo a un adulto de mi escuela que alguien me está molestando, me ayudan de verdad. 🏫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "question_id": "p4_conoce_adulto_ayuda",
+      "type": "single_choice",
+      "text": "Si alguien me molesta, sé a qué adulto de mi escuela puedo pedirle ayuda. 🆘",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "question_id": "p4_confianza_pedir_ayuda",
+      "type": "single_choice",
+      "text": "Me siento seguro de pedir ayuda a un adulto, sin miedo a que me llamen 'soplón' o 'chismoso'. 💬",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "question_id": "p4_victima_fisica",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, mis compañeros me han tratado bien, sin golpearme, empujarme ni lastimarme. 💔",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "question_id": "p4_victima_verbal",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, mis compañeros me han hablado con respeto, sin insultarme ni burlarse de mí. 💬",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "question_id": "p4_victima_exclusion",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, mis compañeros me han incluido en los juegos y actividades. 🎮",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "question_id": "p4_victima_amenazas",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, he podido estar en la escuela sin que nadie me amenace o me provoque miedo. 😟",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "question_id": "p4_victima_discriminacion",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, mis compañeros me han tratado igual que a los demás, sin importar cómo me veo o de dónde soy. ⚖️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "question_id": "p4_agresor_fisico_verbal",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, he empujado, golpeado o dicho cosas feas para molestar a un compañero. ✋",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "question_id": "p4_defensor_activo",
+      "type": "single_choice",
+      "text": "Cuando veo que un compañero más pequeño o débil está siendo molestado, yo lo defiendo o busco ayuda de un adulto. 🦸",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "question_id": "p4_inclusion_activa",
+      "type": "single_choice",
+      "text": "En el recreo o en trabajos en equipo, invito a jugar o trabajar conmigo a compañeros que están solos. 🤗",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "question_id": "p4_agresor_exclusion",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, ¿he dejado a propósito a un compañero fuera del juego o del grupo de WhatsApp? 🚫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "question_id": "p4_cyber_victima_mensajes",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, ¿alguien mandó mensajes feos sobre ti o contó secretos tuyos por WhatsApp, Facebook u otra app? 📱",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "question_id": "p4_cyber_victima_foto",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, ¿alguien tomó una foto o video tuyo y lo compartió para burlarse o hacerte sentir mal? 📸",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "question_id": "p4_cyber_victima_exclusion",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, ¿un compañero de tu escuela te envió mensajes feos, te amenazó o te dejó fuera de grupos de WhatsApp a propósito? 💬",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "question_id": "p4_cyber_confianza_adulto",
+      "type": "single_choice",
+      "text": "Si alguien me molesta por el celular o las redes, estoy seguro de que un adulto de mi escuela me ayudará de verdad. 🛡️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "question_id": "p4_cyber_educacion_maestro",
+      "type": "single_choice",
+      "text": "Mi maestra o maestro ha hablado con el grupo sobre cómo comportarse en el celular y las redes sociales. 📚",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "question_id": "p4_cyber_victima_general",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, ¿te ha pasado que compañeros se burlaron de ti, te excluyeron de grupos o compartieron algo tuyo sin permiso por internet? 🌐",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "question_id": "p4_cyber_agresor",
+      "type": "single_choice",
+      "text": "En los últimos 30 días, ¿he compartido mensajes, fotos o videos de un compañero para burlarme o que otros se rían de él/ella? ⚠️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "question_id": "p4_internivel_trato",
+      "type": "single_choice",
+      "text": "Los alumnos más grandes me hablan con amabilidad, me dejan estar en los espacios de la escuela y me tratan como a un compañero. 🔀",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "question_id": "p4_mapa_patio",
+      "type": "single_choice",
+      "text": "En el recreo y el patio, los adultos cuidan que nadie moleste a los demás. 🗺️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "question_id": "p4_mapa_banos_pasillos",
+      "type": "single_choice",
+      "text": "En los baños y pasillos de mi escuela, me siento tranquilo/a y sin miedo. 🚻",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "question_id": "p4_mapa_biblioteca",
+      "type": "single_choice",
+      "text": "En la biblioteca, puedo estar tranquilo/a sin que nadie me moleste. 📚",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "question_id": "p4_mapa_entrada_salida",
+      "type": "single_choice",
+      "text": "En la entrada y salida de la escuela, los adultos cuidan que todos estemos seguros. 🚪",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "question_id": "p4_bienestar_gusto",
+      "type": "single_choice",
+      "text": "Me da gusto venir a mi escuela y estar con mis compañeros. 🌟",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "question_id": "p4_bienestar_seguridad",
+      "type": "single_choice",
+      "text": "Cuando estoy en mi escuela, me siento tranquilo/a y sin miedo. 😊",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "question_id": "p4_bienestar_general",
+      "type": "single_choice",
+      "text": "En general, me siento feliz y tranquilo en la escuela. 😄",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NUNCA (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 A VECES"
+        },
+        {
+          "code": "3",
+          "text": "😊 CASI SIEMPRE"
+        },
+        {
+          "code": "4",
+          "text": "😄 SIEMPRE (Sí)"
+        }
+      ]
+    }
+  ]
+}
