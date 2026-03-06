@@ -2539,10 +2539,10 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 .survey-modal-option:hover { border-color: #D6A21C; background: rgba(214,162,28,0.08); color: #fff; }
 .survey-modal-option.selected { border-color: #D6A21C; background: rgba(214,162,28,0.12); font-weight: 600; color: #fff; }
 .survey-modal-option-icon {
-  width: 40px; height: 40px;
+  width: 32px; height: 32px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 17px; font-weight: 700;
+  font-size: 13px; font-weight: 700;
   background: rgba(255,255,255,0.05);
   border: 1px solid #365468;
   color: #a9c0d3;
@@ -2553,6 +2553,11 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   background: #D6A21C;
   border-color: #D6A21C;
   color: #16222D;
+}
+
+/* Larger emoji text in primaria mode */
+.primaria-mode .survey-modal-option span {
+  font-size: 18px;
 }
 
 /* Select dropdown in modal */
@@ -3360,7 +3365,10 @@ var navEnc = document.getElementById('navEncuesta');
 
       currentQuestionIndex = 0;
       shownPauses = new Set([0]);
-      document.getElementById('surveyModal').classList.add('open');
+      const surveyModalEl = document.getElementById('surveyModal');
+      surveyModalEl.classList.add('open');
+      if (IS_PRIMARIA) surveyModalEl.classList.add('primaria-mode');
+      else surveyModalEl.classList.remove('primaria-mode');
 
       // If primaria, show superhero welcome now
       if (IS_PRIMARIA) {
@@ -3810,7 +3818,9 @@ var navEnc = document.getElementById('navEncuesta');
 
     // Close survey modal and reset
     const totalAnswered = SURVEY?.questions?.length || 56;
-    document.getElementById('surveyModal').classList.remove('open');
+    const surveyModalEl = document.getElementById('surveyModal');
+    surveyModalEl.classList.remove('open');
+    surveyModalEl.classList.remove('primaria-mode');
     window.currentResponseId = null;
     sessionStorage.removeItem('currentResponseId');
     SURVEY = null;
@@ -3973,7 +3983,9 @@ var navEnc = document.getElementById('navEncuesta');
       }
 
       closeModalPinPanel();
-      document.getElementById('surveyModal').classList.remove('open');
+      const sModal = document.getElementById('surveyModal');
+      sModal.classList.remove('open');
+      sModal.classList.remove('primaria-mode');
       window.currentResponseId = null;
       sessionStorage.removeItem('currentResponseId');
       SURVEY = null;
@@ -4758,5 +4770,3 @@ var navEnc = document.getElementById('navEncuesta');
 
 </body>
 </html>
-
-
