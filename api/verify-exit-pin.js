@@ -48,15 +48,6 @@ export default async function handler(req, res) {
     return res.status(401).json({ ok: false, error: "PIN incorrecto" });
   }
 
-  // PIN correct — mark response as abandoned
-  const { error: updateError } = await supabaseAdmin
-    .from("survey_responses")
-    .update({ status: "abandoned" })
-    .eq("id", responseId);
-
-  if (updateError) {
-    return res.status(500).json({ ok: false, error: updateError.message });
-  }
-
+  // PIN correct — just return ok, response stays as in_progress
   return res.status(200).json({ ok: true });
 }
