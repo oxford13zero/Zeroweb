@@ -2096,14 +2096,8 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
       <div class="survey-modal-progress-fill" id="surveyModalProgress"></div>
     </div>
 
-    <!-- Header -->
-    <div class="survey-modal-header">
-      <div class="survey-modal-brand">
-        <div class="survey-modal-brand-dot"></div>
-        TECH4ZERO · ENCUESTA
-      </div>
-      <button class="survey-modal-close" id="btnSurveyModalClose" type="button">✕</button>
-    </div>
+    <!-- Close button top-right -->
+    <button class="survey-modal-close" id="btnSurveyModalClose" type="button">✕</button>
 
     <!-- PIN panel -->
     <div id="surveyModalPinPanel" class="survey-modal-pin-panel">
@@ -2481,33 +2475,10 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* Header */
-.survey-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 20px 12px;
-  border-bottom: 1px solid rgba(214,162,28,0.2);
-  flex-shrink: 0;
-  background: transparent;
-}
-.survey-modal-brand {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #D6A21C;
-  text-transform: uppercase;
-}
-.survey-modal-brand-dot {
-  width: 7px; height: 7px;
-  background: #D6A21C;
-  border-radius: 50%;
-  animation: quizPulse 2s infinite;
-}
 .survey-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
   background: transparent;
   border: 1px solid #365468;
   color: #7a8e9e;
@@ -2519,13 +2490,13 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
-  flex-shrink: 0;
+  z-index: 5;
 }
 .survey-modal-close:hover { border-color: #ff6b6b; color: #ff6b6b; }
 
 /* Body — scrollable */
 .survey-modal-body {
-  padding: 24px 28px 8px;
+  padding: 48px 28px 8px;
   overflow-y: auto;
   flex: 1;
   background: transparent;
@@ -2560,6 +2531,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.18s;
+  font-family: 'Playfair Display', serif;
   font-size: 15px;
   color: #d9e6f2;
   font-weight: 400;
