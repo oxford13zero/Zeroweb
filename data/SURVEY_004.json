@@ -1,6 +1,7 @@
 {
   "survey": {
     "id": "TECH4ZERO-MX-v2.0",
+    "description": "secundaria - preparatoria - media",
     "code": "SURVEY_004",
     "survey_uuid": "9e26dfc3-8310-4192-a8fc-a02e72078060",
     "title": "Encuesta de Clima Escolar, Bullying y Cyberbullying_TECH4ZERO_MX_v2",
@@ -2016,4 +2017,5 @@
     }
   ]
 }
+
 
