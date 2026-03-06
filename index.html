@@ -576,7 +576,28 @@ window.addEventListener('popstate', function(e) {
       <div id="routingMsg" class="statusMsg statusWarn"></div>
     </div>
 
-    <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px;">
+    <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px; position:relative;">
+
+      <!-- EXIT BUTTON -->
+      <button id="btnSurveyExit" class="survey-exit-btn" type="button" title="Salir de la encuesta">✕</button>
+
+      <!-- PIN PANEL -->
+      <div id="pinPanel" class="pin-panel">
+        <div class="pin-panel-title">🔒 Salir de la encuesta</div>
+        <div class="pin-panel-sub">Ingresa el PIN para cerrar</div>
+        <div class="pin-inputs">
+          <input class="pin-input" id="pin0" type="password" inputmode="numeric" maxlength="1" />
+          <input class="pin-input" id="pin1" type="password" inputmode="numeric" maxlength="1" />
+          <input class="pin-input" id="pin2" type="password" inputmode="numeric" maxlength="1" />
+          <input class="pin-input" id="pin3" type="password" inputmode="numeric" maxlength="1" />
+        </div>
+        <div class="pin-msg" id="pinMsg"></div>
+        <div class="pin-btn-row">
+          <button id="btnPinCancel" class="btnSecondary" type="button">Cancelar</button>
+          <button id="btnPinConfirm" class="btnPrimary" type="button">Confirmar</button>
+        </div>
+      </div>
+
       <div id="qTitle" style="font-weight:700; margin-bottom:10px;"></div>
       <div id="qText" style="margin-bottom:12px;"></div>
       <div id="qOptions"></div>
@@ -2361,6 +2382,81 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   padding: 24px;
 }
 
+/* ── SURVEY EXIT PIN ── */
+.survey-exit-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: 1px solid #365468;
+  color: #7a8e9e;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+}
+.survey-exit-btn:hover { border-color: #ff6b6b; color: #ff6b6b; }
+
+.pin-panel {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(6,14,22,0.97);
+  border-radius: 8px;
+  z-index: 20;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+.pin-panel.open { display: flex; }
+.pin-panel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.pin-panel-sub {
+  font-size: 13px;
+  color: #a9c0d3;
+  margin-bottom: 20px;
+}
+.pin-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.pin-input {
+  width: 44px;
+  height: 52px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  background: #1E2F3F;
+  border: 2px solid #365468;
+  border-radius: 8px;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pin-input:focus { border-color: #D6A21C; }
+.pin-input.error { border-color: #ff6b6b; }
+.pin-msg {
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 18px;
+  margin-bottom: 16px;
+  color: #ff6b6b;
+}
+.pin-btn-row { display: flex; gap: 10px; }
+
 /* ── SURVEY PAUSE MODAL ── */
 .pause-overlay {
   display: none;
@@ -3119,7 +3215,7 @@ var navEnc = document.getElementById('navEncuesta');
       document.querySelector('.finish-trophy').textContent       = '🦸';
       document.querySelector('.finish-level-badge').innerHTML   = '🌟 ¡MISIÓN CUMPLIDA!';
       document.querySelector('.finish-headline').innerHTML      = '¡Lo lograste!<br><em>¡Eres un verdadero superhéroe!</em>';
-      document.querySelector('.finish-body').innerHTML          = '¡Respondiste todas las preguntas! 🎉';
+      document.querySelector('.finish-body').innerHTML          = '¡Respondiste todas las preguntas! 🎉<br>Gracias por ayudar a hacer tu escuela mejor. 🌟';
     } else {
       document.querySelector('.finish-trophy').textContent       = '🏆';
       document.querySelector('.finish-level-badge').innerHTML   = '💎 NIVEL LEYENDA DESBLOQUEADO';
@@ -3147,7 +3243,7 @@ var navEnc = document.getElementById('navEncuesta');
       badgeIcon: '',
       badgeText: 'Bienvenida',
       headline: 'Estás a punto de hacer algo importante.',
-      body: 'Esta encuesta es tu voz. Nadie más puede decir lo que tú viviste. No hay respuestas incorrectas — solo tu experiencia real.'
+      body: 'Esta encuesta es tu voz. Nadie más puede decir lo que tú viviste. No hay respuestas correctas ni incorrectas — solo tu experiencia real.'
     },
     {
       pct: 0.20,
@@ -3178,28 +3274,28 @@ var navEnc = document.getElementById('navEncuesta');
       badgeIcon: '🦸',
       badgeText: '¡Hoy eres un superhéroe!',
       headline: '¡Hoy eres un superhéroe! 🦸',
-      body: 'Vas a responder preguntas sobre tu escuela.\n\n¡No hay respuestas malas!'
+      body: 'Vas a responder preguntas sobre tu escuela.\n\n¡No hay respuestas malas — solo las tuyas!'
     },
     {
       pct: 0.20,
       badgeIcon: '⚡',
       badgeText: '¡Poder desbloqueado!',
       headline: '⚡ ¡Desbloqueaste tu primer poder!',
-      body: '¡Vas súper bien!'
+      body: '¡Vas súper bien! Sigue así.'
     },
     {
       pct: 0.55,
       badgeIcon: '💪',
       badgeText: '¡Super Fuerza activada!',
       headline: '💪 ¡Activaste la Super Fuerza!',
-      body: '¡Ya vas por más de la mitad!'
+      body: '¡Ya vas por más de la mitad!\n\n¡Eres increíble!'
     },
     {
       pct: 0.80,
       badgeIcon: '🚀',
       badgeText: '¡Modo Héroe activado!',
       headline: '🚀 ¡Modo Héroe activado!',
-      body: '¡Casi terminas!'
+      body: '¡Casi terminas!\n\nUn poquito más y eres una leyenda.'
     }
   ];
 
@@ -3481,6 +3577,97 @@ var navEnc = document.getElementById('navEncuesta');
 
     applySessionToUI();
     showFinishModal(totalAnswered);
+  });
+
+  // ════════════════════════════════════════════════════════════
+  // SURVEY EXIT PIN
+  // ════════════════════════════════════════════════════════════
+  const pinPanel    = document.getElementById('pinPanel');
+  const pinMsg      = document.getElementById('pinMsg');
+  const btnPinCancel  = document.getElementById('btnPinCancel');
+  const btnPinConfirm = document.getElementById('btnPinConfirm');
+  const pinInputs   = [0,1,2,3].map(i => document.getElementById('pin' + i));
+
+  function openPinPanel() {
+    pinInputs.forEach(el => { el.value = ''; el.classList.remove('error'); });
+    pinMsg.textContent = '';
+    pinPanel.classList.add('open');
+    pinInputs[0].focus();
+  }
+
+  function closePinPanel() {
+    pinPanel.classList.remove('open');
+    pinInputs.forEach(el => { el.value = ''; el.classList.remove('error'); });
+    pinMsg.textContent = '';
+  }
+
+  // Auto-advance between PIN inputs
+  pinInputs.forEach((el, i) => {
+    el.addEventListener('input', () => {
+      el.value = el.value.replace(/\D/g, '').slice(0, 1);
+      if (el.value && i < 3) pinInputs[i + 1].focus();
+      if (el.value && i === 3) btnPinConfirm.click();
+    });
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !el.value && i > 0) pinInputs[i - 1].focus();
+    });
+  });
+
+  document.getElementById('btnSurveyExit')?.addEventListener('click', openPinPanel);
+  btnPinCancel?.addEventListener('click', closePinPanel);
+
+  btnPinConfirm?.addEventListener('click', async () => {
+    const pin = pinInputs.map(el => el.value).join('');
+    if (pin.length < 4) {
+      pinMsg.textContent = 'Ingresa los 4 dígitos.';
+      return;
+    }
+
+    const responseId = window.currentResponseId;
+    if (!responseId) { closePinPanel(); return; }
+
+    btnPinConfirm.disabled = true;
+    pinMsg.textContent = '';
+
+    try {
+      const res = await fetch('/api/verify-exit-pin', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ responseId, pin })
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        pinInputs.forEach(el => el.classList.add('error'));
+        pinMsg.textContent = data.error || 'PIN incorrecto';
+        pinInputs.forEach(el => { el.value = ''; el.classList.remove('error'); });
+        pinInputs[0].focus();
+        return;
+      }
+
+      // PIN correct — clean up and close survey
+      closePinPanel();
+      if (surveyBox) {
+        surveyBox.style.display = 'none';
+        surveyBox.classList.remove('primaria-mode');
+      }
+      if (routingBox) routingBox.style.display = 'none';
+      window.currentResponseId = null;
+      sessionStorage.removeItem('currentResponseId');
+      SURVEY = null;
+      QUESTION_ID_MAP = {};
+      OPTIONS_CACHE = {};
+      currentQuestionIndex = 0;
+      IS_PRIMARIA = false;
+      ROUTING_QUESTION = null;
+      shownPauses = new Set();
+      applySessionToUI();
+
+    } catch (e) {
+      pinMsg.textContent = 'Error de conexión.';
+    } finally {
+      btnPinConfirm.disabled = false;
+    }
   });
 
   refreshSession();
@@ -4249,6 +4436,3 @@ var navEnc = document.getElementById('navEncuesta');
 
 </body>
 </html>
-
-
-
