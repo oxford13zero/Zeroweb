@@ -2452,12 +2452,13 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 .survey-modal-box {
   width: min(680px, 95vw);
   max-height: 90vh;
-  background: #f8f9fa;
+  background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
+  border: 1px solid rgba(214,162,28,0.5);
   border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+  box-shadow: 0 0 0 1px rgba(214,162,28,0.15), 0 32px 80px rgba(0,0,0,0.7);
   animation: surveyModalIn 0.35s cubic-bezier(0.4,0,0.2,1);
   position: relative;
 }
@@ -2469,7 +2470,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 /* Progress bar */
 .survey-modal-progress-track {
   height: 4px;
-  background: rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.06);
   flex-shrink: 0;
 }
 .survey-modal-progress-fill {
@@ -2486,9 +2487,9 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px 12px;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid rgba(214,162,28,0.2);
   flex-shrink: 0;
-  background: #f8f9fa;
+  background: transparent;
 }
 .survey-modal-brand {
   display: flex;
@@ -2508,8 +2509,8 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
 }
 .survey-modal-close {
   background: transparent;
-  border: 1px solid #dee2e6;
-  color: #6c757d;
+  border: 1px solid #365468;
+  color: #7a8e9e;
   border-radius: 8px;
   width: 32px; height: 32px;
   font-size: 15px;
@@ -2527,7 +2528,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   padding: 24px 28px 8px;
   overflow-y: auto;
   flex: 1;
-  background: #f8f9fa;
+  background: transparent;
 }
 .survey-modal-q-counter {
   font-size: 11px;
@@ -2541,7 +2542,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   font-family: 'Playfair Display', serif;
   font-size: clamp(17px, 2.5vw, 22px);
   font-weight: 600;
-  color: #1a1a2e;
+  color: #fff;
   line-height: 1.4;
   margin-bottom: 22px;
 }
@@ -2554,57 +2555,58 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  background: #fff;
-  border: 1.5px solid #dee2e6;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid #365468;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.18s;
   font-size: 15px;
-  color: #1a1a2e;
+  color: #d9e6f2;
   font-weight: 400;
 }
-.survey-modal-option:hover { border-color: #D6A21C; background: #fff8e6; }
-.survey-modal-option.selected { border-color: #D6A21C; background: #fff8e6; font-weight: 600; color: #1a1a2e; }
+.survey-modal-option:hover { border-color: #D6A21C; background: rgba(214,162,28,0.08); color: #fff; }
+.survey-modal-option.selected { border-color: #D6A21C; background: rgba(214,162,28,0.12); font-weight: 600; color: #fff; }
 .survey-modal-option-icon {
   width: 32px; height: 32px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700;
-  background: #f1f3f5;
-  border: 1px solid #dee2e6;
-  color: #495057;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #365468;
+  color: #a9c0d3;
   flex-shrink: 0;
   transition: all 0.18s;
 }
 .survey-modal-option.selected .survey-modal-option-icon {
   background: #D6A21C;
   border-color: #D6A21C;
-  color: #fff;
+  color: #16222D;
 }
 
 /* Select dropdown in modal */
 .survey-modal-select {
   width: 100%;
   padding: 10px 14px;
-  background: #fff;
-  border: 1.5px solid #dee2e6;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid #365468;
   border-radius: 10px;
-  color: #1a1a2e;
+  color: #d9e6f2;
   font-size: 15px;
   outline: none;
   transition: border-color 0.2s;
   margin-bottom: 8px;
 }
 .survey-modal-select:focus { border-color: #D6A21C; }
+.survey-modal-select option { background: #16222D; color: #d9e6f2; }
 
 /* Text input in modal */
 .survey-modal-text-input {
   width: 100%;
   padding: 10px 14px;
-  background: #fff;
-  border: 1.5px solid #dee2e6;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid #365468;
   border-radius: 10px;
-  color: #1a1a2e;
+  color: #d9e6f2;
   font-size: 15px;
   outline: none;
   transition: border-color 0.2s;
@@ -2617,17 +2619,17 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   justify-content: space-between;
   align-items: center;
   padding: 14px 28px 18px;
-  border-top: 1px solid #dee2e6;
-  background: #f8f9fa;
+  border-top: 1px solid rgba(214,162,28,0.15);
+  background: transparent;
   flex-shrink: 0;
 }
 .survey-modal-msg {
   font-size: 13px;
   font-weight: 600;
-  color: #e67700;
+  color: #ffab40;
   min-height: 16px;
   padding: 0 28px 10px;
-  background: #f8f9fa;
+  background: transparent;
 }
 
 /* PIN panel inside modal */
@@ -2635,7 +2637,7 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   display: none;
   position: absolute;
   inset: 0;
-  background: rgba(248,249,250,0.97);
+  background: rgba(15,29,39,0.97);
   border-radius: 16px;
   z-index: 20;
   flex-direction: column;
@@ -2645,15 +2647,15 @@ Somos un equipo de profesionales que trabaja en la frontera de la tecnología, c
   text-align: center;
 }
 .survey-modal-pin-panel.open { display: flex; }
-.survey-modal-pin-panel .pin-panel-title { color: #1a1a2e; }
-.survey-modal-pin-panel .pin-panel-sub   { color: #495057; }
+.survey-modal-pin-panel .pin-panel-title { color: #fff; }
+.survey-modal-pin-panel .pin-panel-sub   { color: #a9c0d3; }
 .survey-modal-pin-panel .pin-input {
-  background: #fff;
-  border: 2px solid #dee2e6;
-  color: #1a1a2e;
+  background: #1E2F3F;
+  border: 2px solid #365468;
+  color: #fff;
 }
 .survey-modal-pin-panel .pin-input:focus { border-color: #D6A21C; }
-.survey-modal-pin-panel .pin-msg { color: #e03131; }
+.survey-modal-pin-panel .pin-msg { color: #ff6b6b; }
 
 /* ── SURVEY EXIT PIN ── */
 .survey-exit-btn {
