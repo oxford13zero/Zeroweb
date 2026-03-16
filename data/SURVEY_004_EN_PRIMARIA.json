@@ -1,0 +1,967 @@
+{
+  "survey": {
+    "id": "TECH4ZERO-US-PRIMARY-v2.1",
+    "code": "SURVEY_004_EN_PRIMARY",
+    "description": "elementary",
+    "survey_uuid": "PENDING-UUID-SURVEY-004-EN-PRIMARY",
+    "title": "My School and Me 🏫",
+    "version": "2.1",
+    "date": "2025",
+    "population": "Elementary School (6-12 years), United States",
+    "application_time": "15-20 minutos con apoyo del maestro",
+    "total_questions": 38,
+    "note": "Simplified questions for 1st grade comprehension (6-7 years). Teacher should read aloud for grades 1-2."
+  },
+  "questions": [
+    {
+      "number": 1,
+      "question_id": "p4_edad",
+      "type": "single_choice",
+      "text": "How old are you?",
+      "required": true,
+      "options": [
+        {
+          "code": "6",
+          "text": "6 years old"
+        },
+        {
+          "code": "7",
+          "text": "7 years old"
+        },
+        {
+          "code": "8",
+          "text": "8 years old"
+        },
+        {
+          "code": "9",
+          "text": "9 years old"
+        },
+        {
+          "code": "10",
+          "text": "10 years old"
+        },
+        {
+          "code": "11",
+          "text": "11 years old"
+        },
+        {
+          "code": "12",
+          "text": "12 years old"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "question_id": "p4_genero",
+      "type": "single_choice",
+      "text": "Are you…?",
+      "required": true,
+      "options": [
+        {
+          "code": "F",
+          "text": "Girl"
+        },
+        {
+          "code": "M",
+          "text": "Boy"
+        },
+        {
+          "code": "NR",
+          "text": "Prefer not to say"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "question_id": "p4_primer_anio",
+      "type": "single_choice",
+      "text": "Is this your first year at this school?",
+      "required": true,
+      "options": [
+        {
+          "code": "si",
+          "text": "Yes, this is my first year here"
+        },
+        {
+          "code": "no",
+          "text": "No, I was already here before"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "question_id": "p4_maestro_reglas",
+      "type": "single_choice",
+      "text": "My teacher clearly explains what is allowed and what is not allowed in the classroom. 👩‍🏫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "question_id": "p4_maestro_detiene_bullying",
+      "type": "single_choice",
+      "text": "When someone bothers or hurts a classmate, my teacher stops it right away. ✋",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "question_id": "p4_maestro_ayuda_conflictos",
+      "type": "single_choice",
+      "text": "My teacher helps me when I have problems with my classmates. 🤝",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "question_id": "p4_amigos_defienden",
+      "type": "single_choice",
+      "text": "I have friends who defend me when someone bothers me. 👫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "question_id": "p4_pertenencia_grupo",
+      "type": "single_choice",
+      "text": "When I am in the classroom, I feel like part of the group. 🏫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "question_id": "p4_apoyo_companeros",
+      "type": "single_choice",
+      "text": "When I am sad or something bad happens to me, a classmate supports me. 💙",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "question_id": "p4_grupo_evita_bullying",
+      "type": "single_choice",
+      "text": "In my classroom, classmates work together to make sure no one gets picked on. 👀",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "question_id": "p4_apoyo_al_defender",
+      "type": "single_choice",
+      "text": "If I defend someone who is being bullied, my classmates support me. 🦸",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "question_id": "p4_adultos_ayudan",
+      "type": "single_choice",
+      "text": "If I tell an adult at my school that someone is bothering me, they really help me. 🏫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "question_id": "p4_conoce_adulto_ayuda",
+      "type": "single_choice",
+      "text": "If someone bothers me, I know which adult at my school I can ask for help. 🆘",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "question_id": "p4_confianza_pedir_ayuda",
+      "type": "single_choice",
+      "text": "I feel safe asking an adult for help without being afraid of being called a 'tattletale'. 💬",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "question_id": "p4_victima_fisica",
+      "type": "single_choice",
+      "text": "In the last 30 days, my classmates have treated me well, without hitting, pushing, or hurting me. 💔",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "question_id": "p4_victima_verbal",
+      "type": "single_choice",
+      "text": "In the last 30 days, my classmates have spoken to me with respect, without insulting me or making fun of me. 💬",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "question_id": "p4_victima_exclusion",
+      "type": "single_choice",
+      "text": "In the last 30 days, my classmates have included me in games and activities. 🎮",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "question_id": "p4_victima_amenazas",
+      "type": "single_choice",
+      "text": "In the last 30 days, I have been able to be at school without anyone threatening me or making me feel scared. 😟",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "question_id": "p4_victima_discriminacion",
+      "type": "single_choice",
+      "text": "In the last 30 days, my classmates have treated me the same as everyone else, no matter what I look like or where I am from. ⚖️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "question_id": "p4_agresor_fisico_verbal",
+      "type": "single_choice",
+      "text": "In the last 30 days, I pushed, hit, or said mean things to bother a classmate. ✋",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "question_id": "p4_defensor_activo",
+      "type": "single_choice",
+      "text": "When I see a smaller or weaker classmate being picked on, I defend them or get help from an adult. 🦸",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "question_id": "p4_inclusion_activa",
+      "type": "single_choice",
+      "text": "During recess or group activities, I invite classmates who are alone to play or work with me. 🤗",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "question_id": "p4_agresor_exclusion",
+      "type": "single_choice",
+      "text": "In the last 30 days, did I purposely leave a classmate out of a game or group chat? 🚫",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "question_id": "p4_cyber_victima_mensajes",
+      "type": "single_choice",
+      "text": "In the last 30 days, did someone send mean messages about you or share your secrets on WhatsApp, social media, or another app? 📱",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "question_id": "p4_cyber_victima_foto",
+      "type": "single_choice",
+      "text": "In the last 30 days, did someone take a photo or video of you and share it to make fun of you or make you feel bad? 📸",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "question_id": "p4_cyber_victima_exclusion",
+      "type": "single_choice",
+      "text": "In the last 30 days, did a classmate send you mean messages, threaten you, or leave you out of group chats on purpose? 💬",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "question_id": "p4_cyber_confianza_adulto",
+      "type": "single_choice",
+      "text": "If someone bothers me online or on my phone, I am sure a school adult will really help me. 🛡️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "question_id": "p4_cyber_educacion_maestro",
+      "type": "single_choice",
+      "text": "My teacher has talked with the class about how to behave online and on social media. 📚",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "question_id": "p4_cyber_victima_general",
+      "type": "single_choice",
+      "text": "In the last 30 days, have classmates made fun of you, left you out of groups, or shared something of yours without permission online? 🌐",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "question_id": "p4_cyber_agresor",
+      "type": "single_choice",
+      "text": "In the last 30 days, did I share messages, photos, or videos of a classmate to make fun of them or get others to laugh at them? ⚠️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "question_id": "p4_internivel_trato",
+      "type": "single_choice",
+      "text": "Older students speak kindly to me, let me use the school spaces, and treat me like a classmate. 🔀",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "question_id": "p4_mapa_patio",
+      "type": "single_choice",
+      "text": "During recess and in the schoolyard, adults make sure no one bothers anyone else. 🗺️",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "question_id": "p4_mapa_banos_pasillos",
+      "type": "single_choice",
+      "text": "In the bathrooms and hallways of my school, I feel calm and not scared. 🚻",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "question_id": "p4_mapa_biblioteca",
+      "type": "single_choice",
+      "text": "In the library, I can be calm without anyone bothering me. 📚",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "question_id": "p4_mapa_entrada_salida",
+      "type": "single_choice",
+      "text": "At the school entrance and exit, adults make sure everyone is safe. 🚪",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "question_id": "p4_bienestar_gusto",
+      "type": "single_choice",
+      "text": "I enjoy coming to my school and being with my classmates. 🌟",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "question_id": "p4_bienestar_seguridad",
+      "type": "single_choice",
+      "text": "When I am at my school, I feel calm and not scared. 😊",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "question_id": "p4_bienestar_general",
+      "type": "single_choice",
+      "text": "Overall, I feel happy and comfortable at school. 😄",
+      "required": true,
+      "options": [
+        {
+          "code": "1",
+          "text": "😢 NEVER (No)"
+        },
+        {
+          "code": "2",
+          "text": "😕 SOMETIMES"
+        },
+        {
+          "code": "3",
+          "text": "😊 MOST OF THE TIME"
+        },
+        {
+          "code": "4",
+          "text": "😄 ALWAYS (Yes)"
+        }
+      ]
+    }
+  ]
+}

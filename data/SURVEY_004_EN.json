@@ -1,0 +1,2019 @@
+{
+  "survey": {
+    "id": "TECH4ZERO-US-v2.0",
+    "description": "middle - high school - media",
+    "code": "SURVEY_004_EN",
+    "survey_uuid": "PENDING-UUID-SURVEY-004-EN",
+    "title": "School Climate, Bullying and Cyberbullying Survey_TECH4ZERO_US_v2",
+    "version": "2.0",
+    "date": "2025",
+    "population": "Middle and High School (12-18 years), United States",
+    "application_time": "18-22 minutos",
+    "total_questions": 57,
+    "total_sections": 10,
+    "scale_unified": "0-4 (frecuencia adaptada — marco temporal: últimos 2 meses)",
+    "note": "Grade question (zero_general_grado) is captured on the entry screen before loading this survey and saved as the first answer of the response."
+  },
+  "constructs": {
+    "demographic": {
+      "n_items": 5,
+      "alpha_computable": false,
+      "construct_role": "demographic",
+      "score_direction": "n/a",
+      "sections": [
+        "A"
+      ]
+    },
+    "autoridad_docente": {
+      "n_items": 7,
+      "alpha_computable": true,
+      "construct_role": "climate_protective",
+      "score_direction": "higher_means_more_protective",
+      "sections": [
+        "B"
+      ]
+    },
+    "normas_grupales": {
+      "n_items": 4,
+      "alpha_computable": true,
+      "construct_role": "climate_protective",
+      "score_direction": "higher_means_more_protective",
+      "sections": [
+        "C"
+      ]
+    },
+    "respuesta_institucional": {
+      "n_items": 6,
+      "alpha_computable": true,
+      "construct_role": "institutional_support",
+      "score_direction": "higher_means_more_protective",
+      "sections": [
+        "D"
+      ]
+    },
+    "violencia_internivel": {
+      "n_items": 5,
+      "alpha_computable": true,
+      "construct_role": "ecology_unsafe",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "E"
+      ],
+      "note": "Módulo condicional — aplica solo a escuelas K-12 con primaria y secundaria en el mismo campus."
+    },
+    "victimizacion": {
+      "n_items": 8,
+      "alpha_computable": true,
+      "construct_role": "victim_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "F"
+      ],
+      "note": "Ítems redactados con criterio de repetición explícita (UN MISMO compañero/grupo + REPETIDAMENTE) para diferenciar bullying de conflicto puntual."
+    },
+    "perpetracion": {
+      "n_items": 7,
+      "alpha_computable": true,
+      "construct_role": "perpetration_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "G"
+      ]
+    },
+    "cybervictimizacion": {
+      "n_items": 6,
+      "alpha_computable": true,
+      "construct_role": "victim_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "H"
+      ]
+    },
+    "cyberagresion": {
+      "n_items": 2,
+      "alpha_computable": true,
+      "construct_role": "perpetration_frequency",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "H"
+      ]
+    },
+    "ecologia_espacios": {
+      "n_items": 6,
+      "alpha_computable": true,
+      "construct_role": "ecology_unsafe",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "I"
+      ],
+      "note": "Solo para estudiantes que reportaron victimización."
+    },
+    "mapa": {
+      "n_items": 6,
+      "alpha_computable": false,
+      "construct_role": "spatial_mapping",
+      "score_direction": "higher_means_more_risk",
+      "sections": [
+        "I"
+      ],
+      "note": "Mapeo de espacios físicos donde ocurre el bullying. Solo para estudiantes que reportaron victimización. Usar para identificar hotspots dentro del campus.",
+      "analytics_use": "Rankear ubicaciones por puntaje promedio para identificar zonas de riesgo prioritarias"
+    }
+  },
+  "questions": [
+    {
+      "number": 2,
+      "question_id": "zero_general_edad_v2",
+      "section": "A",
+      "section_name": "General Information",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "How old are you?",
+      "options": [
+        {
+          "code": "12",
+          "text": "12"
+        },
+        {
+          "code": "13",
+          "text": "13"
+        },
+        {
+          "code": "14",
+          "text": "14"
+        },
+        {
+          "code": "15",
+          "text": "15"
+        },
+        {
+          "code": "16",
+          "text": "16"
+        },
+        {
+          "code": "17",
+          "text": "17"
+        },
+        {
+          "code": "18",
+          "text": "18 or older"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "question_id": "zero_general_genero_v2",
+      "section": "A",
+      "section_name": "General Information",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "Which gender do you identify with?",
+      "options": [
+        {
+          "code": "F",
+          "text": "Female"
+        },
+        {
+          "code": "M",
+          "text": "Male"
+        },
+        {
+          "code": "O",
+          "text": "Another gender identity"
+        },
+        {
+          "code": "N",
+          "text": "Prefer not to answer"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "question_id": "zero_general_lengua_v2",
+      "section": "A",
+      "section_name": "General Information",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "Is an indigenous language spoken in your home?",
+      "options": [
+        {
+          "code": "S",
+          "text": "Yes"
+        },
+        {
+          "code": "N",
+          "text": "No"
+        },
+        {
+          "code": "P",
+          "text": "Prefer not to answer"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "question_id": "zero_general_tiempo_v2",
+      "section": "A",
+      "section_name": "General Information",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "How long have you been at this school?",
+      "options": [
+        {
+          "code": "1",
+          "text": "Less than 1 year"
+        },
+        {
+          "code": "2",
+          "text": "1-2 years"
+        },
+        {
+          "code": "3",
+          "text": "3-4 years"
+        },
+        {
+          "code": "4",
+          "text": "More than 4 years"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "question_id": "zero_general_tipo_escuela_v2",
+      "section": "A",
+      "section_name": "General Information",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "What type of school is this?",
+      "options": [
+        {
+          "code": "PUB",
+          "text": "Public"
+        },
+        {
+          "code": "CHAR",
+          "text": "Charter"
+        },
+        {
+          "code": "PRIV",
+          "text": "Private"
+        },
+        {
+          "code": "MAG",
+          "text": "Magnet"
+        },
+        {
+          "code": "OTR",
+          "text": "Other"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "question_id": "zero_autoridad_normas",
+      "section": "B",
+      "section_name": "Teacher Authority",
+      "construct": "autoridad_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "My homeroom teacher enforces classroom rules fairly.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "question_id": "zero_autoridad_escucha",
+      "section": "B",
+      "section_name": "Teacher Authority",
+      "construct": "autoridad_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When there is a conflict between students, my homeroom teacher listens to all sides before deciding what to do.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "question_id": "zero_autoridad_interviene",
+      "section": "B",
+      "section_name": "Teacher Authority",
+      "construct": "autoridad_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When someone is humiliated or excluded in front of others, my homeroom teacher intervenes immediately and stops the situation.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "question_id": "zero_autoridad_seguimiento",
+      "section": "B",
+      "section_name": "Teacher Authority",
+      "construct": "autoridad_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When my homeroom teacher intervenes in a student conflict, they follow up afterward to make sure everything is okay.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "question_id": "zero_autoridad_accion_digital",
+      "section": "B",
+      "section_name": "Teacher Authority",
+      "construct": "autoridad_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "If I report a bullying problem to my homeroom teacher (including via text, social media, or online), they take concrete action to address it.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "question_id": "zero_autoridad_coordina",
+      "section": "B",
+      "section_name": "Teacher Authority",
+      "construct": "autoridad_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When there is a digital bullying problem, my homeroom teacher coordinates with my parents or the school administration to resolve it.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "question_id": "zero_autoridad_bienestar",
+      "section": "B",
+      "section_name": "Teacher Authority",
+      "construct": "autoridad_docente",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "My homeroom teacher shows they care about how I feel in the classroom, not just about what I do wrong.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "question_id": "zero_normas_reaccion_v2",
+      "section": "C",
+      "section_name": "Group Norms",
+      "construct": "normas_grupales",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "In my class, if someone humiliates or excludes a classmate, others let them know that behavior is wrong.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "question_id": "zero_normas_defensa_observada",
+      "section": "C",
+      "section_name": "Group Norms",
+      "construct": "normas_grupales",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "In the last 2 months, I have seen classmates defend someone who was being bullied.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "question_id": "zero_normas_defensa_apoyo",
+      "section": "C",
+      "section_name": "Group Norms",
+      "construct": "normas_grupales",
+      "construct_role": "climate_protective",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "If I defend someone who is being bullied, other classmates support me.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "question_id": "zero_normas_intervencion_activa_v2",
+      "section": "C",
+      "section_name": "Group Norms",
+      "construct": "normas_grupales",
+      "construct_role": "bystander_behavior",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_active",
+      "type": "single_choice",
+      "text": "In the last 2 months, I have personally stepped in to help someone who was being bullied.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "question_id": "zero_institucional_protege",
+      "section": "D",
+      "section_name": "Institutional Response",
+      "construct": "respuesta_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When I report bullying to a school adult, they take concrete steps to protect me and stop the situation.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "question_id": "zero_institucional_seguimiento",
+      "section": "D",
+      "section_name": "Institutional Response",
+      "construct": "respuesta_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When I report bullying, adults follow through and make sure it does not get worse or happen again.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "question_id": "zero_institucional_orientador",
+      "section": "D",
+      "section_name": "Institutional Response",
+      "construct": "respuesta_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "The school counselor or psychologist helps me effectively when I come to them about bullying.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "question_id": "zero_institucional_acceso_adulto",
+      "section": "D",
+      "section_name": "Institutional Response",
+      "construct": "respuesta_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When I have a problem, I can easily find an adult at school who will help me with bullying or cyberbullying.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "question_id": "zero_institucional_sin_represalia",
+      "section": "D",
+      "section_name": "Institutional Response",
+      "construct": "respuesta_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "I feel safe knowing that if I report bullying, I will not be called a 'snitch' or 'tattletale' by other students.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "question_id": "zero_institucional_protocolo",
+      "section": "D",
+      "section_name": "Institutional Response",
+      "construct": "respuesta_institucional",
+      "construct_role": "institutional_support",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "When a bullying or cyberbullying case occurs at my school, adults consistently follow the school protocol steps to resolve it.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "question_id": "zero_internivel_supervision",
+      "section": "E",
+      "section_name": "Cross-level Violence",
+      "construct": "violencia_internivel",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "I have seen adults specifically supervising how older and younger students interact in hallways, bathrooms, and entrances.",
+      "notes": "Módulo condicional — aplica solo en escuelas K-12 con primaria y secundaria en el mismo campus.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "question_id": "zero_internivel_intervencion",
+      "section": "E",
+      "section_name": "Cross-level Violence",
+      "construct": "violencia_internivel",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "I have seen that when an older student bothers a younger student, adults intervene immediately and stop it.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "question_id": "zero_internivel_norma",
+      "section": "E",
+      "section_name": "Cross-level Violence",
+      "construct": "violencia_internivel",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_protective",
+      "type": "single_choice",
+      "text": "I have seen teachers enforce the rule that older students must not dominate or intimidate younger students.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "question_id": "zero_internivel_intimidacion",
+      "section": "E",
+      "section_name": "Cross-level Violence",
+      "construct": "violencia_internivel",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have seen younger students being picked on by older students who take advantage of their size.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "question_id": "zero_internivel_coercion",
+      "section": "E",
+      "section_name": "Cross-level Violence",
+      "construct": "violencia_internivel",
+      "construct_role": "ecology_unsafe",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have seen younger students being forced to do favors (homework, money, food) through age or physical advantage.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "question_id": "zero_victima_agresion_fisica_v2",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group has hit, pushed, or physically hurt me REPEATEDLY and I have not been able to stop it.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "question_id": "zero_victima_amenazas_v2",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group has threatened or intimidated me REPEATEDLY and I feel I cannot stop it.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "question_id": "zero_victima_insultos_v2",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group has said hurtful things or insulted me REPEATEDLY, and when I defend myself the situation gets worse.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "question_id": "zero_victima_rumores_v2",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group has spread false rumors about me REPEATEDLY, damaging my reputation with others.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "question_id": "zero_victima_exclusion_v2",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME group of classmates has left me out of activities or conversations REPEATEDLY on purpose, even though I wanted to participate.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "question_id": "zero_victima_coercion_v2",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group has forced me REPEATEDLY to do things against my will, threatening to hurt me if I do not obey.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "question_id": "zero_victima_discriminacion_v2",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group has REPEATEDLY bothered me because of my appearance, skin color, religion, background, or language, making me feel inferior.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "question_id": "zero_victima_acoso_sexual",
+      "section": "F",
+      "section_name": "Victimization",
+      "construct": "victimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group has REPEATEDLY made sexual comments, touched me, or sent me sexual content without my consent, making me feel uncomfortable or scared.",
+      "notes": "Ítem sensible — se muestra aviso de confidencialidad y recursos de apoyo antes de esta pregunta. Línea de la Vida: 800 911 2000.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "question_id": "zero_agresor_agresion_fisica_v2",
+      "section": "G",
+      "section_name": "Aggression",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have hit, pushed, or physically hurt classmates who could not defend themselves against me, REPEATEDLY in the last 2 months.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "question_id": "zero_agresor_amenazas_v2",
+      "section": "G",
+      "section_name": "Aggression",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have threatened classmates with hurting them if they do not do what I say, or I have made them feel scared REPEATEDLY in the last 2 months.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "question_id": "zero_agresor_insultos_v2",
+      "section": "G",
+      "section_name": "Aggression",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have said things to humiliate classmates in front of others, or insulted them REPEATEDLY knowing they cannot respond the same way.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "question_id": "zero_agresor_rumores_v2",
+      "section": "G",
+      "section_name": "Aggression",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have spread false rumors about classmates REPEATEDLY so that others stop trusting them or make fun of them.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "question_id": "zero_agresor_exclusion_v2",
+      "section": "G",
+      "section_name": "Aggression",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have REPEATEDLY prevented certain classmates from joining my friend group or activities where I participate, even though they wanted to.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "question_id": "zero_agresor_coercion_v2",
+      "section": "G",
+      "section_name": "Aggression",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have forced classmates to do things against their will REPEATEDLY, threatening to hurt them if they do not obey.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "question_id": "zero_agresor_discriminacion_v2",
+      "section": "G",
+      "section_name": "Aggression",
+      "construct": "perpetracion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have REPEATEDLY bothered classmates because of their appearance, skin color, religion, background, or language, making them feel inferior.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "question_id": "zero_cybervictima_mensajes",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "THE SAME classmate or group from my school has REPEATEDLY sent me hurtful messages or comments via text, social media, or online games in the last 2 months.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "question_id": "zero_cybervictima_anonimo",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have REPEATEDLY received hurtful messages from fake or anonymous accounts I cannot identify, in the last 2 months.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "question_id": "zero_cybervictima_fotos",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "Photos, videos, or content have been REPEATEDLY posted or shared online to humiliate me, or after I deleted it, it kept appearing elsewhere.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "question_id": "zero_cybervictima_extorsion",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have been threatened online that private information about me (photos, conversations, secrets) will be shared unless I do what they ask.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 48,
+      "question_id": "zero_cybervictima_continua",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "In the last 2 months, conflicts with classmates from school have continued or gotten worse on social media, text messages, or online games.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 49,
+      "question_id": "zero_cybervictima_masivo",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cybervictimizacion",
+      "construct_role": "victim_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "In the last 2 months, people have REPEATEDLY organized mass attacks where many people at once send me hurtful messages, mass-block me, or post negative content about me on social media or group chats.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "question_id": "zero_cyberagresor_mensajes",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cyberagresion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have REPEATEDLY sent hurtful messages or comments to THE SAME classmate via social media or text, knowing they cannot respond the same way, in the last 2 months.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 51,
+      "question_id": "zero_cyberagresor_exclusion",
+      "section": "H",
+      "section_name": "Cyberbullying",
+      "construct": "cyberagresion",
+      "construct_role": "perpetration_frequency",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have REPEATEDLY prevented THE SAME classmate from joining WhatsApp groups, class group chats, or other social networks, even though they wanted to participate.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 52,
+      "question_id": "zero_ecologia_aula_v2",
+      "section": "I",
+      "section_name": "Bullying Ecology",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have experienced bullying in the classroom during class.",
+      "notes": "Solo para estudiantes que reportaron victimización.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "question_id": "zero_ecologia_patio_v2",
+      "section": "I",
+      "section_name": "Bullying Ecology",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have experienced bullying in the schoolyard or playground.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "question_id": "zero_ecologia_banos",
+      "section": "I",
+      "section_name": "Bullying Ecology",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have experienced bullying in the bathrooms.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 55,
+      "question_id": "zero_ecologia_entrada_salida_v2",
+      "section": "I",
+      "section_name": "Bullying Ecology",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have experienced bullying at the school entrance or on nearby streets.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "question_id": "zero_ecologia_transporte_v2",
+      "section": "I",
+      "section_name": "Bullying Ecology",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have experienced bullying on school transportation (bus, subway, etc.).",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "question_id": "zero_ecologia_cafeteria_v2",
+      "section": "I",
+      "section_name": "Bullying Ecology",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "score_direction": "higher_means_more_risk",
+      "type": "single_choice",
+      "text": "I have experienced bullying in the school cafeteria.",
+      "options": [
+        {
+          "code": "0",
+          "text": "Never / 0 times in the last two months"
+        },
+        {
+          "code": "1",
+          "text": "Almost never / 1-2 times"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes / 3-4 times per month"
+        },
+        {
+          "code": "3",
+          "text": "Often / once a week"
+        },
+        {
+          "code": "4",
+          "text": "Always / several times a week or more"
+        }
+      ]
+    }
+  ]
+}
