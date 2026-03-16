@@ -568,7 +568,8 @@ window.addEventListener('popstate', function(e) {
       <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Initial question</div>
       <div id="routingText" style="margin-bottom:12px;"></div>
       <div id="routingOptions"></div>
-      <div style="margin-top:14px;">
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button id="btnRoutingBack" class="btnSecondary" type="button">← Back</button>
         <button id="btnRoutingNext" class="btnPrimary" type="button">Next</button>
       </div>
       <div id="routingMsg" class="statusMsg statusWarn"></div>
@@ -2202,6 +2203,32 @@ window.addEventListener('popstate', function(e) {
   </div>
 </div>
 
+<!-- MODAL: LANGUAGE SELECTOR -->
+<div id="languageModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:440px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">🌐 Selecciona el idioma / Select language</h3>
+    </div>
+    <div style="padding:8px 0;">
+      <p style="margin:0 0 20px 0; font-size:14px; color:#a9c0d3; line-height:1.6;">
+        Esta encuesta está disponible en español e inglés.<br>
+        This survey is available in Spanish and English.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
+          <img src="https://flagcdn.com/mx.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
+          <span>Español</span>
+        </button>
+        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
+          <img src="https://flagcdn.com/us.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
+          <span>English</span>
+        </button>
+      </div>
+      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancelar / Cancel</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: PRIVACIDAD ENCUESTA -->
 <div id="privacyModal" class="modalOverlay">
   <div class="modalBox" style="max-width:580px;">
@@ -2240,6 +2267,9 @@ window.addEventListener('popstate', function(e) {
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnPrivacyBack" class="btnSecondary" type="button" style="display:none;">
+          ← Back
+        </button>
         <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
           Continue to the survey
         </button>
@@ -2977,7 +3007,7 @@ window.addEventListener('popstate', function(e) {
   };
 
   // === SESSION STATE ===
-  window.sessionState = { ok:false, school_id:null, school_name:null };
+  window.sessionState = { ok:false, school_id:null, school_name:null, language:'en' };
   window.currentResponseId = null;
 
   const sessionBadge = document.getElementById('sessionBadge');
@@ -3010,7 +3040,8 @@ window.addEventListener('popstate', function(e) {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
-        country: data?.country || 'MX'
+        country: data?.country || 'MX',
+        language: data?.language || 'en'
       };
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
@@ -3055,6 +3086,12 @@ var navEnc = document.getElementById('navEncuesta');
     if (navEnc) navEnc.style.display = ok ? '' : 'none';
     if (navRes) navRes.style.display = ok ? '' : 'none';
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
+
+    // Auto-redirect Spanish-only schools back to /
+    if (ok && window.sessionState.language === 'es' && location.pathname.startsWith('/en')) {
+      window.location.href = '/' + location.hash;
+      return;
+    }
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
     
@@ -3148,6 +3185,50 @@ var navEnc = document.getElementById('navEncuesta');
     await refreshSession();
   });
 
+  // === LANGUAGE SELECTOR ===
+  function openLanguageSelector() {
+    const modal = document.getElementById('languageModal');
+    if (modal) modal.style.display = 'flex';
+  }
+  function closeLanguageSelector() {
+    const modal = document.getElementById('languageModal');
+    if (modal) modal.style.display = 'none';
+  }
+  async function selectLanguage(lang) {
+    CHOSEN_LANGUAGE = lang;
+    ROUTING_QUESTION = null;
+    closeLanguageSelector();
+    const backBtn = document.getElementById('btnPrivacyBack');
+    if (backBtn) backBtn.style.display = 'inline-flex';
+    await showPauseModal(PAUSE_CONFIGS[0]);
+    openPrivacyModal();
+  }
+  document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
+  document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
+  document.getElementById('btnLangCancel')?.addEventListener('click', () => {
+    closeLanguageSelector();
+    applySessionToUI();
+  });
+  document.getElementById('languageModal')?.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
+  });
+
+  // Privacy back → language selector
+  document.getElementById('btnPrivacyBack')?.addEventListener('click', () => {
+    closePrivacyModal();
+    openLanguageSelector();
+  });
+
+  // Routing back → privacy modal
+  document.getElementById('btnRoutingBack')?.addEventListener('click', () => {
+    routingBox.style.display = 'none';
+    routingMsg.textContent = '';
+    if (encuestaOK) { encuestaOK.style.pointerEvents = 'auto'; encuestaOK.style.opacity = ''; }
+    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
+    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
+    openPrivacyModal();
+  });
+
   // === MODAL PRIVACIDAD ===
   const privacyModal = document.getElementById('privacyModal');
   const privacyAccept = document.getElementById('privacyAccept');
@@ -3168,6 +3249,7 @@ var navEnc = document.getElementById('navEncuesta');
 
   btnPrivacyContinue?.addEventListener('click', async () => {
     closePrivacyModal();
+    if (document.getElementById('btnPrivacyBack')) document.getElementById('btnPrivacyBack').style.display = 'none';
     await showRoutingQuestion();
   });
 
@@ -3178,9 +3260,14 @@ var navEnc = document.getElementById('navEncuesta');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    // Show welcome message first, then privacy modal
-    await showPauseModal(PAUSE_CONFIGS[0]);
-    openPrivacyModal();
+    CHOSEN_LANGUAGE = window.sessionState.language || 'en';
+    ROUTING_QUESTION = null;
+    if (CHOSEN_LANGUAGE === 'both') {
+      openLanguageSelector();
+    } else {
+      await showPauseModal(PAUSE_CONFIGS[0]);
+      openPrivacyModal();
+    }
   });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
@@ -3228,7 +3315,8 @@ var navEnc = document.getElementById('navEncuesta');
   // STEP 1 — ROUTING QUESTION (grade selector, outside surveys)
   // ════════════════════════════════════════════════════════════
 
-  let ROUTING_QUESTION = null;  // loaded once from /data/ROUTING_QUESTION.json
+  let ROUTING_QUESTION = null;  // loaded once from /api/routing-config
+  let CHOSEN_LANGUAGE  = 'en';   // default EN for this page
 
   async function loadRoutingQuestion() {
     if (ROUTING_QUESTION) return;
@@ -3363,7 +3451,7 @@ var navEnc = document.getElementById('navEncuesta');
       OPTIONS_CACHE = {};
 
       // Detect primaria survey and apply large-font moof
-      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria');
+      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria' || SURVEY.survey?.description === 'elementary');
       if (IS_PRIMARIA) {
         surveyBox.classList.add('primaria-mode');
       } else {
