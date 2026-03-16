@@ -3092,6 +3092,12 @@ var navEnc = document.getElementById('navEncuesta');
     if (navEnc) navEnc.style.display = ok ? '' : 'none';
     if (navRes) navRes.style.display = ok ? '' : 'none';
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
+
+    // Auto-redirect English or bilingual schools to /en/
+    if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both') && !location.pathname.startsWith('/en')) {
+      window.location.href = '/en/' + location.hash;
+      return;
+    }
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
     
@@ -3184,6 +3190,10 @@ var navEnc = document.getElementById('navEncuesta');
     closeModal();
     await refreshSession();
   });
+
+  // === SURVEY STATE VARIABLES ===
+  let ROUTING_QUESTION = null;
+  let CHOSEN_LANGUAGE  = 'es';
 
   // === LANGUAGE SELECTOR ===
   const languageModal = document.getElementById('languageModal');
@@ -3340,8 +3350,8 @@ var navEnc = document.getElementById('navEncuesta');
   // STEP 1 — ROUTING QUESTION (grade selector, outside surveys)
   // ════════════════════════════════════════════════════════════
 
-  let ROUTING_QUESTION = null;  // loaded once from /data/ROUTING_QUESTION.json
-  let CHOSEN_LANGUAGE = 'es';   // set by language selector or from school default
+  let ROUTING_QUESTION = null;  // loaded once from /api/routing-config
+  // NOTE: CHOSEN_LANGUAGE and ROUTING_QUESTION declared earlier near language selector
 
   async function loadRoutingQuestion() {
     if (ROUTING_QUESTION) return;
