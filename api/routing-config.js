@@ -16,30 +16,30 @@ export default async function handler(req, res) {
     return res.status(500).json({ ok: false, error: "SCHOOL_NOT_FOUND" });
   }
 
-  const country  = school.country  || "MX";
-  const language = school.language || "es";
+  const country    = school.country  || "MX";
+  const schoolLang = school.language || "es";
 
-  // Build the DB language filter:
-  // - 'es' or 'en' → filter to that language only
-  // - 'both'       → return all active routes for the country (student will choose language first)
-  let query = supabaseAdmin
+  // When school is 'both', the frontend sends ?lang=es or ?lang=en
+  // based on what the student picked in the language selector.
+  const chosenLang = (schoolLang === "both" && req.query?.lang)
+    ? req.query.lang
+    : schoolLang;
+
+  // Effective language for filtering routes — never 'both'
+  const effectiveLang = (chosenLang === "both") ? "en" : chosenLang;
+
+  const { data: configs, error: configError } = await supabaseAdmin
     .from("survey_routing_configs")
     .select("route_key, label, grade_codes, survey_file, display_order, language")
     .eq("country", country)
+    .eq("language", effectiveLang)
     .eq("is_active", true)
     .order("display_order", { ascending: true });
-
-  if (language !== "both") {
-    query = query.eq("language", language);
-  }
-
-  const { data: configs, error: configError } = await query;
 
   if (configError) {
     return res.status(500).json({ ok: false, error: configError.message });
   }
 
-  // Build the options list and routing rules for the frontend
   const options = [];
   const routing_rules = {};
 
@@ -51,28 +51,26 @@ export default async function handler(req, res) {
     for (const code of config.grade_codes) {
       options.push({
         code,
-        text: gradeLabel(code, config.label, language),
+        text: gradeLabel(code, config.label, effectiveLang),
         route_key: config.route_key
       });
     }
   }
 
-  // Question text in the correct language
-  const question_text = language === "en" || language === "both"
+  const question_text = effectiveLang === "en"
     ? "What grade are you in?"
     : "¿En qué grado estás?";
 
   return res.status(200).json({
     ok: true,
     country,
-    language,
+    language: effectiveLang,
     question_text,
     options,
     routing_rules
   });
 }
 
-// Builds individual grade option text from the group label
 function gradeLabel(code, groupLabel, language) {
   const groupName = groupLabel.split("(")[0].trim();
   if (language === "en") {
