@@ -6,10 +6,9 @@ export default async function handler(req, res) {
   const auth = await requireAuth(req, res);
   if (!auth?.ok) return;
 
-  // auth.school_id comes from requireAuth (same session cookie pattern)
   const { data: school, error: schoolError } = await supabaseAdmin
     .from("schools")
-    .select("country")
+    .select("country, language")
     .eq("id", auth.school.id)
     .maybeSingle();
 
@@ -17,14 +16,24 @@ export default async function handler(req, res) {
     return res.status(500).json({ ok: false, error: "SCHOOL_NOT_FOUND" });
   }
 
-  const country = school.country || "MX";
+  const country  = school.country  || "MX";
+  const language = school.language || "es";
 
-  const { data: configs, error: configError } = await supabaseAdmin
+  // Build the DB language filter:
+  // - 'es' or 'en' → filter to that language only
+  // - 'both'       → return all active routes for the country (student will choose language first)
+  let query = supabaseAdmin
     .from("survey_routing_configs")
-    .select("route_key, label, grade_codes, survey_file, display_order")
+    .select("route_key, label, grade_codes, survey_file, display_order, language")
     .eq("country", country)
-    .eq("is_active", true)          // solo el survey activo
+    .eq("is_active", true)
     .order("display_order", { ascending: true });
+
+  if (language !== "both") {
+    query = query.eq("language", language);
+  }
+
+  const { data: configs, error: configError } = await query;
 
   if (configError) {
     return res.status(500).json({ ok: false, error: configError.message });
@@ -42,25 +51,32 @@ export default async function handler(req, res) {
     for (const code of config.grade_codes) {
       options.push({
         code,
-        text: gradeLabel(code, config.label),
+        text: gradeLabel(code, config.label, language),
         route_key: config.route_key
       });
     }
   }
 
+  // Question text in the correct language
+  const question_text = language === "en" || language === "both"
+    ? "What grade are you in?"
+    : "¿En qué grado estás?";
+
   return res.status(200).json({
     ok: true,
     country,
-    question_text: "¿En qué grado estás?",
+    language,
+    question_text,
     options,
     routing_rules
   });
 }
 
 // Builds individual grade option text from the group label
-// e.g. label="Primaria (1°–6°)", code="3" → "3° de Primaria"
-function gradeLabel(code, groupLabel) {
-  const groupName = groupLabel.split("(")[0].trim(); // e.g. "Primaria", "Básica"
+function gradeLabel(code, groupLabel, language) {
+  const groupName = groupLabel.split("(")[0].trim();
+  if (language === "en") {
+    return `${groupName} — Grade ${code}`;
+  }
   return `${code}° de ${groupName}`;
 }
-
