@@ -3063,7 +3063,13 @@ var navEnc = document.getElementById('navEncuesta');
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
-    
+    // Language routing: en/both schools belong on /en/
+    if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both')
+           && !location.pathname.startsWith('/en')) {
+      window.location.href = '/en/' + location.hash;
+      return;
+    }
+
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
       if (routingBox) routingBox.style.display = 'none';
