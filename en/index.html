@@ -319,36 +319,9 @@ window.addEventListener('popstate', function(e) {
 
     
   </script>
-<style>
-#debugPanel {
-  position:fixed; bottom:0; left:0; right:0;
-  background:#0a1520; border-top:2px solid #D6A21C;
-  color:#fff; font-family:monospace; font-size:12px;
-  z-index:99999; max-height:240px; overflow-y:auto; padding:8px 12px;
-}
-#debugPanel .dtitle { color:#D6A21C; font-weight:bold; font-size:13px;
-  display:flex; justify-content:space-between; margin-bottom:6px; }
-#debugPanel .drow { padding:2px 0; border-bottom:1px solid #1E2F3F; display:flex; gap:8px; }
-#debugPanel .ds { color:#a9c0d3; min-width:28px; }
-#debugPanel .dl { color:#69db7c; min-width:230px; }
-#debugPanel .dv { color:#fff; }
-#debugPanel .de { color:#ff6b6b; }
-#debugPanel .dk { color:#69db7c; }
-#debugPanel .dw { color:#ffa94d; }
-#debugPanel button { background:#365468; border:none; color:#fff;
-  padding:2px 8px; border-radius:4px; cursor:pointer; font-size:11px; }
-</style>
 </head>
 
 <body>
-<div id="debugPanel">
-  <div class="dtitle">
-    <span>🔍 Language Debug Trace</span>
-    <button onclick="this.closest('#debugPanel').style.display='none'">Hide</button>
-  </div>
-  <div id="debugRows"></div>
-</div>
-
 
 <header>
   <h1>TECH4ZERO</h1>
@@ -558,33 +531,33 @@ window.addEventListener('popstate', function(e) {
 
   <div class="card">
     <p>
-      To access the survey and request analysis, you must be authenticated via <b>ACCESO USUARIOS</b>.
+      To access the survey and request analysis, you must be authenticated via <b>USER ACCESS</b>.
     </p>
 
     <div id="encuestaOK" class="formPanel" style="display:block; max-width:520px;">
       <p id="schoolWelcome" style="margin:0 0 12px 0;">Session status: Not authenticated.</p>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-        <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Enter the survey</button>
-        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Request survey analysis</button>
+        <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Ingresar a la encuesta</button>
+        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Solicitar analisis de la encuesta</button>
       </div>
 
       <div id="encuestaNeedLogin" class="statusMsg statusWarn" style="display:none;">
-        You must log in via <b>ACCESO USUARIOS</b> to continue.
+        Debe iniciar sesión con <b>ACCESO USUARIOS</b> para continuar.
       </div>
     </div>
 
     <div id="analisisWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
-      <div style="font-weight:700; margin-bottom:10px;">Warning</div>
+      <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
       <div style="margin-bottom:14px;">
-        The system will perform a detailed statistical analysis del ambiente escolar con las encuestas introducidas en el sistema para su escuela, but no new surveys can be added.
+        El sistema realizara un analisis estadistico detallado del ambiente escolar con las encuestas introducidas en el sistema para su escuela, pero no podra adicionar nuevas encuestas.
         <br /><br />
-        Do you want to continue?
+        Desea continuar?
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continuar</button>
-        <button id="btnAnalisisCancel" class="btnSecondary" type="button">Cancel</button>
+        <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancelar</button>
       </div>
     </div>
 
@@ -606,8 +579,8 @@ window.addEventListener('popstate', function(e) {
 
       <!-- PIN PANEL -->
       <div id="pinPanel" class="pin-panel">
-        <div class="pin-panel-title">🔒 Exit survey</div>
-        <div class="pin-panel-sub">Enter PIN to close</div>
+        <div class="pin-panel-title">🔒 Salir de la encuesta</div>
+        <div class="pin-panel-sub">Ingresa el PIN para cerrar</div>
         <div class="pin-inputs">
           <input class="pin-input" id="pin0" type="password" inputmode="numeric" maxlength="1" />
           <input class="pin-input" id="pin1" type="password" inputmode="numeric" maxlength="1" />
@@ -616,7 +589,7 @@ window.addEventListener('popstate', function(e) {
         </div>
         <div class="pin-msg" id="pinMsg"></div>
         <div class="pin-btn-row">
-          <button id="btnPinCancel" class="btnSecondary" type="button">Cancel</button>
+          <button id="btnPinCancel" class="btnSecondary" type="button">Cancelar</button>
           <button id="btnPinConfirm" class="btnPrimary" type="button">Confirmar</button>
         </div>
       </div>
@@ -644,17 +617,17 @@ window.addEventListener('popstate', function(e) {
 
   <div class="card">
     <p>
-      Para ver resultados debe estar autenticado desde <b>ACCESO USUARIOS</b>.
+      To view results you must be authenticated via <b>USER ACCESS</b>.
     </p>
 
     <div class="formPanel" style="display:block; max-width:520px;">
       <div id="resultadosNeedLogin" class="statusMsg statusWarn" style="display:none;">
-        You must log in via <b>USER ACCESS</b> to view results.
+        Debe iniciar sesión con <b>ACCESO USUARIOS</b> para mostrar resultados.
       </div>
 
       <div style="margin-top:10px;">
         <button id="btnMostrarResultados" class="btnPrimary" type="button">
-          Show survey results
+          Mostrar resultados encuesta
         </button>
       </div>
     </div>
@@ -2137,8 +2110,8 @@ window.addEventListener('popstate', function(e) {
 
     <!-- PIN panel -->
     <div id="surveyModalPinPanel" class="survey-modal-pin-panel">
-      <div class="pin-panel-title" style="font-size:16px; font-weight:700; margin-bottom:6px;">🔒 Exit survey</div>
-      <div class="pin-panel-sub" style="font-size:13px; margin-bottom:20px;">Enter PIN to close</div>
+      <div class="pin-panel-title" style="font-size:16px; font-weight:700; margin-bottom:6px;">🔒 Salir de la encuesta</div>
+      <div class="pin-panel-sub" style="font-size:13px; margin-bottom:20px;">Ingresa el PIN para cerrar</div>
       <div class="pin-inputs">
         <input class="pin-input" id="mpin0" type="password" inputmode="numeric" maxlength="1" />
         <input class="pin-input" id="mpin1" type="password" inputmode="numeric" maxlength="1" />
@@ -2147,7 +2120,7 @@ window.addEventListener('popstate', function(e) {
       </div>
       <div class="pin-msg" id="mpinMsg" style="color:#e03131;"></div>
       <div class="pin-btn-row">
-        <button id="btnMPinCancel" class="btnSecondary" type="button">Cancel</button>
+        <button id="btnMPinCancel" class="btnSecondary" type="button">Cancelar</button>
         <button id="btnMPinConfirm" class="btnPrimary" type="button">Confirmar</button>
       </div>
     </div>
@@ -2196,14 +2169,14 @@ window.addEventListener('popstate', function(e) {
 <div id="globalModal" class="modalOverlay">
   <div class="modalBox">
     <div class="modalHeader">
-      <h3 class="modalTitle">User Access</h3>
+      <h3 class="modalTitle">Acceso Usuarios</h3>
       <button id="modalClose" class="modalClose" type="button">X</button>
     </div>
 
     <div id="modalSessionOn" style="display:none;">
       <div class="statusMsg statusOk" id="modalSessionText"></div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-        <button id="btnCerrarSesion" class="btnSecondary" type="button">Log out</button>
+        <button id="btnCerrarSesion" class="btnSecondary" type="button">Cerrar sesión</button>
         <button id="btnCerrarModal1" class="btnPrimary" type="button">Cerrar</button>
       </div>
     </div>
@@ -2211,18 +2184,18 @@ window.addEventListener('popstate', function(e) {
     <div id="modalSessionOff" style="display:none;">
       <div class="formPanel" style="margin-top:10px; max-width:100%;">
         <div class="fieldBlock">
-          <label for="globalUser" class="fieldLabel">Username</label><br />
-          <input id="globalUser" class="textInput" type="text" placeholder="Username" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
+          <label for="globalUser" class="fieldLabel">Usuario</label><br />
+          <input id="globalUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
         </div>
 
         <div class="fieldBlock">
-          <label for="globalPass" class="fieldLabel">Password</label><br />
-          <input id="globalPass" class="textInput" type="password" placeholder="Password" autocomplete="new-password" />
+          <label for="globalPass" class="fieldLabel">Contraseña</label><br />
+          <input id="globalPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
         </div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button id="btnDoLogin" class="btnPrimary" type="button">Log in</button>
-          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancel</button>
+          <button id="btnDoLogin" class="btnPrimary" type="button">Entrar</button>
+          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancelar</button>
         </div>
 
         <div id="globalLoginMsg" class="statusMsg statusErr"></div>
@@ -2252,7 +2225,7 @@ window.addEventListener('popstate', function(e) {
           <span>Español</span>
         </button>
       </div>
-      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancel / Cancel</button>
+      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancel / Cancelar</button>
     </div>
   </div>
 </div>
@@ -2299,7 +2272,7 @@ window.addEventListener('popstate', function(e) {
           Continue to the survey
         </button>
         <button id="btnPrivacyCancel" class="btnSecondary" type="button">
-          Cancel
+          Cancelar
         </button>
       </div>
     </div>
@@ -2370,10 +2343,10 @@ window.addEventListener('popstate', function(e) {
       <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
         <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
           <p style="margin:0; font-size:15px; color:#ffdca8;">
-            No approved analyses available.
+            No hay análisis aprobados disponibles.
           </p>
           <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
-            Request an analysis or wait for approval.
+            Solicite un análisis o espere la aprobación.
           </p>
         </div>
       </div>
@@ -2385,7 +2358,7 @@ window.addEventListener('popstate', function(e) {
           View Selected Analysis
         </button>
         <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
-          Cancel
+          Cancelar
         </button>
       </div>
     </div>
@@ -3045,7 +3018,7 @@ window.addEventListener('popstate', function(e) {
   const btnSolicitarAnalisis = document.getElementById('btnSolicitarAnalisis');
   const analisisWarnPanel = document.getElementById('analisisWarnPanel');
   const btnAnalisisContinuar = document.getElementById('btnAnalisisContinuar');
-  const btnAnalisisCancel = document.getElementById('btnAnalisisCancel');
+  const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
   const surveyBox = document.getElementById('surveyBox');
   const btnMostrarResultados = document.getElementById('btnMostrarResultados');
 
@@ -3112,11 +3085,15 @@ var navEnc = document.getElementById('navEncuesta');
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
-    // Language routing: Spanish-only schools belong on /
-    if (ok && window.sessionState.language === 'es'
-           && location.pathname.startsWith('/en')) {
-      window.location.href = '/' + location.hash;
-      return;
+    // Set CHOSEN_LANGUAGE from school's language field
+    if (ok) {
+      if (window.sessionState.language === 'en' || window.sessionState.language === 'both') {
+        CHOSEN_LANGUAGE = window.sessionState.language === 'both' ? 'en' : 'en';
+      } else if (window.sessionState.language === 'es') {
+        // Spanish-only school on /en/ — redirect back to /
+        window.location.href = '/' + location.hash;
+        return;
+      }
     }
 
     if (!ok) {
@@ -3156,7 +3133,7 @@ var navEnc = document.getElementById('navEncuesta');
     if (ok) {
       modalSessionOff.style.display = 'none';
       modalSessionOn.style.display = 'block';
-      modalSessionText.textContent = `Active session. School: ${window.sessionState.school_name || ''}`.trim();
+      modalSessionText.textContent = `Sesión activa. Escuela: ${window.sessionState.school_name || ''}`.trim();
     } else {
       modalSessionOn.style.display = 'none';
       modalSessionOff.style.display = 'block';
@@ -3178,10 +3155,10 @@ var navEnc = document.getElementById('navEncuesta');
   btnDoLogin?.addEventListener('click', async () => {
     const u = globalUser?.value?.trim() || '';
     const p = globalPass?.value?.trim() || '';
-    if (!u || !p) { globalLoginMsg.textContent = 'Please enter your username and password.'; return; }
+    if (!u || !p) { globalLoginMsg.textContent = 'Por favor ingrese usuario y contraseña.'; return; }
 
     try {
-      globalLoginMsg.textContent = 'Validating...';
+      globalLoginMsg.textContent = 'Validando...';
       const res = await fetch('/api/login', {
         method:'POST', credentials:'include',
         headers:{ 'Content-Type':'application/json' },
@@ -3192,14 +3169,14 @@ var navEnc = document.getElementById('navEncuesta');
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        globalLoginMsg.textContent = `Login failed (HTTP ${res.status}): ${data.error || data.raw || 'no detail'}`;
+        globalLoginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
         return;
       }
       globalLoginMsg.textContent = '';
       closeModal();
       await refreshSession();
     } catch (e) {
-      globalLoginMsg.textContent = 'Connection error.';
+      globalLoginMsg.textContent = 'Error de conexión.';
     }
   });
 
@@ -3211,19 +3188,19 @@ var navEnc = document.getElementById('navEncuesta');
 
   // === LANGUAGE SELECTOR ===
   function openLanguageSelector() {
-    const modal = document.getElementById('languageModal');
-    if (modal) modal.style.display = 'flex';
+    const m = document.getElementById('languageModal');
+    if (m) m.style.display = 'flex';
   }
   function closeLanguageSelector() {
-    const modal = document.getElementById('languageModal');
-    if (modal) modal.style.display = 'none';
+    const m = document.getElementById('languageModal');
+    if (m) m.style.display = 'none';
   }
   async function selectLanguage(lang) {
     CHOSEN_LANGUAGE = lang;
     ROUTING_QUESTION = null;
     closeLanguageSelector();
-    const backBtn = document.getElementById('btnPrivacyBack');
-    if (backBtn) backBtn.style.display = 'inline-flex';
+    const back = document.getElementById('btnPrivacyBack');
+    if (back) back.style.display = 'inline-flex';
     applyPrivacyModalLanguage();
     await showPauseModal(getActivePauseConfigs()[0]);
     openPrivacyModal();
@@ -3231,32 +3208,24 @@ var navEnc = document.getElementById('navEncuesta');
   document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
   document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
   document.getElementById('btnLangCancel')?.addEventListener('click', () => {
-    closeLanguageSelector();
-    applySessionToUI();
+    closeLanguageSelector(); applySessionToUI();
   });
   document.getElementById('languageModal')?.addEventListener('click', (e) => {
     if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
   });
-
-  // Privacy back → language selector (for 'both' schools)
   document.getElementById('btnPrivacyBack')?.addEventListener('click', () => {
     closePrivacyModal();
-    if (window.sessionState.language === 'both') {
-      openLanguageSelector();
-    }
+    if (window.sessionState.language === 'both') openLanguageSelector();
   });
-
-  // Routing back → privacy modal
   document.getElementById('btnRoutingBack')?.addEventListener('click', () => {
     routingBox.style.display = 'none';
-    routingMsg.textContent = '';
     if (encuestaOK) { encuestaOK.style.pointerEvents = 'auto'; encuestaOK.style.opacity = ''; }
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
     if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
     openPrivacyModal();
   });
 
-  // === PRIVACY MODAL LANGUAGE SWAP ===
+  // === PRIVACY MODAL LANGUAGE ===
   function applyPrivacyModalLanguage() {
     const isEs = (CHOSEN_LANGUAGE === 'es');
     const modal = document.getElementById('privacyModal');
@@ -3264,27 +3233,18 @@ var navEnc = document.getElementById('navEncuesta');
     const title = modal.querySelector('.modalTitle');
     if (title) title.textContent = isEs ? '🔒 Tu privacidad está protegida' : '🔒 Your privacy is protected';
     const bullets = modal.querySelectorAll('.privacy-bullet');
-    const esTexts = [
-      '✅ No guardamos tu nombre, ni preguntamos quién eres.',
+    const esT = ['✅ No guardamos tu nombre, ni preguntamos quién eres.',
       '✅ Nadie — ni profesores, ni directores, ni otros estudiantes — pueden conocer tus respuestas.',
-      '✅ Tu sinceridad ayuda a crear una escuela más segura para todos.'
-    ];
-    const enTexts = [
-      '✅ We do not store your name or ask who you are.',
+      '✅ Tu sinceridad ayuda a crear una escuela más segura para todos.'];
+    const enT = ['✅ We do not store your name or ask who you are.',
       '✅ No one — not teachers, principals, or other students — can see your answers.',
-      '✅ Your honesty helps create a safer school for everyone.'
-    ];
-    bullets.forEach((el, i) => { el.textContent = isEs ? esTexts[i] : enTexts[i]; });
-    const checkLabel = modal.querySelector('.privacy-check-label');
-    if (checkLabel) checkLabel.textContent = isEs
-      ? 'I have read and understand that this survey is anonymous and confidential'
+      '✅ Your honesty helps create a safer school for everyone.'];
+    bullets.forEach((el, i) => { el.textContent = isEs ? esT[i] : enT[i]; });
+    const chk = modal.querySelector('.privacy-check-label');
+    if (chk) chk.textContent = isEs
+      ? 'He leído y entiendo que esta encuesta es anónima y confidencial'
       : 'I have read and understand that this survey is anonymous and confidential';
-    if (btnPrivacyContinue) btnPrivacyContinue.textContent = isEs
-      ? 'Continue to the survey' : 'Continue to the survey';
-    const cancelBtn = document.getElementById('btnPrivacyCancel');
-    if (cancelBtn) cancelBtn.textContent = isEs ? 'Cancel' : 'Cancel';
-    const backBtn = document.getElementById('btnPrivacyBack');
-    if (backBtn) backBtn.textContent = isEs ? '← Back' : '← Back';
+    if (btnPrivacyContinue) btnPrivacyContinue.textContent = isEs ? 'Continuar con la encuesta' : 'Continue to the survey';
   }
 
   // === MODAL PRIVACIDAD ===
@@ -3317,9 +3277,9 @@ var navEnc = document.getElementById('navEncuesta');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    CHOSEN_LANGUAGE = window.sessionState.language || 'en';
+    CHOSEN_LANGUAGE = window.sessionState.language === 'both' ? 'en' : (window.sessionState.language || 'en');
     ROUTING_QUESTION = null;
-    if (CHOSEN_LANGUAGE === 'both') {
+    if (window.sessionState.language === 'both') {
       openLanguageSelector();
     } else {
       applyPrivacyModalLanguage();
@@ -3333,7 +3293,7 @@ var navEnc = document.getElementById('navEncuesta');
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'block';
   });
 
-  btnAnalisisCancel?.addEventListener('click', () => {
+  btnAnalisisCancelar?.addEventListener('click', () => {
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
   });
 
@@ -3352,14 +3312,14 @@ var navEnc = document.getElementById('navEncuesta');
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        alert('No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'no detail'));
+        alert('No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'sin detalle'));
         return;
       }
 
-      alert('Request sent.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
+      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
     } catch (e) {
-      alert('Connection error while requesting analysis.\n\n' + (e?.message || String(e)));
+      alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
     }
   });
 
@@ -3459,7 +3419,7 @@ var navEnc = document.getElementById('navEncuesta');
       });
       const startData = await startRes.json().catch(() => ({}));
       if (!startData.ok) {
-        alert('Error starting response: ' + (startData.error || 'no detail'));
+        alert('Error starting response: ' + (startData.error || 'sin detalle'));
         btnRoutingNext.disabled = false;
         return;
       }
@@ -3472,7 +3432,7 @@ var navEnc = document.getElementById('navEncuesta');
       const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
       const mapData = await mapRes.json().catch(() => ({}));
       if (!mapData.ok) {
-        alert('Could not load question map: ' + (mapData.error || 'no detail'));
+        alert('Could not load question map: ' + (mapData.error || 'sin detalle'));
         btnRoutingNext.disabled = false;
         return;
       }
@@ -3532,7 +3492,7 @@ var navEnc = document.getElementById('navEncuesta');
       renderCurrentQuestion();
 
     } catch (e) {
-      routingMsg.textContent = 'Connection error. Intenta de nuevo.';
+      routingMsg.textContent = 'Error de conexión. Intenta de nuevo.';
       console.error(e);
     } finally {
       btnRoutingNext.disabled = false;
@@ -3624,12 +3584,12 @@ var navEnc = document.getElementById('navEncuesta');
       document.querySelector('.finish-trophy').textContent       = '🦸';
       document.querySelector('.finish-level-badge').innerHTML   = '🌟 ¡MISIÓN CUMPLIDA!';
       document.querySelector('.finish-headline').innerHTML      = '¡Lo lograste!<br><em>¡Eres un verdadero superhéroe!</em>';
-      document.querySelector('.finish-body').innerHTML          = '¡Respondiste todas las preguntas! 🎉<br>Thank you for helping make your school better. 🌟';
+      document.querySelector('.finish-body').innerHTML          = '¡Respondiste todas las preguntas! 🎉<br>Gracias por ayudar a hacer tu escuela mejor. 🌟';
     } else {
       document.querySelector('.finish-trophy').textContent       = '🏆';
       document.querySelector('.finish-level-badge').innerHTML   = '💎 NIVEL LEYENDA DESBLOQUEADO';
       document.querySelector('.finish-headline').innerHTML      = '¡Lo lograste!<br><em>Eres parte del cambio.</em>';
-      document.querySelector('.finish-body').innerHTML          = 'You completed the survey from start to finish. That says a lot about you.<br>Your answers will help make your school a better place — even if you never know it.';
+      document.querySelector('.finish-body').innerHTML          = 'Completaste la encuesta de principio a fin. Eso dice mucho de ti.<br>Tus respuestas van a ayudar a hacer tu escuela un lugar mejor — aunque nunca lo sepas.';
     }
     document.getElementById('finishModal').classList.add('open');
     startConfetti();
@@ -3648,67 +3608,50 @@ var navEnc = document.getElementById('navEncuesta');
 
   const PAUSE_CONFIGS_ES = [
     {
-      pct: 0,
-      badgeIcon: '',
-      badgeText: 'Bienvenida',
+      pct: 0, badgeIcon: '', badgeText: 'Bienvenida',
       headline: 'Estás a punto de hacer algo importante.',
-      body: 'This survey is your voice. No one else can say what you experienced. There are no right or wrong answers — only your real experience.'
+      body: 'Esta encuesta es tu voz. Nadie más puede decir lo que tú viviste. No hay respuestas correctas ni incorrectas — solo tu experiencia real.'
     },
     {
-      pct: 0.20,
-      badgeIcon: '🥈',
-      badgeText: 'Nivel Plata',
+      pct: 0.20, badgeIcon: '🥈', badgeText: 'Nivel Plata',
       headline: '¡Ya arrancaste! Llevas el 20% — vas bien.',
-      body: 'Cada respuesta que das construye un mapa real de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
+      body: 'Cada respuesta que das construye un mapa real de tu escuela.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
     },
     {
-      pct: 0.55,
-      badgeIcon: '🥇',
-      badgeText: 'Nivel Oro',
+      pct: 0.55, badgeIcon: '🥇', badgeText: 'Nivel Oro',
       headline: 'Más de la mitad. No cualquiera llega hasta aquí.',
-      body: 'Las próximas preguntas son las más importantes de toda la encuesta. Lo que respondas aquí es lo que más ayuda a cambiar las cosas en tu escuela.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
+      body: 'Las próximas preguntas son las más importantes.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
     },
     {
-      pct: 0.80,
-      badgeIcon: '💎',
-      badgeText: 'Nivel Platino',
+      pct: 0.80, badgeIcon: '💎', badgeText: 'Nivel Platino',
       headline: 'Casi estás. Solo falta un poco.',
-      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Nivel Platino desbloqueado! Ya casi eres una leyenda.'
+      body: 'Ya hiciste la parte difícil. Termina fuerte.\n\n💎 ¡Nivel Platino desbloqueado!'
     }
   ];
 
   const PAUSE_CONFIGS_EN = [
     {
-      pct: 0,
-      badgeIcon: '',
-      badgeText: 'Welcome',
+      pct: 0, badgeIcon: '', badgeText: 'Welcome',
       headline: 'You are about to do something important.',
       body: 'This survey is your voice. No one else can say what you experienced. There are no right or wrong answers — only your real experience.'
     },
     {
-      pct: 0.20,
-      badgeIcon: '🥈',
-      badgeText: 'Silver Level',
+      pct: 0.20, badgeIcon: '🥈', badgeText: 'Silver Level',
       headline: "You started! You're 20% done — keep going.",
-      body: 'Every answer you give builds a real map of your school. Information that adults need but only you can provide.\n\n🥈 You unlocked Silver Level!'
+      body: 'Every answer you give builds a real map of your school.\n\n🥈 You unlocked Silver Level!'
     },
     {
-      pct: 0.55,
-      badgeIcon: '🥇',
-      badgeText: 'Gold Level',
+      pct: 0.55, badgeIcon: '🥇', badgeText: 'Gold Level',
       headline: 'More than halfway. Not everyone makes it this far.',
-      body: 'The next questions are the most important in the entire survey. What you answer here is what helps change things in your school the most.\n\n🥇 You unlocked Gold Level!'
+      body: 'The next questions are the most important.\n\n🥇 You unlocked Gold Level!'
     },
     {
-      pct: 0.80,
-      badgeIcon: '💎',
-      badgeText: 'Platinum Level',
+      pct: 0.80, badgeIcon: '💎', badgeText: 'Platinum Level',
       headline: 'Almost there. Just a little more.',
-      body: 'You did the hard part. The last questions are quick. Finish strong — your school needs it.\n\n💎 Platinum Level unlocked! You are almost a legend.'
+      body: 'You did the hard part. Finish strong.\n\n💎 Platinum Level unlocked!'
     }
   ];
 
-  // Legacy alias — picks the right one based on CHOSEN_LANGUAGE
   const PAUSE_CONFIGS = PAUSE_CONFIGS_EN;
 
   const PAUSE_CONFIGS_PRIMARIA = [
@@ -3800,7 +3743,7 @@ var navEnc = document.getElementById('navEncuesta');
     try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
     if (!res.ok || !data.ok) {
-      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "no detail"}`);
+      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "sin detalle"}`);
     }
 
     OPTIONS_CACHE[questionId] = Array.isArray(data.options) ? data.options : [];
@@ -4008,7 +3951,7 @@ var navEnc = document.getElementById('navEncuesta');
         return;
       }
     } catch (e) {
-      alert('Connection error while submitting the survey.');
+      alert('Error de conexión al finalizar la encuesta.');
       return;
     }
 
@@ -4112,7 +4055,7 @@ var navEnc = document.getElementById('navEncuesta');
       applySessionToUI();
 
     } catch (e) {
-      pinMsg.textContent = 'Connection error.';
+      pinMsg.textContent = 'Error de conexión.';
     } finally {
       btnPinConfirm.disabled = false;
     }
@@ -4194,99 +4137,11 @@ var navEnc = document.getElementById('navEncuesta');
       applySessionToUI();
 
     } catch (e) {
-      mpinMsg.textContent = 'Connection error.';
+      mpinMsg.textContent = 'Error de conexión.';
     } finally {
       btnMPinConfirm.disabled = false;
     }
   });
-
-
-(function() {
-  var buffer = [];
-  var domReady = false;
-  var step = 0;
-
-  function flush() {
-    var container = document.getElementById('debugRows');
-    if (!container) return;
-    buffer.forEach(function(entry) {
-      var row = document.createElement('div');
-      row.className = 'drow';
-      row.innerHTML = '<span class="ds">' + entry.step + '</span>'
-        + '<span class="dl">' + entry.label + '</span>'
-        + '<span class="' + entry.cls + '">' + entry.val + '</span>';
-      container.appendChild(row);
-    });
-    buffer = [];
-    container.scrollTop = container.scrollHeight;
-  }
-
-  function dlog(label, val, type) {
-    step++;
-    var cls = type === 'err' ? 'de' : type === 'warn' ? 'dw' : type === 'ok' ? 'dk' : 'dv';
-    var entry = { step: step, label: label, val: JSON.stringify(val), cls: cls };
-    console.log('[DBG ' + step + ']', label, val);
-    if (domReady) {
-      buffer.push(entry);
-      flush();
-    } else {
-      buffer.push(entry);
-    }
-  }
-  window.dlog = dlog;
-
-  document.addEventListener('DOMContentLoaded', function() {
-    domReady = true;
-    flush();
-    dlog('DOM ready + flushed buffer', '', 'warn');
-    dlog('CHOSEN_LANGUAGE', typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'NOT DECLARED YET');
-    setTimeout(function() {
-      dlog('--- after refreshSession ---', '', 'warn');
-      dlog('sessionState.ok',          window.sessionState ? window.sessionState.ok : 'UNDEF');
-      dlog('sessionState.language',    window.sessionState ? window.sessionState.language : 'UNDEF');
-      dlog('sessionState.school_name', window.sessionState ? window.sessionState.school_name : 'UNDEF');
-      dlog('sessionState.country',     window.sessionState ? window.sessionState.country : 'UNDEF');
-      dlog('CHOSEN_LANGUAGE',          typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'UNDEF');
-    }, 2000);
-  });
-
-  // Patch fetch — fires before DOM ready, so entries go to buffer
-  var origFetch = window.fetch;
-  window.fetch = async function(url, opts) {
-    var res = await origFetch(url, opts);
-    var u = typeof url === 'string' ? url : String(url);
-    if (u.includes('/api/me')) {
-      res.clone().json().then(function(d) {
-        dlog('/api/me ok',          d.ok,                    d.ok ? 'ok' : 'err');
-        dlog('/api/me school_name', d.school_name || '(none)');
-        dlog('/api/me language',    d.language    || '(none)', d.language ? 'ok' : 'err');
-        dlog('/api/me country',     d.country     || '(none)');
-      }).catch(function(e) { dlog('/api/me ERROR', e.message, 'err'); });
-    }
-    if (u.includes('/api/routing-config')) {
-      dlog('routing-config URL', u, 'ok');
-      res.clone().json().then(function(d) {
-        dlog('routing-config ok',            d.ok,                         d.ok ? 'ok' : 'err');
-        dlog('routing-config language',      d.language      || '(none)');
-        dlog('routing-config question_text', d.question_text || '(none)');
-        dlog('routing-config # options',     (d.options||[]).length);
-      }).catch(function(e) { dlog('routing-config ERROR', e.message, 'err'); });
-    }
-    return res;
-  };
-
-  // Log on Enter Survey click
-  document.addEventListener('click', function(e) {
-    if (e.target && e.target.id === 'btnIngresarEncuesta') {
-      dlog('=== Enter Survey clicked ===', '', 'warn');
-      dlog('CHOSEN_LANGUAGE',         typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'UNDEF');
-      dlog('sessionState.language',   window.sessionState ? window.sessionState.language : 'UNDEF');
-      dlog('pathname',                location.pathname);
-    }
-  });
-
-  dlog('Script loaded', location.pathname, 'warn');
-})();
 
   refreshSession();
 
@@ -4416,7 +4271,7 @@ var navEnc = document.getElementById('navEncuesta');
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'no detail'}`, 'statusErr'); return;
+        setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`, 'statusErr'); return;
       }
 
       setContactoMsg('Mensaje enviado. ¡Gracias!', 'statusOk');
