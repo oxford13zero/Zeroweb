@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 export default async function handler(req, res) {
   try {
-    const { questionId, lang } = req.query;
+    const { questionId } = req.query;
     if (!questionId) return res.status(400).json({ ok: false, error: "Missing questionId" });
 
     const supabase = createClient(
@@ -12,21 +12,11 @@ export default async function handler(req, res) {
       { auth: { persistSession: false } }
     );
 
-    let query = supabase
+    const { data, error } = await supabase
       .from("question_options")
-      .select("id, option_text, option_code, language")
+      .select("id, option_text, option_code")
       .eq("question_id", questionId);
 
-    // Filter by language if provided and language column has values
-    if (lang === 'en' || lang === 'es') {
-      const { data: filtered, error: filteredErr } = await query.eq("language", lang);
-      if (!filteredErr && filtered && filtered.length > 0) {
-        return res.status(200).json({ ok: true, options: filtered });
-      }
-      // No language-tagged options — fall through to return all
-    }
-
-    const { data, error } = await query;
     if (error) return res.status(500).json({ ok: false, error: error.message });
     return res.status(200).json({ ok: true, options: data || [] });
 
