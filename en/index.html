@@ -2204,6 +2204,32 @@ window.addEventListener('popstate', function(e) {
   </div>
 </div>
 
+<!-- MODAL: LANGUAGE SELECTOR -->
+<div id="languageModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:440px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">🌐 Select language / Selecciona el idioma</h3>
+    </div>
+    <div style="padding:8px 0;">
+      <p style="margin:0 0 20px 0; font-size:14px; color:#a9c0d3; line-height:1.6;">
+        This survey is available in English and Spanish.<br>
+        Esta encuesta está disponible en inglés y español.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
+          <img src="https://flagcdn.com/us.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
+          <span>English</span>
+        </button>
+        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
+          <img src="https://flagcdn.com/mx.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
+          <span>Español</span>
+        </button>
+      </div>
+      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancel / Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: PRIVACIDAD ENCUESTA -->
 <div id="privacyModal" class="modalOverlay">
   <div class="modalBox" style="max-width:580px;">
@@ -2217,15 +2243,15 @@ window.addEventListener('popstate', function(e) {
           <strong style="color:#D6A21C;">This survey is 100% anonymous and confidential.</strong>
         </p>
         
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+        <p class="privacy-bullet" style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
           ✅ We do not store your name or ask who you are.
         </p>
         
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+        <p class="privacy-bullet" style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
           ✅ No one — not teachers, principals, or other students — can see your answers.
         </p>
         
-        <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
+        <p class="privacy-bullet" style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
           ✅ Your honesty helps create a safer school for everyone.  
         </p>
         <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
@@ -2237,7 +2263,7 @@ window.addEventListener('popstate', function(e) {
       <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
         <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
           <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
-          <span>I have read and understand that this survey is anonymous and confidential</span>
+          <span class="privacy-check-label">I have read and understand that this survey is anonymous and confidential</span>
         </label>
       </div>
 
@@ -3059,7 +3085,13 @@ var navEnc = document.getElementById('navEncuesta');
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
-    
+    // Language routing: Spanish-only schools belong on /
+    if (ok && window.sessionState.language === 'es'
+           && location.pathname.startsWith('/en')) {
+      window.location.href = '/' + location.hash;
+      return;
+    }
+
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
       if (routingBox) routingBox.style.display = 'none';
@@ -3150,6 +3182,84 @@ var navEnc = document.getElementById('navEncuesta');
     await refreshSession();
   });
 
+  // === LANGUAGE SELECTOR ===
+  function openLanguageSelector() {
+    const modal = document.getElementById('languageModal');
+    if (modal) modal.style.display = 'flex';
+  }
+  function closeLanguageSelector() {
+    const modal = document.getElementById('languageModal');
+    if (modal) modal.style.display = 'none';
+  }
+  async function selectLanguage(lang) {
+    CHOSEN_LANGUAGE = lang;
+    ROUTING_QUESTION = null;
+    closeLanguageSelector();
+    const backBtn = document.getElementById('btnPrivacyBack');
+    if (backBtn) backBtn.style.display = 'inline-flex';
+    applyPrivacyModalLanguage();
+    await showPauseModal(getActivePauseConfigs()[0]);
+    openPrivacyModal();
+  }
+  document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
+  document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
+  document.getElementById('btnLangCancel')?.addEventListener('click', () => {
+    closeLanguageSelector();
+    applySessionToUI();
+  });
+  document.getElementById('languageModal')?.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
+  });
+
+  // Privacy back → language selector (for 'both' schools)
+  document.getElementById('btnPrivacyBack')?.addEventListener('click', () => {
+    closePrivacyModal();
+    if (window.sessionState.language === 'both') {
+      openLanguageSelector();
+    }
+  });
+
+  // Routing back → privacy modal
+  document.getElementById('btnRoutingBack')?.addEventListener('click', () => {
+    routingBox.style.display = 'none';
+    routingMsg.textContent = '';
+    if (encuestaOK) { encuestaOK.style.pointerEvents = 'auto'; encuestaOK.style.opacity = ''; }
+    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
+    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
+    openPrivacyModal();
+  });
+
+  // === PRIVACY MODAL LANGUAGE SWAP ===
+  function applyPrivacyModalLanguage() {
+    const isEs = (CHOSEN_LANGUAGE === 'es');
+    const modal = document.getElementById('privacyModal');
+    if (!modal) return;
+    const title = modal.querySelector('.modalTitle');
+    if (title) title.textContent = isEs ? '🔒 Tu privacidad está protegida' : '🔒 Your privacy is protected';
+    const bullets = modal.querySelectorAll('.privacy-bullet');
+    const esTexts = [
+      '✅ No guardamos tu nombre, ni preguntamos quién eres.',
+      '✅ Nadie — ni profesores, ni directores, ni otros estudiantes — pueden conocer tus respuestas.',
+      '✅ Tu sinceridad ayuda a crear una escuela más segura para todos.'
+    ];
+    const enTexts = [
+      '✅ We do not store your name or ask who you are.',
+      '✅ No one — not teachers, principals, or other students — can see your answers.',
+      '✅ Your honesty helps create a safer school for everyone.'
+    ];
+    bullets.forEach((el, i) => { el.textContent = isEs ? esTexts[i] : enTexts[i]; });
+    const checkLabel = modal.querySelector('.privacy-check-label');
+    if (checkLabel) checkLabel.textContent = isEs
+      ? 'He leído y entiendo que esta encuesta es anónima y confidencial'
+      : 'I have read and understand that this survey is anonymous and confidential';
+    if (btnPrivacyContinue) btnPrivacyContinue.textContent = isEs
+      ? 'Continuar con la encuesta' : 'Continue to the survey';
+    const cancelBtn = document.getElementById('btnPrivacyCancel');
+    if (cancelBtn) cancelBtn.textContent = isEs ? 'Cancelar' : 'Cancel';
+    const backBtn = document.getElementById('btnPrivacyBack');
+    if (backBtn) backBtn.textContent = isEs ? '← Volver' : '← Back';
+  }
+
   // === MODAL PRIVACIDAD ===
   const privacyModal = document.getElementById('privacyModal');
   const privacyAccept = document.getElementById('privacyAccept');
@@ -3180,9 +3290,15 @@ var navEnc = document.getElementById('navEncuesta');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    // Show welcome message first, then privacy modal
-    await showPauseModal(getActivePauseConfigs()[0]);
-    openPrivacyModal();
+    CHOSEN_LANGUAGE = window.sessionState.language || 'en';
+    ROUTING_QUESTION = null;
+    if (CHOSEN_LANGUAGE === 'both') {
+      openLanguageSelector();
+    } else {
+      applyPrivacyModalLanguage();
+      await showPauseModal(getActivePauseConfigs()[0]);
+      openPrivacyModal();
+    }
   });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
@@ -3503,7 +3619,38 @@ var navEnc = document.getElementById('navEncuesta');
     if (e.target === this) closeFinishModal();
   });
 
-  const PAUSE_CONFIGS = [
+  const PAUSE_CONFIGS_ES = [
+    {
+      pct: 0,
+      badgeIcon: '',
+      badgeText: 'Bienvenida',
+      headline: 'Estás a punto de hacer algo importante.',
+      body: 'Esta encuesta es tu voz. Nadie más puede decir lo que tú viviste. No hay respuestas correctas ni incorrectas — solo tu experiencia real.'
+    },
+    {
+      pct: 0.20,
+      badgeIcon: '🥈',
+      badgeText: 'Nivel Plata',
+      headline: '¡Ya arrancaste! Llevas el 20% — vas bien.',
+      body: 'Cada respuesta que das construye un mapa real de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
+    },
+    {
+      pct: 0.55,
+      badgeIcon: '🥇',
+      badgeText: 'Nivel Oro',
+      headline: 'Más de la mitad. No cualquiera llega hasta aquí.',
+      body: 'Las próximas preguntas son las más importantes de toda la encuesta. Lo que respondas aquí es lo que más ayuda a cambiar las cosas en tu escuela.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
+    },
+    {
+      pct: 0.80,
+      badgeIcon: '💎',
+      badgeText: 'Nivel Platino',
+      headline: 'Casi estás. Solo falta un poco.',
+      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Nivel Platino desbloqueado! Ya casi eres una leyenda.'
+    }
+  ];
+
+  const PAUSE_CONFIGS_EN = [
     {
       pct: 0,
       badgeIcon: '',
@@ -3533,6 +3680,9 @@ var navEnc = document.getElementById('navEncuesta');
       body: 'You did the hard part. The last questions are quick. Finish strong — your school needs it.\n\n💎 Platinum Level unlocked! You are almost a legend.'
     }
   ];
+
+  // Legacy alias — picks the right one based on CHOSEN_LANGUAGE
+  const PAUSE_CONFIGS = PAUSE_CONFIGS_EN;
 
   const PAUSE_CONFIGS_PRIMARIA = [
     {
@@ -3566,7 +3716,8 @@ var navEnc = document.getElementById('navEncuesta');
   ];
 
   function getActivePauseConfigs() {
-    return IS_PRIMARIA ? PAUSE_CONFIGS_PRIMARIA : PAUSE_CONFIGS;
+    if (IS_PRIMARIA) return PAUSE_CONFIGS_PRIMARIA;
+    return (CHOSEN_LANGUAGE === 'es') ? PAUSE_CONFIGS_ES : PAUSE_CONFIGS_EN;
   }
 
   let shownPauses = new Set();
