@@ -1,34 +1,186 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Debug</title></head>
-<body style="background:#0a1520; color:#fff; font-family:monospace; padding:20px; font-size:13px;">
-<h2 style="color:#D6A21C;">API Version Check</h2>
-<div id="out"></div>
+<head>
+<meta charset="UTF-8">
+<title>TECH4ZERO Debug</title>
+<style>
+  body { margin:0; font-family: monospace; background:#0a1520; color:#fff; }
+  h1 { background:#16222D; padding:20px; margin:0; color:#D6A21C; font-size:18px; border-bottom:2px solid #D6A21C; }
+  .section { padding:20px; border-bottom:1px solid #1E2F3F; }
+  .section h2 { margin:0 0 12px 0; font-size:14px; color:#D6A21C; }
+  .row { padding:6px 10px; margin:4px 0; border-radius:4px; font-size:13px; display:flex; gap:12px; }
+  .label { color:#a9c0d3; min-width:200px; }
+  .val { color:#fff; }
+  .ok  { background:#0d2b1a; border-left:3px solid #69db7c; }
+  .err { background:#2b0d0d; border-left:3px solid #ff6b6b; }
+  .warn{ background:#2b1f0d; border-left:3px solid #ffa94d; }
+  .info{ background:#0d1e2b; border-left:3px solid #74c0fc; }
+  button { margin:8px 0; padding:10px 24px; background:#D6A21C; color:#0a1520; border:none;
+           border-radius:6px; font-weight:700; font-size:14px; cursor:pointer; }
+  button:hover { background:#f0c040; }
+  #loginForm { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+  #loginForm input { padding:8px 12px; background:#1E2F3F; border:1px solid #365468;
+                     color:#fff; border-radius:6px; font-size:13px; width:160px; }
+  pre { background:#0d1e2b; padding:12px; border-radius:6px; font-size:11px;
+        overflow-x:auto; white-space:pre-wrap; color:#d9e6f2; max-height:200px; overflow-y:auto; }
+</style>
+</head>
+<body>
+
+<h1>🔍 TECH4ZERO — Full Debug Console</h1>
+
+<!-- STEP 1: LOGIN -->
+<div class="section">
+  <h2>STEP 1 — Login</h2>
+  <div id="loginForm">
+    <input id="u" type="text" placeholder="username" autocomplete="off" />
+    <input id="p" type="password" placeholder="password" />
+    <button onclick="doLogin()">Login</button>
+    <button onclick="doLogout()" style="background:#365468; color:#fff;">Logout</button>
+  </div>
+  <div id="loginResult" style="margin-top:10px;"></div>
+</div>
+
+<!-- STEP 2: SESSION -->
+<div class="section">
+  <h2>STEP 2 — Session & Language</h2>
+  <button onclick="checkSession()">Check Session</button>
+  <div id="sessionResult"></div>
+</div>
+
+<!-- STEP 3: OPTIONS -->
+<div class="section">
+  <h2>STEP 3 — Question Options (gender question)</h2>
+  <button onclick="checkOptions()">Check Options</button>
+  <div id="optionsResult"></div>
+</div>
+
+<!-- STEP 4: ROUTING -->
+<div class="section">
+  <h2>STEP 4 — Routing Config</h2>
+  <button onclick="checkRouting()">Check Routing</button>
+  <div id="routingResult"></div>
+</div>
+
 <script>
-var out = document.getElementById('out');
-function log(msg, color) {
-  out.innerHTML += '<div style="padding:5px 0; color:'+(color||'#fff')+'">'+msg+'</div>';
+var QID = 'ee2e381a-3a66-4a41-b011-63ef249162ae';
+var currentLang = 'es';
+
+function row(label, val, type) {
+  return '<div class="row '+(type||'info')+'"><span class="label">'+label+'</span><span class="val">'+val+'</span></div>';
 }
 
-// Call question-options with a bad questionId — 
-// if new version is deployed it returns {ok:false, error:"Missing questionId"} for empty
-// if old version is deployed it returns different error
-log('Test 1: empty questionId (checks which version is deployed)', '#a9c0d3');
-fetch('/api/question-options', {credentials:'include'})
-  .then(r => { log('HTTP: '+r.status); return r.text(); })
-  .then(txt => { log('Response: '+txt, '#ffa94d'); });
+// ── LOGIN ──────────────────────────────────────────────
+async function doLogin() {
+  var u = document.getElementById('u').value.trim();
+  var p = document.getElementById('p').value.trim();
+  var el = document.getElementById('loginResult');
+  if (!u || !p) { el.innerHTML = row('Error','Enter username and password','err'); return; }
+  el.innerHTML = row('Status','Logging in...','info');
+  try {
+    var r = await fetch('/api/login', {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({username:u, password:p})
+    });
+    var d = await r.json();
+    if (d.ok) {
+      el.innerHTML = row('Login','✓ Success','ok');
+      checkSession();
+    } else {
+      el.innerHTML = row('Login','✗ Failed: '+(d.error||'unknown'),'err');
+    }
+  } catch(e) { el.innerHTML = row('Error',e.message,'err'); }
+}
 
-// Call with a real questionId but no auth — should return options or auth error  
-var qid = 'ee2e381a-3a66-4a41-b011-63ef249162ae';
-log('Test 2: real questionId no auth', '#a9c0d3');
-fetch('/api/question-options?questionId='+qid, {credentials:'include'})
-  .then(r => { log('HTTP: '+r.status); return r.text(); })
-  .then(txt => { log('Response (first 400 chars): '+txt.substring(0,400), '#ffa94d'); });
+async function doLogout() {
+  await fetch('/api/logout', {method:'POST', credentials:'include'});
+  document.getElementById('loginResult').innerHTML = row('Logout','✓ Logged out','ok');
+  document.getElementById('sessionResult').innerHTML = '';
+}
 
-log('Test 3: with lang=es', '#a9c0d3');
-fetch('/api/question-options?questionId='+qid+'&lang=es', {credentials:'include'})
-  .then(r => { log('HTTP: '+r.status); return r.text(); })
-  .then(txt => { log('Response (first 400 chars): '+txt.substring(0,400), '#ffa94d'); });
+// ── SESSION ────────────────────────────────────────────
+async function checkSession() {
+  var el = document.getElementById('sessionResult');
+  el.innerHTML = row('Status','Calling /api/me...','info');
+  try {
+    var r = await fetch('/api/me', {credentials:'include'});
+    var txt = await r.text();
+    var d;
+    try { d = JSON.parse(txt); } catch(e) {
+      el.innerHTML = row('Error','API returned non-JSON: '+txt.substring(0,200),'err');
+      return;
+    }
+    var html = '';
+    html += row('HTTP status', r.status, r.status===200?'ok':'err');
+    html += row('ok', d.ok, d.ok?'ok':'err');
+    html += row('school_name', d.school_name||'(none)', d.school_name?'ok':'warn');
+    html += row('language', d.language||'(none)', d.language?'ok':'err');
+    html += row('country', d.country||'(none)');
+    if (d.language) currentLang = d.language;
+    if (!d.ok) html += row('⚠','Not logged in — use Step 1 to login first','err');
+    el.innerHTML = html;
+  } catch(e) { el.innerHTML = row('Error',e.message,'err'); }
+}
+
+// ── OPTIONS ────────────────────────────────────────────
+async function checkOptions() {
+  var el = document.getElementById('optionsResult');
+  el.innerHTML = row('Status','Running 3 tests...','info');
+  var html = '';
+
+  // Test A: no lang
+  try {
+    var r = await fetch('/api/question-options?questionId='+QID, {credentials:'include'});
+    var txt = await r.text();
+    try {
+      var d = JSON.parse(txt);
+      html += row('No ?lang — count', d.options.length, d.options.length<=4?'ok':'err');
+      html += row('First option', d.options[0]?d.options[0].option_text+' (lang='+d.options[0].language+')':'none');
+    } catch(e) { html += row('No ?lang — raw response', txt.substring(0,200), 'err'); }
+  } catch(e) { html += row('No ?lang — ERROR', e.message, 'err'); }
+
+  // Test B: lang=es
+  try {
+    var r2 = await fetch('/api/question-options?questionId='+QID+'&lang=es', {credentials:'include'});
+    var txt2 = await r2.text();
+    try {
+      var d2 = JSON.parse(txt2);
+      html += row('?lang=es — count', d2.options.length, d2.options.length<=4?'ok':'err');
+      html += '<pre>'+d2.options.map(o=>o.option_text+' ['+o.language+']').join('\n')+'</pre>';
+    } catch(e) { html += row('?lang=es — raw', txt2.substring(0,200), 'err'); }
+  } catch(e) { html += row('?lang=es — ERROR', e.message, 'err'); }
+
+  // Test C: lang=en
+  try {
+    var r3 = await fetch('/api/question-options?questionId='+QID+'&lang=en', {credentials:'include'});
+    var txt3 = await r3.text();
+    try {
+      var d3 = JSON.parse(txt3);
+      html += row('?lang=en — count', d3.options.length, d3.options.length<=4?'ok':'err');
+      html += '<pre>'+d3.options.map(o=>o.option_text+' ['+o.language+']').join('\n')+'</pre>';
+    } catch(e) { html += row('?lang=en — raw', txt3.substring(0,200), 'err'); }
+  } catch(e) { html += row('?lang=en — ERROR', e.message, 'err'); }
+
+  el.innerHTML = html;
+}
+
+// ── ROUTING ────────────────────────────────────────────
+async function checkRouting() {
+  var el = document.getElementById('routingResult');
+  el.innerHTML = row('Status','Calling /api/routing-config...','info');
+  try {
+    var r = await fetch('/api/routing-config?lang='+currentLang, {credentials:'include'});
+    var d = await r.json();
+    var html = '';
+    html += row('ok', d.ok, d.ok?'ok':'err');
+    html += row('language returned', d.language||'(none)', d.language?'ok':'err');
+    html += row('question_text', d.question_text||'(none)');
+    html += row('# options', (d.options||[]).length);
+    html += '<pre>'+JSON.stringify(d.options, null, 2)+'</pre>';
+    el.innerHTML = html;
+  } catch(e) { el.innerHTML = row('Error',e.message,'err'); }
+}
 </script>
 </body>
 </html>
