@@ -352,10 +352,6 @@ window.addEventListener('popstate', function(e) {
 
   <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button" onclick="openAccesoUsuarios()">ACCESO USUARIOS</button>
 
-  <!-- LANGUAGE TOGGLE -->
-  <a href="/en/" style="background-color:#1E2F3F; color:#a9c0d3; padding:8px 14px; border-radius:20px; text-decoration:none; font-size:13px; font-weight:700; border:1px solid #365468;">
-    <img src="https://flagcdn.com/us.svg" style="width:22px; height:15px; object-fit:cover; border-radius:2px; vertical-align:middle;"></a>
-
   <!-- ADMIN BUTTONS (hidden by default) -->
   <div id="adminNavButtons" class="adminNavButtons">
     <button id="btnAddSchool" class="btnPrimary" type="button">Add School</button>
@@ -574,8 +570,7 @@ window.addEventListener('popstate', function(e) {
       <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Pregunta inicial</div>
       <div id="routingText" style="margin-bottom:12px;"></div>
       <div id="routingOptions"></div>
-      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-        <button id="btnRoutingBack" class="btnSecondary" type="button">← Volver</button>
+      <div style="margin-top:14px;">
         <button id="btnRoutingNext" class="btnPrimary" type="button">Siguiente</button>
       </div>
       <div id="routingMsg" class="statusMsg statusWarn"></div>
@@ -751,8 +746,9 @@ window.addEventListener('popstate', function(e) {
     
     <div class="offices-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:24px 0;">
 
-       <div style="position:relative; overflow:hidden; background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
-         <img src="https://flagcdn.com/cl.svg" alt="" style="position:absolute; top:8px; right:8px; width:55px; height:37px; opacity:0.18; filter:grayscale(100%); pointer-events:none; user-select:none; border-radius:4px;" />
+       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+         <span style="position:absolute; bottom:-10px; right:-4px; font-size:80px; opacity:0.28; pointer-events:none; user-select:none;">🇨🇱</span>
+        <!-- <div style="font-size:22px; margin-bottom:6px;">🇨🇱</div> -->
         <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Santiago, Chile</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           Av. Providencia 2340<br>
@@ -761,8 +757,9 @@ window.addEventListener('popstate', function(e) {
         </div>
       </div>
       
-      <div style="position:relative; overflow:hidden; background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
-        <img src="https://flagcdn.com/us.svg" alt="" style="position:absolute; top:8px; right:8px; width:60px; height:37px; object-fit:cover; opacity:0.18; filter:grayscale(100%); pointer-events:none; user-select:none; border-radius:4px;" />
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+        <span style="position:absolute; bottom:-10px; right:-4px; font-size:80px; opacity:0.28; pointer-events:none; user-select:none;">US</span>
+        <!-- <div style="font-size:22px; margin-bottom:6px;">🇺🇸</div>   -->
         <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Portland, Oregon</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           851 SW 6th Ave<br>
@@ -771,8 +768,9 @@ window.addEventListener('popstate', function(e) {
         </div>
       </div>
 
-      <div style="position:relative; overflow:hidden; background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
-        <img src="https://flagcdn.com/mx.svg" alt="" style="position:absolute; top:8px; right:8px; width:55px; height:31px; opacity:0.18; filter:grayscale(100%); pointer-events:none; user-select:none; border-radius:4px;" />
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+        <span style="position:absolute; bottom:-10px; right:-4px; font-size:80px; opacity:0.28; pointer-events:none; user-select:none;">MX</span>
+       <!-- <div style="font-size:22px; margin-bottom:6px;">🇲🇽</div> -->
         <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Ciudad de México</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           Av. Insurgentes Sur 1234<br>
@@ -2210,32 +2208,6 @@ window.addEventListener('popstate', function(e) {
   </div>
 </div>
 
-<!-- MODAL: LANGUAGE SELECTOR -->
-<div id="languageModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:440px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">🌐 Selecciona el idioma / Select language</h3>
-    </div>
-    <div style="padding:8px 0;">
-      <p style="margin:0 0 20px 0; font-size:14px; color:#a9c0d3; line-height:1.6;">
-        Esta encuesta está disponible en español e inglés.<br>
-        This survey is available in Spanish and English.
-      </p>
-      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
-        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
-          <img src="https://flagcdn.com/mx.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
-          <span>Español</span>
-        </button>
-        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
-          <img src="https://flagcdn.com/us.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
-          <span>English</span>
-        </button>
-      </div>
-      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancelar / Cancel</button>
-    </div>
-  </div>
-</div>
-
 <!-- MODAL: PRIVACIDAD ENCUESTA -->
 <div id="privacyModal" class="modalOverlay">
   <div class="modalBox" style="max-width:580px;">
@@ -2274,9 +2246,6 @@ window.addEventListener('popstate', function(e) {
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnPrivacyBack" class="btnSecondary" type="button" style="display:none;">
-          ← Volver
-        </button>
         <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
           Continuar con la encuesta
         </button>
@@ -3014,7 +2983,7 @@ window.addEventListener('popstate', function(e) {
   };
 
   // === SESSION STATE ===
-  window.sessionState = { ok:false, school_id:null, school_name:null, language:'es' };
+  window.sessionState = { ok:false, school_id:null, school_name:null };
   window.currentResponseId = null;
 
   const sessionBadge = document.getElementById('sessionBadge');
@@ -3047,8 +3016,7 @@ window.addEventListener('popstate', function(e) {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
-        country: data?.country || 'MX',
-        language: data?.language || 'es'
+        country: data?.country || 'MX'
       };
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
@@ -3093,12 +3061,6 @@ var navEnc = document.getElementById('navEncuesta');
     if (navEnc) navEnc.style.display = ok ? '' : 'none';
     if (navRes) navRes.style.display = ok ? '' : 'none';
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
-
-    // Auto-redirect English or bilingual schools to /en/
-    if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both') && !location.pathname.startsWith('/en')) {
-      window.location.href = '/en/' + location.hash;
-      return;
-    }
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
     
@@ -3192,56 +3154,6 @@ var navEnc = document.getElementById('navEncuesta');
     await refreshSession();
   });
 
-  // === SURVEY STATE VARIABLES ===
-  // (ROUTING_QUESTION and CHOSEN_LANGUAGE declared near routing section)
-
-  // === LANGUAGE SELECTOR ===
-  function openLanguageSelector() {
-    const modal = document.getElementById('languageModal');
-    if (modal) modal.style.display = 'flex';
-  }
-  function closeLanguageSelector() {
-    const modal = document.getElementById('languageModal');
-    if (modal) modal.style.display = 'none';
-  }
-  async function selectLanguage(lang) {
-    CHOSEN_LANGUAGE = lang;
-    ROUTING_QUESTION = null;
-    closeLanguageSelector();
-    const backBtn = document.getElementById('btnPrivacyBack');
-    if (backBtn) backBtn.style.display = 'inline-flex';
-    await showPauseModal(PAUSE_CONFIGS[0]);
-    openPrivacyModal();
-  }
-  document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
-  document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
-  document.getElementById('btnLangCancel')?.addEventListener('click', () => {
-    closeLanguageSelector();
-    applySessionToUI();
-  });
-  document.getElementById('languageModal')?.addEventListener('click', (e) => {
-    if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
-  });
-
-  // Privacy back → language selector
-  document.getElementById('btnPrivacyBack')?.addEventListener('click', () => {
-    closePrivacyModal();
-    openLanguageSelector();
-  });
-
-  // Routing back → privacy modal
-  document.getElementById('btnRoutingBack')?.addEventListener('click', () => {
-    routingBox.style.display = 'none';
-    routingMsg.textContent = '';
-    if (encuestaOK) { encuestaOK.style.pointerEvents = 'auto'; encuestaOK.style.opacity = ''; }
-    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
-    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
-    openPrivacyModal();
-  });
-
-  // Auto-redirect en/both schools to /en/
-  // (applied in applySessionToUI below)
-
   // === MODAL PRIVACIDAD ===
   const privacyModal = document.getElementById('privacyModal');
   const privacyAccept = document.getElementById('privacyAccept');
@@ -3262,7 +3174,6 @@ var navEnc = document.getElementById('navEncuesta');
 
   btnPrivacyContinue?.addEventListener('click', async () => {
     closePrivacyModal();
-    if (document.getElementById('btnPrivacyBack')) document.getElementById('btnPrivacyBack').style.display = 'none';
     await showRoutingQuestion();
   });
 
@@ -3273,14 +3184,9 @@ var navEnc = document.getElementById('navEncuesta');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    CHOSEN_LANGUAGE = window.sessionState.language || 'es';
-    ROUTING_QUESTION = null; // reset so it reloads with correct language
-    if (CHOSEN_LANGUAGE === 'both') {
-      openLanguageSelector();
-    } else {
-      await showPauseModal(PAUSE_CONFIGS[0]);
-      openPrivacyModal();
-    }
+    // Show welcome message first, then privacy modal
+    await showPauseModal(getActivePauseConfigs()[0]);
+    openPrivacyModal();
   });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
@@ -3329,11 +3235,12 @@ var navEnc = document.getElementById('navEncuesta');
   // ════════════════════════════════════════════════════════════
 
   let ROUTING_QUESTION = null;  // loaded once from /api/routing-config
-  let CHOSEN_LANGUAGE  = 'es';   // set by language selector or from school default
+  let CHOSEN_LANGUAGE  = 'es';   // default for this page
 
   async function loadRoutingQuestion() {
     if (ROUTING_QUESTION) return;
-    const res = await fetch('/api/routing-config', { credentials: 'include' });
+    const langParam = (CHOSEN_LANGUAGE && CHOSEN_LANGUAGE !== 'both') ? `?lang=${CHOSEN_LANGUAGE}` : '';
+    const res = await fetch(`/api/routing-config${langParam}`, { credentials: 'include' });
     if (!res.ok) { alert(`ERROR: No se pudo cargar la configuración de grados (HTTP ${res.status})`); return; }
     const data = await res.json();
     if (!data.ok) { alert(`ERROR: ${data.error || 'No se pudo cargar routing-config'}`); return; }
@@ -3464,7 +3371,7 @@ var navEnc = document.getElementById('navEncuesta');
       OPTIONS_CACHE = {};
 
       // Detect primaria survey and apply large-font mode
-      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria' || SURVEY.survey?.description === 'elementary');
+      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria');
       if (IS_PRIMARIA) {
         surveyBox.classList.add('primaria-mode');
       } else {
