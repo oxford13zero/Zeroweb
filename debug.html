@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Language Debug</title></head>
+<body style="background:#0a1520; color:#fff; font-family:monospace; padding:20px; font-size:13px;">
+<h2 style="color:#D6A21C; margin-bottom:4px;">TECH4ZERO — Language Flow Debug</h2>
+<p style="color:#a9c0d3; margin:0 0 16px 0;">Login first, then reload this page.</p>
+<div id="out"></div>
+
+<script>
+var step = 0;
+function log(label, val, ok) {
+  step++;
+  var color = ok === true ? '#69db7c' : ok === false ? '#ff6b6b' : ok === 'warn' ? '#ffa94d' : '#fff';
+  document.getElementById('out').innerHTML +=
+    '<div style="padding:5px 0; border-bottom:1px solid #1E2F3F; display:flex; gap:12px;">'
+    + '<span style="color:#a9c0d3; min-width:24px;">' + step + '</span>'
+    + '<span style="color:#69db7c; min-width:260px;">' + label + '</span>'
+    + '<span style="color:' + color + '">' + JSON.stringify(val) + '</span>'
+    + '</div>';
+}
+
+log('location.pathname', location.pathname, 'warn');
+log('location.href', location.href, 'warn');
+
+// Test 1: raw /api/me response
+fetch('/api/me', { credentials: 'include' })
+  .then(function(r) {
+    log('/api/me HTTP status', r.status, r.status === 200);
+    log('/api/me content-type', r.headers.get('content-type'));
+    return r.text();
+  })
+  .then(function(text) {
+    log('/api/me raw body (first 200)', text.substring(0, 200));
+    try {
+      var d = JSON.parse(text);
+      log('d.ok', d.ok, d.ok);
+      log('d.school_name', d.school_name || '(none)');
+      log('d.language', d.language, d.language === 'en' ? true : d.language === 'es' ? 'warn' : false);
+      log('d.country', d.country || '(none)');
+
+      if (!d.ok) {
+        log('⚠ NOT LOGGED IN — login first then reload', '', false);
+      } else {
+        log('--- Expected redirect? ---', '', 'warn');
+        var shouldRedirect = (d.language === 'en' || d.language === 'both');
+        var onEnPage = location.pathname.startsWith('/en');
+        log('shouldRedirect (lang=en/both)', shouldRedirect, shouldRedirect);
+        log('already on /en/', onEnPage, 'warn');
+        log('redirect would fire', shouldRedirect && !onEnPage, shouldRedirect && !onEnPage);
+      }
+    } catch(e) {
+      log('/api/me JSON parse ERROR', e.message, false);
+      log('→ API is returning HTML, not JSON', 'me.js may not be deployed', false);
+    }
+  })
+  .catch(function(e) {
+    log('/api/me fetch ERROR', e.message, false);
+  });
+</script>
+</body>
+</html>
