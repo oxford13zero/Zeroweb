@@ -2983,7 +2983,7 @@ window.addEventListener('popstate', function(e) {
   };
 
   // === SESSION STATE ===
-  window.sessionState = { ok:false, school_id:null, school_name:null, language:'es' };
+  window.sessionState = { ok:false, school_id:null, school_name:null };
   window.currentResponseId = null;
 
   const sessionBadge = document.getElementById('sessionBadge');
@@ -3016,8 +3016,7 @@ window.addEventListener('popstate', function(e) {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
-        country: data?.country || 'MX',
-        language: data?.language || 'es'
+        country: data?.country || 'MX'
       };
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
@@ -3064,13 +3063,7 @@ var navEnc = document.getElementById('navEncuesta');
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
-    // Redirect en/both schools to /en/
-    if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both')
-           && !location.pathname.startsWith('/en')) {
-      window.location.href = '/en/' + location.hash;
-      return;
-    }
-
+    
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
       if (routingBox) routingBox.style.display = 'none';
@@ -3627,7 +3620,8 @@ var navEnc = document.getElementById('navEncuesta');
     if (!questionId) return [];
     if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
 
-    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}`, { credentials: "include" });
+    const langQ = (typeof CHOSEN_LANGUAGE !== 'undefined' && CHOSEN_LANGUAGE && CHOSEN_LANGUAGE !== 'both') ? `&lang=${CHOSEN_LANGUAGE}` : '';
+    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}${langQ}`, { credentials: "include" });
     const raw = await res.text();
     let data = {};
     try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
