@@ -14,21 +14,18 @@ export default async function handler(req, res) {
 
     let query = supabase
       .from("question_options")
-      .select("id, option_text, option_code, display_order, language")
-      .eq("question_id", questionId)
-      .order("display_order", { ascending: true });
+      .select("id, option_text, option_code, language")
+      .eq("question_id", questionId);
 
-    // If lang param provided, filter to that language only
-    // Fall back to all options if no language column or no match
+    // Filter by language if provided and language column has values
     if (lang === 'en' || lang === 'es') {
       const { data: filtered, error: filteredErr } = await query.eq("language", lang);
       if (!filteredErr && filtered && filtered.length > 0) {
         return res.status(200).json({ ok: true, options: filtered });
       }
-      // If no language-tagged options, fall through to return all
+      // No language-tagged options — fall through to return all
     }
 
-    // No lang filter or no language-tagged options found — return all
     const { data, error } = await query;
     if (error) return res.status(500).json({ ok: false, error: error.message });
     return res.status(200).json({ ok: true, options: data || [] });
