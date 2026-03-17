@@ -121,7 +121,7 @@
       padding:18px;
       box-shadow:0 20px 60px rgba(0,0,0,0.35);
     }
-    .modalHeaofr {
+    .modalHeader {
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -325,7 +325,7 @@ window.addEventListener('popstate', function(e) {
 
 <header>
   <h1>TECH4ZERO</h1>
-  <p>EDUCATION+AI</p>
+  <p>EDUCATION+IA</p>
 </header>
 
 <!-- ADMIN ICON - Top Right Corner -->
@@ -348,10 +348,7 @@ window.addEventListener('popstate', function(e) {
 
   <button id="btnAccesoUsernames" class="btnPrimary navAccess" type="button" onclick="openAccesoUsernames()">USER ACCESS</button>
 
-  <!-- LANGUAGE TOGGLE -->
-  <a href="/" style="background-color:#1E2F3F; color:#a9c0d3; padding:8px 14px; border-radius:20px; text-decoration:none; font-size:13px; font-weight:700; border:1px solid #365468;">ES</a>
-
-  <!-- ADMIN BUTTONS (hidden by offault) -->
+  <!-- ADMIN BUTTONS (hidden by default) -->
   <div id="adminNavButtons" class="adminNavButtons">
     <button id="btnAddSchool" class="btnPrimary" type="button">Add School</button>
     <button id="btnApproveSurvey" class="btnPrimary" type="button">Approve Survey</button>
@@ -371,13 +368,14 @@ window.addEventListener('popstate', function(e) {
   <div class="heroSection">
     <div class="heroGlow"></div>
     <div class="heroContent">
-      <h1 class="heroHeadline">Do you really know what's<br>happening in your school?</h1>
-      <p class="heroSubheadline">In 48 hours we deliver a complete school climate diagnosis and an action plan
-       backed by UNESCO and ESSA, ready to implement.<br>
-      We identify bullying, risk zones, classroom-level climate and early warning signals the human eye can't detect.<br>
-        You won't receive a standard report.
-        You'll receive an action plan tailored specifically to your school.</p><br>
-      <button class="heroCTA" type="button" onclick="openQuiz()">Want to see your school through your students' eyes? — 2-minute self-assessment</button>
+      <h1 class="heroHeadline">¿Sabes realmente lo que está<br>pasando en tu escuela?</h1>
+      <p class="heroSubheadline">En 48 horas te entregamos un diagnóstico completo del clima escolar y un plan de accion 
+       respaldado por UNESCO y ESSA, listo para implementar.<br>
+      Identificamos acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.<br>
+        No recibirás un informe estándar.
+        Recibirás un plan de accion adaptado especialmente para tu escuela</p><br>
+      <!-- CHANGE 1: quiz trigger -->
+      <button class="heroCTA" type="button" onclick="openQuiz()">¿Quieres ver tu escuela con los ojos de tus estudiantes? — Mini evaluación en 2 minutos</button>
     </div>
   </div>
 <!-- comentario -->
@@ -390,7 +388,7 @@ window.addEventListener('popstate', function(e) {
   </div>
 
   <div class="credibilityBar">
-    ✅ &nbsp;+300 schools assessed &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;Mexico · Chile · Costa Rica · Dominican Rep. · USA &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Aligned with UNESCO and ESSA
+    ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
   </div>
 </section>
 
@@ -402,40 +400,40 @@ window.addEventListener('popstate', function(e) {
   <!-- SECCIÓN 2 — EL PROBLEMA -->
   <div class="programaSection" style="background:#0a1520;">
     <div class="sectionInner">
-      <h3>A widespread problem</h3>
+      <h3>Un problema generalizado</h3>
       <p class="sectionBody">
-        Most school violence incidents never reach your desk. Students don't report. Teachers don't always identify the warning signs. And by the time the problem becomes visible, it has already escalated.<br><br>
-        Meanwhile, you are responsible for what happens in every classroom, every hallway, every digital space in your school community.
+        La mayoría de los incidentes de violencia escolar nunca llegan a tu escritorio. Los estudiantes no reportan. Los docentes no siempre identifican las señales. Y cuando el problema se hace visible, ya escaló.<br><br>
+        Mientras tanto, tú eres responsable de lo que ocurre en cada salón, en cada pasillo, en cada espacio digital de tu comunidad escolar.
       </p>
       <div class="overlayGrid">
         <div class="overlayCard">
-          <img src="img/s2_acoso.jpeg" alt="School bullying" />
+          <img src="img/s2_acoso.jpeg" alt="Acoso escolar" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <span class="oIcon">⚠️</span><div class="oLine"></div>
-            <div class="oTitle">70% of bullying happens outside the classroom</div>
-            <div class="oText">In hallways, bathrooms, and digital spaces you don't supervise.</div>
-            <span class="oTag">📍 Blind spot</span>
+            <div class="oTitle">El 70% del acoso ocurre fuera del aula</div>
+            <div class="oText">En pasillos, baños y entornos digitales que no supervisas.</div>
+            <span class="oTag">📍 Zona ciega</span>
           </div>
         </div>
         <div class="overlayCard">
-          <img src="img/s2_rendimiento.jpeg" alt="Low academic performance" />
+          <img src="img/s2_rendimiento.jpeg" alt="Bajo rendimiento" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <span class="oIcon">⚠️</span><div class="oLine"></div>
-            <div class="oTitle">Up to 18 points lower in math and reading</div>
-            <div class="oText">Among affected students. <em style="color:#4a6070;">(Source: UNESCO/TERCE, 16 countries)</em></div>
-            <span class="oTag">📊 Acaofmic impact</span>
+            <div class="oTitle">Rinden hasta 18 puntos menos en matemáticas y lectura</div>
+            <div class="oText">Los estudiantes afectados. <em style="color:#4a6070;">(Fuente: UNESCO/TERCE, 16 países)</em></div>
+            <span class="oTag">📊 Impacto académico</span>
           </div>
         </div>
         <div class="overlayCard">
-          <img src="img/s2_legal.jpeg" alt="Legal consequences" />
+          <img src="img/s2_legal.jpeg" alt="Consecuencias legales" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <span class="oIcon">⚖️</span><div class="oLine"></div>
-            <div class="oTitle">A mishandled complaint can escalate fast</div>
-            <div class="oText">Legal, media, and reputational consequences for your institution.</div>
-            <span class="oTag">⚠️ Institutional risk</span>
+            <div class="oTitle">Una denuncia mal gestionada puede escalar</div>
+            <div class="oText">Consecuencias legales, mediáticas y reputacionales para tu institución.</div>
+            <span class="oTag">⚠️ Riesgo institucional</span>
           </div>
         </div>
       </div>
@@ -445,13 +443,13 @@ window.addEventListener('popstate', function(e) {
   <!-- SECCIÓN 3 — LA SOLUCIÓN -->
   <div class="programaSection" style="background:#1E2F3F;">
     <div class="sectionInner">
-      <h3>We deliver: the exact diagnosis of your school and a concrete plan to act.</h3>
+      <h3>Te entregamos: el diagnóstico exacto de tu escuela y el plan concreto para actuar.</h3>
       <p class="sectionBody">
-        In 3 steps and 48 hours, TECH4ZERO delivers a complete diagnosis of your school and an action plan ready to implement.
-        First, your entire school community — students and teachers — completes an online, anonymous and confidential survey.
-        Then, our experts analyze the results with advanced statistics and artificial intelligence, detecting patterns and
-        precise predictions the human eye cannot see. In 48 hours you receive two documents:
-        the exact diagnosis of your school and the action plan designed specifically for it.
+        En 3 pasos y 48 horas, TECH4ZERO te entrega un diagnóstico completo de tu escuela y un plan de acción listo para implementar.
+        Primero, toda tu comunidad escolar — estudiantes y docentes — responde una encuesta online, anónima y confidencial.
+        Luego, nuestros expertos analizan los resultados con estadística avanzada e inteligencia artificial, detectando patrones y
+        predicciones que el ojo humano no puede ver. En 48 horas recibes dos documentos:
+        el diagnóstico exacto de tu escuela y el plan de acción diseñado específicamente para ella.
       </p>
       <div class="overlayGrid" style="grid-template-columns:repeat(3,1fr);">
         <div class="overlayCard">
@@ -459,38 +457,38 @@ window.addEventListener('popstate', function(e) {
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
-              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">STEP</span>
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
               <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">1</span>
             </div>
             <div class="oLine"></div>
-            <div class="oTitle">Your community responds</div>
-            <div class="oText">Students and teachers complete an online, anonymous and confidential survey — from any device.</div>
+            <div class="oTitle">Tu comunidad responde</div>
+            <div class="oText">Estudiantes y docentes completan una encuesta online, anónima y confidencial — desde cualquier dispositivo.</div>
           </div>
         </div>
         <div class="overlayCard">
-          <img src="img/s3_mapa.jpeg" alt="Expert analysis" />
+          <img src="img/s3_mapa.jpeg" alt="Análisis expertos" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
-              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">STEP</span>
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
               <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">2</span>
             </div>
             <div class="oLine"></div>
-            <div class="oTitle">Our experts analyze</div>
-            <div class="oText">We process results with advanced statistics and AI — detecting patterns, risk zones and precise predictions.</div>
+            <div class="oTitle">Nuestros expertos analizan</div>
+            <div class="oText">Procesamos los resultados con estadística avanzada e IA — detectando patrones, zonas de riesgo y predicciones precisas.</div>
           </div>
         </div>
         <div class="overlayCard">
-          <img src="img/s3_plan.jpeg" alt="Intervention plan" />
+          <img src="img/s3_plan.jpeg" alt="Plan de intervención" />
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
-              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">STEP</span>
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
               <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">3</span>
             </div>
             <div class="oLine"></div>
-            <div class="oTitle">You receive in 48 hours</div>
-            <div class="oText">Two documents: the exact diagnosis of your school and a tailored action plan — ready to implement immediately.</div>
+            <div class="oTitle">Tú recibes en 48 horas</div>
+            <div class="oText">Dos documentos: el diagnóstico exacto de tu escuela y el plan de acción a la medida — listo para implementar de inmediato.</div>
           </div>
         </div>
       </div>
@@ -500,24 +498,24 @@ window.addEventListener('popstate', function(e) {
   <!-- SECCIÓN 4 — RESULTADOS REALES -->
   <div class="programaSection" style="background:#16222D;">
     <div class="sectionInner">
-      <h3>The numbers speak for themselves</h3>
+      <h3>Los números hablan por sí solos</h3>
       <div class="statsGrid">
-        <div class="statCard"><div class="statNumber">37%</div><div class="statDesc">average reduction in reported incidents at 90 days</div></div>
-        <div class="statCard"><div class="statNumber">92%</div><div class="statDesc">of teachers report greater confidence identifying early warning signs</div></div>
-        <div class="statCard"><div class="statNumber">4.2x</div><div class="statDesc">more preventive vs. reactive interventions in implemented schools</div></div>
+        <div class="statCard"><div class="statNumber">37%</div><div class="statDesc">reducción promedio de incidentes reportados a los 90 días</div></div>
+        <div class="statCard"><div class="statNumber">92%</div><div class="statDesc">de docentes reportan mayor confianza para identificar señales tempranas</div></div>
+        <div class="statCard"><div class="statNumber">4.2x</div><div class="statDesc">más intervenciones preventivas vs. reactivas en escuelas implementadas</div></div>
       </div>
-      <p class="statsNote">Consolidated data from 2023–2025 cohorts. Results vary by institutional context.</p>
+      <p class="statsNote">Datos consolidados de cohortes 2023–2025. Resultados varían según contexto institucional.</p>
     </div>
   </div>
 
   <!-- VIDEOS 
   <div class="card">
     <div class="video-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin:0;">
-      <div class="video-container" style="width:100%; margin:0; padding-top:56.25%;"><iframe src="https://www.youtube.com/embed/zw1zTrZn2ic" title="Viofo 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-      <div class="video-container" style="width:100%; margin:0; padding-top:56.25%;"><iframe src="https://www.youtube.com/embed/rC_xEqFqZ_s?start=1" title="Viofo TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-      <div class="video-container" style="width:100%; margin:0; padding-top:56.25%;"><iframe src="https://www.youtube.com/embed/vLFFojLhCZs?start=1" title="Viofo TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="video-container" style="width:100%; margin:0; padding-top:56.25%;"><iframe src="https://www.youtube.com/embed/zw1zTrZn2ic" title="Video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="video-container" style="width:100%; margin:0; padding-top:56.25%;"><iframe src="https://www.youtube.com/embed/rC_xEqFqZ_s?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="video-container" style="width:100%; margin:0; padding-top:56.25%;"><iframe src="https://www.youtube.com/embed/vLFFojLhCZs?start=1" title="Video TECH4ZERO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
     </div>
-    <p class="nota" style="margin-top:16px;">Consolidated data from 2023–2025 cohorts. Results vary by institutional context.</p>
+    <p class="nota" style="margin-top:16px;">Datos consolidados de cohortes 2023-2025. Resultados varían según contexto institucional.</p>
   </div>
 -->
 </section>
@@ -529,48 +527,47 @@ window.addEventListener('popstate', function(e) {
 
   
 <section id="encuesta">
-  <h2>School Survey</h2>
+  <h2>Encuesta Escolar</h2>
 
   <div class="card">
     <p>
-      To access the survey and request analysis, you must be authenticated via <b>USER ACCESS</b>.
+      Para ingresar a la encuesta y solicitar análisis, debe estar autenticado desde <b>ACCESO USUARIOS</b>.
     </p>
 
     <div id="encuestaOK" class="formPanel" style="display:block; max-width:520px;">
-      <p id="schoolWelcome" style="margin:0 0 12px 0;">Session status: Not authenticated.</p>
+      <p id="schoolWelcome" style="margin:0 0 12px 0;">Estado de sesión: No autenticado.</p>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-        <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Enter the survey</button>
-        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Request survey analysis</button>
+        <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Ingresar a la encuesta</button>
+        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Solicitar analisis de la encuesta</button>
       </div>
 
       <div id="encuestaNeedLogin" class="statusMsg statusWarn" style="display:none;">
-        You must log in via <b>USER ACCESS</b> to continue.
+        Debe iniciar sesión con <b>ACCESO USUARIOS</b> para continuar.
       </div>
     </div>
 
     <div id="analisisWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
-      <div style="font-weight:700; margin-bottom:10px;">Warning</div>
+      <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
       <div style="margin-bottom:14px;">
-        The system will perform a detailed statistical analysis of the school climate using the surveys already in the system for your school, but no new surveys can be adofd.
+        El sistema realizara un analisis estadistico detallado del ambiente escolar con las encuestas introducidas en el sistema para su escuela, pero no podra adicionar nuevas encuestas.
         <br /><br />
-        Do you want to continue?
+        Desea continuar?
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continue</button>
-        <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancel</button>
+        <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continuar</button>
+        <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancelar</button>
       </div>
     </div>
 
     <!-- ROUTING QUESTION BOX: shown before survey loads -->
     <div id="routingBox" class="formPanel" style="display:none; margin-top:18px;">
-      <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Initial question</div>
+      <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Pregunta inicial</div>
       <div id="routingText" style="margin-bottom:12px;"></div>
       <div id="routingOptions"></div>
-      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-        <button id="btnRoutingBack" class="btnSecondary" type="button">← Back</button>
-        <button id="btnRoutingNext" class="btnPrimary" type="button">Next</button>
+      <div style="margin-top:14px;">
+        <button id="btnRoutingNext" class="btnPrimary" type="button">Siguiente</button>
       </div>
       <div id="routingMsg" class="statusMsg statusWarn"></div>
     </div>
@@ -578,12 +575,12 @@ window.addEventListener('popstate', function(e) {
     <div id="surveyBox" class="formPanel" style="display:none; margin-top:18px; position:relative;">
 
       <!-- EXIT BUTTON -->
-      <button id="btnSurveyExit" class="survey-exit-btn" type="button" title="Salir of la encuesta">✕</button>
+      <button id="btnSurveyExit" class="survey-exit-btn" type="button" title="Salir de la encuesta">✕</button>
 
       <!-- PIN PANEL -->
       <div id="pinPanel" class="pin-panel">
-        <div class="pin-panel-title">🔒 Exit survey</div>
-        <div class="pin-panel-sub">Enter PIN to close</div>
+        <div class="pin-panel-title">🔒 Salir de la encuesta</div>
+        <div class="pin-panel-sub">Ingresa el PIN para cerrar</div>
         <div class="pin-inputs">
           <input class="pin-input" id="pin0" type="password" inputmode="numeric" maxlength="1" />
           <input class="pin-input" id="pin1" type="password" inputmode="numeric" maxlength="1" />
@@ -592,8 +589,8 @@ window.addEventListener('popstate', function(e) {
         </div>
         <div class="pin-msg" id="pinMsg"></div>
         <div class="pin-btn-row">
-          <button id="btnPinCancel" class="btnSecondary" type="button">Cancel</button>
-          <button id="btnPinConfirm" class="btnPrimary" type="button">Confirm</button>
+          <button id="btnPinCancel" class="btnSecondary" type="button">Cancelar</button>
+          <button id="btnPinConfirm" class="btnPrimary" type="button">Confirmar</button>
         </div>
       </div>
 
@@ -602,8 +599,8 @@ window.addEventListener('popstate', function(e) {
       <div id="qOptions"></div>
 
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-        <button id="btnQPrev" class="btnSecondary" type="button">Previous</button>
-        <button id="btnQNext" class="btnPrimary" type="button">Next</button>
+        <button id="btnQPrev" class="btnSecondary" type="button">Anterior</button>
+        <button id="btnQNext" class="btnPrimary" type="button">Siguiente</button>
       </div>
 
       <div id="surveyMsg" class="statusMsg statusWarn"></div>
@@ -616,21 +613,21 @@ window.addEventListener('popstate', function(e) {
 
   
 <section id="resultados">
-  <h2>Survey Results</h2>
+  <h2>Resultados Encuesta</h2>
 
   <div class="card">
     <p>
-      To view results you must be authenticated via <b>USER ACCESS</b>.
+      Para ver resultados debe estar autenticado desde <b>ACCESO USUARIOS</b>.
     </p>
 
     <div class="formPanel" style="display:block; max-width:520px;">
       <div id="resultadosNeedLogin" class="statusMsg statusWarn" style="display:none;">
-        You must log in via <b>USER ACCESS</b> to view results.
+        Debe iniciar sesión con <b>ACCESO USUARIOS</b> para mostrar resultados.
       </div>
 
       <div style="margin-top:10px;">
         <button id="btnMostrarResultados" class="btnPrimary" type="button">
-          Show survey results
+          Mostrar resultados encuesta
         </button>
       </div>
     </div>
@@ -643,13 +640,13 @@ window.addEventListener('popstate', function(e) {
 
   <div class="card">
     <p>
-      This section reads data from Supabase (table <b>encargado_escolar</b>) to verify connection.
+      Esta sección lee datos desde Supabase (tabla <b>encargado_escolar</b>) para verificar conexión.
     </p>
 
     <div class="formPanel">
       <div class="fieldBlock">
-        <label class="fieldLabel" for="d_nombre">Name</label><br />
-        <input id="d_nombre" class="textInput" type="text" placeholder="Name" readonly />
+        <label class="fieldLabel" for="d_nombre">Nombre</label><br />
+        <input id="d_nombre" class="textInput" type="text" placeholder="Nombre" readonly />
       </div>
 
       <div class="fieldBlock">
@@ -668,7 +665,7 @@ window.addEventListener('popstate', function(e) {
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
-        <button id="btnPrev" class="btnSecondary" type="button">Retroceofr</button>
+        <button id="btnPrev" class="btnSecondary" type="button">Retroceder</button>
         <button id="btnNext" class="btnPrimary" type="button">Avanzar</button>
       </div>
 
@@ -681,28 +678,28 @@ window.addEventListener('popstate', function(e) {
   <!---------------------  EQUIPO ----------------------------->
 
 <section id="equipo">
-  <h2>Our Team</h2>
-  <div class="card"><p>An interdisciplinary team of specialists in education, psychology and technology committed to safe school communities.</p></div>
+  <h2>Nuestro Equipo</h2>
+  <div class="card"><p>Equipo interdisciplinario de especialistas en educación, psicología y tecnología comprometidos con comunidades escolares seguras.</p></div>
   <div class="card" style="margin-top:18px;">
 
     <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
         <img src="Rodyfoto77.png" alt="Foto Integrante 1" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Rodolfo Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master's in Educational Psychology — History and Geography Teacher.</div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Rodolfo teaches socio-emotional skills in educational settings. He was invited by the city of Neuss, Germany, to lead the Die Welt Erziehung Und Die Neuerung program (Global Education and Innovation) and has successfully implemented the Zero program in Chile, Mexico, Costa Rica, the Dominican Republic and the United States.</p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Psicologia de la Educacion - Profesor de Historia y Geografía.</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Rodolfo enseña habilidades socioemocionales en el mundo educativo. Ha sido invitado por la ciudad de Neuss, en Alemania, para liderar el programa Die Welt Erziehung Und Die Neuerung (Educación e Innovación Mundial) y ha implementado exitosamente el programa Zero en Chile, México, Costa Rica, República Dominicana y Estados Unidos.</p>
       </div>
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
         <img src="Marcos.png" alt="Foto Integrante 2" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Marcos Miranda</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Doctor of Education</div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Marcos transforms challenging school environments into spaces of belonging, respect and high performance. His unique approach combines science, equity and leadership to generate real and lasting change in school culture.</p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Doctor en Educacion</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Marcos convierte ambientes escolares desafiantes en espacios de pertenencia, respeto y alto rendimiento. Su enfoque único combina ciencia, equidad y liderazgo para generar cambios reales y duraderos en la cultura escolar.</p>
       </div>
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
         <img src="Lesterfoto55.png" alt="Foto Integrante 3" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Lester Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master's in Computer Engineering</div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Senior consultant in data, artificial intelligence and technology, modernizing and securing mission-critical systems in education, healthcare and mining. Expert in human-technology interaction in high-risk environments.</p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Ingenieria en Computacion</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Consultor senior en datos, inteligencia artificial y tecnología, modernizando y asegurando sistemas de misión crítica en los sectores de educación, salud y minería. Experto en interacción humano-tecnologíca en entornos de alto riesgo.</p>
       </div>
     </div>
 <br>
@@ -713,8 +710,8 @@ window.addEventListener('popstate', function(e) {
       <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(14,28,40,0.85) 0%, rgba(14,28,40,0.2) 60%, transparent 100%);"></div>
       <div style="position:absolute; bottom:0; left:0; padding:28px 32px;">
         <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:14px;"></div>
-        <div style="font-family:'Open Sans',sans-serif; font-size:22px; font-weight:600; color:#fff; margin-bottom:6px;">Experts in Education, psychology and engineering — working together to transform schools.</div>
-        <div style="font-size:16px; color:#a9c0d3; line-height:1.6;">THE TECH4ZERO TEAM.</div>
+        <div style="font-family:'Open Sans',sans-serif; font-size:22px; font-weight:600; color:#fff; margin-bottom:6px;">Expertos en Educación, psicología e ingeniería — trabajando juntos para transformar escuelas.</div>
+        <div style="font-size:16px; color:#a9c0d3; line-height:1.6;">EL EQUIPO TECH4ZERO.</div>
       </div>
     
     </div>
@@ -725,16 +722,19 @@ window.addEventListener('popstate', function(e) {
   <!---------------------  CONTACTO ----------------------------->
   
 <section id="contacto">
-  <h2>Contact Us</h2>
+  <h2>Contáctenos</h2>
 
   <div class="card">
     <!--
-    <p><span class="highlight">Somos of Vancouver-Canada. Enfocados en lo que viene.</span><br><br>
-      We are a team of professionals working at the frontier of technology, based in Santiago, Chile — a city that hosts one of the most dynamic tech communities in Latin America. <img src="https://twemoji.maxcdn.com/v/latest/72x72/1f1e8-1f1e6.png" style="width:27px;">
+    <p><span class="highlight">Somos de Vancouver-Canada. Enfocados en lo que viene.</span><br><br>
+      Somos un equipo de profesionales que trabaja en la frontera de la tecnología, con base en Columbia Británica, Canadá — una provincia reconocida 
+      globalmente por su compromiso con la excelencia educativa y la innovación. <img src="https://twemoji.maxcdn.com/v/latest/72x72/1f1e8-1f1e6.png" style="width:27px;">
     </p>
     -->
-           <p><span class="highlight">Based in Santiago, Chile. Focused on what's next.</span><br><br>
-                We are a team of professionals working at the frontier of technology, based in Santiago, Chile — a city that hosts one of the most dynamic tech communities in Latin America. We have offices in the United States and Mexico, working alongside educational institutions committed to excellence and innovation.
+           <p><span class="highlight">Somos de Santiago, Chile. Enfocados en lo que viene.</span><br><br>
+                Somos un equipo de profesionales que trabaja en la frontera de la tecnología, con base en Santiago de Chile — una ciudad que alberga 
+                 una de las comunidades tecnológicas más dinámicas de América Latina. Contamos con oficinas en Estados Unidos y México, 
+                trabajando junto a instituciones educativas comprometidas con la excelencia y la innovación.
             </p>
     
     <!-- OFFICES GRID -->
@@ -796,18 +796,18 @@ window.addEventListener('popstate', function(e) {
     <div style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; margin-top:8px;">
 
       <div class="formPanel" style="width:640px; flex-shrink:0; max-width:100%; margin:0 auto;">
-        <div class="fieldBlock"><label class="fieldLabel" for="c_nombre">Name</label><br /><input id="c_nombre" class="textInput" type="text" placeholder="Your name" />
+        <div class="fieldBlock"><label class="fieldLabel" for="c_nombre">Nombre</label><br /><input id="c_nombre" class="textInput" type="text" placeholder="Tu nombre" />
         </div>
         <div class="fieldBlock"><label class="fieldLabel" for="c_email">Email</label><br /><input id="c_email" class="textInput" type="email" placeholder="tu@email.com" />
         </div>
-        <div class="fieldBlock"><label class="fieldLabel" for="c_asunto">Subject</label><br /><input id="c_asunto" class="textInput" type="text" placeholder="Subject" />
+        <div class="fieldBlock"><label class="fieldLabel" for="c_asunto">Asunto</label><br /><input id="c_asunto" class="textInput" type="text" placeholder="Asunto" />
         </div>
-        <div class="fieldBlock"><label class="fieldLabel" for="c_mensaje">Mensaje</label><br /><textarea id="c_mensaje" class="textInput" rows="6" placeholder="Write your message..."></textarea>
+        <div class="fieldBlock"><label class="fieldLabel" for="c_mensaje">Mensaje</label><br /><textarea id="c_mensaje" class="textInput" rows="6" placeholder="Escribe tu mensaje..."></textarea>
         </div>
         <input id="c_company" type="text" style="display:none" tabindex="-1" autocomplete="off" />
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button id="btnEnviarContacto" class="btnPrimary" type="button">Send</button>
-          <button id="btnLimpiarContacto" class="btnSecondary" type="button">Clear</button>
+          <button id="btnEnviarContacto" class="btnPrimary" type="button">Enviar</button>
+          <button id="btnLimpiarContacto" class="btnSecondary" type="button">Limpiar</button>
         </div>
         <div id="contactoMsg" class="statusMsg statusWarn"></div>
       </div>
@@ -820,8 +820,8 @@ window.addEventListener('popstate', function(e) {
           <div>
             <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:16px;">
             </div>
-            <p style="font-family:'Playfair Display',serif; font-size:18px; line-height:1.7; color:#ffffff; margin:0 0 16px 0; font-style:italic;">"You don't need to have everything figured out before reaching out. Tell us what's happening in your school and together we'll find the way."</p>
-            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;">— Join our community!
+            <p style="font-family:'Playfair Display',serif; font-size:18px; line-height:1.7; color:#ffffff; margin:0 0 16px 0; font-style:italic;">"No necesitas tener todo claro antes de escribirnos. Cuéntanos qué está pasando en tu                        escuela y juntos encontramos el camino."</p>
+            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;">— Unete a nuestra comunidad!
             </div>
           </div>
         </div>
@@ -1094,140 +1094,140 @@ window.addEventListener('popstate', function(e) {
 <div class="inv-hero">
   <div class="inv-hero-glow"></div>
   <div class="inv-hero-inner">
-    <div class="inv-eyebrow">💡 Investment per institution</div>
+    <div class="inv-eyebrow">💡 Inversión por institución</div>
     <h1 class="inv-hero-h1" style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,50px);font-weight:600;line-height:1.2;margin-bottom:18px;color:#fff;">Un diagnóstico completo.<br><em style="color:#D6A21C;font-style:normal;">Un plan listo para actuar.</em></h1>
-    <p>One-time payment per project. No subscription, no surprises. In 48 hours you know exactly what is happening in your school — and how to fix it.</p>
+    <p>Pago único por proyecto. Sin suscripción, sin sorpresas. En 48 horas sabes exactamente lo que está pasando en tu escuela — y cómo resolverlo.</p>
     <div class="inv-hero-anchor">
-      Prices starting at <span>USD $890</span> · Results in 48 hours
+      Precios desde <span>USD $890</span> · Resultados en 48 horas
     </div>
   </div>
 </div>
 
 <!-- TRUST BAR -->
 <div class="inv-trust-bar">
-  ✅ &nbsp;+300 schools assessed &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;Mexico · Chile · Costa Rica · Dominican Rep. · USA &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Aligned with UNESCO and ESSA
+  ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
 </div>
 
 <!-- PLANES -->
 <div class="inv-section">
-  <div class="inv-plans-label">Choose the plan that best fits your needs</div>
+  <div class="inv-plans-label">Elige el plan que mejor describe lo que necesitas</div>
 
   <div class="inv-plans-grid">
 
     <!-- PLAN VER -->
     <div class="inv-plan-card">
-      <div class="inv-plan-size">You act</div>
+      <div class="inv-plan-size">Tú actúas</div>
       <div class="inv-plan-name">VER</div>
-      <div class="inv-plan-students">Understand the reality of your school</div>
+      <div class="inv-plan-students">Conoce la realidad de tu escuela</div>
       <div class="inv-plan-price-wrap">
         <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
         <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
         <span class="inv-plan-price">890</span>
       </div>
-      <div class="inv-plan-price-period">one-time payment · per project</div>
+      <div class="inv-plan-price-period">pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
-        <li><span class="inv-check">✓</span>Anonymous survey for students and teachers</li>
-        <li><span class="inv-check">✓</span>AI analysis + advanced statistics</li>
-        <li><span class="inv-check">✓</span>Complete school climate diagnosis</li>
-        <li><span class="inv-check">✓</span>Personalized action plan</li>
-        <li><span class="inv-check">✓</span>Delivery in 48 hours</li>
+        <li><span class="inv-check">✓</span>Encuesta anónima para estudiantes y docentes</li>
+        <li><span class="inv-check">✓</span>Análisis con IA + estadística avanzada</li>
+        <li><span class="inv-check">✓</span>Diagnóstico completo de clima escolar</li>
+        <li><span class="inv-check">✓</span>Plan de acción personalizado</li>
+        <li><span class="inv-check">✓</span>Entrega en 48 horas</li>
       </ul>
-      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Request information →</a>
+      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Solicitar información →</a>
     </div>
 
     <!-- PLAN ENTENDER — FEATURED -->
     <div class="inv-plan-card">
-      <div class="inv-plan-size">We guiof you</div> 
+      <div class="inv-plan-size">Nosotros te guiamos</div> 
       <div class="inv-plan-name">ENTENDER</div>
-      <div class="inv-featured-badge">⭐ Limited spots</div>
+      <div class="inv-featured-badge">⭐ Cupos limitados</div>
      <!-- <div class="inv-plan-students">Sabe qué pasa y cómo reaccionar</div>  -->      
       <div class="inv-plan-price-wrap">
         <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
         <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
         <span class="inv-plan-price">1290</span>
       </div>
-      <div class="inv-plan-price-period">one-time payment · per project</div>
+      <div class="inv-plan-price-period">pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
-        <li><span class="inv-check">✓</span>Complete school climate assessment</li>
-        <li><span class="inv-check">✓</span>Personalized action plan</li>
-        <li><span class="inv-check">✓</span>AI-powered early warning detection</li>
-        <li><span class="inv-check">✓</span>Delivery in 48 hours</li>
-        <li><span class="inv-check">✓</span><strong style="color:#fff;">3 hours of consulting with one of our experts</strong> </li>
+        <li><span class="inv-check">✓</span>Evaluación completa de clima escolar</li>
+        <li><span class="inv-check">✓</span>Plan de acción personalizado</li>
+        <li><span class="inv-check">✓</span>Detección de señales tempranas por IA</li>
+        <li><span class="inv-check">✓</span>Entrega en 48 horas</li>
+        <li><span class="inv-check">✓</span><strong style="color:#fff;">3 horas de asesoríacon experto de nuestro equipo</strong> </li>
       </ul>
-      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Schedule a diagnosis →</a>
+      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Agendar diagnóstico →</a>
     </div>
 
     <!-- PLAN TRANSFORMAR -->
     <div class="inv-plan-card">
-      <div class="inv-plan-size">We accompany you</div>
+      <div class="inv-plan-size">Nosotros te acompañamos</div>
       <div class="inv-plan-name">TRANSFORMAR</div>
-      <div class="inv-plan-students">Transform your school climate from the root</div>
+      <div class="inv-plan-students">Cambia el clima de tu escuela de raíz</div>
       <div class="inv-plan-price-wrap">
         <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
         <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
         <span class="inv-plan-price">2,290</span>
       </div>
-      <div class="inv-plan-price-period">one-time payment · per project</div>
+      <div class="inv-plan-price-period">pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
-        <li><span class="inv-check">✓</span><strong style="color:#fff;">2 assessments to measure progress over time</strong> </li>
-        <li><span class="inv-check">✓</span>Personalized action plan</li>
-        <li><span class="inv-check">✓</span>Comparative analysis between both assessments</li>
-        <li><span class="inv-check">✓</span>Delivery in 48 hours per assessment</li>
-        <li><span class="inv-check">✓</span><strong style="color:#fff;">6 hours of consulting with one of our experts</strong> </li>
+        <li><span class="inv-check">✓</span><strong style="color:#fff;">2 evaluacionespara medir evolución en el tiempo</strong> </li>
+        <li><span class="inv-check">✓</span>Plan de acción personalizado</li>
+        <li><span class="inv-check">✓</span>Análisis comparativo entre ambas evaluaciones</li>
+        <li><span class="inv-check">✓</span>Entrega en 48 horas por evaluación</li>
+        <li><span class="inv-check">✓</span><strong style="color:#fff;">6 horas de asesoría con experto de nuestro equipo</strong> </li>
       </ul>
-      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Request information →</a>
+      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Solicitar información →</a>
     </div>
 
   </div>
 
   <!-- TODO INCLUIDO -->
   <div class="inv-included-section">
-    <div class="inv-included-title">All plans include</div>
-    <div class="inv-included-sub">Regardless of the plan you choose, every TECH4ZERO diagnosis comes with the same quality and methodology guarantees.</div>
+    <div class="inv-included-title">En todos los planes incluye</div>
+    <div class="inv-included-sub">Sin importar el plan que elijas, cada diagnóstico TECH4ZERO viene con las mismas garantías de calidad y metodología.</div>
     <div class="inv-included-grid">
       <div class="inv-included-item">
         <div class="inv-included-icon">🔒</div>
         <div class="inv-included-text">
-          <strong>100% anonymous survey</strong>
-          <span>Guaranteed confidentiality for students and teachers. No one can be identified.</span>
+          <strong>Encuesta 100% anónima</strong>
+          <span>Confidencialidad garantizada para estudiantes y docentes. Nadie puede ser identificado.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">🤖</div>
         <div class="inv-included-text">
-          <strong>AI + human expert</strong>
-          <span>Our AI processes the data. The conclusions are signed by a professional from our team.</span>
+          <strong>IA + experto humano</strong>
+          <span>Los datos los procesa nuestra IA. Las conclusiones las firma un profesional de nuestro equipo.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">⚡</div>
         <div class="inv-included-text">
-          <strong>Results in 48 hours</strong>
-          <span>From the time the survey is completed to when you receive the report, no more than two business days.</span>
+          <strong>Resultados en 48 horas</strong>
+          <span>Desde que se completa la encuesta hasta que recibes el informe, no más de dos días hábiles.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">📋</div>
         <div class="inv-included-text">
-          <strong>Aligned with UNESCO and ESSA</strong>
-          <span>Internationally validated methodology. Documentation that supports preventive management.</span>
+          <strong>Alineado UNESCO y ESSA</strong>
+          <span>Metodología validada internacionalmente. Documentación que respalda gestión preventiva.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">🗺️</div>
         <div class="inv-included-text">
-          <strong>Concrete action plan</strong>
-          <span>Not a generic report. A plan designed specifically for the reality of your school.</span>
+          <strong>Plan de acción concreto</strong>
+          <span>No un informe genérico. Un plan diseñado específicamente para la realidad de tu escuela.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">📱</div>
         <div class="inv-included-text">
-          <strong>Compatible with any device</strong>
-          <span>The survey works on phone, tablet or computer. No apps, no installations.</span>
+          <strong>Compatible con cualquier dispositivo</strong>
+          <span>La encuesta funciona en celular, tablet o computadora. Sin apps, sin instalaciones.</span>
         </div>
       </div>
     </div>
@@ -1235,48 +1235,48 @@ window.addEventListener('popstate', function(e) {
 
   <!-- FAQ -->
   <div class="inv-faq-section">
-    <div class="inv-faq-title">Frequently asked questions</div>
+    <div class="inv-faq-title">Preguntas frecuentes</div>
     <div class="inv-faq-grid">
       <div class="inv-faq-item">
-        <div class="inv-faq-q">Is the payment one-time or recurring?</div>
-        <div class="inv-faq-a">One-time payment per project. No monthly subscription or hidden charges. You contract a complete diagnosis and that includes the entire process from start to finish.</div>
+        <div class="inv-faq-q">¿El pago es único o recurrente?</div>
+        <div class="inv-faq-a">Pago único por proyecto. No hay suscripción mensual ni cobros ocultos. Contratas un diagnóstico completo y eso incluye todo el proceso de principio a fin.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">What if I want to repeat the diagnosis next year?</div>
-        <div class="inv-faq-a">You can contract a new diagnosis whenever you need it. Many schools do it annually to measure climate evolution. Returning schools receive a 15% discount.</div>
+        <div class="inv-faq-q">¿Qué pasa si quiero repetir el diagnóstico el siguiente año?</div>
+        <div class="inv-faq-a">Puedes contratar un nuevo diagnóstico cuando lo necesites. Muchas escuelas lo hacen anualmente para medir la evolución del clima. Las escuelas recurrentes reciben un descuento del 15%.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">How long does the survey take to complete?</div>
-        <div class="inv-faq-a">The survey takes 8 to 12 minutes per student. It can be completed from any device, during school hours or from home. It is typically completed in 3–5 business days.</div>
+        <div class="inv-faq-q">¿En cuánto tiempo se completa la encuesta?</div>
+        <div class="inv-faq-a">La encuesta toma entre 8 y 12 minutos por estudiante. Puede completarse desde cualquier dispositivo, en horario escolar o desde el hogar. Típicamente se completa en 3–5 días hábiles.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">How secure is my students' data?</div>
-        <div class="inv-faq-a">The data is the exclusive property of the institution. It is never used for advertising or shared with third parties. Responses are completely anonymous — no one can be individually identified.</div>
+        <div class="inv-faq-q">¿Qué tan seguros están los datos de mis estudiantes?</div>
+        <div class="inv-faq-a">Los datos son propiedad exclusiva de la institución. Jamás son utilizados para publicidad ni compartidos con terceros. Las respuestas son completamente anónimas — nadie puede ser identificado individualmente.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">Can I fund it with the school budget?</div>
-        <div class="inv-faq-a">Yes. The TECH4ZERO diagnosis can be funded through school climate funds, administrative or counseling budgets. In Chile it can also be funded with SEP resources.</div>
+        <div class="inv-faq-q">¿Puedo financiarlo con el presupuesto escolar?</div>
+        <div class="inv-faq-a">Sí. El diagnóstico TECH4ZERO puede financiarse con fondos de convivencia escolar, presupuestos de dirección o de orientación. En Chile también puede financiarse con recursos SEP.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">Do you work with school districts or only individual institutions?</div>
-        <div class="inv-faq-a">We work with both. For districts or school networks we have special proposals with consolidated pricing. Contact us to receive a personalized proposal.</div>
+        <div class="inv-faq-q">¿Trabajan con distritos escolares o solo instituciones individuales?</div>
+        <div class="inv-faq-a">Trabajamos con ambos. Para distritos o redes de colegios tenemos propuestas especiales con precio consolidado. Contáctanos para recibir una propuesta personalizada.</div>
       </div>
     </div>
   </div>
 
   <!-- BOTTOM CTA -->
   <div class="inv-bottom-cta">
-    <h2>Not sure which plan to choose?</h2>
-    <p>Tell us the size of your institution and we'll send you a proposal in less than 24 hours. No commitment required.</p>
+    <h2>¿No sabes qué plan elegir?</h2>
+    <p>Cuéntanos el tamaño de tu institución y te enviamos una propuesta en menos de 24 horas. Sin compromiso.</p>
     <div class="inv-bottom-cta-btns">
-      <button class="inv-btn-gold" onclick="showTab('contacto')">Request a personalized proposal →</button>
-      <button class="inv-btn-ghost" onclick="showTab('programa')">See the diagnosis in action</button>
+      <button class="inv-btn-gold" onclick="showTab('contacto')">Solicitar propuesta personalizada →</button>
+      <button class="inv-btn-ghost" onclick="showTab('programa')">Ver el diagnóstico en acción</button>
     </div>
   </div>
 
   <div class="inv-disclaimer">
-    Prices in US dollars (USD). Local taxes may apply depending on the country.<br>
-    Consolidated data from 2023–2025 cohorts. Results vary by institutional context.
+    Precios en dólares americanos (USD). Impuestos locales pueden aplicar según el país.<br>
+    Datos consolidados de cohortes 2023–2025. Resultados varían según contexto institucional.
   </div>
 
 </div>
@@ -1319,11 +1319,11 @@ window.addEventListener('popstate', function(e) {
   .testi-institution { font-size:12px; color:#7a8e9e; }
   .testi-divider { height:1px; background:linear-gradient(90deg,rgba(214,162,28,0.3),transparent); margin:24px 0; }
 
-  /* Viofo card variant */
+  /* Video card variant */
   .testi-card.has-video { padding:0; cursor:pointer; }
   .testi-card.has-video .testi-thumb { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:16px 16px 0 0; }
-  .testi-card.has-video testi-thumb img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; filter:brightness(0.8); }
-  .testi-card.has-video:hover testi-thumb img { transform:scale(1.04); filter:brightness(0.65); }
+  .testi-card.has-video .testi-thumb img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; filter:brightness(0.8); }
+  .testi-card.has-video:hover .testi-thumb img { transform:scale(1.04); filter:brightness(0.65); }
   .testi-play-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
   .testi-play-circle { width:60px; height:60px; background:rgba(214,162,28,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:transform 0.2s, background 0.2s; box-shadow:0 4px 24px rgba(214,162,28,0.4); }
   .testi-card.has-video:hover .testi-play-circle { transform:scale(1.1); background:#D6A21C; }
@@ -1349,24 +1349,24 @@ window.addEventListener('popstate', function(e) {
   <!-- Hero header -->
   <div class="testi-hero">
     <div class="testi-hero-inner">
-      <div class="testi-eyebrow">⭐ Voices from our community</div>
-      <h2>What those who lived it say</h2>
-      <p>Principals, coordinators and teachers who transformed their institution with TECH4ZERO.</p>
+      <div class="testi-eyebrow">⭐ Voces de nuestra comunidad</div>
+      <h2>Lo que dicen quienes ya lo vivieron</h2>
+      <p>Directores, coordinadores y docentes que transformaron su institución con TECH4ZERO.</p>
     </div>
   </div>
 
   <!-- 2×2 Grid -->
   <div class="testi-grid">
 
-    <!-- TARJETA 1 — Viofo -->
+    <!-- TARJETA 1 — Video -->
     <div class="testi-card has-video" onclick="testiOpenVideo('vLFFojLhCZs','Testimonio — Minera Hales-CODELCO Chile')">
   <div class="testi-thumb">
-    <img src="https://img.youtube.com/vi/vLFFojLhCZs/hqdefault.jpg" alt="Viofo testimonio" />
+    <img src="https://img.youtube.com/vi/vLFFojLhCZs/hqdefault.jpg" alt="Video testimonio" />
         <div class="testi-play-btn"><div class="testi-play-circle"><div class="testi-play-arrow"></div></div></div>
       </div>
       <!-- <span class="testi-flag">🇨🇱</span> -->
       <div class="testi-card-body">
-        <p class="testi-quote">"A before and after for our school. Tech4zero gave us a quantum leap in just a few days."</p>
+        <p class="testi-quote">"Un antes y un después para nuestra escuela. Tech4zero nos dio un salto cuantitativo en solo unos días."</p>
         <div class="testi-divider"></div>
         <div class="testi-author">
           <img src="https://flagcdn.com/32x24/cl.png" alt="Chile" style="width:32px; border-radius:4px; margin-right:4px;">
@@ -1382,12 +1382,12 @@ window.addEventListener('popstate', function(e) {
     <!-- TARJETA 2 — Texto -->
 <div class="testi-card has-video" onclick="testiOpenVideo('6L4z_tQmDK0','Testimonio — Escuela en Kaiser-EEUU')">
   <div class="testi-thumb">
-    <img src="https://img.youtube.com/vi/6L4z_tQmDK0/hqdefault.jpg" alt="Viofo testimonio" />
+    <img src="https://img.youtube.com/vi/6L4z_tQmDK0/hqdefault.jpg" alt="Video testimonio" />
         <div class="testi-play-btn"><div class="testi-play-circle"><div class="testi-play-arrow"></div></div></div>
       </div>
       <!-- <span class="testi-flag">🇨🇱</span> -->
       <div class="testi-card-body">
-        <p class="testi-quote">"For the first time we had a real map of our school's situation. And they supported us in finding the solution."</p>
+        <p class="testi-quote">"Por primera vez tuvimos un mapa real de la situacion de nuestra escuela. Y nos apoyaron en la solución"</p>
         <div class="testi-divider"></div>
         <div class="testi-author">
           <img src="https://flagcdn.com/32x24/us.png" alt="USA" style="width:32px; border-radius:4px; margin-right:4px;">
@@ -1408,20 +1408,20 @@ window.addEventListener('popstate', function(e) {
       </div>
       <!-- <span class="testi-flag">🇨🇷</span>  -->
       <div class="testi-card-body">
-        <p class="testi-quote">"Esto nos da esperanza of lograr la paz que tanto necesitamos en nuestro hermoso pais. Gracias!!"</p>
+        <p class="testi-quote">"Esto nos da esperanza de lograr la paz que tanto necesitamos en nuestro hermoso pais. Gracias!!"</p>
         <div class="testi-divider"></div>
         <div class="testi-author">
           <img src="https://flagcdn.com/32x24/do.png" alt="Republica Dominicana" style="width:32px; border-radius:4px; margin-right:4px;">
           <div>
             <div class="testi-name">Jose Luis Alcantara</div>
-            <div class="testi-role">School Psychologist</div>
-            <div class="testi-institution">Director, SJP Educational Center · Santo Domingo, Dominican Republic</div>
+            <div class="testi-role">Psicólogo Escolar</div>
+            <div class="testi-institution">Director Centro Educativo SJP · Santo Domingo, Republica Dominicana</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TARJETA 4 — Viofo -->
+    <!-- TARJETA 4 — Video -->
        <div class="testi-card has-video" style="cursor:default;">
       <div class="testi-thumb" style="min-height:200px; background:#0f1d27;">
         <img src="img/Imagen_013.jpg" alt="Concepcion" 
@@ -1429,14 +1429,14 @@ window.addEventListener('popstate', function(e) {
       </div>
       <span class="testi-flag">🇨🇷</span>
       <div class="testi-card-body">
-        <p class="testi-quote">"Our teachers finally have the right tool thanks to Tech4Zero."</p>
+        <p class="testi-quote">"Nuestros profesores por fin cuentan con la herramienta correcta gracias a Tech4Zero."</p>
         <div class="testi-divider"></div>
         <div class="testi-author">
           <img src="https://flagcdn.com/32x24/cl.png" alt="Chile" style="width:32px; border-radius:4px; margin-right:4px;">
           <div>
-            <div class="testi-name">School Climate Specialists</div>
-            <div class="testi-role">Eighth Region - Bio Bio</div>
-            <div class="testi-institution">Concepción, Chile</div>
+            <div class="testi-name">Especialistas en Clima Escolar</div>
+            <div class="testi-role">Octava Region- Bio Bio</div>
+            <div class="testi-institution">Concecpion- Chile</div>
           </div>
         </div>
       </div>
@@ -1597,7 +1597,7 @@ window.addEventListener('popstate', function(e) {
     <div class="quiz-modal-header">
       <div class="quiz-modal-brand">
         <div class="quiz-modal-brand-dot"></div>
-        <span class="quiz-modal-brand-name">Tech4Zero · Self-Assessment</span>
+        <span class="quiz-modal-brand-name">Tech4Zero · Autodiagnóstico</span>
       </div>
       <button class="quiz-modal-close" onclick="closeQuiz()" type="button">✕</button>
     </div>
@@ -1605,13 +1605,13 @@ window.addEventListener('popstate', function(e) {
     <!-- PANTALLA: INTRO -->
     <div class="quiz-screen active" id="quiz-screen-intro">
       <div style="height:16px;"></div>
-      <div class="quiz-intro-label">⏱ 2 minutes · 11 questions</div>
-      <h2 class="quiz-intro-title">Do you want to see your school through<br><em>your students' eyes?</em></h2>
+      <div class="quiz-intro-label">⏱ 2 minutos · 11 preguntas</div>
+      <h2 class="quiz-intro-title">¿Quieres ver la escuela con los ojos de<br><em>tus estudiantes?</em></h2>
       <p class="quiz-intro-desc">
-        11 direct questions to find out how far you are from your students' reality — including whether you have the documentation to defend yourself legally, 
-        early teacher detection and diagnosis by classroom, genofr and age.
-        No jargon. No tricks. At the end, an honest assessment
-        of how much you're seeing — and how much you're missing.
+        11 preguntas directas para saber qué tan lejos estás de la realidad de tus estudiantes — incluyendo si tienes la documentación para defenderte legalmente, 
+        detección temprana docente y diagnóstico por salón, género y edad.
+        Sin tecnicismos. Sin trampa. Al final, un diagnóstico honesto
+        de cuánto estás viendo — y cuánto se te está escapando.
       </p>
 
       <!--
@@ -1622,31 +1622,31 @@ window.addEventListener('popstate', function(e) {
         </div>
         <div class="quiz-intro-meta-item">
           <div class="quiz-intro-meta-icon">🛡️</div>
-          <span>Active prevention</span>
+          <span>Prevención activa</span>
         </div>
         <div class="quiz-intro-meta-item">
           <div class="quiz-intro-meta-icon">⚡</div>
-          <span>Capacidad of respuesta</span>
+          <span>Capacidad de respuesta</span>
         </div>
       </div>
        -->
       
       <button class="quiz-btn-primary" onclick="startQuiz()" type="button" style="font-size:15px;padding:13px 30px;">
-        I want to know →
+        Quiero saberlo →
       </button>
     </div>
 
     <!-- PANTALLA: PREGUNTAS -->
     <div class="quiz-screen" id="quiz-screen-questions">
       <div style="height:8px;"></div>
-      <div class="quiz-q-counter"  id="quizQCounter">Question 1 of 8</div>
-      <div class="quiz-q-category" id="quizQCategory">VISIBILITY</div>
+      <div class="quiz-q-counter"  id="quizQCounter">Pregunta 1 de 8</div>
+      <div class="quiz-q-category" id="quizQCategory">VISIBILIDAD</div>
       <div class="quiz-q-text"     id="quizQText"></div>
       <div class="quiz-q-options"  id="quizQOptions"></div>
       <div class="quiz-q-nav">
         <div class="quiz-q-dots" id="quizQDots"></div>
         <button class="quiz-btn-primary" id="quizBtnNext" onclick="quizNextQuestion()" type="button" disabled>
-          Next →
+          Siguiente →
         </button>
       </div>
     </div>
@@ -1667,22 +1667,22 @@ window.addEventListener('popstate', function(e) {
         <div class="quiz-result-level"    id="quizResultLevel">—</div>
         <p  class="quiz-result-subtitle"  id="quizResultSubtitle"></p>
       </div>
-      <div class="quiz-findings-title">🔎 Your main gaps</div>
+      <div class="quiz-findings-title">🔎 Tus principales brechas</div>
       <div class="quiz-findings-list" id="quizFindingsList"></div>
       <button class="quiz-btn-primary" onclick="quizShowShare()" type="button" style="width:100%;font-size:15px;padding:14px;">
-        View my result card →
+        Ver mi tarjeta de resultado →
       </button>
     </div>
 
     <!-- PANTALLA: COMPARTIR -->
     <div class="quiz-screen" id="quiz-screen-share">
       <div class="quiz-share-card">
-        <div class="quiz-share-brand">TECH4ZERO · SCHOOL SELF-ASSESSMENT</div>
-        <div class="quiz-share-headline">I measured how far I am from my students's reality.<br>This is the result.</div>
+        <div class="quiz-share-brand">TECH4ZERO · AUTODIAGNÓSTICO ESCOLAR</div>
+        <div class="quiz-share-headline">Medí que tan lejos estoy de la realidad de mis estudiantes.<br>Este es el resultado.</div>
         <div class="quiz-share-score-row">
           <div class="quiz-share-big-num" id="quizShareScore">—</div>
           <div class="quiz-share-score-label">
-            out of 100 points<br>
+            de 100 puntos<br>
             <strong id="quizShareLevel">—</strong>
           </div>
         </div>
@@ -1709,15 +1709,15 @@ window.addEventListener('popstate', function(e) {
       <!-- <div class="quiz-email-section">
         <div class="quiz-email-title">📄 Recibe el informe completo en PDF</div>
         <div class="quiz-email-desc" id="quizEmailDesc">
-          The PDF includes your detailed diagnosis, comparative statistics with similar schools
-          in your country, and a concrete first-steps plan for your institution.
+          El PDF incluye tu diagnóstico detallado, estadísticas comparativas con escuelas similares
+          en tu país, y un plan de primeros pasos concreto para tu institución.
         </div>
         <div class="quiz-email-row">
           <input class="quiz-email-input" type="email" id="quizEmailInput" placeholder="tu@colegio.edu.mx" />
-          <button class="quiz-btn-primary" onclick="quizRequestPDF()" type="button" id="quizBtnPDF">Send PDF →</button>
+          <button class="quiz-btn-primary" onclick="quizRequestPDF()" type="button" id="quizBtnPDF">Enviar PDF →</button>
         </div>
         <p style="font-size:11px;color:#4a6070;margin-top:10px;">
-          🔒 Yesn spam. Solo el informe y una llamada of seguimiento si lo ofseas.
+          🔒 Sin spam. Solo el informe y una llamada de seguimiento si lo deseas.
         </p>
       </div>  -->
 
@@ -1726,27 +1726,27 @@ window.addEventListener('popstate', function(e) {
 
   <div style="background:rgba(255,255,255,0.03);border:1px solid #365468;border-radius:10px;padding:14px;">
     <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#D6A21C;text-transform:uppercase;margin-bottom:8px;">
-      📚 Recommended UNESCO resource
+      📚 Recurso UNESCO recomendado
     </div>
     <div style="font-size:14px;color:#fff;font-weight:600;margin-bottom:4px;line-height:1.4;">
-      Beyond Numbers: Ending Violence and Bullying in Schools
+      Más allá de los números: Poner fin a la violencia y el acoso en el ámbito escolar
     </div>
     <div style="font-size:12px;color:#a9c0d3;margin-bottom:12px;line-height:1.5;">
-      Official UNESCO report. Global data on prevalence, academic impact 
-      and evidence-based prevention strategies.
+      Informe oficial UNESCO. Datos globales sobre prevalencia, impacto académico 
+      y estrategias de prevención basadas en evidencia.
     </div>
     <a href="data/378398spa.pdf" 
        target="_blank"
        style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:transparent;border:1px solid #D6A21C;border-radius:8px;color:#D6A21C;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;"
        onmouseover="this.style.background='rgba(214,162,28,0.1)'"
        onmouseout="this.style.background='transparent'">
-      ↓ Download free PDF
+      ↓ Descargar PDF gratuito
     </a>
   </div>
       <br>
       <div class="quiz-btn-row">
-        <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Close</button>
-        <button class="quiz-btn-primary"   onclick="startQuiz()"  type="button" style="flex:1;">↺ Restart</button>
+        <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Cerrar</button>
+        <button class="quiz-btn-primary"   onclick="startQuiz()"  type="button" style="flex:1;">↺ Reiniciar</button>
       </div>
     </div>
 
@@ -1758,72 +1758,73 @@ window.addEventListener('popstate', function(e) {
 (function () {
 
   var QUIZ_QUESTIONS = [
-    { category:'THEIR DAY', text:'Do you know how safe your students feel when they walk through the door of your school each morning?' },
-    { category:'THEIR WORLD', text:'Do you know the places in your school where students feel lonely or afraid?' },
-    { category:'THEIR VOICE', text:'Do your students know who to turn to when something bad happens to them — and do they trust they will be heard?' },
-    { category:'THEIR SILENCE', text:'Has your school identified the students who statistically carry the highest risk of being bullying victims?' },
-    { category:'THEIR CLASSROOM', text:'Do you know which classrooms your students feel safe in \u2014 and which ones they don\'t?' },
-    { category:'THEIR TEACHERS', text:'Do your teachers know how to listen to what students don\'t say with words?' },
-    { category:'THEIR TRUST', text:'Do any of your students feel that your school is the safest place in their day?' },
-    { category:'THEIR FUTURE', text:'Do students know that cases of aggression are resolved quickly and fairly?' },
-    { category:'YOUR PROTECTION', text:'If a family sued you tomorrow over a bullying case that happened in your school — do you have documentation proving you did everything in your power to prevent it?' },
-    { category:'YOUR TEACHERS', text:'Do your teachers have the tools to recognize bullying before it escalates, or are they responding to what has already exploded?' },
-    { category:'YOUR MAP', text:'Do you know whether the emotional climate of your students changes by gender, age or classroom — or do you treat your entire school as a single reality?' }
+    { category:'SU DIA', text:'¿Sabes que tan seguros se sienten tus estudiantes cuando cruzan la puerta de tu escuela cada mañana?' },
+    { category:'SU MUNDO', text:'¿Conoces los lugares de tu escuela donde tus estudiantes se sienten solos o con miedo?' },
+    { category:'SU VOZ', text:'¿Saben tus estudiantes a quién acudir cuando algo malo les pasa — y confían en que los escucharán?' },
+    { category:'SU SILENCIO',  text:'¿Tu escuela tiene identificados a los estudiantes que estadísticamente concentran el mayor riesgo de ser víctimas de acoso?' },
+    { category:'SU AULA',  text:'¿Sabes en qué salones tus estudiantes se sienten seguros — y en cuáles no?' },
+    { category:'SUS DOCENTES',  text:'¿Tus profesores saben escuchar lo que los estudiantes no dicen con palabras?' },
+    { category:'SU CONFIANZA',   text:'¿Alguno de tus estudiantes siente que tu escuela es el lugar más seguro de su día?' },
+    { category:'SU FUTURO',   text:'¿Los estudiantes saben que los casos de agresiones se solucionan rapidamente y con justicia?' },
+    { category:'TU PROTECCION', text:'Si mañana una familia te demanda por un caso de acoso que ocurrió en tu escuela — ¿tienes documentación que demuestre que hiciste todo lo que estaba en tus manos para prevenirlo?' },
+    { category:'TUS DOCENTES', text:'¿Tus profesores tienen las herramientas para reconocer el bullying antes de que escale o están respondiendo a lo que ya explotó?' },
+    { category:'TU MAPA', text:'¿Sabes si el clima emocional de tus estudiantes cambia según el género, la edad o el salón — o tratas a toda tu escuela como si fuera una sola realidad?' }
 
     
   ];
 
   var QUIZ_OPTIONS = [
-    { value:'yes', label:'Yes', icon:'A' },
+    { value:'yes', label:'Si', icon:'A' },
     { value:'no',  label:'No',    icon:'B' },
-    { value:'idk', label:'I\'m not sure',     icon:'C' }
+    { value:'idk', label:'No estoy seguro/a',     icon:'C' }
   ];
 
   var QUIZ_FINDINGS = [
-  { q:0, type:'danger', icon:'🚨',
-    title:'Without safety perception data, there is no baseline',
-    text:'If you don\'t measure how students arrive, you can\'t know if your school is part of the solution or part of the problem.' },
+  { q:0, type:'danger', icon:'🚨', 
+    title:'Sin datos de percepción de seguridad, no hay línea base',
+    text:'Si no mides cómo llegan tus estudiantes, no puedes saber si tu escuela es parte de la solución o parte del problema.' },
 
-  { q:1, type:'danger', icon:'🚨',
-    title:'Unsupervised spaces are active risk zones',
-    text:'Without a critical point mapping, supervision resources are distributed where they\'re visible — not where they\'re needed.' },
+  { q:1, type:'danger', icon:'🚨', 
+    title:'Los espacios no supervisados son zonas de riesgo activo',
+    text:'Sin un mapeo de puntos críticos, los recursos de supervisión se distribuyen donde se ven — no donde se necesitan.' },
 
-  { q:2, type:'warning', icon:'⚠️',
-    title:'Without a reliable reporting channel, silence is the norm',
-    text:'A student who doesn\'t know who to turn to — or who doesn\'t trust they\'ll be heard — won\'t report. And what isn\'t reported can\'t be addressed.' },
+  { q:2, type:'warning', icon:'⚠️', 
+    title:'Sin canal de reporte confiable, el silencio es la norma',
+    text:'Un estudiante que no sabe a quién acudir — o que no confía en ser escuchado — no reporta. Y lo que no se reporta no se interviene.' },
 
-  { q:3, type:'danger', icon:'🚨',
-    title:'Without risk identification, prevention is reactive',
-    text:'Intervening after the incident costs 4 to 7 times more than preventing it. Without a vulnerability profile per student, you always arrive too late.' },
+  { q:3, type:'danger', icon:'🚨', 
+    title:'Sin identificación de riesgo, la prevención es reactiva',
+    text:'Intervenir después del incidente cuesta entre 4 y 7 veces más que prevenirlo. Sin un perfil de vulnerabilidad por estudiante, siempre llegas tarde.' },
 
-  { q:4, type:'warning', icon:'⚠️',
-    title:'Climate varies by classroom — averages hide it',
-    text:'An overall index may show acceptable results while specific classrooms register critical levels. Without classroom-level data, the average protects the problem.' },
+  { q:4, type:'warning', icon:'⚠️', 
+    title:'El clima varía por salón — los promedios lo ocultan',
+    text:'Un índice general puede mostrar resultados aceptables mientras salones específicos registran niveles críticos. Sin datos por aula, el promedio protege el problema.' },
 
-  { q:5, type:'warning', icon:'⚠️',
-    title:'Early detection is a skill — not an intuition',
-    text:'Without specific training in behavioral observation, teachers respond to what has already escalated. Early signals require a protocol, not just sensitivity.' },
+  { q:5, type:'warning', icon:'⚠️', 
+    title:'La detección temprana es una competencia — no una intuición',
+    text:'Sin formación específica en observación conductual, los docentes responden a lo que ya escaló. Las señales tempranas requieren un protocolo, no solo sensibilidad.' },
 
-  { q:6, type:'danger', icon:'🚨',
-    title:'A school that isn\'t a safe haven activates survival mode',
-    text:'When the school environment is not perceived as safe, the student\'s nervous system prioritizes alertness over learning. The academic impact is measurable and direct.' },
+  { q:6, type:'danger', icon:'🚨', 
+    title:'Una escuela que no es refugio activa el modo de supervivencia',
+    text:'Cuando el entorno escolar no se percibe como seguro, el sistema nervioso del estudiante prioriza alerta sobre aprendizaje. El impacto académico es medible y directo.' },
 
-  { q:7, type:'danger', icon:'🚨',
-    title:'The perception of justice determines whether students speak or stay silent',
-    text:'If students don\'t believe cases are resolved fairly and quickly, underreporting increases. Unreported incidents carry the highest institutional risk.' },
+  { q:7, type:'danger', icon:'🚨', 
+    title:'La percepción de justicia define si los estudiantes hablan o callan',
+    text:'Si los estudiantes no creen que los casos se resuelven con equidad y rapidez, el subregistro aumenta. Los incidentes no reportados son los de mayor riesgo institucional.' },
 
-  { q:8, type:'danger', icon:'🚨',
-    title:'Without preventive documentation, legal exposure is total',
-    text:'A file built after the incident does not constitute evidence of preventive management. Protocols only have legal value if they are prior, systematic and verifiable.' },
+  { q:8, type:'danger', icon:'🚨', 
+    title:'Sin documentación preventiva, la exposición legal es total',
+    text:'Un expediente construido después del incidente no constituye evidencia de gestión preventiva. Los protocolos solo tienen valor legal si son anteriores, sistemáticos y verificables.' },
 
-  { q:9, type:'warning', icon:'⚠️',
-    title:'Teachers without specific tools operate in reactive mode',
-    text:'Recognizing bullying in its early phase requires competencies in detecting group dynamics and psychosocial risk signals. Without that training, intervention arrives when the damage is already done.' },
+  { q:9, type:'warning', icon:'⚠️', 
+    title:'Docentes sin herramientas específicas operan en modo reactivo',
+    text:'Reconocer bullying en fase temprana requiere competencias en detección de dinámicas grupales y señales de riesgo psicosocial. Sin esa formación, la intervención llega cuando el daño ya está hecho.' },
 
-  { q:10, type:'danger', icon:'🚨',
-    title:'Without disaggregation, general data is clinically useless',
-    text:'Gender, age and classroom are not demographic variables — they are the axes where differential risk concentrates. A diagnosis without that disaggregation cannot target any intervention.' }
+  { q:10, type:'danger', icon:'🚨', 
+    title:'Sin desagregación, los datos generales son clínicamente inútiles',
+    text:'Género, edad y salón no son variables demográficas — son los ejes donde se concentra el riesgo diferencial. Un diagnóstico sin esa desagregación no permite focalizar ninguna intervención.' }
 ];
+
   var quizCurrentQ   = 0;
   var quizAnswers    = [];
   var quizFinalScore = 0;
@@ -1838,32 +1839,32 @@ window.addEventListener('popstate', function(e) {
   }
 
   //function quizGetLevelInfo(score) {
-  //  if (score <= 25) return { level:'Far behind', cls:'critical', color:'#ff6b6b',
-  //    subtitle:'Tu escuela tiene puntos ciegos graves. Yesn datos, no pueofs prevenir lo que no ves. Esto representa un riesgo real e inmediato para tus estudiantes y tu institución.' };
+  //  if (score <= 25) return { level:'Muy lejos', cls:'critical', color:'#ff6b6b',
+  //    subtitle:'Tu escuela tiene puntos ciegos graves. Sin datos, no puedes prevenir lo que no ves. Esto representa un riesgo real e inmediato para tus estudiantes y tu institución.' };
   //  if (score <= 50) return { level:'Visibilidad Baja',    cls:'low',      color:'#ffa94d',
-  //    subtitle:'Tienes algo of control, pero hay áreas significativas que se te escapan. Lo que no estás midiendo no lo pueofs mejorar — y alguien está pagando ese costo.' };
+  //    subtitle:'Tienes algo de control, pero hay áreas significativas que se te escapan. Lo que no estás midiendo no lo puedes mejorar — y alguien está pagando ese costo.' };
   //  if (score <= 75) return { level:'Visibilidad Media',   cls:'medium',   color:'#D6A21C',
   //    subtitle:'Estás por sobre el promedio regional, pero todavía hay brechas importantes. Una intervención focalizada podría marcar una diferencia significativa.' };
   //  return               { level:'Visibilidad Alta',    cls:'high',     color:'#69db7c',
-  //    subtitle:'Tu escuela tiene buenas prácticas. TECH4ZERO pueof llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.' };
+  //    subtitle:'Tu escuela tiene buenas prácticas. TECH4ZERO puede llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.' };
   //
 
   function quizGetLevelInfo(score) {
-  if (score <= 25) return {
-    level:'Far behind', cls:'critical', color:'#ff6b6b',
-    subtitle:'Your students\'s reality and what you perceive are two different worlds. What you don\'t see isn\'t because it doesn\'t exist — it\'s because no one has shown it to you yet.'
+  if (score <= 25) return { 
+    level:'Muy lejos', cls:'critical', color:'#ff6b6b',
+    subtitle:'La realidad de tus estudiantes y lo que tú percibes son dos mundos distintos. Lo que no ves no es porque no exista — es porque todavía nadie te lo ha mostrado.' 
   };
-  if (score <= 50) return {
-    level:'Behind', cls:'low', color:'#ffa94d',
-    subtitle:'You see the surface of your school, but your students\' real life happens somewhere else. You\'re closer than you think — but the distance still matters.'
+  if (score <= 50) return { 
+    level:'Lejos', cls:'low', color:'#ffa94d',
+    subtitle:'Ves la superficie de tu escuela, pero la vida real de tus estudiantes ocurre en otro lugar. Estás más cerca de lo que crees — pero la distancia todavía importa.' 
   };
-  if (score <= 75) return {
-    level:'Getting closer', cls:'medium', color:'#D6A21C',
-    subtitle:'You have intuition and sensitivity, but you\'re missing their eyes. With the right tools, you could close that gap in weeks.'
+  if (score <= 75) return { 
+    level:'Cerca', cls:'medium', color:'#D6A21C',
+    subtitle:'Tienes intuición y sensibilidad, pero te faltan los ojos de ellos. Con las herramientas correctas, podrías cerrar esa distancia en semanas.' 
   };
-  return {
-    level:'Very close', cls:'high', color:'#69db7c',
-    subtitle:'You\'re starting to see your school the way your students experience it. That is extraordinarily difficult to achieve — and it\'s exactly from there that schools that transform lives are built.'
+  return { 
+    level:'Muy cerca', cls:'high', color:'#69db7c',
+    subtitle:'Empiezas a ver tu escuela como tus estudiantes la viven. Eso es extraordinariamente difícil de lograr — y es exactamente desde donde se construyen escuelas que transforman vidas.' 
   };
 }
 
@@ -1871,7 +1872,7 @@ window.addEventListener('popstate', function(e) {
     var q = QUIZ_QUESTIONS[quizCurrentQ];
     if (!q) return;
 
-    document.getElementById('quizQCounter').textContent  = 'Question ' + (quizCurrentQ + 1) + ' of ' + QUIZ_QUESTIONS.length;
+    document.getElementById('quizQCounter').textContent  = 'Pregunta ' + (quizCurrentQ + 1) + ' de ' + QUIZ_QUESTIONS.length;
     document.getElementById('quizQCategory').textContent = q.category;
     document.getElementById('quizQText').textContent     = q.text;
 
@@ -1893,7 +1894,7 @@ window.addEventListener('popstate', function(e) {
 
     var btn = document.getElementById('quizBtnNext');
     btn.disabled    = !quizAnswers[quizCurrentQ];
-    btn.textContent = quizCurrentQ === QUIZ_QUESTIONS.length - 1 ? 'See result →' : 'Next →';
+    btn.textContent = quizCurrentQ === QUIZ_QUESTIONS.length - 1 ? 'Ver resultado →' : 'Siguiente →';
 
     document.getElementById('quizQDots').innerHTML = QUIZ_QUESTIONS.map(function(_,i) {
       var cls = 'quiz-q-dot';
@@ -1942,7 +1943,7 @@ window.addEventListener('popstate', function(e) {
       document.getElementById('quizFindingsList').innerHTML =
         '<div style="text-align:center; padding:20px; color:#69db7c; font-size:15px; line-height:1.6;">'
         + '✅ No se detectaron brechas significativas.<br>'
-        + '<span style="font-size:13px; color:#a9c0d3;">Your school shows exceptional visibility.</span>'
+        + '<span style="font-size:13px; color:#a9c0d3;">Tu escuela muestra una visibilidad excepcional.</span>'
         + '</div>';
     } else {
       document.getElementById('quizFindingsList').innerHTML = wrong.map(function(f){
@@ -2006,16 +2007,16 @@ window.addEventListener('popstate', function(e) {
 
   window.quizShareWhatsApp = function() {
     var info = quizGetLevelInfo(quizFinalScore);
-    var msg  = 'I just took the TECH4ZERO self-assessment for my school.\n\n'
-             + '📊 My visibility index: *' + quizFinalScore + '/100 — ' + info.level + '*\n\n'
-             + 'With this result I think we should talk about how to improve this.\n\n'
-             + '🔗 Take yours at: https://tech4zero.com';
+    var msg  = 'Acabo de hacer el autodiagnóstico de TECH4ZERO para mi escuela.\n\n'
+             + '📊 Mi índice de visibilidad: *' + quizFinalScore + '/100 — ' + info.level + '*\n\n'
+             + 'Con este dato creo que deberíamos conversar sobre cómo mejorar esto.\n\n'
+             + '🔗 Haz el tuyo en: https://tech4zero.com';
     window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
   };
 
   window.quizCopyLink = function() {
     navigator.clipboard.writeText('https://tech4zero.com').then(function(){
-      alert('Link copied! Share it with your team.');
+      alert('¡Enlace copiado! Compártelo con tu equipo.');
     });
   };
 
@@ -2028,7 +2029,7 @@ window.addEventListener('popstate', function(e) {
     }
     var btn = document.getElementById('quizBtnPDF');
     btn.disabled    = true;
-    btn.textContent = 'Sending...';
+    btn.textContent = 'Enviando...';
     try {
       var info = quizGetLevelInfo(quizFinalScore);
       var res  = await fetch('/api/quiz-lead', {
@@ -2037,17 +2038,17 @@ window.addEventListener('popstate', function(e) {
         body:    JSON.stringify({ email: email, score: quizFinalScore, level: info.level, answers: quizAnswers })
       });
       var data = await res.json().catch(function(){ return {}; });
-      if (!res.ok || !data.ok) { btn.disabled = false; btn.textContent = 'Error — intenta of nuevo'; return; }
-      btn.textContent = '✅ Sent!';
+      if (!res.ok || !data.ok) { btn.disabled = false; btn.textContent = 'Error — intenta de nuevo'; return; }
+      btn.textContent = '✅ ¡Enviado!';
       document.getElementById('quizEmailDesc').textContent =
-        'Revisa tu banofja of entrada. Yes no llega en 5 minutos, revisa tu carpeta of spam.';
+        'Revisa tu bandeja de entrada. Si no llega en 5 minutos, revisa tu carpeta de spam.';
     } catch(e) {
       btn.disabled    = false;
-      btn.textContent = 'Connection error';
+      btn.textContent = 'Error de conexión';
     }
   };
 
-  /* Close al click en overlay */
+  /* Cerrar al click en overlay */
   document.getElementById('quizModal').addEventListener('click', function(e) {
     if (e.target === this) window.closeQuiz();
   });
@@ -2071,27 +2072,27 @@ window.addEventListener('popstate', function(e) {
 <div id="finishModal" class="finish-overlay">
   <div class="finish-box">
     <span class="finish-trophy">🏆</span>
-    <div class="finish-level-badge">💎 LEGEND LEVEL UNLOCKED</div>
-    <div class="finish-headline">You did it!<br><em>You are part of the change.</em></div>
+    <div class="finish-level-badge">💎 NIVEL LEYENDA DESBLOQUEADO</div>
+    <div class="finish-headline">¡Lo lograste!<br><em>Eres parte del cambio.</em></div>
     <div class="finish-body">
-      You completed the survey from start to finish. That says a lot about you.<br>
-      Your answers will help make your school a better place — even if you never know it.
+      Completaste la encuesta de principio a fin. Eso dice mucho de ti.<br>
+      Tus respuestas van a ayudar a hacer tu escuela un lugar mejor — aunque nunca lo sepas.
     </div>
     <div class="finish-stats">
       <div class="finish-stat">
         <span class="finish-stat-number" id="finishStatQuestions">56</span>
-        <span class="finish-stat-label">questions answered</span>
+        <span class="finish-stat-label">preguntas respondidas</span>
       </div>
       <div class="finish-stat">
         <span class="finish-stat-number">4</span>
-        <span class="finish-stat-label">levels reached</span>
+        <span class="finish-stat-label">niveles alcanzados</span>
       </div>
       <div class="finish-stat">
         <span class="finish-stat-number">100%</span>
-        <span class="finish-stat-label">completed</span>
+        <span class="finish-stat-label">completado</span>
       </div>
     </div>
-    <button class="finish-close-btn" id="finishCloseBtn" type="button">Thank you! Close →</button>
+    <button class="finish-close-btn" id="finishCloseBtn" type="button">¡Gracias! Cerrar →</button>
   </div>
 </div>
 
@@ -2109,8 +2110,8 @@ window.addEventListener('popstate', function(e) {
 
     <!-- PIN panel -->
     <div id="surveyModalPinPanel" class="survey-modal-pin-panel">
-      <div class="pin-panel-title" style="font-size:16px; font-weight:700; margin-bottom:6px;">🔒 Exit survey</div>
-      <div class="pin-panel-sub" style="font-size:13px; margin-bottom:20px;">Enter PIN to close</div>
+      <div class="pin-panel-title" style="font-size:16px; font-weight:700; margin-bottom:6px;">🔒 Salir de la encuesta</div>
+      <div class="pin-panel-sub" style="font-size:13px; margin-bottom:20px;">Ingresa el PIN para cerrar</div>
       <div class="pin-inputs">
         <input class="pin-input" id="mpin0" type="password" inputmode="numeric" maxlength="1" />
         <input class="pin-input" id="mpin1" type="password" inputmode="numeric" maxlength="1" />
@@ -2119,8 +2120,8 @@ window.addEventListener('popstate', function(e) {
       </div>
       <div class="pin-msg" id="mpinMsg" style="color:#e03131;"></div>
       <div class="pin-btn-row">
-        <button id="btnMPinCancel" class="btnSecondary" type="button">Cancel</button>
-        <button id="btnMPinConfirm" class="btnPrimary" type="button">Confirm</button>
+        <button id="btnMPinCancel" class="btnSecondary" type="button">Cancelar</button>
+        <button id="btnMPinConfirm" class="btnPrimary" type="button">Confirmar</button>
       </div>
     </div>
 
@@ -2136,8 +2137,8 @@ window.addEventListener('popstate', function(e) {
 
     <!-- Nav -->
     <div class="survey-modal-nav">
-      <button id="btnSurveyModalPrev" class="btnSecondary" type="button">← Previous</button>
-      <button id="btnSurveyModalNext" class="btnPrimary"   type="button">Next →</button>
+      <button id="btnSurveyModalPrev" class="btnSecondary" type="button">← Anterior</button>
+      <button id="btnSurveyModalNext" class="btnPrimary"   type="button">Siguiente →</button>
     </div>
 
   </div>
@@ -2152,11 +2153,11 @@ window.addEventListener('popstate', function(e) {
     </div>
     <div class="pause-headline" id="pauseHeadline"></div>
     <div class="pause-body" id="pauseBody"></div>
-    <div class="pause-reminofr">
-      <span class="pause-reminofr-star">⭐</span>
-      <span>Remember to answer only about what happened in the <strong>last two months</strong>.</span>
+    <div class="pause-reminder">
+      <span class="pause-reminder-star">⭐</span>
+      <span>Recuerda responder solo sobre lo que pasó en los <strong>últimos dos meses</strong>.</span>
     </div>
-    <button class="pause-continue-btn" id="pauseContinueBtn" type="button">Continue →</button>
+    <button class="pause-continue-btn" id="pauseContinueBtn" type="button">Continuar →</button>
   </div>
 </div>
 
@@ -2167,34 +2168,34 @@ window.addEventListener('popstate', function(e) {
 <!-- MODAL GLOBAL: ACCESO USUARIOS -->
 <div id="globalModal" class="modalOverlay">
   <div class="modalBox">
-    <div class="modalHeaofr">
-      <h3 class="modalTitle">User Access</h3>
+    <div class="modalHeader">
+      <h3 class="modalTitle">Acceso Usuarios</h3>
       <button id="modalClose" class="modalClose" type="button">X</button>
     </div>
 
     <div id="modalSessionOn" style="display:none;">
       <div class="statusMsg statusOk" id="modalSessionText"></div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-        <button id="btnCerrarSesion" class="btnSecondary" type="button">Log out</button>
-        <button id="btnCerrarModal1" class="btnPrimary" type="button">Close</button>
+        <button id="btnCerrarSesion" class="btnSecondary" type="button">Cerrar sesión</button>
+        <button id="btnCerrarModal1" class="btnPrimary" type="button">Cerrar</button>
       </div>
     </div>
 
     <div id="modalSessionOff" style="display:none;">
       <div class="formPanel" style="margin-top:10px; max-width:100%;">
         <div class="fieldBlock">
-          <label for="globalUser" class="fieldLabel">Username</label><br />
-          <input id="globalUser" class="textInput" type="text" placeholder="Username" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
+          <label for="globalUser" class="fieldLabel">Usuario</label><br />
+          <input id="globalUser" class="textInput" type="text" placeholder="Usuario" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" />
         </div>
 
         <div class="fieldBlock">
-          <label for="globalPass" class="fieldLabel">Password</label><br />
-          <input id="globalPass" class="textInput" type="password" placeholder="Password" autocomplete="new-password" />
+          <label for="globalPass" class="fieldLabel">Contraseña</label><br />
+          <input id="globalPass" class="textInput" type="password" placeholder="Contraseña" autocomplete="new-password" />
         </div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button id="btnDoLogin" class="btnPrimary" type="button">Log in</button>
-          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancel</button>
+          <button id="btnDoLogin" class="btnPrimary" type="button">Entrar</button>
+          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancelar</button>
         </div>
 
         <div id="globalLoginMsg" class="statusMsg statusErr"></div>
@@ -2203,58 +2204,32 @@ window.addEventListener('popstate', function(e) {
   </div>
 </div>
 
-<!-- MODAL: LANGUAGE SELECTOR -->
-<div id="languageModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:440px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">🌐 Selecciona el idioma / Select language</h3>
-    </div>
-    <div style="padding:8px 0;">
-      <p style="margin:0 0 20px 0; font-size:14px; color:#a9c0d3; line-height:1.6;">
-        Esta encuesta está disponible en español e inglés.<br>
-        This survey is available in Spanish and English.
-      </p>
-      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
-        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
-          <img src="https://flagcdn.com/mx.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
-          <span>Español</span>
-        </button>
-        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.18s;" onmouseover="this.style.borderColor='#D6A21C';this.style.background='rgba(214,162,28,0.08)'" onmouseout="this.style.borderColor='#365468';this.style.background='rgba(255,255,255,0.04)'">
-          <img src="https://flagcdn.com/us.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
-          <span>English</span>
-        </button>
-      </div>
-      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancelar / Cancel</button>
-    </div>
-  </div>
-</div>
-
 <!-- MODAL: PRIVACIDAD ENCUESTA -->
 <div id="privacyModal" class="modalOverlay">
   <div class="modalBox" style="max-width:580px;">
-    <div class="modalHeaofr">
-      <h3 class="modalTitle">🔒 Your privacy is protected</h3>
+    <div class="modalHeader">
+      <h3 class="modalTitle">🔒 Tu privacidad está protegida</h3>
     </div>
 
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;">
-          <strong style="color:#D6A21C;">This survey is 100% anonymous and confidential.</strong>
+          <strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>
         </p>
         
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ We do not store your name or ask who you are.
+          ✅ No guardamos tu nombre, ni preguntamos quién eres.
         </p>
         
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ No one — not teachers, principals, or other students — can see your answers.
+          ✅ Nadie -ni profesores, ni directores, ni otros estudiantes- pueden conocer tus respuestas.
         </p>
         
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ Your honesty helps create a safer school for everyone.  
+          ✅ Tu sinceridad ayuda a crear una escuela más segura para todos.  
         </p>
         <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
-          <em><strong>Thank you for participating</strong></em>
+          <em><strong>Gracias por participar</strong></em>
         </p>
         
       </div>
@@ -2262,19 +2237,16 @@ window.addEventListener('popstate', function(e) {
       <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
         <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
           <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
-          <span>I have read and understand that this survey is anonymous and confidential</span>
+          <span>He leído y entiendo que esta encuesta es anónima y confidencial</span>
         </label>
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnPrivacyBack" class="btnSecondary" type="button" style="display:none;">
-          ← Back
-        </button>
         <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
-          Continue to the survey
+          Continuar con la encuesta
         </button>
         <button id="btnPrivacyCancel" class="btnSecondary" type="button">
-          Cancel
+          Cancelar
         </button>
       </div>
     </div>
@@ -2284,7 +2256,7 @@ window.addEventListener('popstate', function(e) {
 <!-- MODAL: ADMIN LOGIN -->
 <div id="adminModal" class="modalOverlay">
   <div class="modalBox" style="max-width:450px;">
-    <div class="modalHeaofr">
+    <div class="modalHeader">
       <h3 class="modalTitle">🔐 Admin Access</h3>
       <button id="adminModalClose" class="modalClose" type="button">X</button>
     </div>
@@ -2328,27 +2300,27 @@ window.addEventListener('popstate', function(e) {
 <!-- MODAL: SELECT ANALYSIS TO VIEW -->
 <div id="selectAnalysisModal" class="modalOverlay">
   <div class="modalBox" style="max-width:700px;">
-    <div class="modalHeaofr">
-      <h3 class="modalTitle">Select Analysis</h3>
+    <div class="modalHeader">
+      <h3 class="modalTitle">Seleccionar Análisis</h3>
       <button id="selectAnalysisClose" class="modalClose" type="button">X</button>
     </div>
 
     <div style="padding:8px 0;">
       <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
-        Select the analysis you want to view:
+        Selecciona el análisis que deseas visualizar:
       </p>
 
       <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
-        <div class="statusMsg statusWarn">Loading available analyses...</div>
+        <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
       </div>
 
       <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
         <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
           <p style="margin:0; font-size:15px; color:#ffdca8;">
-            No approved analyses available.
+            No hay análisis aprobados disponibles.
           </p>
           <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
-            Request an analysis or wait for approval.
+            Solicite un análisis o espere la aprobación.
           </p>
         </div>
       </div>
@@ -2357,10 +2329,10 @@ window.addEventListener('popstate', function(e) {
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>
-          View Selected Analysis
+          Ver Análisis Seleccionado
         </button>
         <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
-          Cancel
+          Cancelar
         </button>
       </div>
     </div>
@@ -2393,7 +2365,7 @@ window.addEventListener('popstate', function(e) {
 <!-- MODAL: APPROVE SURVEYS -->
 <div id="approveSurveysModal" class="modalOverlay">
   <div class="modalBox" style="max-width:800px;">
-    <div class="modalHeaofr">
+    <div class="modalHeader">
       <h3 class="modalTitle">Approve Surveys</h3>
       <button id="approveSurveysClose" class="modalClose" type="button">X</button>
     </div>
@@ -2592,7 +2564,7 @@ window.addEventListener('popstate', function(e) {
   color: #16222D;
 }
 
-/* Larger emoji text in primaria moof */
+/* Larger emoji text in primaria mode */
 .primaria-mode .survey-modal-option span {
   font-size: 18px;
 }
@@ -2808,7 +2780,7 @@ window.addEventListener('popstate', function(e) {
   margin-left: auto;
   margin-right: auto;
 }
-.pause-reminofr {
+.pause-reminder {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2822,7 +2794,7 @@ window.addEventListener('popstate', function(e) {
   color: #d9e6f2;
   line-height: 1.5;
 }
-.pause-reminofr-star { font-size: 16px; flex-shrink: 0; }
+.pause-reminder-star { font-size: 16px; flex-shrink: 0; }
 .pause-continue-btn {
   display: inline-block;
   padding: 13px 36px;
@@ -3007,7 +2979,7 @@ window.addEventListener('popstate', function(e) {
   };
 
   // === SESSION STATE ===
-  window.sessionState = { ok:false, school_id:null, school_name:null, language:'en' };
+  window.sessionState = { ok:false, school_id:null, school_name:null };
   window.currentResponseId = null;
 
   const sessionBadge = document.getElementById('sessionBadge');
@@ -3040,8 +3012,7 @@ window.addEventListener('popstate', function(e) {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
-        country: data?.country || 'MX',
-        language: data?.language || 'en'
+        country: data?.country || 'MX'
       };
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
@@ -3058,19 +3029,19 @@ window.addEventListener('popstate', function(e) {
       sessionBadge.classList.remove('badgeNo');
       sessionBadge.classList.add('badgeOk');
     } else if (ok) {
-      sessionBadge.textContent = `Authenticated: ${schoolName || 'OK'}`;
+      sessionBadge.textContent = `Autenticado: ${schoolName || 'OK'}`;
       sessionBadge.classList.remove('badgeNo');
       sessionBadge.classList.add('badgeOk');
     } else {
-      sessionBadge.textContent = 'Not authenticated';
+      sessionBadge.textContent = 'No autenticado';
       sessionBadge.classList.remove('badgeOk');
       sessionBadge.classList.add('badgeNo');
     }
 
     if (schoolWelcome) {
       schoolWelcome.textContent = ok
-        ? `Session status: Authenticated. School: ${schoolName}`.trim()
-        : 'Session status: Not authenticated.';
+        ? `Estado de sesión: Autenticado. Escuela: ${schoolName}`.trim()
+        : 'Estado de sesión: No autenticado.';
     }
 
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = !ok;
@@ -3086,12 +3057,6 @@ var navEnc = document.getElementById('navEncuesta');
     if (navEnc) navEnc.style.display = ok ? '' : 'none';
     if (navRes) navRes.style.display = ok ? '' : 'none';
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
-
-    // Auto-redirect Spanish-only schools back to /
-    if (ok && window.sessionState.language === 'es' && location.pathname.startsWith('/en')) {
-      window.location.href = '/' + location.hash;
-      return;
-    }
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
     
@@ -3132,7 +3097,7 @@ var navEnc = document.getElementById('navEncuesta');
     if (ok) {
       modalSessionOff.style.display = 'none';
       modalSessionOn.style.display = 'block';
-      modalSessionText.textContent = `Active session. School: ${window.sessionState.school_name || ''}`.trim();
+      modalSessionText.textContent = `Sesión activa. Escuela: ${window.sessionState.school_name || ''}`.trim();
     } else {
       modalSessionOn.style.display = 'none';
       modalSessionOff.style.display = 'block';
@@ -3154,10 +3119,10 @@ var navEnc = document.getElementById('navEncuesta');
   btnDoLogin?.addEventListener('click', async () => {
     const u = globalUser?.value?.trim() || '';
     const p = globalPass?.value?.trim() || '';
-    if (!u || !p) { globalLoginMsg.textContent = 'Please enter your username and password.'; return; }
+    if (!u || !p) { globalLoginMsg.textContent = 'Por favor ingrese usuario y contraseña.'; return; }
 
     try {
-      globalLoginMsg.textContent = 'Validating...';
+      globalLoginMsg.textContent = 'Validando...';
       const res = await fetch('/api/login', {
         method:'POST', credentials:'include',
         headers:{ 'Content-Type':'application/json' },
@@ -3168,14 +3133,14 @@ var navEnc = document.getElementById('navEncuesta');
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        globalLoginMsg.textContent = `Login failed (HTTP ${res.status}): ${data.error || data.raw || 'no detail'}`;
+        globalLoginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
         return;
       }
       globalLoginMsg.textContent = '';
       closeModal();
       await refreshSession();
     } catch (e) {
-      globalLoginMsg.textContent = 'Connection error.';
+      globalLoginMsg.textContent = 'Error de conexión.';
     }
   });
 
@@ -3183,50 +3148,6 @@ var navEnc = document.getElementById('navEncuesta');
     await fetch('/api/logout', { method:'POST', credentials:'include' }).catch(() => {});
     closeModal();
     await refreshSession();
-  });
-
-  // === LANGUAGE SELECTOR ===
-  function openLanguageSelector() {
-    const modal = document.getElementById('languageModal');
-    if (modal) modal.style.display = 'flex';
-  }
-  function closeLanguageSelector() {
-    const modal = document.getElementById('languageModal');
-    if (modal) modal.style.display = 'none';
-  }
-  async function selectLanguage(lang) {
-    CHOSEN_LANGUAGE = lang;
-    ROUTING_QUESTION = null;
-    closeLanguageSelector();
-    const backBtn = document.getElementById('btnPrivacyBack');
-    if (backBtn) backBtn.style.display = 'inline-flex';
-    await showPauseModal(PAUSE_CONFIGS[0]);
-    openPrivacyModal();
-  }
-  document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
-  document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
-  document.getElementById('btnLangCancel')?.addEventListener('click', () => {
-    closeLanguageSelector();
-    applySessionToUI();
-  });
-  document.getElementById('languageModal')?.addEventListener('click', (e) => {
-    if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
-  });
-
-  // Privacy back → language selector
-  document.getElementById('btnPrivacyBack')?.addEventListener('click', () => {
-    closePrivacyModal();
-    openLanguageSelector();
-  });
-
-  // Routing back → privacy modal
-  document.getElementById('btnRoutingBack')?.addEventListener('click', () => {
-    routingBox.style.display = 'none';
-    routingMsg.textContent = '';
-    if (encuestaOK) { encuestaOK.style.pointerEvents = 'auto'; encuestaOK.style.opacity = ''; }
-    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = false;
-    if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = false;
-    openPrivacyModal();
   });
 
   // === MODAL PRIVACIDAD ===
@@ -3249,7 +3170,6 @@ var navEnc = document.getElementById('navEncuesta');
 
   btnPrivacyContinue?.addEventListener('click', async () => {
     closePrivacyModal();
-    if (document.getElementById('btnPrivacyBack')) document.getElementById('btnPrivacyBack').style.display = 'none';
     await showRoutingQuestion();
   });
 
@@ -3260,14 +3180,9 @@ var navEnc = document.getElementById('navEncuesta');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-    CHOSEN_LANGUAGE = window.sessionState.language || 'en';
-    ROUTING_QUESTION = null;
-    if (CHOSEN_LANGUAGE === 'both') {
-      openLanguageSelector();
-    } else {
-      await showPauseModal(PAUSE_CONFIGS[0]);
-      openPrivacyModal();
-    }
+    // Show welcome message first, then privacy modal
+    await showPauseModal(getActivePauseConfigs()[0]);
+    openPrivacyModal();
   });
 
   btnSolicitarAnalisis?.addEventListener('click', () => {
@@ -3294,14 +3209,14 @@ var navEnc = document.getElementById('navEncuesta');
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        alert('Could not request analysis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'no detail'));
+        alert('No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'sin detalle'));
         return;
       }
 
-      alert('Request sent.\n\nThe system will perform the survey analysis.\nYou can go to the "RESULTS" tab to view the analysis.');
+      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
     } catch (e) {
-      alert('Connection error while requesting analysis.\n\n' + (e?.message || String(e)));
+      alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
     }
   });
 
@@ -3320,11 +3235,12 @@ var navEnc = document.getElementById('navEncuesta');
 
   async function loadRoutingQuestion() {
     if (ROUTING_QUESTION) return;
-    const res = await fetch('/api/routing-config', { credentials: 'include' });
-    if (!res.ok) { alert(`ERROR: Could not load graof configuration (HTTP ${res.status})`); return; }
+    const langParam = (CHOSEN_LANGUAGE && CHOSEN_LANGUAGE !== 'both') ? `?lang=${CHOSEN_LANGUAGE}` : '';
+    const res = await fetch(`/api/routing-config${langParam}`, { credentials: 'include' });
+    if (!res.ok) { alert(`ERROR: No se pudo cargar la configuración de grados (HTTP ${res.status})`); return; }
     const data = await res.json();
     if (!data.ok) { alert(`ERROR: ${data.error || 'No se pudo cargar routing-config'}`); return; }
-    // Normalize to the same shape the rest of the coof expects
+    // Normalize to the same shape the rest of the code expects
     ROUTING_QUESTION = {
       question_id: "zero_general_grado",
       text: data.question_text,
@@ -3341,7 +3257,7 @@ var navEnc = document.getElementById('navEncuesta');
     await loadRoutingQuestion();
     if (!ROUTING_QUESTION) return;
 
-    routingTitle.textContent = 'Question 0 — General Information';
+    routingTitle.textContent = 'Pregunta 0 — Información General';
     routingText.textContent = ROUTING_QUESTION.text;
 
     routingOptions.innerHTML = ROUTING_QUESTION.options.map(o => `
@@ -3355,18 +3271,18 @@ var navEnc = document.getElementById('navEncuesta');
     routingBox.style.display = 'block';
   }
 
-  // Handle "Next" on the routing question
+  // Handle "Siguiente" on the routing question
   btnRoutingNext?.addEventListener('click', async () => {
     const checked = document.querySelector('input[name="routingAnswer"]:checked');
     if (!checked) {
-      routingMsg.textContent = 'Please select your grade to continue.';
+      routingMsg.textContent = 'Selecciona tu grado para continuar.';
       return;
     }
 
     const selectedCode = checked.value;
     const routingRules = ROUTING_QUESTION.routing_rules;
 
-    // Find which route_key this graof belongs to
+    // Find which route_key this grade belongs to
     let targetSurveyFile = null;
     for (const [routeKey, config] of Object.entries(routingRules)) {
       if (config.grade_codes.includes(selectedCode)) {
@@ -3376,21 +3292,21 @@ var navEnc = document.getElementById('navEncuesta');
     }
 
     if (!targetSurveyFile) {
-      routingMsg.textContent = 'Grade not recognized. Please contact the administrator.';
+      routingMsg.textContent = 'Grado no reconocido. Contacta al administrador.';
       return;
     }
 
-    routingMsg.textContent = 'Loading survey...';
+    routingMsg.textContent = 'Cargando encuesta...';
     btnRoutingNext.disabled = true;
 
     try {
       // Load the correct survey
       const surveyRes = await fetch(targetSurveyFile, { cache: 'no-store' });
-      if (!surveyRes.ok) { alert('Could not load the survey'); btnRoutingNext.disabled = false; return; }
+      if (!surveyRes.ok) { alert('No se pudo cargar la encuesta'); btnRoutingNext.disabled = false; return; }
       SURVEY = await surveyRes.json();
 
       targetSurveyId = SURVEY.survey?.survey_uuid;
-      if (!targetSurveyId) { alert('Error: survey_uuid not found in survey file.'); btnRoutingNext.disabled = false; return; }
+      if (!targetSurveyId) { alert('Error: survey_uuid no encontrado en el archivo de encuesta.'); btnRoutingNext.disabled = false; return; }
 
       // Create the response now that we know which survey
       const startRes = await fetch('/api/start-response', {
@@ -3400,7 +3316,7 @@ var navEnc = document.getElementById('navEncuesta');
       });
       const startData = await startRes.json().catch(() => ({}));
       if (!startData.ok) {
-        alert('Error starting response: ' + (startData.error || 'no detail'));
+        alert('Error al iniciar respuesta: ' + (startData.error || 'sin detalle'));
         btnRoutingNext.disabled = false;
         return;
       }
@@ -3413,7 +3329,7 @@ var navEnc = document.getElementById('navEncuesta');
       const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
       const mapData = await mapRes.json().catch(() => ({}));
       if (!mapData.ok) {
-        alert('Could not load question map: ' + (mapData.error || 'no detail'));
+        alert('No se pudo cargar mapa de preguntas: ' + (mapData.error || 'sin detalle'));
         btnRoutingNext.disabled = false;
         return;
       }
@@ -3421,8 +3337,8 @@ var navEnc = document.getElementById('navEncuesta');
 
       // Look up the DB id for zero_general_grado by scanning the map for that external_id
       // The map is { "questionNumber": "dbUUID" } keyed by question number.
-      // Yesnce zero_general_grado is NOT in either survey anymore, we need to get its DB id
-      // via a ofdicated endpoint or by passing the external_id directly.
+      // Since zero_general_grado is NOT in either survey anymore, we need to get its DB id
+      // via a dedicated endpoint or by passing the external_id directly.
       // We use a separate lightweight call to resolve it by external_id.
       const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_grado`, { credentials: 'include' });
       const gradeQData = await gradeQRes.json().catch(() => ({}));
@@ -3436,22 +3352,22 @@ var navEnc = document.getElementById('navEncuesta');
             responseId: window.currentResponseId,
             questionId: gradeQData.questionId,
             answerText: null,
-            selectedOptionIds: [selectedCode]   // selectedCode is the option coof (e.g. "1","7", etc.)
+            selectedOptionIds: [selectedCode]   // selectedCode is the option code (e.g. "1","7", etc.)
           })
         });
       }
       // Note: if the endpoint doesn't exist yet, the grade answer save is skipped gracefully
       // but the survey still proceeds correctly.
 
-      // Hiof routing box, start the actual survey
+      // Hide routing box, start the actual survey
       routingBox.style.display = 'none';
       routingMsg.textContent = '';
 
       // Clear options cache so any DB changes are picked up fresh
       OPTIONS_CACHE = {};
 
-      // Detect primaria survey and apply large-font moof
-      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria' || SURVEY.survey?.description === 'elementary');
+      // Detect primaria survey and apply large-font mode
+      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria');
       if (IS_PRIMARIA) {
         surveyBox.classList.add('primaria-mode');
       } else {
@@ -3473,7 +3389,7 @@ var navEnc = document.getElementById('navEncuesta');
       renderCurrentQuestion();
 
     } catch (e) {
-      routingMsg.textContent = 'Connection error. Please try again.';
+      routingMsg.textContent = 'Error de conexión. Intenta de nuevo.';
       console.error(e);
     } finally {
       btnRoutingNext.disabled = false;
@@ -3563,14 +3479,14 @@ var navEnc = document.getElementById('navEncuesta');
     document.getElementById('finishStatQuestions').textContent = totalQuestions || 56;
     if (IS_PRIMARIA) {
       document.querySelector('.finish-trophy').textContent       = '🦸';
-      document.querySelector('.finish-level-badge').innerHTML   = '🌟 MISSION COMPLETE!';
-      document.querySelector('.finish-headline').innerHTML      = 'You did it!<br><em>You are a true superhero!</em>';
-      document.querySelector('.finish-body').innerHTML          = 'You answered all the questions! 🎉<br>Thank you for helping make your school better. 🌟';
+      document.querySelector('.finish-level-badge').innerHTML   = '🌟 ¡MISIÓN CUMPLIDA!';
+      document.querySelector('.finish-headline').innerHTML      = '¡Lo lograste!<br><em>¡Eres un verdadero superhéroe!</em>';
+      document.querySelector('.finish-body').innerHTML          = '¡Respondiste todas las preguntas! 🎉<br>Gracias por ayudar a hacer tu escuela mejor. 🌟';
     } else {
       document.querySelector('.finish-trophy').textContent       = '🏆';
-      document.querySelector('.finish-level-badge').innerHTML   = '💎 LEGEND LEVEL UNLOCKED';
-      document.querySelector('.finish-headline').innerHTML      = 'You did it!<br><em>You are part of the change.</em>';
-      document.querySelector('.finish-body').innerHTML          = 'Completaste la encuesta of principio a fin. Eso dice mucho of ti.<br>Tus respuestas van a ayudar a hacer tu escuela un lugar mejor — aunque nunca lo sepas.';
+      document.querySelector('.finish-level-badge').innerHTML   = '💎 NIVEL LEYENDA DESBLOQUEADO';
+      document.querySelector('.finish-headline').innerHTML      = '¡Lo lograste!<br><em>Eres parte del cambio.</em>';
+      document.querySelector('.finish-body').innerHTML          = 'Completaste la encuesta de principio a fin. Eso dice mucho de ti.<br>Tus respuestas van a ayudar a hacer tu escuela un lugar mejor — aunque nunca lo sepas.';
     }
     document.getElementById('finishModal').classList.add('open');
     startConfetti();
@@ -3591,30 +3507,30 @@ var navEnc = document.getElementById('navEncuesta');
     {
       pct: 0,
       badgeIcon: '',
-      badgeText: 'Welcome',
-      headline: 'You are about to do something important.',
-      body: 'This survey is your voice. No one else can say what you experienced. There are no right or wrong answers — only your real experience.'
+      badgeText: 'Bienvenida',
+      headline: 'Estás a punto de hacer algo importante.',
+      body: 'Esta encuesta es tu voz. Nadie más puede decir lo que tú viviste. No hay respuestas correctas ni incorrectas — solo tu experiencia real.'
     },
     {
       pct: 0.20,
       badgeIcon: '🥈',
-      badgeText: 'Silver Level',
-      headline: 'You started! You\'re 20% done — keep going.',
-      body: 'Every answer you give builds a real map of your school. Information that adults need but only you can provide.\n\n🥈 You unlocked Silver Level!'
+      badgeText: 'Nivel Plata',
+      headline: '¡Ya arrancaste! Llevas el 20% — vas bien.',
+      body: 'Cada respuesta que das construye un mapa real de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
     },
     {
       pct: 0.55,
       badgeIcon: '🥇',
-      badgeText: 'Gold Level',
-      headline: 'More than halfway. Not everyone makes it this far.',
-      body: 'The next questions are the most important in the entire survey. What you answer here is what helps change things in your school the most.\n\n🥇 You unlocked Gold Level!'
+      badgeText: 'Nivel Oro',
+      headline: 'Más de la mitad. No cualquiera llega hasta aquí.',
+      body: 'Las próximas preguntas son las más importantes de toda la encuesta. Lo que respondas aquí es lo que más ayuda a cambiar las cosas en tu escuela.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
     },
     {
       pct: 0.80,
       badgeIcon: '💎',
-      badgeText: 'Platinum Level',
-      headline: 'Almost there. Just a little more.',
-      body: 'You did the hard part. The last questions are quick. Finish strong — your school needs it.\n\n💎 Platinum Level unlocked! You are almost a legend.'
+      badgeText: 'Nivel Platino',
+      headline: 'Casi estás. Solo falta un poco.',
+      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Nivel Platino desbloqueado! Ya casi eres una leyenda.'
     }
   ];
 
@@ -3622,30 +3538,30 @@ var navEnc = document.getElementById('navEncuesta');
     {
       pct: 0,
       badgeIcon: '🦸',
-      badgeText: 'Today you are a superhero!',
-      headline: 'Today you are a superhero! 🦸',
-      body: 'You are going to answer questions about your school.\n\nThere are no wrong answers — only yours!'
+      badgeText: '¡Hoy eres un superhéroe!',
+      headline: '¡Hoy eres un superhéroe! 🦸',
+      body: 'Vas a responder preguntas sobre tu escuela.\n\n¡No hay respuestas malas — solo las tuyas!'
     },
     {
       pct: 0.20,
       badgeIcon: '⚡',
-      badgeText: 'Power unlocked!',
-      headline: '⚡ You unlocked your first power!',
-      body: 'You are doing great! Keep it up.'
+      badgeText: '¡Poder desbloqueado!',
+      headline: '⚡ ¡Desbloqueaste tu primer poder!',
+      body: '¡Vas súper bien! Sigue así.'
     },
     {
       pct: 0.55,
       badgeIcon: '💪',
-      badgeText: 'Super Strength activated!',
-      headline: '💪 You activated Super Strength!',
-      body: 'You are more than halfway!\n\nYou are amazing!'
+      badgeText: '¡Super Fuerza activada!',
+      headline: '💪 ¡Activaste la Super Fuerza!',
+      body: '¡Ya vas por más de la mitad!\n\n¡Eres increíble!'
     },
     {
       pct: 0.80,
       badgeIcon: '🚀',
-      badgeText: 'Hero Mode activated!',
-      headline: '🚀 Hero Mode activated!',
-      body: 'Almost done!\n\nA little more and you are a legend.'
+      badgeText: '¡Modo Héroe activado!',
+      headline: '🚀 ¡Modo Héroe activado!',
+      body: '¡Casi terminas!\n\nUn poquito más y eres una leyenda.'
     }
   ];
 
@@ -3706,7 +3622,7 @@ var navEnc = document.getElementById('navEncuesta');
     try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
     if (!res.ok || !data.ok) {
-      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "no detail"}`);
+      throw new Error(`No se pudieron cargar opciones para ${questionId}: ${data.error || data.raw || "sin detalle"}`);
     }
 
     OPTIONS_CACHE[questionId] = Array.isArray(data.options) ? data.options : [];
@@ -3732,8 +3648,8 @@ var navEnc = document.getElementById('navEncuesta');
     const isMilestone = MILESTONE_QUESTIONS.has(qNum) || qNum === total;
     document.getElementById('surveyModalCounter').textContent =
       isMilestone
-        ? `Question ${qNum} of ${total}`
-        : `Question ${qNum} of ${total}`;
+        ? `Pregunta ${qNum} de ${total}`
+        : `Pregunta ${qNum} de ${total}`;
     // Bold on milestones
     document.getElementById('surveyModalCounter').style.fontSize = isMilestone ? '13px' : '11px';
   }
@@ -3757,12 +3673,12 @@ var navEnc = document.getElementById('navEncuesta');
 
     if (question.type === 'single_choice') {
       if (!dbQid) {
-        optionsDiv.innerHTML = `<div class="statusMsg statusErr">Could not resolve questionId for question #${question.number}.</div>`;
+        optionsDiv.innerHTML = `<div class="statusMsg statusErr">No se pudo resolver questionId para la pregunta #${question.number}.</div>`;
         return;
       }
 
       if (isDemographicExternalId(ext)) {
-        optionsDiv.innerHTML = `<select id="answerSelect" class="survey-modal-select"><option value="">Loading...</option></select>`;
+        optionsDiv.innerHTML = `<select id="answerSelect" class="survey-modal-select"><option value="">Cargando...</option></select>`;
         (async () => {
           try {
             const opts = await getOptionsForQuestion(dbQid);
@@ -3775,12 +3691,12 @@ var navEnc = document.getElementById('navEncuesta');
           }
         })();
       } else {
-        optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Loading options...</div>`;
+        optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
         const iconLabels = ['A','B','C','D','E','F'];
         (async () => {
           try {
             const opts = await getOptionsForQuestion(dbQid);
-            if (!opts.length) { optionsDiv.innerHTML = `<div class="statusMsg statusErr">This question has no options.</div>`; return; }
+            if (!opts.length) { optionsDiv.innerHTML = `<div class="statusMsg statusErr">Esta pregunta no tiene opciones.</div>`; return; }
             optionsDiv.innerHTML = '';
             opts.forEach((o, i) => {
               const txt = (o.option_text ?? o.option_code ?? '').toString();
@@ -3800,20 +3716,20 @@ var navEnc = document.getElementById('navEncuesta');
         })();
       }
     } else if (question.type === 'text') {
-      optionsDiv.innerHTML = `<input class="survey-modal-text-input" type="text" id="answerText" placeholder="Write your response" />`;
+      optionsDiv.innerHTML = `<input class="survey-modal-text-input" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
     }
 
     document.getElementById('btnSurveyModalPrev').disabled = (currentQuestionIndex === 0);
     document.getElementById('btnSurveyModalNext').textContent =
-      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finish ✓' : 'Next →';
+      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar ✓' : 'Siguiente →';
   }
 
   async function saveCurrentAnswerOrStop() {
     const q = SURVEY?.questions?.[currentQuestionIndex];
-    if (!q) { alert('No current question'); return false; }
+    if (!q) { alert('No hay pregunta actual'); return false; }
 
     const questionId = getDbQuestionIdByNumber(q.number);
-    if (!questionId) { alert('Could not resolve questionId for number: ' + q.number); return false; }
+    if (!questionId) { alert('No se pudo resolver questionId para number: ' + q.number); return false; }
 
     let answerText = null;
     let selectedOptionIds = [];
@@ -3834,14 +3750,14 @@ var navEnc = document.getElementById('navEncuesta');
     const required = (q.required === undefined) ? true : !!q.required;
     if (required) {
       if (q.type === 'text') {
-        if (!answerText) { document.getElementById('surveyModalMsg').textContent = 'Please write a response to continue.'; return false; }
+        if (!answerText) { document.getElementById('surveyModalMsg').textContent = 'Escribe una respuesta para continuar.'; return false; }
       } else {
-        if (selectedOptionIds.length === 0) { document.getElementById('surveyModalMsg').textContent = 'Please select an option to continue.'; return false; }
+        if (selectedOptionIds.length === 0) { document.getElementById('surveyModalMsg').textContent = 'Selecciona una opción para continuar.'; return false; }
       }
     }
 
     const responseId = window.currentResponseId;
-    if (!responseId) { alert('Missing responseId (please log in and try again).'); return false; }
+    if (!responseId) { alert('Falta responseId (inicia sesión y vuelve a intentar).'); return false; }
 
     const r = await fetch('/api/save-answer', {
       method: 'POST', credentials: 'include',
@@ -3854,7 +3770,7 @@ var navEnc = document.getElementById('navEncuesta');
     try { j = raw ? JSON.parse(raw) : {}; } catch { j = { raw }; }
 
     if (!r.ok || !j.ok) {
-      alert('Could not save (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
+      alert('No se pudo guardar (HTTP ' + r.status + '):\n' + JSON.stringify(j, null, 2));
       return false;
     }
     return true;
@@ -3903,11 +3819,11 @@ var navEnc = document.getElementById('navEncuesta');
       try { j3 = raw3 ? JSON.parse(raw3) : {}; } catch { j3 = { raw3 }; }
 
       if (!r3.ok || !j3.ok) {
-        alert('Could not submit the survey (HTTP ' + r3.status + '):\n' + JSON.stringify(j3, null, 2));
+        alert('No se pudo finalizar la encuesta (HTTP ' + r3.status + '):\n' + JSON.stringify(j3, null, 2));
         return;
       }
     } catch (e) {
-      alert('Connection error while submitting the survey.');
+      alert('Error de conexión al finalizar la encuesta.');
       return;
     }
 
@@ -3970,7 +3886,7 @@ var navEnc = document.getElementById('navEncuesta');
   btnPinConfirm?.addEventListener('click', async () => {
     const pin = pinInputs.map(el => el.value).join('');
     if (pin.length < 4) {
-      pinMsg.textContent = 'Enter all 4 digits.';
+      pinMsg.textContent = 'Ingresa los 4 dígitos.';
       return;
     }
 
@@ -3990,7 +3906,7 @@ var navEnc = document.getElementById('navEncuesta');
 
       if (!res.ok || !data.ok) {
         pinInputs.forEach(el => el.classList.add('error'));
-        pinMsg.textContent = data.error || 'Incorrect PIN';
+        pinMsg.textContent = data.error || 'PIN incorrecto';
         pinInputs.forEach(el => { el.value = ''; el.classList.remove('error'); });
         pinInputs[0].focus();
         return;
@@ -4011,7 +3927,7 @@ var navEnc = document.getElementById('navEncuesta');
       applySessionToUI();
 
     } catch (e) {
-      pinMsg.textContent = 'Connection error.';
+      pinMsg.textContent = 'Error de conexión.';
     } finally {
       btnPinConfirm.disabled = false;
     }
@@ -4053,7 +3969,7 @@ var navEnc = document.getElementById('navEncuesta');
 
   btnMPinConfirm?.addEventListener('click', async () => {
     const pin = mpinInputs.map(el => el.value).join('');
-    if (pin.length < 4) { mpinMsg.textContent = 'Enter all 4 digits.'; return; }
+    if (pin.length < 4) { mpinMsg.textContent = 'Ingresa los 4 dígitos.'; return; }
 
     const responseId = window.currentResponseId;
     if (!responseId) { closeModalPinPanel(); document.getElementById('surveyModal').classList.remove('open'); return; }
@@ -4072,7 +3988,7 @@ var navEnc = document.getElementById('navEncuesta');
       if (!res.ok || !data.ok) {
         mpinInputs.forEach(el => { el.value = ''; el.classList.add('error'); });
         setTimeout(() => mpinInputs.forEach(el => el.classList.remove('error')), 600);
-        mpinMsg.textContent = data.error || 'Incorrect PIN';
+        mpinMsg.textContent = data.error || 'PIN incorrecto';
         mpinInputs[0].focus();
         return;
       }
@@ -4093,7 +4009,7 @@ var navEnc = document.getElementById('navEncuesta');
       applySessionToUI();
 
     } catch (e) {
-      mpinMsg.textContent = 'Connection error.';
+      mpinMsg.textContent = 'Error de conexión.';
     } finally {
       btnMPinConfirm.disabled = false;
     }
@@ -4108,7 +4024,7 @@ var navEnc = document.getElementById('navEncuesta');
   let datosIndex = 0;
   let datosLoadedOnce = false;
 
-  const elName = document.getElementById('d_nombre');
+  const elNombre = document.getElementById('d_nombre');
   const elApPaterno = document.getElementById('d_ap_paterno');
   const elApMaterno = document.getElementById('d_ap_materno');
   const elEst = document.getElementById('d_establecimiento');
@@ -4123,7 +4039,7 @@ var navEnc = document.getElementById('navEncuesta');
   }
 
   function fillFields(row) {
-    elName.value = row?.first_name ?? '';
+    elNombre.value = row?.first_name ?? '';
     elApPaterno.value = row?.pat_last_name ?? '';
     elApMaterno.value = row?.mat_last_name ?? '';
     elEst.value = row?.school_id ?? '';
@@ -4145,20 +4061,20 @@ var navEnc = document.getElementById('navEncuesta');
   }
 
   async function loadCurrent() {
-    setStatus("Loading data...", "statusWarn");
+    setStatus("Cargando datos...", "statusWarn");
     try {
       const result = await fetchOneRow(datosIndex);
-      if (!result.ok) { setStatus(`Could not read encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr"); fillFields(null); return; }
+      if (!result.ok) { setStatus(`No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr"); fillFields(null); return; }
       const arr = Array.isArray(result.json) ? result.json : [];
       if (arr.length === 0) {
-        if (datosIndex === 0) { setStatus("The encargado_escolar table is empty.", "statusWarn"); }
-        else { setStatus("No more records.", "statusWarn"); datosIndex = Math.max(0, datosIndex - 1); }
+        if (datosIndex === 0) { setStatus("La tabla encargado_escolar está vacía.", "statusWarn"); }
+        else { setStatus("No hay más registros.", "statusWarn"); datosIndex = Math.max(0, datosIndex - 1); }
         fillFields(null); return;
       }
       fillFields(arr[0]);
-      setStatus(`Showing record #${datosIndex + 1}`, "statusOk");
+      setStatus(`Mostrando registro #${datosIndex + 1}`, "statusOk");
     } catch (e) {
-      setStatus("Connection error with Supabase.", "statusErr"); fillFields(null);
+      setStatus("Error de conexión con Supabase.", "statusErr"); fillFields(null);
     }
   }
 
@@ -4173,9 +4089,9 @@ var navEnc = document.getElementById('navEncuesta');
   };
 
   // === CONTACTO ===
-  const cName = document.getElementById('c_nombre');
+  const cNombre = document.getElementById('c_nombre');
   const cEmail  = document.getElementById('c_email');
-  const cSubject = document.getElementById('c_asunto');
+  const cAsunto = document.getElementById('c_asunto');
   const cMensaje= document.getElementById('c_mensaje');
   const cCompany= document.getElementById('c_company');
   const btnEnviarContacto = document.getElementById('btnEnviarContacto');
@@ -4190,31 +4106,31 @@ var navEnc = document.getElementById('navEncuesta');
   }
 
   btnLimpiarContacto?.addEventListener('click', () => {
-    if (cName) cName.value = '';
+    if (cNombre) cNombre.value = '';
     if (cEmail) cEmail.value = '';
-    if (cSubject) cSubject.value = '';
+    if (cAsunto) cAsunto.value = '';
     if (cMensaje) cMensaje.value = '';
     if (cCompany) cCompany.value = '';
     setContactoMsg('', 'statusWarn');
   });
 
   btnEnviarContacto?.addEventListener('click', async () => {
-    const name = cName?.value?.trim() || '';
+    const name = cNombre?.value?.trim() || '';
     const email = cEmail?.value?.trim() || '';
-    const subject = cSubject?.value?.trim() || '';
+    const subject = cAsunto?.value?.trim() || '';
     const message = cMensaje?.value?.trim() || '';
     const hp = cCompany?.value?.trim() || '';
 
     if (!name || !email || !subject || !message) {
-      setContactoMsg('Please complete name, email, subject and message.', 'statusWarn'); return;
+      setContactoMsg('Por favor completa nombre, email, asunto y mensaje.', 'statusWarn'); return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setContactoMsg('Invalid email. Please check the format.', 'statusWarn'); return;
+      setContactoMsg('Email inválido. Revisa el formato.', 'statusWarn'); return;
     }
 
     try {
       btnEnviarContacto.disabled = true;
-      setContactoMsg('Sending...', 'statusWarn');
+      setContactoMsg('Enviando...', 'statusWarn');
 
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -4227,13 +4143,13 @@ var navEnc = document.getElementById('navEncuesta');
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        setContactoMsg(`Could not send (HTTP ${res.status}): ${data.error || data.raw || 'no detail'}`, 'statusErr'); return;
+        setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`, 'statusErr'); return;
       }
 
-      setContactoMsg('Message sent. Thank you!', 'statusOk');
+      setContactoMsg('Mensaje enviado. ¡Gracias!', 'statusOk');
       btnLimpiarContacto?.click();
     } catch (e) {
-      setContactoMsg('Connection error while sending the message.', 'statusErr');
+      setContactoMsg('Error de conexión al enviar el mensaje.', 'statusErr');
     } finally {
       btnEnviarContacto.disabled = false;
     }
@@ -4270,7 +4186,7 @@ var navEnc = document.getElementById('navEncuesta');
     try {
       const res = await fetch('/api/list-approved-analyses', { credentials: 'include' });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) throw new Error(data.error || 'Error loading analyses');
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Error al cargar análisis');
 
       analysesLoading.style.display = 'none';
       if (!data.analyses || data.analyses.length === 0) { analysesEmpty.style.display = 'block'; return; }
@@ -4295,9 +4211,9 @@ var navEnc = document.getElementById('navEncuesta');
           <div class="analysisInfo">
             <div class="analysisDate">${analysisDate}</div>
             <div class="analysisStats">
-              <div class="analysisStat"><span class="statLabel">Students:</span><span class="statValue">${analysis.total_students}</span></div>
-              <div class="analysisStat"><span class="statLabel">Range:</span><span class="statValue">${dateRange}</span></div>
-              <span class="statusBadge">Approved</span>
+              <div class="analysisStat"><span class="statLabel">Estudiantes:</span><span class="statValue">${analysis.total_students}</span></div>
+              <div class="analysisStat"><span class="statLabel">Rango:</span><span class="statValue">${dateRange}</span></div>
+              <span class="statusBadge">Aprobado</span>
             </div>
           </div>
         </label>
@@ -4337,7 +4253,7 @@ var navEnc = document.getElementById('navEncuesta');
   selectAnalysisModal?.addEventListener('click', (e) => { if (e.target === selectAnalysisModal) closeSelectAnalysisModal(); });
 
   btnViewSelectedAnalysis?.addEventListener('click', () => {
-    if (!selectedAnalysisData) { alert('Please select an analysis'); return; }
+    if (!selectedAnalysisData) { alert('Por favor selecciona un análisis'); return; }
     const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
     const url = `${baseUrl}?school_id=${encodeURIComponent(window.sessionState.school_id)}&analysis_dt=${encodeURIComponent(selectedAnalysisData.analysis_date)}`;
     window.location.href = url;
@@ -4394,7 +4310,7 @@ var navEnc = document.getElementById('navEncuesta');
       adminIcon.classList.remove('authenticated');
       adminIcon.title = 'Admin Access';
       if (!window.sessionState.ok && sessionBadge) {
-        sessionBadge.textContent = 'Not authenticated';
+        sessionBadge.textContent = 'No autenticado';
         sessionBadge.classList.remove('badgeOk');
         sessionBadge.classList.add('badgeNo');
       }
@@ -4645,12 +4561,12 @@ var navEnc = document.getElementById('navEncuesta');
         `).join('');
     }
 
-    // Renofr on country change
+    // Render on country change
     addSchoolCountry?.addEventListener('change', () => {
       renderEnrollmentFields(addSchoolCountry.value);
     });
 
-    // Initial renofr
+    // Initial render
     renderEnrollmentFields('MX');
 
     let schoolFormData = {};
@@ -4786,7 +4702,7 @@ var navEnc = document.getElementById('navEncuesta');
 <!-- ADD SCHOOL MODAL - STEP 1 -->
 <div id="addSchoolModal1" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
-    <div class="modalHeaofr">
+    <div class="modalHeader">
       <h3 class="modalTitle">Add New School - Step 1 of 2</h3>
       <button id="addSchoolClose1" class="modalClose" type="button">X</button>
     </div>
@@ -4795,7 +4711,7 @@ var navEnc = document.getElementById('navEncuesta');
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolName">School Name *</label><br />
-          <input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Lincoln Elementary School" style="width:100%; max-width:100%;" />
+          <input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Escuela Primaria Benito Juárez" style="width:100%; max-width:100%;" />
         </div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolUsername">Username *</label><br />
@@ -4834,7 +4750,7 @@ var navEnc = document.getElementById('navEncuesta');
 <!-- ADD SCHOOL MODAL - STEP 2 -->
 <div id="addSchoolModal2" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
-    <div class="modalHeaofr">
+    <div class="modalHeader">
       <h3 class="modalTitle">Add New School - Step 2 of 2</h3>
       <button id="addSchoolClose2" class="modalClose" type="button">X</button>
     </div>
@@ -4843,15 +4759,15 @@ var navEnc = document.getElementById('navEncuesta');
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncFirstName">First Name *</label><br />
-          <input id="addEncFirstName" class="textInput" type="text" placeholder="e.g., Maria" style="width:100%; max-width:100%;" />
+          <input id="addEncFirstName" class="textInput" type="text" placeholder="e.g., María" style="width:100%; max-width:100%;" />
         </div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncPatLastName">Paternal Last Name *</label><br />
-          <input id="addEncPatLastName" class="textInput" type="text" placeholder="e.g., Garcia" style="width:100%; max-width:100%;" />
+          <input id="addEncPatLastName" class="textInput" type="text" placeholder="e.g., García" style="width:100%; max-width:100%;" />
         </div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncMatLastName">Maternal Last Name</label><br />
-          <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., Lopez (optional)" style="width:100%; max-width:100%;" />
+          <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López (optional)" style="width:100%; max-width:100%;" />
         </div>
       </div>
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
