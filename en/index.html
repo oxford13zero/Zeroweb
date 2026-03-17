@@ -319,49 +319,32 @@ window.addEventListener('popstate', function(e) {
 
     
   </script>
-
 <style>
 #debugPanel {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: #0a1520;
-  border-top: 2px solid #D6A21C;
-  color: #fff;
-  font-family: monospace;
-  font-size: 12px;
-  z-index: 99999;
-  max-height: 260px;
-  overflow-y: auto;
-  padding: 8px 12px;
+  position:fixed; bottom:0; left:0; right:0;
+  background:#0a1520; border-top:2px solid #D6A21C;
+  color:#fff; font-family:monospace; font-size:12px;
+  z-index:99999; max-height:240px; overflow-y:auto; padding:8px 12px;
 }
-#debugPanel .dtitle {
-  color: #D6A21C; font-weight: bold; font-size: 13px;
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 6px;
-}
-#debugPanel .drow {
-  padding: 3px 0; border-bottom: 1px solid #1E2F3F;
-  display: flex; gap: 8px;
-}
-#debugPanel .dstep { color: #a9c0d3; min-width: 30px; }
-#debugPanel .dlabel { color: #69db7c; min-width: 220px; }
-#debugPanel .dval { color: #ffffff; }
-#debugPanel .derr { color: #ff6b6b; }
-#debugPanel .dok  { color: #69db7c; }
-#debugPanel .dwarn{ color: #ffa94d; }
-#debugPanel button {
-  background: #365468; border: none; color: #fff;
-  padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 11px;
-}
+#debugPanel .dtitle { color:#D6A21C; font-weight:bold; font-size:13px;
+  display:flex; justify-content:space-between; margin-bottom:6px; }
+#debugPanel .drow { padding:2px 0; border-bottom:1px solid #1E2F3F; display:flex; gap:8px; }
+#debugPanel .ds { color:#a9c0d3; min-width:28px; }
+#debugPanel .dl { color:#69db7c; min-width:230px; }
+#debugPanel .dv { color:#fff; }
+#debugPanel .de { color:#ff6b6b; }
+#debugPanel .dk { color:#69db7c; }
+#debugPanel .dw { color:#ffa94d; }
+#debugPanel button { background:#365468; border:none; color:#fff;
+  padding:2px 8px; border-radius:4px; cursor:pointer; font-size:11px; }
 </style>
 </head>
 
 <body>
-<!-- ══ DEBUG PANEL ══ -->
 <div id="debugPanel">
   <div class="dtitle">
-    <span>🔍 TECH4ZERO — Language Debug Trace</span>
-    <button onclick="document.getElementById('debugPanel').style.display='none'">Hide</button>
+    <span>🔍 Language Debug Trace</span>
+    <button onclick="this.closest('#debugPanel').style.display='none'">Hide</button>
   </div>
   <div id="debugRows"></div>
 </div>
@@ -4218,89 +4201,92 @@ var navEnc = document.getElementById('navEncuesta');
   });
 
 
-// ══════════════════════════════════════════════
-// DEBUG TRACER — remove before production
-// ══════════════════════════════════════════════
 (function() {
+  var buffer = [];
+  var domReady = false;
   var step = 0;
+
+  function flush() {
+    var container = document.getElementById('debugRows');
+    if (!container) return;
+    buffer.forEach(function(entry) {
+      var row = document.createElement('div');
+      row.className = 'drow';
+      row.innerHTML = '<span class="ds">' + entry.step + '</span>'
+        + '<span class="dl">' + entry.label + '</span>'
+        + '<span class="' + entry.cls + '">' + entry.val + '</span>';
+      container.appendChild(row);
+    });
+    buffer = [];
+    container.scrollTop = container.scrollHeight;
+  }
 
   function dlog(label, val, type) {
     step++;
-    // Wait until DOM is ready before appending
-    var container = document.getElementById('debugRows');
-    if (!container) {
-      console.log('[DEBUG ' + step + '] (panel not ready)', label, val);
-      return;
+    var cls = type === 'err' ? 'de' : type === 'warn' ? 'dw' : type === 'ok' ? 'dk' : 'dv';
+    var entry = { step: step, label: label, val: JSON.stringify(val), cls: cls };
+    console.log('[DBG ' + step + ']', label, val);
+    if (domReady) {
+      buffer.push(entry);
+      flush();
+    } else {
+      buffer.push(entry);
     }
-    var row = document.createElement('div');
-    row.className = 'drow';
-    var cls = type === 'err' ? 'derr' : type === 'warn' ? 'dwarn' : type === 'ok' ? 'dok' : 'dval';
-    row.innerHTML = '<span class="dstep">' + step + '</span>'
-      + '<span class="dlabel">' + label + '</span>'
-      + '<span class="' + cls + '">' + JSON.stringify(val) + '</span>';
-    container.appendChild(row);
-    container.scrollTop = container.scrollHeight;
-    console.log('[DEBUG ' + step + ']', label, val);
   }
   window.dlog = dlog;
 
-  // Patch fetch to intercept /api/me and /api/routing-config
+  document.addEventListener('DOMContentLoaded', function() {
+    domReady = true;
+    flush();
+    dlog('DOM ready + flushed buffer', '', 'warn');
+    dlog('CHOSEN_LANGUAGE', typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'NOT DECLARED YET');
+    setTimeout(function() {
+      dlog('--- after refreshSession ---', '', 'warn');
+      dlog('sessionState.ok',          window.sessionState ? window.sessionState.ok : 'UNDEF');
+      dlog('sessionState.language',    window.sessionState ? window.sessionState.language : 'UNDEF');
+      dlog('sessionState.school_name', window.sessionState ? window.sessionState.school_name : 'UNDEF');
+      dlog('sessionState.country',     window.sessionState ? window.sessionState.country : 'UNDEF');
+      dlog('CHOSEN_LANGUAGE',          typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'UNDEF');
+    }, 2000);
+  });
+
+  // Patch fetch — fires before DOM ready, so entries go to buffer
   var origFetch = window.fetch;
   window.fetch = async function(url, opts) {
-    var result = await origFetch(url, opts);
-    var urlStr = typeof url === 'string' ? url : String(url);
-
-    if (urlStr.includes('/api/me')) {
-      result.clone().json().then(function(data) {
-        dlog('/api/me → ok',          data.ok,                    data.ok ? 'ok' : 'err');
-        dlog('/api/me → school_name', data.school_name || '(none)');
-        dlog('/api/me → language',    data.language    || '(none)', data.language ? 'ok' : 'err');
-        dlog('/api/me → country',     data.country     || '(none)');
-      }).catch(function(e) { dlog('/api/me parse error', e.message, 'err'); });
+    var res = await origFetch(url, opts);
+    var u = typeof url === 'string' ? url : String(url);
+    if (u.includes('/api/me')) {
+      res.clone().json().then(function(d) {
+        dlog('/api/me ok',          d.ok,                    d.ok ? 'ok' : 'err');
+        dlog('/api/me school_name', d.school_name || '(none)');
+        dlog('/api/me language',    d.language    || '(none)', d.language ? 'ok' : 'err');
+        dlog('/api/me country',     d.country     || '(none)');
+      }).catch(function(e) { dlog('/api/me ERROR', e.message, 'err'); });
     }
-
-    if (urlStr.includes('/api/routing-config')) {
-      dlog('routing-config URL', urlStr, 'ok');
-      result.clone().json().then(function(data) {
-        dlog('routing-config → ok',            data.ok,                          data.ok ? 'ok' : 'err');
-        dlog('routing-config → language',      data.language      || '(none)');
-        dlog('routing-config → question_text', data.question_text || '(none)');
-        dlog('routing-config → # options',     (data.options || []).length);
-      }).catch(function(e) { dlog('routing-config parse error', e.message, 'err'); });
+    if (u.includes('/api/routing-config')) {
+      dlog('routing-config URL', u, 'ok');
+      res.clone().json().then(function(d) {
+        dlog('routing-config ok',            d.ok,                         d.ok ? 'ok' : 'err');
+        dlog('routing-config language',      d.language      || '(none)');
+        dlog('routing-config question_text', d.question_text || '(none)');
+        dlog('routing-config # options',     (d.options||[]).length);
+      }).catch(function(e) { dlog('routing-config ERROR', e.message, 'err'); });
     }
-
-    return result;
+    return res;
   };
 
-  // Log on btnIngresarEncuesta click
+  // Log on Enter Survey click
   document.addEventListener('click', function(e) {
     if (e.target && e.target.id === 'btnIngresarEncuesta') {
-      dlog('── btnIngresar clicked ──', '', 'warn');
-      dlog('  CHOSEN_LANGUAGE',    typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'UNDEFINED');
-      dlog('  sessionState.lang',  window.sessionState ? window.sessionState.language : 'UNDEFINED');
-      dlog('  sessionState.ok',    window.sessionState ? window.sessionState.ok       : 'UNDEFINED');
-      dlog('  pathname',           location.pathname);
+      dlog('=== Enter Survey clicked ===', '', 'warn');
+      dlog('CHOSEN_LANGUAGE',         typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'UNDEF');
+      dlog('sessionState.language',   window.sessionState ? window.sessionState.language : 'UNDEF');
+      dlog('pathname',                location.pathname);
     }
   });
 
-  // Wait for DOM then log initial state + schedule post-login check
-  document.addEventListener('DOMContentLoaded', function() {
-    dlog('── Page loaded ──', location.pathname, 'warn');
-    dlog('CHOSEN_LANGUAGE (initial)', typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'not yet declared');
-
-    // After refreshSession completes (~1.5s)
-    setTimeout(function() {
-      dlog('── After refreshSession ──', '', 'warn');
-      dlog('sessionState.ok',          window.sessionState ? window.sessionState.ok          : 'UNDEFINED');
-      dlog('sessionState.language',    window.sessionState ? window.sessionState.language    : 'UNDEFINED');
-      dlog('sessionState.school_name', window.sessionState ? window.sessionState.school_name : 'UNDEFINED');
-      dlog('sessionState.country',     window.sessionState ? window.sessionState.country     : 'UNDEFINED');
-      dlog('CHOSEN_LANGUAGE (now)',    typeof CHOSEN_LANGUAGE !== 'undefined' ? CHOSEN_LANGUAGE : 'UNDEFINED');
-    }, 1500);
-  });
-
+  dlog('Script loaded', location.pathname, 'warn');
 })();
-// ══ END DEBUG ══
 
   refreshSession();
 
