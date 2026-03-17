@@ -563,7 +563,7 @@ window.addEventListener('popstate', function(e) {
 
     <!-- ROUTING QUESTION BOX: shown before survey loads -->
     <div id="routingBox" class="formPanel" style="display:none; margin-top:18px;">
-      <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Pregunta inicial</div>
+      <div id="routingTitle" style="font-weight:700; margin-bottom:10px;">Initial question</div>
       <div id="routingText" style="margin-bottom:12px;"></div>
       <div id="routingOptions"></div>
       <div style="margin-top:14px;">
@@ -1646,7 +1646,7 @@ window.addEventListener('popstate', function(e) {
       <div class="quiz-q-nav">
         <div class="quiz-q-dots" id="quizQDots"></div>
         <button class="quiz-btn-primary" id="quizBtnNext" onclick="quizNextQuestion()" type="button" disabled>
-          Siguiente →
+          Next →
         </button>
       </div>
     </div>
@@ -1894,7 +1894,7 @@ window.addEventListener('popstate', function(e) {
 
     var btn = document.getElementById('quizBtnNext');
     btn.disabled    = !quizAnswers[quizCurrentQ];
-    btn.textContent = quizCurrentQ === QUIZ_QUESTIONS.length - 1 ? 'Ver resultado →' : 'Siguiente →';
+    btn.textContent = quizCurrentQ === QUIZ_QUESTIONS.length - 1 ? 'Ver resultado →' : 'Next →';
 
     document.getElementById('quizQDots').innerHTML = QUIZ_QUESTIONS.map(function(_,i) {
       var cls = 'quiz-q-dot';
@@ -2137,8 +2137,8 @@ window.addEventListener('popstate', function(e) {
 
     <!-- Nav -->
     <div class="survey-modal-nav">
-      <button id="btnSurveyModalPrev" class="btnSecondary" type="button">← Anterior</button>
-      <button id="btnSurveyModalNext" class="btnPrimary"   type="button">Siguiente →</button>
+      <button id="btnSurveyModalPrev" class="btnSecondary" type="button">← Previous</button>
+      <button id="btnSurveyModalNext" class="btnPrimary"   type="button">Next →</button>
     </div>
 
   </div>
@@ -2208,28 +2208,28 @@ window.addEventListener('popstate', function(e) {
 <div id="privacyModal" class="modalOverlay">
   <div class="modalBox" style="max-width:580px;">
     <div class="modalHeader">
-      <h3 class="modalTitle">🔒 Tu privacidad está protegida</h3>
+      <h3 class="modalTitle">🔒 Your privacy is protected</h3>
     </div>
 
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;">
-          <strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>
+          <strong style="color:#D6A21C;">This survey is 100% anonymous and confidential.</strong>
         </p>
         
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ No guardamos tu nombre, ni preguntamos quién eres.
+          ✅ We do not store your name or ask who you are.
         </p>
         
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ Nadie -ni profesores, ni directores, ni otros estudiantes- pueden conocer tus respuestas.
+          ✅ No one — not teachers, principals, or other students — can see your answers.
         </p>
         
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
-          ✅ Tu sinceridad ayuda a crear una escuela más segura para todos.  
+          ✅ Your honesty helps create a safer school for everyone.  
         </p>
         <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
-          <em><strong>Gracias por participar</strong></em>
+          <em><strong>Thank you for participating</strong></em>
         </p>
         
       </div>
@@ -2237,13 +2237,13 @@ window.addEventListener('popstate', function(e) {
       <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
         <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
           <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
-          <span>He leído y entiendo que esta encuesta es anónima y confidencial</span>
+          <span>I have read and understand that this survey is anonymous and confidential</span>
         </label>
       </div>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
-          Continuar con la encuesta
+          Continue to the survey
         </button>
         <button id="btnPrivacyCancel" class="btnSecondary" type="button">
           Cancelar
@@ -2301,17 +2301,17 @@ window.addEventListener('popstate', function(e) {
 <div id="selectAnalysisModal" class="modalOverlay">
   <div class="modalBox" style="max-width:700px;">
     <div class="modalHeader">
-      <h3 class="modalTitle">Seleccionar Análisis</h3>
+      <h3 class="modalTitle">Select Analysis</h3>
       <button id="selectAnalysisClose" class="modalClose" type="button">X</button>
     </div>
 
     <div style="padding:8px 0;">
       <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
-        Selecciona el análisis que deseas visualizar:
+        Select the analysis you want to view:
       </p>
 
       <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
-        <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
+        <div class="statusMsg statusWarn">Loading available analyses...</div>
       </div>
 
       <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
@@ -2329,7 +2329,7 @@ window.addEventListener('popstate', function(e) {
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnViewSelectedAnalysis" class="btnPrimary" type="button" disabled>
-          Ver Análisis Seleccionado
+          View Selected Analysis
         </button>
         <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
           Cancelar
@@ -3257,7 +3257,7 @@ var navEnc = document.getElementById('navEncuesta');
     await loadRoutingQuestion();
     if (!ROUTING_QUESTION) return;
 
-    routingTitle.textContent = 'Pregunta 0 — Información General';
+    routingTitle.textContent = 'Question 0 — General Information';
     routingText.textContent = ROUTING_QUESTION.text;
 
     routingOptions.innerHTML = ROUTING_QUESTION.options.map(o => `
@@ -3275,7 +3275,7 @@ var navEnc = document.getElementById('navEncuesta');
   btnRoutingNext?.addEventListener('click', async () => {
     const checked = document.querySelector('input[name="routingAnswer"]:checked');
     if (!checked) {
-      routingMsg.textContent = 'Selecciona tu grado para continuar.';
+      routingMsg.textContent = 'Please select your grade to continue.';
       return;
     }
 
@@ -3292,21 +3292,21 @@ var navEnc = document.getElementById('navEncuesta');
     }
 
     if (!targetSurveyFile) {
-      routingMsg.textContent = 'Grado no reconocido. Contacta al administrador.';
+      routingMsg.textContent = 'Grade not recognized. Please contact your administrator.';
       return;
     }
 
-    routingMsg.textContent = 'Cargando encuesta...';
+    routingMsg.textContent = 'Loading survey...';
     btnRoutingNext.disabled = true;
 
     try {
       // Load the correct survey
       const surveyRes = await fetch(targetSurveyFile, { cache: 'no-store' });
-      if (!surveyRes.ok) { alert('No se pudo cargar la encuesta'); btnRoutingNext.disabled = false; return; }
+      if (!surveyRes.ok) { alert('Could not load the survey'); btnRoutingNext.disabled = false; return; }
       SURVEY = await surveyRes.json();
 
       targetSurveyId = SURVEY.survey?.survey_uuid;
-      if (!targetSurveyId) { alert('Error: survey_uuid no encontrado en el archivo de encuesta.'); btnRoutingNext.disabled = false; return; }
+      if (!targetSurveyId) { alert('Error: survey_uuid not found in survey file.'); btnRoutingNext.disabled = false; return; }
 
       // Create the response now that we know which survey
       const startRes = await fetch('/api/start-response', {
@@ -3316,7 +3316,7 @@ var navEnc = document.getElementById('navEncuesta');
       });
       const startData = await startRes.json().catch(() => ({}));
       if (!startData.ok) {
-        alert('Error al iniciar respuesta: ' + (startData.error || 'sin detalle'));
+        alert('Error starting response: ' + (startData.error || 'sin detalle'));
         btnRoutingNext.disabled = false;
         return;
       }
@@ -3329,7 +3329,7 @@ var navEnc = document.getElementById('navEncuesta');
       const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
       const mapData = await mapRes.json().catch(() => ({}));
       if (!mapData.ok) {
-        alert('No se pudo cargar mapa de preguntas: ' + (mapData.error || 'sin detalle'));
+        alert('Could not load question map: ' + (mapData.error || 'sin detalle'));
         btnRoutingNext.disabled = false;
         return;
       }
@@ -3507,30 +3507,30 @@ var navEnc = document.getElementById('navEncuesta');
     {
       pct: 0,
       badgeIcon: '',
-      badgeText: 'Bienvenida',
-      headline: 'Estás a punto de hacer algo importante.',
-      body: 'Esta encuesta es tu voz. Nadie más puede decir lo que tú viviste. No hay respuestas correctas ni incorrectas — solo tu experiencia real.'
+      badgeText: 'Welcome',
+      headline: 'You are about to do something important.',
+      body: 'This survey is your voice. No one else can say what you experienced. There are no right or wrong answers — only your real experience.'
     },
     {
       pct: 0.20,
       badgeIcon: '🥈',
-      badgeText: 'Nivel Plata',
-      headline: '¡Ya arrancaste! Llevas el 20% — vas bien.',
-      body: 'Cada respuesta que das construye un mapa real de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
+      badgeText: 'Silver Level',
+      headline: "You started! You're 20% done — keep going.",
+      body: 'Every answer you give builds a real map of your school. Information that adults need but only you can provide.\n\n🥈 You unlocked Silver Level!'
     },
     {
       pct: 0.55,
       badgeIcon: '🥇',
-      badgeText: 'Nivel Oro',
-      headline: 'Más de la mitad. No cualquiera llega hasta aquí.',
-      body: 'Las próximas preguntas son las más importantes de toda la encuesta. Lo que respondas aquí es lo que más ayuda a cambiar las cosas en tu escuela.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
+      badgeText: 'Gold Level',
+      headline: 'More than halfway. Not everyone makes it this far.',
+      body: 'The next questions are the most important in the entire survey. What you answer here is what helps change things in your school the most.\n\n🥇 You unlocked Gold Level!'
     },
     {
       pct: 0.80,
       badgeIcon: '💎',
-      badgeText: 'Nivel Platino',
-      headline: 'Casi estás. Solo falta un poco.',
-      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Nivel Platino desbloqueado! Ya casi eres una leyenda.'
+      badgeText: 'Platinum Level',
+      headline: 'Almost there. Just a little more.',
+      body: 'You did the hard part. The last questions are quick. Finish strong — your school needs it.\n\n💎 Platinum Level unlocked! You are almost a legend.'
     }
   ];
 
@@ -3678,7 +3678,7 @@ var navEnc = document.getElementById('navEncuesta');
       }
 
       if (isDemographicExternalId(ext)) {
-        optionsDiv.innerHTML = `<select id="answerSelect" class="survey-modal-select"><option value="">Cargando...</option></select>`;
+        optionsDiv.innerHTML = `<select id="answerSelect" class="survey-modal-select"><option value="">Loading...</option></select>`;
         (async () => {
           try {
             const opts = await getOptionsForQuestion(dbQid);
@@ -3691,12 +3691,19 @@ var navEnc = document.getElementById('navEncuesta');
           }
         })();
       } else {
-        optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
+        optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Loading options...</div>`;
         const iconLabels = ['A','B','C','D','E','F'];
         (async () => {
           try {
-            const opts = await getOptionsForQuestion(dbQid);
-            if (!opts.length) { optionsDiv.innerHTML = `<div class="statusMsg statusErr">Esta pregunta no tiene opciones.</div>`; return; }
+            const rawOpts = await getOptionsForQuestion(dbQid);
+            const seen = new Set();
+            const opts = rawOpts.filter(o => {
+              const txt = (o.option_text ?? o.option_code ?? '').toString().trim();
+              if (seen.has(txt)) return false;
+              seen.add(txt);
+              return true;
+            });
+            if (!opts.length) { optionsDiv.innerHTML = `<div class="statusMsg statusErr">This question has no options.</div>`; return; }
             optionsDiv.innerHTML = '';
             opts.forEach((o, i) => {
               const txt = (o.option_text ?? o.option_code ?? '').toString();
@@ -3721,7 +3728,7 @@ var navEnc = document.getElementById('navEncuesta');
 
     document.getElementById('btnSurveyModalPrev').disabled = (currentQuestionIndex === 0);
     document.getElementById('btnSurveyModalNext').textContent =
-      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar ✓' : 'Siguiente →';
+      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finish ✓' : 'Next →';
   }
 
   async function saveCurrentAnswerOrStop() {
@@ -3750,9 +3757,9 @@ var navEnc = document.getElementById('navEncuesta');
     const required = (q.required === undefined) ? true : !!q.required;
     if (required) {
       if (q.type === 'text') {
-        if (!answerText) { document.getElementById('surveyModalMsg').textContent = 'Escribe una respuesta para continuar.'; return false; }
+        if (!answerText) { document.getElementById('surveyModalMsg').textContent = 'Please write a response to continue.'; return false; }
       } else {
-        if (selectedOptionIds.length === 0) { document.getElementById('surveyModalMsg').textContent = 'Selecciona una opción para continuar.'; return false; }
+        if (selectedOptionIds.length === 0) { document.getElementById('surveyModalMsg').textContent = 'Please select an option to continue.'; return false; }
       }
     }
 
@@ -4061,7 +4068,7 @@ var navEnc = document.getElementById('navEncuesta');
   }
 
   async function loadCurrent() {
-    setStatus("Cargando datos...", "statusWarn");
+    setStatus("Loading data...", "statusWarn");
     try {
       const result = await fetchOneRow(datosIndex);
       if (!result.ok) { setStatus(`No se pudo leer encargado_escolar (HTTP ${result.status ?? "?"}).`, "statusErr"); fillFields(null); return; }
