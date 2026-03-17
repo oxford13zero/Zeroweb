@@ -1,71 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Root Debug</title></head>
+<head><meta charset="UTF-8"><title>Options Debug</title></head>
 <body style="background:#0a1520; color:#fff; font-family:monospace; padding:20px; font-size:13px;">
-<h2 style="color:#D6A21C;">ROOT (/) — Language Redirect Debug</h2>
-<p style="color:#a9c0d3; margin:0 0 16px 0;">Deploy this to <b>/debug.html</b> (root). Login first, then open <b>tech4zero.com/debug.html</b></p>
+<h2 style="color:#D6A21C;">question-options API debug</h2>
 <div id="out"></div>
-
 <script>
-var step = 0;
-function log(label, val, color) {
-  step++;
+function log(msg, color) {
   document.getElementById('out').innerHTML +=
-    '<div style="padding:5px 0; border-bottom:1px solid #1E2F3F; display:flex; gap:12px;">'
-    + '<span style="color:#a9c0d3; min-width:24px;">' + step + '</span>'
-    + '<span style="color:#69db7c; min-width:280px;">' + label + '</span>'
-    + '<span style="color:' + (color||'#fff') + '">' + JSON.stringify(val) + '</span>'
-    + '</div>';
+    '<div style="padding:4px 0; border-bottom:1px solid #1E2F3F; color:'+(color||'#fff')+'">'+msg+'</div>';
 }
 
-log('THIS PAGE pathname', location.pathname, '#ffa94d');
-log('THIS PAGE href', location.href, '#ffa94d');
+var qid = 'ee2e381a-3a66-4a41-b011-63ef249162ae'; // gender question
 
-fetch('/api/me', { credentials: 'include' })
-  .then(r => r.json())
-  .then(d => {
-    log('api/me ok', d.ok, d.ok ? '#69db7c' : '#ff6b6b');
-    log('api/me school_name', d.school_name || '(none)');
-    log('api/me language', d.language || '(none)', d.language === 'es' ? '#ffa94d' : '#69db7c');
-    log('api/me country', d.country || '(none)');
+// Test 1: no lang param
+fetch('/api/question-options?questionId='+qid, {credentials:'include'})
+  .then(r=>r.json()).then(d=>{
+    log('WITHOUT ?lang — total options: '+d.options.length, '#ffa94d');
+    d.options.forEach(o=>log('  '+o.option_text+' | lang='+o.language));
+  });
 
-    if (!d.ok) {
-      log('⚠ NOT LOGGED IN — login via tech4zero.com first, then come back here', '', '#ff6b6b');
-      return;
-    }
+// Test 2: with ?lang=es
+fetch('/api/question-options?questionId='+qid+'&lang=es', {credentials:'include'})
+  .then(r=>r.json()).then(d=>{
+    log('WITH ?lang=es — total options: '+d.options.length, '#69db7c');
+    d.options.forEach(o=>log('  '+o.option_text+' | lang='+o.language));
+  });
 
-    log('--- Redirect logic ---', '', '#ffa94d');
-    var lang = d.language || 'es';
-    var onRoot = !location.pathname.startsWith('/en');
-    var shouldRedirect = (lang === 'en' || lang === 'both') && onRoot;
-    log('lang === en or both', lang === 'en' || lang === 'both', shouldRedirect ? '#69db7c' : '#ffa94d');
-    log('currently on root (not /en/)', onRoot, '#fff');
-    log('SHOULD REDIRECT to /en/', shouldRedirect, shouldRedirect ? '#69db7c' : '#ffa94d');
-
-    if (shouldRedirect) {
-      log('✓ Redirect WILL fire → /en/', 'waiting 3 seconds...', '#69db7c');
-      setTimeout(() => { window.location.href = '/en/' + location.hash; }, 3000);
-    } else {
-      log('✓ Stay on / — correct for language=' + lang, '', '#69db7c');
-    }
-
-    // Now check: does Index_MASTER.html have the redirect code?
-    log('--- Checking Index_MASTER on this server ---', '', '#ffa94d');
-    fetch('/', { credentials: 'include' })
-      .then(r => r.text())
-      .then(html => {
-        var hasLangField    = html.includes("language: data?.language");
-        var hasRedirect     = html.includes("location.href = '/en/'");
-        var hasLangInState  = html.includes("language:'es'");
-        log('Index_MASTER has language in refreshSession', hasLangField, hasLangField ? '#69db7c' : '#ff6b6b');
-        log('Index_MASTER has redirect to /en/', hasRedirect, hasRedirect ? '#69db7c' : '#ff6b6b');
-        log('Index_MASTER has language in sessionState', hasLangInState, hasLangInState ? '#69db7c' : '#ff6b6b');
-        if (!hasRedirect) {
-          log('⚠ OLD Index_MASTER deployed — missing redirect code!', '', '#ff6b6b');
-        }
-      });
-  })
-  .catch(e => log('ERROR', e.message, '#ff6b6b'));
+// Test 3: with ?lang=en
+fetch('/api/question-options?questionId='+qid+'&lang=en', {credentials:'include'})
+  .then(r=>r.json()).then(d=>{
+    log('WITH ?lang=en — total options: '+d.options.length, '#69db7c');
+    d.options.forEach(o=>log('  '+o.option_text+' | lang='+o.language));
+  });
 </script>
 </body>
 </html>
