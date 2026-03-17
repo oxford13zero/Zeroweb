@@ -1,36 +1,40 @@
-// api/question-options.js
+// /api/question-options.js
 import { createClient } from "@supabase/supabase-js";
 
 export default async function handler(req, res) {
   try {
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const serviceKey = process.env.SUPABASE_SERVICE_KEY;
+    const { questionId, lang } = req.query;
+    if (!questionId) return res.status(400).json({ ok: false, error: "Missing questionId" });
 
-    if (!supabaseUrl || !serviceKey) {
-      return res.status(500).json({ ok: false, error: "Missing SUPABASE_URL / SUPABASE_SERVICE_KEY" });
-    }
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_KEY,
+      { auth: { persistSession: false } }
+    );
 
-    const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
-
-    const questionId = (req.query.questionId || "").trim();
-    if (!questionId) {
-      return res.status(400).json({ ok: false, error: "Missing questionId" });
-    }
-
-    const { data, error } = await supabase
+    let query = supabase
       .from("question_options")
-      .select("id, option_code, option_text, position, is_active")
+      .select("id, option_text, option_code, display_order, language")
       .eq("question_id", questionId)
-      .eq("is_active", true)
-      .order("position", { ascending: true })
-      .order("option_code", { ascending: true });
+      .order("display_order", { ascending: true });
 
-    if (error) {
-      return res.status(500).json({ ok: false, error: error.message });
+    // If lang param provided, filter to that language only
+    // Fall back to all options if no language column or no match
+    if (lang === 'en' || lang === 'es') {
+      const { data: filtered, error: filteredErr } = await query.eq("language", lang);
+      if (!filteredErr && filtered && filtered.length > 0) {
+        return res.status(200).json({ ok: true, options: filtered });
+      }
+      // If no language-tagged options, fall through to return all
     }
 
-    return res.status(200).json({ ok: true, questionId, options: data || [] });
+    // No lang filter or no language-tagged options found — return all
+    const { data, error } = await query;
+    if (error) return res.status(500).json({ ok: false, error: error.message });
+    return res.status(200).json({ ok: true, options: data || [] });
+
   } catch (e) {
-    return res.status(500).json({ ok: false, error: String(e?.message || e) });
+    console.error("question-options error:", e);
+    return res.status(500).json({ ok: false, error: "SERVER_ERROR" });
   }
 }
