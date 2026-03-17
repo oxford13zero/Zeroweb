@@ -2,36 +2,58 @@
 <html>
 <head><meta charset="UTF-8"><title>Options Debug</title></head>
 <body style="background:#0a1520; color:#fff; font-family:monospace; padding:20px; font-size:13px;">
-<h2 style="color:#D6A21C;">question-options API debug</h2>
-<div id="out"></div>
+<h2 style="color:#D6A21C;">question-options debug</h2>
+<p style="color:#a9c0d3;">Login as MX school first, then open this page.</p>
+<div id="out" style="margin-top:16px;"></div>
 <script>
+var out = document.getElementById('out');
 function log(msg, color) {
-  document.getElementById('out').innerHTML +=
-    '<div style="padding:4px 0; border-bottom:1px solid #1E2F3F; color:'+(color||'#fff')+'">'+msg+'</div>';
+  out.innerHTML += '<div style="padding:5px 0; border-bottom:1px solid #333; color:'+(color||'#fff')+'">'+msg+'</div>';
 }
 
-var qid = 'ee2e381a-3a66-4a41-b011-63ef249162ae'; // gender question
+log('Step 1: checking session...', '#a9c0d3');
 
-// Test 1: no lang param
-fetch('/api/question-options?questionId='+qid, {credentials:'include'})
-  .then(r=>r.json()).then(d=>{
-    log('WITHOUT ?lang — total options: '+d.options.length, '#ffa94d');
-    d.options.forEach(o=>log('  '+o.option_text+' | lang='+o.language));
-  });
+fetch('/api/me', {credentials:'include'})
+  .then(r=>r.json())
+  .then(function(me) {
+    log('school: ' + me.school_name + ' | language: ' + me.language + ' | ok: ' + me.ok, me.ok?'#69db7c':'#ff6b6b');
 
-// Test 2: with ?lang=es
-fetch('/api/question-options?questionId='+qid+'&lang=es', {credentials:'include'})
-  .then(r=>r.json()).then(d=>{
-    log('WITH ?lang=es — total options: '+d.options.length, '#69db7c');
-    d.options.forEach(o=>log('  '+o.option_text+' | lang='+o.language));
-  });
+    if (!me.ok) { log('NOT LOGGED IN — login at tech4zero.com first then come back', '#ff6b6b'); return; }
 
-// Test 3: with ?lang=en
-fetch('/api/question-options?questionId='+qid+'&lang=en', {credentials:'include'})
-  .then(r=>r.json()).then(d=>{
-    log('WITH ?lang=en — total options: '+d.options.length, '#69db7c');
-    d.options.forEach(o=>log('  '+o.option_text+' | lang='+o.language));
-  });
+    var qid = 'ee2e381a-3a66-4a41-b011-63ef249162ae';
+
+    log('Step 2: calling WITHOUT lang param...', '#a9c0d3');
+    fetch('/api/question-options?questionId='+qid, {credentials:'include'})
+      .then(function(r) {
+        log('HTTP status: ' + r.status, r.status===200?'#69db7c':'#ff6b6b');
+        return r.text();
+      })
+      .then(function(txt) {
+        log('Raw response: ' + txt.substring(0,300), '#fff');
+        try {
+          var d = JSON.parse(txt);
+          log('Parsed ok. options count: ' + (d.options||[]).length, '#ffa94d');
+          (d.options||[]).forEach(function(o) {
+            log('  option_text="'+o.option_text+'" language="'+o.language+'"');
+          });
+        } catch(e) { log('JSON parse error: '+e.message, '#ff6b6b'); }
+
+        log('Step 3: calling WITH ?lang=es...', '#a9c0d3');
+        fetch('/api/question-options?questionId='+qid+'&lang=es', {credentials:'include'})
+          .then(r=>r.text())
+          .then(function(txt2) {
+            log('Raw response: ' + txt2.substring(0,300), '#fff');
+            try {
+              var d2 = JSON.parse(txt2);
+              log('WITH lang=es — options count: ' + (d2.options||[]).length, '#69db7c');
+              (d2.options||[]).forEach(function(o) {
+                log('  "'+o.option_text+'" lang='+o.language);
+              });
+            } catch(e) { log('JSON parse error: '+e.message, '#ff6b6b'); }
+          });
+      });
+  })
+  .catch(function(e) { log('ERROR: '+e.message, '#ff6b6b'); });
 </script>
 </body>
 </html>
