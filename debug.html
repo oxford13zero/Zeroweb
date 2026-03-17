@@ -10,7 +10,7 @@ h1 { color:#D6A21C; font-size:20px; margin:0 0 20px 0; }
 input { padding:8px; background:#1E2F3F; border:1px solid #365468; color:#fff; border-radius:4px; font-size:14px; width:180px; margin-right:8px; }
 button { padding:9px 20px; background:#D6A21C; color:#000; border:none; border-radius:4px; font-weight:700; font-size:14px; cursor:pointer; margin-right:8px; }
 .out { margin-top:12px; font-size:13px; line-height:1.8; white-space:pre-wrap; }
-.g { color:#69db7c; } .r { color:#ff6b6b; } .y { color:#ffa94d; } .b { color:#74c0fc; }
+.g{color:#69db7c;}.r{color:#ff6b6b;}.y{color:#ffa94d;}.b{color:#74c0fc;}
 </style>
 </head>
 <body>
@@ -31,68 +31,77 @@ button { padding:9px 20px; background:#D6A21C; color:#000; border:none; border-r
 </div>
 
 <div class="card">
-  <h2>3 — Options (gender question)</h2>
+  <h2>3 — Options test (p4_victima_exclusion question)</h2>
+  <div style="margin-bottom:8px; color:#a9c0d3; font-size:12px;">
+    This question has 2 rows per option_code — 1 en + 1 es. Filter should return 4 options only.
+  </div>
   <button onclick="opts()">CHECK OPTIONS</button>
   <div class="out" id="r3"></div>
 </div>
 
 <script>
-var QID = 'ee2e381a-3a66-4a41-b011-63ef249162ae';
+// p4_victima_exclusion question ID — find it first
+var QID_PLACEHOLDER = null;
 
 function set(id, html) { document.getElementById(id).innerHTML = html; }
 
 async function login() {
   var u = document.getElementById('u').value.trim();
   var p = document.getElementById('p').value.trim();
-  set('r1', '<span class="b">Logging in...</span>');
+  set('r1','<span class="b">Logging in...</span>');
   var r = await fetch('/api/login', {method:'POST', credentials:'include',
     headers:{'Content-Type':'application/json'}, body:JSON.stringify({username:u,password:p})});
   var d = await r.json();
   set('r1', d.ok
-    ? '<span class="g">✓ Logged in as: ' + (d.school_name||u) + '</span>'
-    : '<span class="r">✗ Failed: ' + (d.error||'unknown') + '</span>');
+    ? '<span class="g">✓ Logged in: '+(d.school_name||u)+'</span>'
+    : '<span class="r">✗ Failed: '+(d.error||'unknown')+'</span>');
+  if (d.ok) session();
 }
 
 async function session() {
-  set('r2', '<span class="b">Checking...</span>');
+  set('r2','<span class="b">Checking...</span>');
   var r = await fetch('/api/me', {credentials:'include'});
-  var txt = await r.text();
-  try {
-    var d = JSON.parse(txt);
-    set('r2',
-      '<span class="' + (d.ok?'g':'r') + '">ok: ' + d.ok + '</span>\n' +
-      'school_name: <span class="y">' + (d.school_name||'none') + '</span>\n' +
-      'language:    <span class="y">' + (d.language||'none') + '</span>\n' +
-      'country:     <span class="y">' + (d.country||'none') + '</span>'
-    );
-  } catch(e) {
-    set('r2', '<span class="r">Not JSON: ' + txt.substring(0,300) + '</span>');
-  }
+  var d = await r.json();
+  set('r2',
+    '<span class="'+(d.ok?'g':'r')+'">ok: '+d.ok+'</span>\n'+
+    'school: <span class="y">'+(d.school_name||'none')+'</span>\n'+
+    'language: <span class="y">'+(d.language||'none')+'</span>\n'+
+    'country: <span class="y">'+(d.country||'none')+'</span>'
+  );
+  window._lang = d.language || 'es';
 }
 
 async function opts() {
-  set('r3', '<span class="b">Checking...</span>');
-  var out = '';
+  set('r3','<span class="b">Finding question ID then testing options...</span>');
 
-  async function test(label, url) {
-    var r = await fetch(url, {credentials:'include'});
-    var txt = await r.text();
-    try {
-      var d = JSON.parse(txt);
-      var count = (d.options||[]).length;
-      out += '<span class="y">' + label + '</span> — ' + count + ' options\n';
-      (d.options||[]).forEach(function(o) {
-        out += '  "' + o.option_text + '" [lang=' + (o.language||'NULL') + ']\n';
-      });
-    } catch(e) {
-      out += '<span class="r">' + label + ' ERROR: ' + txt.substring(0,200) + '</span>\n';
-    }
-    out += '\n';
-  }
+  // First find question ID for p4_victima_exclusion via routing question
+  // Use a known question — zero_agresor_amenazas_v2 which we confirmed has en+es options
+  // We need its UUID — let's test with the age question we already know: ee2e381a
+  var qid = 'ee2e381a-3a66-4a41-b011-63ef249162ae';
+  var lang = window._lang || 'es';
+  var out = 'Using question: '+qid+'\nDetected language: '+lang+'\n\n';
 
-  await test('NO lang param',   '/api/question-options?questionId='+QID);
-  await test('?lang=es',        '/api/question-options?questionId='+QID+'&lang=es');
-  await test('?lang=en',        '/api/question-options?questionId='+QID+'&lang=en');
+  // Test WITHOUT lang
+  var r1 = await fetch('/api/question-options?questionId='+qid, {credentials:'include'});
+  var t1 = await r1.text();
+  try {
+    var d1 = JSON.parse(t1);
+    out += '<span class="y">No ?lang param:</span> '+d1.options.length+' options\n';
+    d1.options.forEach(o => out += '  "'+o.option_text+'" [lang='+o.language+']\n');
+  } catch(e) { out += '<span class="r">No lang — raw: '+t1.substring(0,200)+'</span>\n'; }
+
+  out += '\n';
+
+  // Test WITH lang
+  var r2 = await fetch('/api/question-options?questionId='+qid+'&lang='+lang, {credentials:'include'});
+  var t2 = await r2.text();
+  try {
+    var d2 = JSON.parse(t2);
+    out += '<span class="'+(d2.options.length<=7?'g':'r')+'">?lang='+lang+':</span> '+d2.options.length+' options\n';
+    d2.options.forEach(o => out += '  "'+o.option_text+'" [lang='+o.language+']\n');
+  } catch(e) { out += '<span class="r">lang='+lang+' — raw: '+t2.substring(0,200)+'</span>\n'; }
+
+  out += '\n<span class="b">Full URL called: /api/question-options?questionId='+qid+'&lang='+lang+'</span>';
   set('r3', out);
 }
 </script>
