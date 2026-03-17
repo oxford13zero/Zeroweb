@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Debug Test</title></head>
+<body>
+<h2 style="font-family:monospace; background:#0a1520; color:#D6A21C; padding:20px;">
+  If you see this, the file deployed correctly.
+</h2>
+<div id="out" style="font-family:monospace; font-size:13px; padding:20px; background:#111; color:#fff;"></div>
+<script>
+function log(msg, color) {
+  var d = document.getElementById('out');
+  d.innerHTML += '<div style="color:' + (color||'#fff') + '; padding:4px 0; border-bottom:1px solid #333;">' + msg + '</div>';
+}
+
+log('1. Script running', '#69db7c');
+log('2. Location: ' + location.href, '#69db7c');
+
+fetch('/api/me', { credentials: 'include' })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    log('3. /api/me ok=' + d.ok, d.ok ? '#69db7c' : '#ff6b6b');
+    log('4. language=' + d.language, '#ffa94d');
+    log('5. school_name=' + d.school_name, '#ffa94d');
+    log('6. country=' + d.country, '#ffa94d');
+  })
+  .catch(function(e) {
+    log('3. /api/me ERROR: ' + e.message, '#ff6b6b');
+  });
+</script>
+</body>
+</html>
