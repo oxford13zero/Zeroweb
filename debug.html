@@ -14,82 +14,71 @@ button { padding:9px 20px; background:#D6A21C; color:#000; border:none; border-r
 </style>
 </head>
 <body>
-<h1>TECH4ZERO Debug Console</h1>
+<h1>Language Switch Debug</h1>
 
 <div class="card">
-  <h2>1 — Login</h2>
-  <input id="u" placeholder="username" />
-  <input id="p" type="password" placeholder="password" />
-  <button onclick="login()">LOGIN</button>
+  <h2>Step 1 — Login as school A</h2>
+  <input id="u1" placeholder="username" />
+  <input id="p1" type="password" placeholder="password" />
+  <button onclick="login('u1','p1','r1')">LOGIN A</button>
   <div class="out" id="r1"></div>
 </div>
 
 <div class="card">
-  <h2>2 — Session</h2>
-  <button onclick="session()">CHECK SESSION</button>
+  <h2>Step 2 — Check /api/me after login</h2>
+  <button onclick="checkMe('r2')">CHECK SESSION</button>
   <div class="out" id="r2"></div>
 </div>
 
 <div class="card">
-  <h2>3 — Options filter test</h2>
-  <button onclick="opts('es')">TEST lang=es</button>
-  <button onclick="opts('en')" style="background:#365468;color:#fff;">TEST lang=en</button>
+  <h2>Step 3 — Logout</h2>
+  <button onclick="logout('r3')">LOGOUT</button>
   <div class="out" id="r3"></div>
 </div>
 
+<div class="card">
+  <h2>Step 4 — Login as school B</h2>
+  <input id="u2" placeholder="username" />
+  <input id="p2" type="password" placeholder="password" />
+  <button onclick="login('u2','p2','r4')">LOGIN B</button>
+  <div class="out" id="r4"></div>
+</div>
+
+<div class="card">
+  <h2>Step 5 — Check /api/me after login B</h2>
+  <button onclick="checkMe('r5')">CHECK SESSION</button>
+  <div class="out" id="r5"></div>
+</div>
+
 <script>
-// age question: ee2e381a  — has both es and en options
-// gender question: find via external_id zero_general_genero_v2
-var QIDS = {
-  edad: 'ee2e381a-3a66-4a41-b011-63ef249162ae',
-};
-
 function set(id, html) { document.getElementById(id).innerHTML = html; }
-window._lang = 'es';
 
-async function login() {
-  var u = document.getElementById('u').value.trim();
-  var p = document.getElementById('p').value.trim();
-  set('r1','<span class="b">Logging in...</span>');
+async function login(uid, pid, rid) {
+  var u = document.getElementById(uid).value.trim();
+  var p = document.getElementById(pid).value.trim();
+  set(rid, '<span class="b">Logging in...</span>');
   var r = await fetch('/api/login', {method:'POST', credentials:'include',
     headers:{'Content-Type':'application/json'}, body:JSON.stringify({username:u,password:p})});
   var d = await r.json();
-  set('r1', d.ok
-    ? '<span class="g">✓ '+d.school_name+'</span>'
-    : '<span class="r">✗ '+(d.error||'unknown')+'</span>');
-  if (d.ok) session();
+  set(rid, d.ok
+    ? '<span class="g">✓ Logged in: '+d.school_name+'</span>'
+    : '<span class="r">✗ Failed: '+(d.error||'unknown')+'</span>');
 }
 
-async function session() {
+async function logout(rid) {
+  await fetch('/api/logout', {method:'POST', credentials:'include'});
+  set(rid, '<span class="g">✓ Logged out</span>');
+}
+
+async function checkMe(rid) {
   var r = await fetch('/api/me', {credentials:'include'});
   var d = await r.json();
-  window._lang = d.language || 'es';
-  set('r2',
-    '<span class="'+(d.ok?'g':'r')+'">ok='+d.ok+'</span>  '+
-    'school=<span class="y">'+(d.school_name||'?')+'</span>  '+
-    'language=<span class="y">'+(d.language||'?')+'</span>  '+
-    'country=<span class="y">'+(d.country||'?')+'</span>'
+  set(rid,
+    'ok: <span class="'+(d.ok?'g':'r')+'">'+d.ok+'</span>\n' +
+    'school: <span class="y">'+(d.school_name||'none')+'</span>\n' +
+    'language: <span class="y">'+(d.language||'none')+'</span>\n' +
+    'country: <span class="y">'+(d.country||'none')+'</span>'
   );
-}
-
-async function opts(lang) {
-  var qid = QIDS.edad;
-  var out = 'Testing age question with lang=<span class="y">'+lang+'</span>\n\n';
-
-  var r = await fetch('/api/question-options?questionId='+qid+'&lang='+lang, {credentials:'include'});
-  var txt = await r.text();
-  try {
-    var d = JSON.parse(txt);
-    var count = (d.options||[]).length;
-    var ok = count <= 7;
-    out += 'Options returned: <span class="'+(ok?'g':'r')+'">'+count+'</span> '+(ok?'✓ (correct)':'✗ (still duplicated)')+'\n\n';
-    (d.options||[]).forEach(function(o) {
-      out += '  "'+o.option_text+'" [lang='+o.language+']\n';
-    });
-  } catch(e) {
-    out += '<span class="r">ERROR: '+txt.substring(0,300)+'</span>';
-  }
-  set('r3', out);
 }
 </script>
 </body>
