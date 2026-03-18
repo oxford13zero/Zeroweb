@@ -3064,6 +3064,19 @@ var navEnc = document.getElementById('navEncuesta');
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
+      
+// Redirect en/both schools to /en/
+    if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both')
+           && !location.pathname.startsWith('/en')) {
+      window.location.href = '/en/' + location.hash;
+      return;
+    }
+
+    // Sync CHOSEN_LANGUAGE — resets when switching accounts
+    CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
+
+    
+      
     // Redirect en/both schools to /en/
     if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both')
            && !location.pathname.startsWith('/en')) {
