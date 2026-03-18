@@ -3006,12 +3006,18 @@ window.addEventListener('popstate', function(e) {
     try {
       const res = await fetch('/api/me', { credentials:'include' });
       const data = await res.json().catch(() => ({}));
-      window.sessionState = {
+     
+      
+     window.sessionState = {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
-        country: data?.country || 'MX'
+        country: data?.country || 'MX',
+        language: data?.language || 'en'
       };
+
+
+      
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
     }
