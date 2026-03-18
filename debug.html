@@ -1,85 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>T4Z Debug</title>
-<style>
-* { box-sizing:border-box; }
-body { margin:0; padding:20px; background:#0a1520; color:#fff; font-family:monospace; font-size:14px; }
-h1 { color:#D6A21C; font-size:20px; margin:0 0 20px 0; }
-.card { background:#16222D; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px; }
-.card h2 { margin:0 0 12px 0; color:#D6A21C; font-size:15px; }
-input { padding:8px; background:#1E2F3F; border:1px solid #365468; color:#fff; border-radius:4px; font-size:14px; width:180px; margin-right:8px; }
-button { padding:9px 20px; background:#D6A21C; color:#000; border:none; border-radius:4px; font-weight:700; font-size:14px; cursor:pointer; margin-right:8px; }
-.out { margin-top:12px; font-size:13px; line-height:1.8; white-space:pre-wrap; }
-.g{color:#69db7c;}.r{color:#ff6b6b;}.y{color:#ffa94d;}.b{color:#74c0fc;}
-</style>
-</head>
-<body>
-<h1>Language Switch Debug</h1>
-
-<div class="card">
-  <h2>Step 1 — Login as school A</h2>
-  <input id="u1" placeholder="username" />
-  <input id="p1" type="password" placeholder="password" />
-  <button onclick="login('u1','p1','r1')">LOGIN A</button>
-  <div class="out" id="r1"></div>
-</div>
-
-<div class="card">
-  <h2>Step 2 — Check /api/me after login</h2>
-  <button onclick="checkMe('r2')">CHECK SESSION</button>
-  <div class="out" id="r2"></div>
-</div>
-
-<div class="card">
-  <h2>Step 3 — Logout</h2>
-  <button onclick="logout('r3')">LOGOUT</button>
-  <div class="out" id="r3"></div>
-</div>
-
-<div class="card">
-  <h2>Step 4 — Login as school B</h2>
-  <input id="u2" placeholder="username" />
-  <input id="p2" type="password" placeholder="password" />
-  <button onclick="login('u2','p2','r4')">LOGIN B</button>
-  <div class="out" id="r4"></div>
-</div>
-
-<div class="card">
-  <h2>Step 5 — Check /api/me after login B</h2>
-  <button onclick="checkMe('r5')">CHECK SESSION</button>
-  <div class="out" id="r5"></div>
-</div>
-
+<head><meta charset="UTF-8"><title>EN Page Debug</title></head>
+<body style="background:#0a1520; color:#fff; font-family:monospace; padding:20px; font-size:13px;">
+<h2 style="color:#D6A21C;">Check what /en/index.html contains</h2>
+<div id="out" style="white-space:pre-wrap; line-height:1.8;"></div>
 <script>
-function set(id, html) { document.getElementById(id).innerHTML = html; }
-
-async function login(uid, pid, rid) {
-  var u = document.getElementById(uid).value.trim();
-  var p = document.getElementById(pid).value.trim();
-  set(rid, '<span class="b">Logging in...</span>');
-  var r = await fetch('/api/login', {method:'POST', credentials:'include',
-    headers:{'Content-Type':'application/json'}, body:JSON.stringify({username:u,password:p})});
-  var d = await r.json();
-  set(rid, d.ok
-    ? '<span class="g">✓ Logged in: '+d.school_name+'</span>'
-    : '<span class="r">✗ Failed: '+(d.error||'unknown')+'</span>');
+function log(msg, color) {
+  document.getElementById('out').innerHTML += '<span style="color:'+(color||'#fff')+'">'+msg+'</span>\n';
 }
 
-async function logout(rid) {
-  await fetch('/api/logout', {method:'POST', credentials:'include'});
-  set(rid, '<span class="g">✓ Logged out</span>');
-}
-
-async function checkMe(rid) {
-  var r = await fetch('/api/me', {credentials:'include'});
-  var d = await r.json();
-  set(rid,
-    'ok: <span class="'+(d.ok?'g':'r')+'">'+d.ok+'</span>\n' +
-    'school: <span class="y">'+(d.school_name||'none')+'</span>\n' +
-    'language: <span class="y">'+(d.language||'none')+'</span>\n' +
-    'country: <span class="y">'+(d.country||'none')+'</span>'
-  );
-}
+fetch('/en/', {credentials:'include'})
+  .then(r => r.text())
+  .then(html => {
+    log('Page size: ' + html.length + ' chars');
+    log('Has es→/ redirect: ' + html.includes("location.href = '/' + location.hash"),
+        html.includes("location.href = '/' + location.hash") ? '#69db7c' : '#ff6b6b');
+    log('Has CHOSEN_LANGUAGE sync: ' + html.includes("CHOSEN_LANGUAGE = ok ?"),
+        html.includes("CHOSEN_LANGUAGE = ok ?") ? '#69db7c' : '#ff6b6b');
+    log('Has language in refreshSession: ' + html.includes("language: data?.language"),
+        html.includes("language: data?.language") ? '#69db7c' : '#ff6b6b');
+    log('html lang attr: ' + (html.match(/<html lang="(\w+)"/) || ['','?'])[1]);
+  });
 </script>
 </body>
 </html>
