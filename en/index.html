@@ -3057,15 +3057,12 @@ var navEnc = document.getElementById('navEncuesta');
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
-// Redirect Spanish-only schools back to /
-    if (ok && window.sessionState.language === 'es'
-           && location.pathname.startsWith('/en')) {
+// Sync CHOSEN_LANGUAGE when switching accounts
+    if (ok) CHOSEN_LANGUAGE = (window.sessionState.language === 'both') ? 'en' : (window.sessionState.language || 'en');
+    if (ok && window.sessionState.language === 'es' && location.pathname.startsWith('/en')) {
       window.location.href = '/' + location.hash;
       return;
-    }
-
-    // Sync CHOSEN_LANGUAGE — resets when switching accounts
-    CHOSEN_LANGUAGE = ok ? (window.sessionState.language === 'both' ? 'en' : (window.sessionState.language || 'en')) : 'en';
+    };
 
 
 
