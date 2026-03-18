@@ -3383,6 +3383,11 @@ var navEnc = document.getElementById('navEncuesta');
       // Note: if the endpoint doesn't exist yet, the grade answer save is skipped gracefully
       // but the survey still proceeds correctly.
 
+
+      // Ensure CHOSEN_LANGUAGE is resolved before rendering questions
+      if (!CHOSEN_LANGUAGE || CHOSEN_LANGUAGE === 'both') {
+        CHOSEN_LANGUAGE = 'es';
+      }
       // Hide routing box, start the actual survey
       routingBox.style.display = 'none';
       routingMsg.textContent = '';
@@ -3391,7 +3396,7 @@ var navEnc = document.getElementById('navEncuesta');
       OPTIONS_CACHE = {};
 
       // Detect primaria survey and apply large-font mode
-      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria');
+      IS_PRIMARIA = (SURVEY.survey?.description === 'primaria' || SURVEY.survey?.description === 'elementary');
       if (IS_PRIMARIA) {
         surveyBox.classList.add('primaria-mode');
       } else {
