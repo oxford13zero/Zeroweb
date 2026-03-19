@@ -3188,6 +3188,10 @@ var navEnc = document.getElementById('navEncuesta');
   async function selectLanguage(lang) {
     CHOSEN_LANGUAGE = lang;
     closeLanguageSelector();
+    console.log('routeKey:', window._selectedRouteKey);
+    console.log('enSurveyFile:', window._enSurveyFile);
+    console.log('esSurveyFileMap:', window._esSurveyFileMap);
+    console.log('surveyFile will be:', (lang === 'es') ? (window._esSurveyFileMap[window._selectedRouteKey] || '/data/SURVEY_004.json') : window._enSurveyFile);
 
     const routeKey = window._selectedRouteKey || 'middle';
     const surveyFile = (lang === 'es')
