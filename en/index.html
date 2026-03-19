@@ -3188,7 +3188,39 @@ var navEnc = document.getElementById('navEncuesta');
   async function selectLanguage(lang) {
     CHOSEN_LANGUAGE = lang;
     closeLanguageSelector();
-    openPrivacyModal();
+
+    const routeKey = window._selectedRouteKey || 'middle';
+    const surveyFile = (lang === 'es')
+      ? (window._esSurveyFileMap[routeKey] || '/data/SURVEY_004.json')
+      : window._enSurveyFile;
+
+    try {
+      const surveyRes = await fetch(surveyFile, { cache: 'no-store' });
+      if (!surveyRes.ok) { alert('Could not load survey'); return; }
+      SURVEY = await surveyRes.json();
+
+      const surveyId = SURVEY.survey?.survey_uuid;
+      if (!surveyId) { alert('Error: survey_uuid not found'); return; }
+
+      const startRes = await fetch('/api/start-response', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ surveyId })
+      });
+      const startData = await startRes.json().catch(() => ({}));
+      if (!startData.ok) { alert('Error starting response: ' + (startData.error || 'unknown')); return; }
+
+      window.currentResponseId = startData.responseId;
+      sessionStorage.setItem('currentResponseId', startData.responseId);
+
+      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(surveyId)}`, { credentials: 'include' });
+      const mapData = await mapRes.json().catch(() => ({}));
+      if (mapData.ok) QUESTION_ID_MAP = mapData.map || {};
+
+      openPrivacyModal();
+    } catch(e) {
+      alert('Connection error: ' + e.message);
+    }
   }
   async function startSurveyWithChosenLanguage() {
     OPTIONS_CACHE = {};
@@ -3352,9 +3384,11 @@ var navEnc = document.getElementById('navEncuesta');
 
     // Find which route_key this grade belongs to
     let targetSurveyFile = null;
+    let selectedRouteKey = null;
     for (const [routeKey, config] of Object.entries(routingRules)) {
       if (config.grade_codes.includes(selectedCode)) {
-        targetSurveyFile = `/data/${config.survey_file}`;
+        targetSurveyFile = '/data/${config.survey_file}';
+        selectedRouteKey = routeKey;
         break;
       }
     }
@@ -3367,73 +3401,28 @@ var navEnc = document.getElementById('navEncuesta');
     routingMsg.textContent = 'Loading survey...';
     btnRoutingNext.disabled = true;
 
-    try {
-      // Load the correct survey
-      const surveyRes = await fetch(targetSurveyFile, { cache: 'no-store' });
-      if (!surveyRes.ok) { alert('Could not load the survey'); btnRoutingNext.disabled = false; return; }
-      SURVEY = await surveyRes.json();
 
-      targetSurveyId = SURVEY.survey?.survey_uuid;
-      if (!targetSurveyId) { alert('Error: survey_uuid not found in survey file.'); btnRoutingNext.disabled = false; return; }
-
-      // Create the response now that we know which survey
-      const startRes = await fetch('/api/start-response', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: targetSurveyId })
-      });
-      const startData = await startRes.json().catch(() => ({}));
-      if (!startData.ok) {
-        alert('Error starting response: ' + (startData.error || 'sin detalle'));
-        btnRoutingNext.disabled = false;
-        return;
-      }
-
-      window.currentResponseId = startData.responseId;
-      sessionStorage.setItem('currentResponseId', startData.responseId);
-
-      // Save the grade answer to this response using the routing question's question_id
-      // We need the DB questionId for zero_general_grado — fetch from questions-map of the selected survey
-      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
-      const mapData = await mapRes.json().catch(() => ({}));
-      if (!mapData.ok) {
-        alert('Could not load question map: ' + (mapData.error || 'sin detalle'));
-        btnRoutingNext.disabled = false;
-        return;
-      }
-      QUESTION_ID_MAP = mapData.map || {};
-
-      // Look up the DB id for zero_general_grado by scanning the map for that external_id
-      // The map is { "questionNumber": "dbUUID" } keyed by question number.
-      // Since zero_general_grado is NOT in either survey anymore, we need to get its DB id
-      // via a dedicated endpoint or by passing the external_id directly.
-      // We use a separate lightweight call to resolve it by external_id.
-      const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_grado`, { credentials: 'include' });
-      const gradeQData = await gradeQRes.json().catch(() => ({}));
-
-      if (gradeQData.ok && gradeQData.questionId) {
-        // Save grade answer
-        await fetch('/api/save-answer', {
-          method: 'POST', credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            responseId: window.currentResponseId,
-            questionId: gradeQData.questionId,
-            answerText: null,
-            selectedOptionIds: [selectedCode]   // selectedCode is the option code (e.g. "1","7", etc.)
-          })
-        });
-      }
-      // Note: if the endpoint doesn't exist yet, the grade answer save is skipped gracefully
-      // but the survey still proceeds correctly.
+    
+try {
+      // Store route info — survey will be loaded after language is selected
+      window._selectedRouteKey = selectedRouteKey;
+      window._enSurveyFile = targetSurveyFile;
+      window._esSurveyFileMap = {
+        'elementary': '/data/SURVEY_004_PRIMARIA.json',
+        'middle':     '/data/SURVEY_004.json',
+        'high':       '/data/SURVEY_004.json'
+      };
 
       // Hide routing box, show language selector
       routingBox.style.display = 'none';
       routingMsg.textContent = '';
-
-      // Step 3: show language selector modal
       openLanguageSelector();
+
     } catch (e) {
+
+
+  
+      
       routingMsg.textContent = 'Error de conexión. Intenta de nuevo.';
       console.error(e);
     } finally {
