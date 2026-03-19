@@ -1733,7 +1733,7 @@ window.addEventListener('popstate', function(e) {
       Official UNESCO report. Global data on prevalence, academic impact
       and evidence-based prevention strategies.
     </div>
-    <a href="../data/378398spa.pdf" 
+    <a href="/data/378398spa.pdf" 
        target="_blank"
        style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:transparent;border:1px solid #D6A21C;border-radius:8px;color:#D6A21C;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;"
        onmouseover="this.style.background='rgba(214,162,28,0.1)'"
@@ -1892,7 +1892,7 @@ function quizGetLevelInfo(score) {
 
     var btn = document.getElementById('quizBtnNext');
     btn.disabled    = !quizAnswers[quizCurrentQ];
-    btn.textContent = quizCurrentQ === QUIZ_QUESTIONS.length - 1 ? 'Ver resultado →' : 'Next →';
+    btn.textContent = quizCurrentQ === QUIZ_QUESTIONS.length - 1 ? 'View result →' : 'Next →';
 
     document.getElementById('quizQDots').innerHTML = QUIZ_QUESTIONS.map(function(_,i) {
       var cls = 'quiz-q-dot';
