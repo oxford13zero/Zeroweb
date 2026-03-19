@@ -1606,8 +1606,8 @@ window.addEventListener('popstate', function(e) {
       <div class="quiz-intro-label">⏱ 2 minutos · 11 preguntas</div>
       <h2 class="quiz-intro-title">¿Quieres ver la escuela con los ojos de<br><em>tus estudiantes?</em></h2>
       <p class="quiz-intro-desc">
-        11 preguntas directas para saber qué tan lejos estás de la realidad de tus estudiantes — incluyendo si tienes la documentación para defenderte legalmente, 
-        detección temprana docente y diagnóstico por salón, género y edad.
+        11 direct questions to find out how far you are from the reality of your students — including whether you have the documentation to defend yourself legally,
+        early teacher detection, and diagnosis by classroom, gender and age.
         No jargon. No tricks. At the end, an honest assessment
         of how much you're seeing — and how much you're missing.
       </p>
@@ -1637,8 +1637,8 @@ window.addEventListener('popstate', function(e) {
     <!-- PANTALLA: PREGUNTAS -->
     <div class="quiz-screen" id="quiz-screen-questions">
       <div style="height:8px;"></div>
-      <div class="quiz-q-counter"  id="quizQCounter">Pregunta 1 de 8</div>
-      <div class="quiz-q-category" id="quizQCategory">VISIBILIDAD</div>
+      <div class="quiz-q-counter"  id="quizQCounter">Question 1 out of 8</div>
+      <div class="quiz-q-category" id="quizQCategory">VISIBILITY</div>
       <div class="quiz-q-text"     id="quizQText"></div>
       <div class="quiz-q-options"  id="quizQOptions"></div>
       <div class="quiz-q-nav">
@@ -1665,7 +1665,7 @@ window.addEventListener('popstate', function(e) {
         <div class="quiz-result-level"    id="quizResultLevel">—</div>
         <p  class="quiz-result-subtitle"  id="quizResultSubtitle"></p>
       </div>
-      <div class="quiz-findings-title">🔎 Tus principales brechas</div>
+      <div class="quiz-findings-title">🔎 Your main gaps</div>
       <div class="quiz-findings-list" id="quizFindingsList"></div>
       <button class="quiz-btn-primary" onclick="quizShowShare()" type="button" style="width:100%;font-size:15px;padding:14px;">
         View my result card →
@@ -1675,12 +1675,12 @@ window.addEventListener('popstate', function(e) {
     <!-- PANTALLA: COMPARTIR -->
     <div class="quiz-screen" id="quiz-screen-share">
       <div class="quiz-share-card">
-        <div class="quiz-share-brand">TECH4ZERO · AUTODIAGNÓSTICO ESCOLAR</div>
-        <div class="quiz-share-headline">Medí que tan lejos estoy de la realidad de mis estudiantes.<br>Este es el resultado.</div>
+        <div class="quiz-share-brand">TECH4ZERO · SCHOOL SELF-ASSESSMENT</div>
+        <div class="quiz-share-headline">I measured how far I am from the reality of my students.<br>This is the result.</div>
         <div class="quiz-share-score-row">
           <div class="quiz-share-big-num" id="quizShareScore">—</div>
           <div class="quiz-share-score-label">
-            de 100 puntos<br>
+            out of 100 points<br>
             <strong id="quizShareLevel">—</strong>
           </div>
         </div>
@@ -1724,27 +1724,27 @@ window.addEventListener('popstate', function(e) {
 
   <div style="background:rgba(255,255,255,0.03);border:1px solid #365468;border-radius:10px;padding:14px;">
     <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#D6A21C;text-transform:uppercase;margin-bottom:8px;">
-      📚 Recurso UNESCO recomendado
+      📚 Recommended UNESCO resource
     </div>
     <div style="font-size:14px;color:#fff;font-weight:600;margin-bottom:4px;line-height:1.4;">
-      Más allá de los números: Poner fin a la violencia y el acoso en el ámbito escolar
+      Beyond Numbers: Ending Violence and Bullying at School
     </div>
     <div style="font-size:12px;color:#a9c0d3;margin-bottom:12px;line-height:1.5;">
-      Informe oficial UNESCO. Datos globales sobre prevalencia, impacto académico 
-      y estrategias de prevención basadas en evidencia.
+      Official UNESCO report. Global data on prevalence, academic impact
+      and evidence-based prevention strategies.
     </div>
     <a href="data/378398spa.pdf" 
        target="_blank"
        style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:transparent;border:1px solid #D6A21C;border-radius:8px;color:#D6A21C;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;"
        onmouseover="this.style.background='rgba(214,162,28,0.1)'"
        onmouseout="this.style.background='transparent'">
-      ↓ Descargar PDF gratuito
+      ↓ Download free PDF
     </a>
   </div>
       <br>
       <div class="quiz-btn-row">
-        <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Cerrar</button>
-        <button class="quiz-btn-primary"   onclick="startQuiz()"  type="button" style="flex:1;">↺ Reiniciar</button>
+        <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Close</button>
+        <button class="quiz-btn-primary"   onclick="startQuiz()"  type="button" style="flex:1;">↺ Restart</button>
       </div>
     </div>
 
@@ -1756,71 +1756,71 @@ window.addEventListener('popstate', function(e) {
 (function () {
 
   var QUIZ_QUESTIONS = [
-    { category:'SU DIA', text:'¿Sabes que tan seguros se sienten tus estudiantes cuando cruzan la puerta de tu escuela cada mañana?' },
-    { category:'SU MUNDO', text:'¿Conoces los lugares de tu escuela donde tus estudiantes se sienten solos o con miedo?' },
-    { category:'SU VOZ', text:'¿Saben tus estudiantes a quién acudir cuando algo malo les pasa — y confían en que los escucharán?' },
-    { category:'SU SILENCIO',  text:'¿Tu escuela tiene identificados a los estudiantes que estadísticamente concentran el mayor riesgo de ser víctimas de acoso?' },
-    { category:'SU AULA',  text:'¿Sabes en qué salones tus estudiantes se sienten seguros — y en cuáles no?' },
-    { category:'SUS DOCENTES',  text:'¿Tus profesores saben escuchar lo que los estudiantes no dicen con palabras?' },
-    { category:'SU CONFIANZA',   text:'¿Alguno de tus estudiantes siente que tu escuela es el lugar más seguro de su día?' },
-    { category:'SU FUTURO',   text:'¿Los estudiantes saben que los casos de agresiones se solucionan rapidamente y con justicia?' },
-    { category:'TU PROTECCION', text:'Si mañana una familia te demanda por un caso de acoso que ocurrió en tu escuela — ¿tienes documentación que demuestre que hiciste todo lo que estaba en tus manos para prevenirlo?' },
-    { category:'TUS DOCENTES', text:'¿Tus profesores tienen las herramientas para reconocer el bullying antes de que escale o están respondiendo a lo que ya explotó?' },
-    { category:'TU MAPA', text:'¿Sabes si el clima emocional de tus estudiantes cambia según el género, la edad o el salón — o tratas a toda tu escuela como si fuera una sola realidad?' }
+    { category:'THEIR DAY', text:'Do you know how safe your students feel when they walk through your school doors each morning?' },
+    { category:'THEIR WORLD', text:'Do you know the places in your school where students feel alone or afraid?' },
+    { category:'THEIR VOICE', text:'Do your students know who to turn to when something bad happens — and do they trust they will be heard?' },
+    { category:'THEIR SILENCE', text:'Has your school identified the students who statistically face the highest risk of being bullied?' },
+    { category:'THEIR CLASSROOM', text:'Do you know which classrooms your students feel safe in — and which ones they don\'t?' },
+    { category:'THEIR TEACHERS', text:'Do your teachers know how to listen to what students are not saying in words?' },
+    { category:'THEIR TRUST', text:'Do any of your students feel that your school is the safest place in their day?' },
+    { category:'THEIR FUTURE', text:'Do students know that cases of aggression are resolved quickly and fairly?' },
+    { category:'YOUR PROTECTION', text:'If a family sued you tomorrow over a bullying incident at your school — do you have documentation proving you did everything in your power to prevent it?' },
+    { category:'YOUR TEACHERS', text:'Do your teachers have the tools to recognize bullying before it escalates — or are they responding only after it has already exploded?' },
+    { category:'YOUR MAP', text:'Do you know whether the emotional climate of your students shifts by gender, age, or classroom — or do you treat your whole school as one single reality?' }
 
     
   ];
 
   var QUIZ_OPTIONS = [
-    { value:'yes', label:'Si', icon:'A' },
+    { value:'yes', label:'Yes', icon:'A' },
     { value:'no',  label:'No',    icon:'B' },
-    { value:'idk', label:'No estoy seguro/a',     icon:'C' }
+    { value:'idk', label:'Not sure',     icon:'C' }
   ];
 
   var QUIZ_FINDINGS = [
   { q:0, type:'danger', icon:'🚨', 
-    title:'Sin datos de percepción de seguridad, no hay línea base',
-    text:'Si no mides cómo llegan tus estudiantes, no puedes saber si tu escuela es parte de la solución o parte del problema.' },
+    title:'Without safety perception data, there is no baseline',
+    text:'If you don\'t measure how students arrive, you can\'t know whether your school is part of the solution or part of the problem.' },
 
   { q:1, type:'danger', icon:'🚨', 
-    title:'Los espacios no supervisados son zonas de riesgo activo',
-    text:'Sin un mapeo de puntos críticos, los recursos de supervisión se distribuyen donde se ven — no donde se necesitan.' },
+    title:'Unsupervised spaces are active risk zones',
+    text:'Without mapping critical hotspots, supervision resources are deployed where things are visible — not where they are needed.' },
 
   { q:2, type:'warning', icon:'⚠️', 
-    title:'Sin canal de reporte confiable, el silencio es la norma',
-    text:'Un estudiante que no sabe a quién acudir — o que no confía en ser escuchado — no reporta. Y lo que no se reporta no se interviene.' },
+    title:'Without a trusted reporting channel, silence is the norm',
+    text:'A student who doesn\'t know who to turn to — or doesn\'t trust they will be heard — won\'t report. And what isn\'t reported is never addressed.' },
 
   { q:3, type:'danger', icon:'🚨', 
-    title:'Sin identificación de riesgo, la prevención es reactiva',
-    text:'Intervenir después del incidente cuesta entre 4 y 7 veces más que prevenirlo. Sin un perfil de vulnerabilidad por estudiante, siempre llegas tarde.' },
+    title:'Without risk identification, prevention is reactive',
+    text:'Intervening after an incident costs 4 to 7 times more than preventing it. Without a vulnerability profile per student, you always arrive too late.' },
 
   { q:4, type:'warning', icon:'⚠️', 
-    title:'El clima varía por salón — los promedios lo ocultan',
-    text:'Un índice general puede mostrar resultados aceptables mientras salones específicos registran niveles críticos. Sin datos por aula, el promedio protege el problema.' },
+    title:'Climate varies by classroom — averages hide it',
+    text:'A general index can show acceptable results while specific classrooms record critical levels. Without classroom-level data, the average protects the problem.' },
 
   { q:5, type:'warning', icon:'⚠️', 
-    title:'La detección temprana es una competencia — no una intuición',
-    text:'Sin formación específica en observación conductual, los docentes responden a lo que ya escaló. Las señales tempranas requieren un protocolo, no solo sensibilidad.' },
+    title:'Early detection is a skill — not an instinct',
+    text:'Without specific training in behavioral observation, teachers respond to what has already escalated. Early warning signs require a protocol, not just sensitivity.' },
 
   { q:6, type:'danger', icon:'🚨', 
-    title:'Una escuela que no es refugio activa el modo de supervivencia',
-    text:'Cuando el entorno escolar no se percibe como seguro, el sistema nervioso del estudiante prioriza alerta sobre aprendizaje. El impacto académico es medible y directo.' },
+    title:'A school that isn\'t a safe haven activates survival mode',
+    text:'When the school environment is not perceived as safe, the student\'s nervous system prioritizes alertness over learning. The academic impact is measurable and direct.' },
 
   { q:7, type:'danger', icon:'🚨', 
-    title:'La percepción de justicia define si los estudiantes hablan o callan',
-    text:'Si los estudiantes no creen que los casos se resuelven con equidad y rapidez, el subregistro aumenta. Los incidentes no reportados son los de mayor riesgo institucional.' },
+    title:'The perception of justice defines whether students speak or stay silent',
+    text:'If students don\'t believe cases are resolved fairly and quickly, underreporting increases. Unreported incidents carry the highest institutional risk.' },
 
   { q:8, type:'danger', icon:'🚨', 
-    title:'Sin documentación preventiva, la exposición legal es total',
-    text:'Un expediente construido después del incidente no constituye evidencia de gestión preventiva. Los protocolos solo tienen valor legal si son anteriores, sistemáticos y verificables.' },
+    title:'Without preventive documentation, legal exposure is total',
+    text:'A file built after the incident does not constitute evidence of preventive management. Protocols only have legal value if they are prior, systematic and verifiable.' },
 
   { q:9, type:'warning', icon:'⚠️', 
-    title:'Docentes sin herramientas específicas operan en modo reactivo',
-    text:'Reconocer bullying en fase temprana requiere competencias en detección de dinámicas grupales y señales de riesgo psicosocial. Sin esa formación, la intervención llega cuando el daño ya está hecho.' },
+    title:'Teachers without specific tools operate in reactive mode',
+    text:'Recognizing bullying in its early phase requires skills in detecting group dynamics and psychosocial risk signals. Without that training, intervention arrives when the damage is already done.' },
 
   { q:10, type:'danger', icon:'🚨', 
-    title:'Sin desagregación, los datos generales son clínicamente inútiles',
-    text:'Género, edad y salón no son variables demográficas — son los ejes donde se concentra el riesgo diferencial. Un diagnóstico sin esa desagregación no permite focalizar ninguna intervención.' }
+    title:'Without disaggregation, general data is clinically useless',
+    text:'Gender, age and classroom are not demographic variables — they are the axes where differential risk concentrates. A diagnosis without that breakdown cannot target any intervention.' }
 ];
 
   var quizCurrentQ   = 0;
@@ -1847,22 +1847,22 @@ window.addEventListener('popstate', function(e) {
   //    subtitle:'Tu escuela tiene buenas prácticas. TECH4ZERO puede llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.' };
   //
 
-  function quizGetLevelInfo(score) {
+function quizGetLevelInfo(score) {
   if (score <= 25) return { 
-    level:'Muy lejos', cls:'critical', color:'#ff6b6b',
-    subtitle:'La realidad de tus estudiantes y lo que tú percibes son dos mundos distintos. Lo que no ves no es porque no exista — es porque todavía nadie te lo ha mostrado.' 
+    level:'Very far', cls:'critical', color:'#ff6b6b',
+    subtitle:'The reality of your students and what you perceive are two different worlds. What you don\'t see isn\'t because it doesn\'t exist — it\'s because no one has shown it to you yet.' 
   };
   if (score <= 50) return { 
-    level:'Lejos', cls:'low', color:'#ffa94d',
-    subtitle:'Ves la superficie de tu escuela, pero la vida real de tus estudiantes ocurre en otro lugar. Estás más cerca de lo que crees — pero la distancia todavía importa.' 
+    level:'Far', cls:'low', color:'#ffa94d',
+    subtitle:'You see the surface of your school, but the real lives of your students happen somewhere else. You\'re closer than you think — but the distance still matters.' 
   };
   if (score <= 75) return { 
-    level:'Cerca', cls:'medium', color:'#D6A21C',
-    subtitle:'Tienes intuición y sensibilidad, pero te faltan los ojos de ellos. Con las herramientas correctas, podrías cerrar esa distancia en semanas.' 
+    level:'Close', cls:'medium', color:'#D6A21C',
+    subtitle:'You have intuition and sensitivity, but you\'re missing their eyes. With the right tools, you could close that gap in weeks.' 
   };
   return { 
-    level:'Muy cerca', cls:'high', color:'#69db7c',
-    subtitle:'Empiezas a ver tu escuela como tus estudiantes la viven. Eso es extraordinariamente difícil de lograr — y es exactamente desde donde se construyen escuelas que transforman vidas.' 
+    level:'Very close', cls:'high', color:'#69db7c',
+    subtitle:'You\'re starting to see your school the way your students experience it. That is extraordinarily difficult to achieve — and it\'s exactly from that place that schools are built that transform lives.' 
   };
 }
 
@@ -1940,8 +1940,8 @@ window.addEventListener('popstate', function(e) {
     if (!wrong.length) {
       document.getElementById('quizFindingsList').innerHTML =
         '<div style="text-align:center; padding:20px; color:#69db7c; font-size:15px; line-height:1.6;">'
-        + '✅ No se detectaron brechas significativas.<br>'
-        + '<span style="font-size:13px; color:#a9c0d3;">Tu escuela muestra una visibilidad excepcional.</span>'
+        + '✅ No significant gaps detected.<br>'
+        + '<span style="font-size:13px; color:#a9c0d3;">Your school shows exceptional visibility.</span>'
         + '</div>';
     } else {
       document.getElementById('quizFindingsList').innerHTML = wrong.map(function(f){
