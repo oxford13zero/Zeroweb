@@ -3084,6 +3084,7 @@ var navEnc = document.getElementById('navEncuesta');
       return;
     }
 
+    CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
     if (!ok) {
       if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
       if (routingBox) routingBox.style.display = 'none';
@@ -3204,6 +3205,8 @@ var navEnc = document.getElementById('navEncuesta');
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    CHOSEN_LANGUAGE = window.sessionState.language || 'es';
+    ROUTING_QUESTION = null;
     // Show welcome message first, then privacy modal
     await showPauseModal(getActivePauseConfigs()[0]);
     openPrivacyModal();
@@ -3385,6 +3388,9 @@ var navEnc = document.getElementById('navEncuesta');
 
 
       // Ensure CHOSEN_LANGUAGE is resolved before rendering questions
+      if (!CHOSEN_LANGUAGE || CHOSEN_LANGUAGE === 'both') {
+        CHOSEN_LANGUAGE = 'es';
+      }
       if (!CHOSEN_LANGUAGE || CHOSEN_LANGUAGE === 'both') {
         CHOSEN_LANGUAGE = 'es';
       }
