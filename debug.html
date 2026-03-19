@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Master Debug</title>
+<head><meta charset="UTF-8"><title>CHOSEN_LANGUAGE Trace</title>
 <style>
 body { margin:0; padding:20px; background:#0a1520; color:#fff; font-family:monospace; font-size:13px; }
 h1 { color:#D6A21C; margin:0 0 16px 0; }
@@ -8,77 +8,116 @@ h1 { color:#D6A21C; margin:0 0 16px 0; }
 .card h2 { margin:0 0 10px 0; color:#D6A21C; font-size:14px; }
 button { padding:8px 18px; background:#D6A21C; color:#000; border:none; border-radius:4px; font-weight:700; cursor:pointer; margin-right:8px; }
 input { padding:7px; background:#1E2F3F; border:1px solid #365468; color:#fff; border-radius:4px; width:160px; margin-right:6px; }
-.out { margin-top:10px; white-space:pre-wrap; line-height:1.7; font-size:12px; }
+.out { margin-top:10px; white-space:pre-wrap; line-height:1.8; font-size:12px; }
 .g{color:#69db7c;}.r{color:#ff6b6b;}.y{color:#ffa94d;}.b{color:#74c0fc;}
 </style>
 </head>
 <body>
-<h1>Master Index Debug</h1>
+<h1>CHOSEN_LANGUAGE Live Trace</h1>
 
 <div class="card">
   <h2>1 — Login</h2>
   <input id="u" placeholder="username" />
   <input id="p" type="password" placeholder="password" />
-  <button onclick="login()">LOGIN</button>
-  <div class="out" id="r1"></div>
-</div>
-
-<div class="card">
-  <h2>2 — Check deployed /index.html (MASTER)</h2>
-  <button onclick="checkMaster()">CHECK /index.html</button>
-  <div class="out" id="r2"></div>
-</div>
-
-<div class="card">
-  <h2>3 — Raw /api/me response</h2>
-  <button onclick="checkMe()">CHECK /api/me</button>
-  <div class="out" id="r3"></div>
+  <button onclick="run()">LOGIN + FULL TRACE</button>
+  <div class="out" id="out"></div>
 </div>
 
 <script>
-function set(id, html) { document.getElementById(id).innerHTML = html; }
+var out = document.getElementById('out');
+function log(msg, color) {
+  out.innerHTML += '<span style="color:'+(color||'#fff')+'">' + msg + '</span>\n';
+}
 
-async function login() {
+async function run() {
   var u = document.getElementById('u').value.trim();
   var p = document.getElementById('p').value.trim();
-  var r = await fetch('/api/login', {method:'POST', credentials:'include',
+  out.innerHTML = '';
+
+  // Step 1: Login
+  log('--- STEP 1: Login ---', '#D6A21C');
+  var r1 = await fetch('/api/login', {method:'POST', credentials:'include',
     headers:{'Content-Type':'application/json'}, body:JSON.stringify({username:u,password:p})});
-  var d = await r.json();
-  set('r1', d.ok ? '<span class="g">✓ '+d.school_name+'</span>' : '<span class="r">✗ '+(d.error||'unknown')+'</span>');
-  if (d.ok) { checkMe(); }
-}
+  var d1 = await r1.json();
+  log('login ok: ' + d1.ok, d1.ok?'#69db7c':'#ff6b6b');
+  if (!d1.ok) return;
 
-async function checkMaster() {
-  var r = await fetch('/', {credentials:'include'});
-  var html = await r.text();
-  var out = '';
-  out += 'Size: '+html.length+' chars\n';
+  // Step 2: /api/me
+  log('\n--- STEP 2: /api/me ---', '#D6A21C');
+  var r2 = await fetch('/api/me', {credentials:'include'});
+  var me = await r2.json();
+  log('school: ' + me.school_name);
+  log('language: ' + me.language, me.language ? '#69db7c' : '#ff6b6b');
+  log('country: ' + me.country);
 
-  // Find the exact refreshSession sessionState block
-  var idx = html.indexOf("window.sessionState = {");
-  // Find second occurrence (first is declaration, second is in refreshSession)
-  var idx2 = html.indexOf("window.sessionState = {", idx+1);
+  var schoolLang = me.language || 'es';
 
-  if (idx2 > 0) {
-    var block = html.substring(idx2, idx2+300);
-    out += '\nExact refreshSession block:\n';
-    out += block.split('\n').slice(0,10).join('\n') + '\n';
-    out += '\n';
-    out += 'Has language field: <span class="'+(block.includes('language')? 'g':'r')+'">'+(block.includes('language')?'✓ YES':'✗ NO')+'</span>\n';
+  // Step 3: Simulate what index.html does with sessionState
+  log('\n--- STEP 3: Simulating applySessionToUI ---', '#D6A21C');
+  log('sessionState.language = ' + schoolLang, '#ffa94d');
+  var CHOSEN_LANGUAGE = schoolLang === 'both' ? 'en' : (schoolLang || 'es');
+  log('CHOSEN_LANGUAGE set to: ' + CHOSEN_LANGUAGE, '#ffa94d');
+
+  // Step 4: routing-config
+  log('\n--- STEP 4: routing-config?lang=' + CHOSEN_LANGUAGE + ' ---', '#D6A21C');
+  var r3 = await fetch('/api/routing-config?lang=' + CHOSEN_LANGUAGE, {credentials:'include'});
+  var rc = await r3.json();
+  log('ok: ' + rc.ok, rc.ok?'#69db7c':'#ff6b6b');
+  log('returned language: ' + rc.language);
+  var surveyFile = null;
+  if (rc.routing_rules) {
+    var first = Object.values(rc.routing_rules)[0];
+    surveyFile = first?.survey_file;
+  }
+  log('survey_file: ' + surveyFile, '#ffa94d');
+
+  // Step 5: Load survey
+  log('\n--- STEP 5: Loading survey JSON ---', '#D6A21C');
+  var r4 = await fetch('/data/' + surveyFile, {cache:'no-store'});
+  var survey = await r4.json().catch(()=>null);
+  if (!survey) { log('FAILED to load survey', '#ff6b6b'); return; }
+  log('description: ' + survey.survey?.description);
+
+  // Simulate IS_PRIMARIA detection
+  var IS_PRIMARIA = survey.survey?.description === 'primaria' || survey.survey?.description === 'elementary';
+  log('IS_PRIMARIA: ' + IS_PRIMARIA, IS_PRIMARIA ? '#69db7c' : '#ffa94d');
+
+  // Simulate CHOSEN_LANGUAGE fix before render
+  if (!CHOSEN_LANGUAGE || CHOSEN_LANGUAGE === 'both') {
+    CHOSEN_LANGUAGE = 'es';
+    log('CHOSEN_LANGUAGE fixed to: es (was both/empty)', '#ffa94d');
   } else {
-    out += '<span class="r">Second sessionState block NOT FOUND</span>\n';
+    log('CHOSEN_LANGUAGE unchanged: ' + CHOSEN_LANGUAGE, '#69db7c');
   }
 
-  out += 'lang param in question-options: <span class="'+(html.includes("lang=${CHOSEN_LANGUAGE}")?'g':'r')+'">'+(html.includes("lang=${CHOSEN_LANGUAGE}")?'✓ YES':'✗ NO')+'</span>\n';
-  out += 'CHOSEN_LANGUAGE fix: <span class="'+(html.includes("CHOSEN_LANGUAGE === 'both'")?'g':'r')+'">'+(html.includes("CHOSEN_LANGUAGE === 'both'")?'✓ YES':'✗ NO')+'</span>\n';
+  // Step 6: questions-map
+  log('\n--- STEP 6: questions-map ---', '#D6A21C');
+  var r5 = await fetch('/api/questions-map?surveyId=' + survey.survey.survey_uuid, {credentials:'include'});
+  var qmap = await r5.json().catch(()=>({}));
+  log('ok: ' + qmap.ok);
+  var q1id = qmap.map?.['1'];
+  log('q#1 UUID: ' + q1id, '#ffa94d');
 
-  set('r2', out);
-}
+  // Step 7: fetch options - simulate what getOptionsForQuestion does
+  log('\n--- STEP 7: Fetching options ---', '#D6A21C');
+  var langQ = (CHOSEN_LANGUAGE && CHOSEN_LANGUAGE !== 'both') ? '&lang=' + CHOSEN_LANGUAGE : '';
+  var optUrl = '/api/question-options?questionId=' + q1id + langQ;
+  log('URL called: ' + optUrl, '#74c0fc');
+  var r6 = await fetch(optUrl, {credentials:'include'});
+  var opts = await r6.json().catch(()=>({}));
+  log('# options returned: ' + (opts.options||[]).length,
+    (opts.options||[]).length <= 7 ? '#69db7c' : '#ff6b6b');
+  (opts.options||[]).forEach(o => {
+    log('  "' + o.option_text + '" [' + o.language + ']');
+  });
 
-async function checkMe() {
-  var r = await fetch('/api/me', {credentials:'include'});
-  var txt = await r.text();
-  set('r3', 'Raw /api/me response:\n' + txt);
+  if ((opts.options||[]).length > 7) {
+    log('\n⚠ DUPLICATES DETECTED', '#ff6b6b');
+    log('langQ used: "' + langQ + '"', '#ff6b6b');
+    log('CHOSEN_LANGUAGE at fetch time: ' + CHOSEN_LANGUAGE, '#ff6b6b');
+  } else {
+    log('\n✓ CORRECT - only ' + CHOSEN_LANGUAGE + ' options returned', '#69db7c');
+  }
 }
 </script>
 </body>
