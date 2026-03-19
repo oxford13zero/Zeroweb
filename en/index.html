@@ -3391,7 +3391,7 @@ var navEnc = document.getElementById('navEncuesta');
     let selectedRouteKey = null;
     for (const [routeKey, config] of Object.entries(routingRules)) {
       if (config.grade_codes.includes(selectedCode)) {
-        targetSurveyFile = '/data/${config.survey_file}';
+       targetSurveyFile = `/data/${config.survey_file}`;
         selectedRouteKey = routeKey;
         break;
       }
@@ -3404,8 +3404,6 @@ var navEnc = document.getElementById('navEncuesta');
 
     routingMsg.textContent = 'Loading survey...';
     btnRoutingNext.disabled = true;
-
-
     
 try {
       // Store route info — survey will be loaded after language is selected
