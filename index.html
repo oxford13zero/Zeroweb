@@ -3207,6 +3207,7 @@ var navEnc = document.getElementById('navEncuesta');
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
     CHOSEN_LANGUAGE = window.sessionState.language || 'es';
     ROUTING_QUESTION = null;
+     OPTIONS_CACHE = {};
     // Show welcome message first, then privacy modal
     await showPauseModal(getActivePauseConfigs()[0]);
     openPrivacyModal();
