@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Primaria ES Debug</title>
+<head><meta charset="UTF-8"><title>Master Debug</title>
 <style>
 body { margin:0; padding:20px; background:#0a1520; color:#fff; font-family:monospace; font-size:13px; }
 h1 { color:#D6A21C; margin:0 0 16px 0; }
@@ -13,10 +13,10 @@ input { padding:7px; background:#1E2F3F; border:1px solid #365468; color:#fff; b
 </style>
 </head>
 <body>
-<h1>Primaria ES Duplicate Debug</h1>
+<h1>Master Index Debug</h1>
 
 <div class="card">
-  <h2>1 — Login as MX primaria school</h2>
+  <h2>1 — Login</h2>
   <input id="u" placeholder="username" />
   <input id="p" type="password" placeholder="password" />
   <button onclick="login()">LOGIN</button>
@@ -24,24 +24,19 @@ input { padding:7px; background:#1E2F3F; border:1px solid #365468; color:#fff; b
 </div>
 
 <div class="card">
-  <h2>2 — Check deployed /index.html fixes</h2>
+  <h2>2 — Check deployed /index.html (MASTER)</h2>
   <button onclick="checkMaster()">CHECK /index.html</button>
   <div class="out" id="r2"></div>
 </div>
 
 <div class="card">
-  <h2>3 — Trace full options flow for p4_edad</h2>
-  <button onclick="traceOptions()">TRACE OPTIONS</button>
+  <h2>3 — Raw /api/me response</h2>
+  <button onclick="checkMe()">CHECK /api/me</button>
   <div class="out" id="r3"></div>
 </div>
 
 <script>
 function set(id, html) { document.getElementById(id).innerHTML = html; }
-function row(label, val, cls) {
-  return '<span class="'+(cls||'b')+'">'+label+':</span> '+val+'\n';
-}
-
-var sessionLang = 'es';
 
 async function login() {
   var u = document.getElementById('u').value.trim();
@@ -49,95 +44,41 @@ async function login() {
   var r = await fetch('/api/login', {method:'POST', credentials:'include',
     headers:{'Content-Type':'application/json'}, body:JSON.stringify({username:u,password:p})});
   var d = await r.json();
-  if (d.ok) {
-    // Check me to get language
-    var r2 = await fetch('/api/me', {credentials:'include'});
-    var me = await r2.json();
-    sessionLang = me.language || 'es';
-    set('r1', '<span class="g">✓ '+me.school_name+'</span>\n' +
-      row('language', me.language, 'y') +
-      row('country', me.country, 'y'));
-  } else {
-    set('r1', '<span class="r">✗ '+(d.error||'unknown')+'</span>');
-  }
+  set('r1', d.ok ? '<span class="g">✓ '+d.school_name+'</span>' : '<span class="r">✗ '+(d.error||'unknown')+'</span>');
+  if (d.ok) { checkMe(); }
 }
 
 async function checkMaster() {
   var r = await fetch('/', {credentials:'include'});
   var html = await r.text();
   var out = '';
-  out += row('Size', html.length+' chars');
-  out += row('language in refreshSession',
-    html.includes("language: data?.language") ? '✓ YES' : '✗ NO',
-    html.includes("language: data?.language") ? 'g' : 'r');
-  out += row('CHOSEN_LANGUAGE resolved fix',
-    html.includes("CHOSEN_LANGUAGE === 'both'") ? '✓ YES' : '✗ NO',
-    html.includes("CHOSEN_LANGUAGE === 'both'") ? 'g' : 'r');
-  out += row('lang param in question-options',
-    html.includes("lang=${CHOSEN_LANGUAGE}") ? '✓ YES' : '✗ NO',
-    html.includes("lang=${CHOSEN_LANGUAGE}") ? 'g' : 'r');
-  out += row('IS_PRIMARIA catches elementary',
-    html.includes("description === 'elementary'") ? '✓ YES' : '✗ NO',
-    html.includes("description === 'elementary'") ? 'g' : 'r');
+  out += 'Size: '+html.length+' chars\n';
+
+  // Find the exact refreshSession sessionState block
+  var idx = html.indexOf("window.sessionState = {");
+  // Find second occurrence (first is declaration, second is in refreshSession)
+  var idx2 = html.indexOf("window.sessionState = {", idx+1);
+
+  if (idx2 > 0) {
+    var block = html.substring(idx2, idx2+300);
+    out += '\nExact refreshSession block:\n';
+    out += block.split('\n').slice(0,10).join('\n') + '\n';
+    out += '\n';
+    out += 'Has language field: <span class="'+(block.includes('language')? 'g':'r')+'">'+(block.includes('language')?'✓ YES':'✗ NO')+'</span>\n';
+  } else {
+    out += '<span class="r">Second sessionState block NOT FOUND</span>\n';
+  }
+
+  out += 'lang param in question-options: <span class="'+(html.includes("lang=${CHOSEN_LANGUAGE}")?'g':'r')+'">'+(html.includes("lang=${CHOSEN_LANGUAGE}")?'✓ YES':'✗ NO')+'</span>\n';
+  out += 'CHOSEN_LANGUAGE fix: <span class="'+(html.includes("CHOSEN_LANGUAGE === 'both'")?'g':'r')+'">'+(html.includes("CHOSEN_LANGUAGE === 'both'")?'✓ YES':'✗ NO')+'</span>\n';
+
   set('r2', out);
 }
 
-async function traceOptions() {
-  var out = '';
-  out += row('sessionLang (from /api/me)', sessionLang, 'y');
-
-  // Step 1: routing config
-  var r1 = await fetch('/api/routing-config?lang='+sessionLang, {credentials:'include'});
-  var rc = await r1.json().catch(()=>({}));
-  out += row('routing-config ok', rc.ok, rc.ok?'g':'r');
-  out += row('routing language', rc.language, 'y');
-
-  var surveyFile = rc.routing_rules ? Object.values(rc.routing_rules)[0]?.survey_file : null;
-  out += row('first survey_file', surveyFile||'(none)', surveyFile?'y':'r');
-
-  if (!surveyFile) { set('r3', out); return; }
-
-  // Step 2: load survey JSON
-  var r2 = await fetch('/data/'+surveyFile, {cache:'no-store'});
-  var survey = await r2.json().catch(()=>null);
-  if (!survey) { out += row('survey load', 'FAILED', 'r'); set('r3', out); return; }
-  out += row('survey uuid', survey.survey?.survey_uuid, 'y');
-  out += row('survey description', survey.survey?.description, 'y');
-
-  // Step 3: questions-map
-  var r3 = await fetch('/api/questions-map?surveyId='+survey.survey.survey_uuid, {credentials:'include'});
-  var qmap = await r3.json().catch(()=>({}));
-  out += row('questions-map ok', qmap.ok, qmap.ok?'g':'r');
-
-  var q1id = qmap.map?.['1'];
-  out += row('q#1 UUID (p4_edad)', q1id||'NOT FOUND', q1id?'y':'r');
-
-  if (!q1id) { set('r3', out); return; }
-
-  // Step 4: options WITHOUT lang param
-  var ra = await fetch('/api/question-options?questionId='+q1id, {credentials:'include'});
-  var da = await ra.json().catch(()=>({}));
-  out += '\n--- WITHOUT ?lang param ---\n';
-  out += row('# options', (da.options||[]).length, (da.options||[]).length<=7?'g':'r');
-
-  // Step 5: options WITH lang param
-  var rb = await fetch('/api/question-options?questionId='+q1id+'&lang='+sessionLang, {credentials:'include'});
-  var db = await rb.json().catch(()=>({}));
-  out += '\n--- WITH ?lang='+sessionLang+' ---\n';
-  out += row('# options', (db.options||[]).length, (db.options||[]).length<=7?'g':'r');
-  (db.options||[]).forEach(o => {
-    out += '  "'+o.option_text+'" [lang='+o.language+']\n';
-  });
-
-  // Step 6: check what CHOSEN_LANGUAGE would be in the page
-  out += '\n--- What /index.html would use ---\n';
-  var ri = await fetch('/', {credentials:'include'});
-  var indexHtml = await ri.text();
-  // Find the CHOSEN_LANGUAGE default
-  var m = indexHtml.match(/let CHOSEN_LANGUAGE\s*=\s*'(\w+)'/);
-  out += row('CHOSEN_LANGUAGE default in /index.html', m?m[1]:'NOT FOUND', 'y');
-
-  set('r3', out);
+async function checkMe() {
+  var r = await fetch('/api/me', {credentials:'include'});
+  var txt = await r.text();
+  set('r3', 'Raw /api/me response:\n' + txt);
 }
 </script>
 </body>
