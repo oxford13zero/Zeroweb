@@ -1931,7 +1931,7 @@ window.addEventListener('popstate', function(e) {
     }, 25);
 
     
-    <!--  ANALISIS BRECHA MINI ENCUSTA ---------------------------- -->
+    //--  ANALISIS BRECHA MINI ENCUSTA ----------------------------
     var wrong = quizAnswers
       .map(function(a,i){ return Object.assign({}, QUIZ_FINDINGS[i], { answered:a }); })
       .filter(function(f){ return f.answered === 'no' || f.answered === 'idk'; })
@@ -1952,7 +1952,7 @@ window.addEventListener('popstate', function(e) {
       }).join('');
     }
 
-    <!--  ENDS ANALISIS BRECHA MINI ENCUSTA ---------------------------- -->
+    // ENDS ANALISIS BRECHA MINI ENCUSTA ----------------------------
 
     
   }
