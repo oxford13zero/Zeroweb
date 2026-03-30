@@ -1879,7 +1879,7 @@ window.addEventListener('popstate', function(e) {
     QUIZ_OPTIONS.forEach(function(opt) {
       var div = document.createElement('div');
       div.className = 'quiz-q-option';
-      div.innerHTML = '<div class="quiz-q-option-icon">' + opt.icon + '</div><span>' + opt.label + '</span>';
+      div.innerHTML = '<div class="quiz-q-option-icon">' + opt.icon + '<\/div><span>' + opt.label + '<\/span>';
       if (quizAnswers[quizCurrentQ] === opt.value) div.classList.add('selected');
       div.addEventListener('click', function() {
         document.querySelectorAll('#quizQOptions .quiz-q-option').forEach(function(o){ o.classList.remove('selected'); });
@@ -1898,7 +1898,7 @@ window.addEventListener('popstate', function(e) {
       var cls = 'quiz-q-dot';
       if (i < quizCurrentQ) cls += ' done';
       if (i === quizCurrentQ) cls += ' current';
-      return '<div class="' + cls + '"></div>';
+      return '<div class="' + cls + '"><\/div>';
     }).join('');
   }
 
@@ -1946,9 +1946,9 @@ window.addEventListener('popstate', function(e) {
     } else {
       document.getElementById('quizFindingsList').innerHTML = wrong.map(function(f){
         return '<div class="quiz-finding-item ' + f.type + '">'
-             + '<div class="quiz-finding-icon">' + f.icon + '</div>'
-             + '<div class="quiz-finding-text"><strong>' + f.title + '</strong>' + f.text + '</div>'
-             + '</div>';
+             + '<div class="quiz-finding-icon">' + f.icon + '<\/div>'
+             + '<div class="quiz-finding-text"><strong>' + f.title + '<\/strong>' + f.text + '<\/div>'
+             + '<\/div>';
       }).join('');
     }
 
@@ -3036,12 +3036,16 @@ window.addEventListener('popstate', function(e) {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
-        country: data?.country || 'MX'
+        country: data?.country || 'MX',
         language: data?.language || 'es'
-        
       };
     } catch (e) {
-      window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
+      window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX', language:'es' };
+    }
+    // Redirect Spanish schools to the Spanish version
+    if (window.sessionState.ok && window.sessionState.language === 'es') {
+      window.location.href = '/';
+      return;
     }
     applySessionToUI();
   }
