@@ -3075,13 +3075,13 @@ window.addEventListener('popstate', function(e) {
     if (encuestaNeedLogin) encuestaNeedLogin.style.display = ok ? 'none' : 'block';
     if (resultadosNeedLogin) resultadosNeedLogin.style.display = ok ? 'none' : 'block';
 
-<!--   Este codigo desaparece botones para usuarios no autenticados -------->
+// Este codigo desaparece botones para usuarios no autenticados
 var navEnc = document.getElementById('navEncuesta');
     var navRes = document.getElementById('navResultados');
     if (navEnc) navEnc.style.display = ok ? '' : 'none';
     if (navRes) navRes.style.display = ok ? '' : 'none';
     if (!ok && (location.hash === '#encuesta' || location.hash === '#resultados')) showTab('home');
- <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
+ // ENDS - Este codigo desaparece botones para usuarios no autenticados   
 
     
     if (!ok) {
