@@ -3037,6 +3037,8 @@ window.addEventListener('popstate', function(e) {
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
         country: data?.country || 'MX'
+        language: data?.language || 'es'
+        
       };
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
@@ -3068,6 +3070,12 @@ window.addEventListener('popstate', function(e) {
         : 'Session status: Not authenticated.';
     }
 
+
+    // If school language is 'es', redirect to Spanish version
+    if (ok && window.sessionState.language === 'es') {
+      window.location.href = '/';
+      return;
+    }
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = !ok;
     if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = !ok;
     if (btnMostrarResultados) btnMostrarResultados.disabled = !ok;
