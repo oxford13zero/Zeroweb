@@ -1850,19 +1850,19 @@ window.addEventListener('popstate', function(e) {
   function quizGetLevelInfo(score) {
   if (score <= 25) return { 
     level:'Very far', cls:'critical', color:'#ff6b6b',
-    subtitle:'The reality of your students and what you perceive are two different worlds. What you don't see isn't because it doesn't exist — it's because no one has shown it to you yet.' 
+    subtitle:'The reality of your students and what you perceive are two different worlds. What you don\'t see isn\'t because it doesn\'t exist \u2014 it\'s because no one has shown it to you yet.' 
   };
   if (score <= 50) return { 
     level:'Far', cls:'low', color:'#ffa94d',
-    subtitle:'You see the surface of your school, but the real lives of your students happen somewhere else. You're closer than you think — but the distance still matters.' 
+    subtitle:'You see the surface of your school, but the real lives of your students happen somewhere else. You\'re closer than you think \u2014 but the distance still matters.' 
   };
   if (score <= 75) return { 
     level:'Close', cls:'medium', color:'#D6A21C',
-    subtitle:'You have intuition and sensitivity, but you're missing their eyes. With the right tools, you could close that gap in weeks.' 
+    subtitle:'You have intuition and sensitivity, but you\'re missing their eyes. With the right tools, you could close that gap in weeks.' 
   };
   return { 
     level:'Very close', cls:'high', color:'#69db7c',
-    subtitle:'You're starting to see your school the way your students experience it. That is extraordinarily difficult to achieve — and it's exactly from that place that schools are built that transform lives.' 
+    subtitle:'You\'re starting to see your school the way your students experience it. That is extraordinarily difficult to achieve \u2014 and it\'s exactly from that place that schools are built that transform lives.' 
   };
 }
 
