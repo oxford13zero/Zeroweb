@@ -1,6 +1,5 @@
 // /api/save-answer.js
 import { supabaseAdmin } from "./_lib/supabaseAdmin.js";
-import { requireAuth } from "./_lib/auth.js";
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -14,9 +13,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
   }
 
-  const auth = await requireAuth(req, res);
-  if (!auth?.ok) return;
-
   const { responseId, questionId, answerText, selectedOptionIds } = req.body || {};
 
   if (!responseId || !questionId) {
@@ -26,15 +22,15 @@ export default async function handler(req, res) {
   // 1) Verificar ownership del response
   const { data: resp, error: respErr } = await supabaseAdmin
     .from("survey_responses")
-    .select("id, school_id")
+    .select("id, status")
     .eq("id", responseId)
     .single();
 
   if (respErr || !resp) {
     return res.status(404).json({ ok: false, error: "RESPONSE_NOT_FOUND" });
   }
-  if (resp.school_id !== auth.school.id) {
-    return res.status(403).json({ ok: false, error: "FORBIDDEN" });
+  if (resp.status === "submitted") {
+    return res.status(400).json({ ok: false, error: "RESPONSE_ALREADY_SUBMITTED" });
   }
 
   // 2) Upsert question_answers
@@ -164,5 +160,3 @@ export default async function handler(req, res) {
     mode: allUuids ? "uuid_option_ids" : "option_codes",
   });
 }
-
-
