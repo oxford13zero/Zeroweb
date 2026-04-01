@@ -1,15 +1,10 @@
 // /api/submit-response.js
 import { supabaseAdmin } from "./_lib/supabaseAdmin.js";
-import { requireAuth } from "./_lib/auth.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
   }
-
-  // Auth por cookie t4z_session
-  const auth = await requireAuth(req, res);
-  if (!auth?.ok) return;
 
   const { responseId } = req.body || {};
   if (!responseId) {
@@ -27,9 +22,6 @@ export default async function handler(req, res) {
     return res.status(404).json({ ok: false, error: "RESPONSE_NOT_FOUND" });
   }
 
-  if (existing.school_id !== auth.school.id) {
-    return res.status(403).json({ ok: false, error: "FORBIDDEN" });
-  }
 
   // Marcar como submitted (idempotente)
   const { data, error } = await supabaseAdmin
