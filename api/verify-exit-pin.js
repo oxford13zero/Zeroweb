@@ -1,12 +1,8 @@
 // /api/verify-exit-pin.js
 import { supabaseAdmin } from "./_lib/supabaseAdmin.js";
-import { requireAuth } from "./_lib/auth.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Method not allowed" });
-
-  const auth = await requireAuth(req, res);
-  if (!auth?.ok) return;
 
   const { responseId, pin } = req.body || {};
   if (!responseId || !pin) {
