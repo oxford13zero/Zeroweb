@@ -3418,7 +3418,7 @@ var navEnc = document.getElementById('navEncuesta');
       // Since zero_general_grado is NOT in either survey anymore, we need to get its DB id
       // via a dedicated endpoint or by passing the external_id directly.
       // We use a separate lightweight call to resolve it by external_id.
-      const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_grado`, { credentials: 'include' });
+      const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_curso`, { credentials: 'include' });
       const gradeQData = await gradeQRes.json().catch(() => ({}));
 
       if (gradeQData.ok && gradeQData.questionId) {
@@ -3672,7 +3672,7 @@ var navEnc = document.getElementById('navEncuesta');
     if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
 
     const langQ = (typeof CHOSEN_LANGUAGE !== 'undefined' && CHOSEN_LANGUAGE && CHOSEN_LANGUAGE !== 'both') ? `&lang=${CHOSEN_LANGUAGE}` : '';
-    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}${langQ}`, { credentials: "include" });
+    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}${langQ}${targetSurveyId ? '&surveyId=' + encodeURIComponent(targetSurveyId) : ''}`, { credentials: "include" });
     const raw = await res.text();
     let data = {};
     try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
