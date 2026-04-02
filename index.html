@@ -3653,7 +3653,7 @@ var navEnc = document.getElementById('navEncuesta');
     if (OPTIONS_CACHE[questionId]) return OPTIONS_CACHE[questionId];
 
     const langQ = (typeof CHOSEN_LANGUAGE !== 'undefined' && CHOSEN_LANGUAGE && CHOSEN_LANGUAGE !== 'both') ? `&lang=${CHOSEN_LANGUAGE}` : '';
-    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}${langQ}`, { credentials: "include" });
+    const res = await fetch(`/api/question-options?questionId=${encodeURIComponent(questionId)}${langQ}${targetSurveyId ? '&surveyId=' + encodeURIComponent(targetSurveyId) : ''}`, { credentials: "include" });
     const raw = await res.text();
     let data = {};
     try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
