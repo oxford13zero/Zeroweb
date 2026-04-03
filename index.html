@@ -3376,12 +3376,14 @@ var navEnc = document.getElementById('navEncuesta');
         await fetch('/api/save-answer', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
+          
           body: JSON.stringify({
             responseId: window.currentResponseId,
             questionId: gradeQData.questionId,
             answerText: null,
-            selectedOptionIds: [selectedCode]   // selectedCode is the option code (e.g. "1","7", etc.)
-          })
+            selectedOptionIds: [selectedCode],
+            surveyId: targetSurveyId
+          })          
         });
       }
       // Note: if the endpoint doesn't exist yet, the grade answer save is skipped gracefully
