@@ -104,12 +104,25 @@ export default async function handler(req, res) {
 
     const valid = (opts || []).filter((o) => o.question_id === questionId);
     optionIds = valid.map((o) => o.id);
-  } else {
+
+
+    
+} else {
     // Caso antiguo: UI manda codes, hay que mapear option_code -> id
-    const { data: opts, error: optErr } = await supabaseAdmin
+    // surveyId es opcional pero necesario para desambiguar códigos duplicados
+    // (ej: code "6" existe en SURVEY_004_MX y en SURVEY_004_EN con distinto texto)
+    const { surveyId } = req.body || {};
+
+    let query = supabaseAdmin
       .from("question_options")
       .select("id, option_code")
       .eq("question_id", questionId);
+
+    if (surveyId) {
+      query = query.eq("survey_id", surveyId);
+    }
+
+    const { data: opts, error: optErr } = await query;
 
     if (optErr) {
       return res.status(500).json({
@@ -122,7 +135,7 @@ export default async function handler(req, res) {
     const map = new Map((opts || []).map((o) => [String(o.option_code), o.id]));
     optionIds = cleaned.map((c) => map.get(String(c))).filter(Boolean);
   }
-
+  
   // Si no quedó nada válido, devolvemos ok pero avisamos (te ayuda para debug)
   if (optionIds.length === 0) {
     return res.status(200).json({
