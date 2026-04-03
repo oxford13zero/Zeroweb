@@ -15,7 +15,7 @@
   "questions": [
     {
       "number": 1,
-      "question_id": "p4_edad",
+      "question_id": "zero_general_edad_v2",
       "type": "single_choice",
       "text": "¿Cuántos años tienes?",
       "required": true,
@@ -52,7 +52,7 @@
     },
     {
       "number": 2,
-      "question_id": "p4_genero",
+      "question_id": "zero_general_genero_v2",
       "type": "single_choice",
       "text": "¿Eres…?",
       "required": true,
