@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TECH4ZERO — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:    #D6A21C;
+      --gold-dk: #b8880f;
+      --bg0:     #0a1218;
+      --bg1:     #0f1923;
+      --bg2:     #16222D;
+      --bg3:     #1E2F3F;
+      --border:  #1e3040;
+      --text:    #d0e8f0;
+      --muted:   #7a9aaa;
+      --danger:  #E24B4A;
+      --warning: #EF9F27;
+      --ok:      #1D9E75;
+      --purple:  #7F77DD;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg1);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Auth screen ── */
+    #authScreen {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; background: var(--bg0);
+    }
+    .auth-box {
+      text-align: center; padding: 40px;
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 12px; max-width: 360px; width: 90%;
+    }
+    .auth-box h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 28px; margin-bottom: 8px; }
+    .auth-box p  { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+    .spinner {
+      width: 36px; height: 36px; border: 3px solid var(--border);
+      border-top-color: var(--gold); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .auth-error { color: #f09595; font-size: 14px; margin-top: 16px; }
+
+    /* ── Layout ── */
+    #dashboard { display: none; flex-direction: column; min-height: 100vh; }
+
+    .topbar {
+      background: var(--bg0); border-bottom: 0.5px solid var(--border);
+      padding: 14px 28px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 16px; }
+    .logo { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 20px; }
+    .school-name { font-size: 14px; color: var(--text); font-weight: 600; }
+    .school-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .topbar-right { display: flex; gap: 10px; align-items: center; }
+
+    .semaforo-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+    }
+    .pill-CRISIS       { background: #2a0a0a; color: #f09595; border: 0.5px solid #a32d2d; }
+    .pill-INTERVENCION { background: #2a1500; color: #FAC775; border: 0.5px solid #854F0B; }
+    .pill-ATENCION     { background: #1a1500; color: #FAC775; border: 0.5px solid #634806; }
+    .pill-MONITOREO    { background: #0a1a0a; color: #9FE1CB; border: 0.5px solid #0F6E56; }
+    .pill-SIN_DATOS    { background: var(--bg3); color: var(--muted); border: 0.5px solid var(--border); }
+
+    .btn-gold {
+      background: var(--gold); color: var(--bg0); border: none;
+      padding: 8px 18px; border-radius: 6px; font-size: 13px;
+      font-weight: 600; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-dk); }
+    .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-outline {
+      background: transparent; color: var(--gold);
+      border: 0.5px solid var(--gold);
+      padding: 8px 18px; border-radius: 6px; font-size: 13px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-outline:hover { background: rgba(214,162,28,0.1); }
+
+    /* ── Content ── */
+    .content { padding: 24px 28px; flex: 1; }
+
+    .section-title {
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 14px; margin-top: 28px;
+    }
+    .section-title:first-child { margin-top: 0; }
+
+    /* ── Metric cards ── */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px; margin-bottom: 4px;
+    }
+    .metric-card {
+      background: var(--bg0); border: 0.5px solid var(--border);
+      border-radius: 10px; padding: 16px;
+    }
+    .metric-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+    .metric-value { font-size: 26px; font-weight: 600; color: var(--text); }
+    .metric-sub   { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .metric-card.danger  .metric-value { color: #f09595; }
+    .metric-card.warning .metric-value { color: #FAC775; }
+    .metric-card.ok      .metric-value { color: #9FE1CB; }
+
+    .tag {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 10px; font-weight: 600;
+    }
+    .tag-red    { background: #2a0a0a; color: #f09595; border: 0.5px solid #a32d2d; }
+    .tag-amber  { background: #2a1500; color: #FAC775; border: 0.5px solid #854F0B; }
+    .tag-green  { background: #0a1a0a; color: #9FE1CB; border: 0.5px solid #0F6E56; }
+    .tag-gray   { background: var(--bg3); color: var(--muted); border: 0.5px solid var(--border); }
+
+    /* ── Chart grid ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px; margin-bottom: 4px;
+    }
+    .chart-card {
+      background: var(--bg0); border: 0.5px solid var(--border);
+      border-radius: 10px; padding: 18px;
+    }
+    .chart-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .chart-sub   { font-size: 11px; color: var(--muted); margin-bottom: 16px; }
+    .chart-wrap  { position: relative; }
+
+    /* ── Bar list (ecology) ── */
+    .bar-list { display: flex; flex-direction: column; gap: 10px; }
+    .bar-row  { display: flex; align-items: center; gap: 10px; }
+    .bar-lbl  { font-size: 12px; color: var(--muted); width: 120px; flex-shrink: 0; }
+    .bar-track{ flex: 1; background: var(--bg3); border-radius: 3px; height: 8px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; background: var(--purple); }
+    .bar-val  { font-size: 12px; color: var(--muted); width: 32px; text-align: right; }
+
+    /* ── Action items ── */
+    .actions-list { display: flex; flex-direction: column; gap: 10px; }
+    .action-item  {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px; background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 8px;
+    }
+    .action-icon {
+      width: 32px; height: 32px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .action-text { font-size: 13px; color: var(--text); font-weight: 600; }
+    .action-sub  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── PDF button row ── */
+    .pdf-row {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      padding: 20px 0; border-top: 0.5px solid var(--border);
+      margin-top: 28px;
+    }
+    .pdf-progress { margin-top: 12px; }
+    .progress-bar {
+      height: 4px; background: var(--border); border-radius: 2px;
+      overflow: hidden; margin-top: 8px;
+    }
+    .progress-fill {
+      height: 100%; background: var(--gold); border-radius: 2px;
+      width: 0%; transition: width 0.3s;
+    }
+    .progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; padding: 20px; font-size: 12px;
+      color: var(--muted); border-top: 0.5px solid var(--border);
+      background: var(--bg0);
+    }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 12px 16px; }
+      .content { padding: 16px; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Auth screen (shown while verifying token) ── -->
+<div id="authScreen">
+  <div class="auth-box">
+    <h1>TECH4ZERO</h1>
+    <p>Verificando acceso...</p>
+    <div class="spinner"></div>
+    <div id="authError" class="auth-error" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ── Main dashboard (shown after auth) ── -->
+<div id="dashboard">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="logo">TECH4ZERO</div>
+      <div>
+        <div class="school-name" id="hdrSchool">—</div>
+        <div class="school-meta" id="hdrMeta">—</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="hdrSemaforo" class="semaforo-pill pill-SIN_DATOS">—</span>
+      <button class="btn-outline" onclick="window.history.back()">← Volver</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- KPI metrics -->
+    <div class="section-title">Panorama general</div>
+    <div class="metrics">
+      <div class="metric-card" id="cardVict">
+        <div class="metric-label">Victimización frecuente</div>
+        <div class="metric-value" id="metVict">—</div>
+        <div class="metric-sub" id="subVict">—</div>
+      </div>
+      <div class="metric-card" id="cardPerp">
+        <div class="metric-label">Agresores frecuentes</div>
+        <div class="metric-value" id="metPerp">—</div>
+        <div class="metric-sub" id="subPerp">—</div>
+      </div>
+      <div class="metric-card" id="cardCyber">
+        <div class="metric-label">Cyberbullying</div>
+        <div class="metric-value" id="metCyber">—</div>
+        <div class="metric-sub" id="subCyber">—</div>
+      </div>
+      <div class="metric-card" id="cardRisk">
+        <div class="metric-label">Índice de riesgo escolar</div>
+        <div class="metric-value" id="metRisk">—</div>
+        <div class="metric-sub" id="subRisk">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Estudiantes encuestados</div>
+        <div class="metric-value" id="metN">—</div>
+        <div class="metric-sub" id="subN">—</div>
+      </div>
+    </div>
+
+    <!-- Charts row 1: prevalence + grade/gender -->
+    <div class="section-title">Análisis por área y subgrupos</div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Prevalencia por área</div>
+        <div class="chart-sub">% de estudiantes afectados</div>
+        <div class="chart-wrap" style="height:220px;">
+          <canvas id="chartPrevalence"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Agresores por grado y género</div>
+        <div class="chart-sub">% con perpetración frecuente</div>
+        <div class="chart-wrap" style="height:220px;">
+          <canvas id="chartAgr"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Víctimas por grado y género</div>
+        <div class="chart-sub">% con victimización frecuente</div>
+        <div class="chart-wrap" style="height:220px;">
+          <canvas id="chartVic"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Perfiles Olweus</div>
+        <div class="chart-sub">Distribución de la muestra</div>
+        <div class="chart-wrap" style="height:220px;">
+          <canvas id="chartOlweus"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: ecology + actions -->
+    <div class="section-title">Espacios de riesgo y acciones prioritarias</div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Espacios de riesgo</div>
+        <div class="chart-sub">Puntuación media (0–4) — solo víctimas</div>
+        <div class="bar-list" id="ecologyBars">
+          <div style="color:var(--muted);font-size:13px;">Cargando...</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Bullying tradicional vs. cyberbullying</div>
+        <div class="chart-sub">Solapamiento entre tipos</div>
+        <div class="chart-wrap" style="height:180px;">
+          <canvas id="chartCyber"></canvas>
+        </div>
+        <div id="cyberText" style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;"></div>
+      </div>
+      <div class="chart-card" style="grid-column: span 2;">
+        <div class="chart-title">Acciones prioritarias recomendadas</div>
+        <div class="chart-sub">Basadas en los datos de tu escuela</div>
+        <div class="actions-list" id="actionsList">
+          <div style="color:var(--muted);font-size:13px;">Cargando...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF generation -->
+    <div class="pdf-row">
+      <button class="btn-gold" id="btnGenReports" onclick="generateReports()">
+        Generar Informe de Diagnóstico + Plan de Acción (PDF)
+      </button>
+    </div>
+    <div class="pdf-progress" id="pdfProgress" style="display:none;">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">Generando...</div>
+    </div>
+    <div id="downloadRow" style="display:none; display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;"></div>
+
+  </div><!-- /content -->
+
+  <footer>
+    TECH4ZERO · Programa ZERO · Universidad de Stavanger
+  </footer>
+
+</div><!-- /dashboard -->
+
+<script src="dashboard.js"></script>
+</body>
+</html>
