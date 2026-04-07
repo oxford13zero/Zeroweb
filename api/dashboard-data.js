@@ -114,7 +114,7 @@ function classifyOlweus(perpScore, victScore) {
 
 // Risk index (0-100): combines risk factors and protective factors
 function calcRiskIndex(prevalences) {
-  const riskKeys       = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion"];
+  const riskKeys       = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion", "internivel"];
   const protectiveKeys = ["autoridad_docente", "normas_grupo", "respuesta_institucional"];
 
   let riskSum = 0, riskCount = 0;
@@ -152,90 +152,104 @@ function calcRiskIndex(prevalences) {
 }
 
 // ── Construct definitions (external_id → construct name) ────────────────────
+// Covers all survey variants: SURVEY_004, SURVEY_004_MX, SURVEY_004_CL,
+// SURVEY_004_EN, and all PRIMARIA variants.
 
 const CONSTRUCT_MAP = {
-  // Victimization
-  "zero_vic_fisica_v2":         "victimizacion",
-  "zero_vic_verbal_v2":         "victimizacion",
-  "zero_vic_exclusion_v2":      "victimizacion",
-  "zero_vic_amenazas_v2":       "victimizacion",
-  "zero_vic_discriminacion_v2": "victimizacion",
-  // Perpetration
-  "zero_perp_fisica_v2":        "perpetracion",
-  "zero_perp_verbal_v2":        "perpetracion",
-  "zero_perp_exclusion_v2":     "perpetracion",
-  "zero_perp_amenazas_v2":      "perpetracion",
-  // Cybervictimization
-  "zero_cyber_vic_v2":          "cybervictimizacion",
-  "zero_cyber_vic_foto_v2":     "cybervictimizacion",
-  "zero_cyber_vic_excl_v2":     "cybervictimizacion",
-  // Teacher authority
-  "zero_auto_doc_reglas_v2":    "autoridad_docente",
-  "zero_auto_doc_detiene_v2":   "autoridad_docente",
-  "zero_auto_doc_ayuda_v2":     "autoridad_docente",
-  // Group norms
-  "zero_normas_defienden_v2":   "normas_grupo",
-  "zero_normas_pertenencia_v2": "normas_grupo",
-  "zero_normas_apoyo_v2":       "normas_grupo",
-  "zero_normas_evita_v2":       "normas_grupo",
-  // Institutional response
-  "zero_inst_apoyo_v2":         "respuesta_institucional",
-  "zero_inst_conoce_v2":        "respuesta_institucional",
-  "zero_inst_confianza_v2":     "respuesta_institucional",
-  // Ecology spaces
-  "zero_eco_patio_v2":          "ecologia_patio",
-  "zero_eco_banos_v2":          "ecologia_banos",
-  "zero_eco_pasillos_v2":       "ecologia_pasillos",
-  "zero_eco_entrada_v2":        "ecologia_entrada",
-  "zero_eco_biblioteca_v2":     "ecologia_biblioteca",
+  // ── Victimization (zero_* format) ──────────────────────────────────────────
+  "zero_victima_agresion_fisica_v2":  "victimizacion",
+  "zero_victima_insultos_v2":         "victimizacion",
+  "zero_victima_rumores_v2":          "victimizacion",
+  "zero_victima_exclusion_v2":        "victimizacion",
+  "zero_victima_amenazas_v2":         "victimizacion",
+  "zero_victima_coercion_v2":         "victimizacion",
+  "zero_victima_discriminacion_v2":   "victimizacion",
+  "zero_victima_acoso_sexual":        "victimizacion",
+
+  // ── Perpetration (zero_* format) ───────────────────────────────────────────
+  "zero_agresor_agresion_fisica_v2":  "perpetracion",
+  "zero_agresor_insultos_v2":         "perpetracion",
+  "zero_agresor_rumores_v2":          "perpetracion",
+  "zero_agresor_exclusion_v2":        "perpetracion",
+  "zero_agresor_amenazas_v2":         "perpetracion",
+  "zero_agresor_coercion_v2":         "perpetracion",
+  "zero_agresor_discriminacion_v2":   "perpetracion",
+
+  // ── Cybervictimization (zero_* format) ─────────────────────────────────────
+  "zero_cybervictima_mensajes":       "cybervictimizacion",
+  "zero_cybervictima_fotos":          "cybervictimizacion",
+  "zero_cybervictima_exclusion":      "cybervictimizacion",  // if present
+  "zero_cybervictima_anonimo":        "cybervictimizacion",
+  "zero_cybervictima_continua":       "cybervictimizacion",
+  "zero_cybervictima_extorsion":      "cybervictimizacion",
+  "zero_cybervictima_masivo":         "cybervictimizacion",
+
+  // ── Cyberaggression (zero_* format) ────────────────────────────────────────
+  "zero_cyberagresor_mensajes":       "cyberagresion",
+  "zero_cyberagresor_exclusion":      "cyberagresion",
+
+  // ── Teacher / Adult authority (zero_* format) ──────────────────────────────
+  "zero_autoridad_normas":            "autoridad_docente",
+  "zero_autoridad_interviene":        "autoridad_docente",
+  "zero_autoridad_escucha":           "autoridad_docente",
+  "zero_autoridad_coordina":          "autoridad_docente",
+  "zero_autoridad_bienestar":         "autoridad_docente",
+  "zero_autoridad_seguimiento":       "autoridad_docente",
+  "zero_autoridad_accion_digital":    "autoridad_docente",
+
+  // ── Group norms (zero_* format) ────────────────────────────────────────────
+  "zero_normas_reaccion_v2":              "normas_grupo",
+  "zero_normas_intervencion_activa_v2":   "normas_grupo",
+  "zero_normas_defensa_apoyo":            "normas_grupo",
+  "zero_normas_defensa_observada":        "normas_grupo",
+
+  // ── Institutional response (zero_* format) ─────────────────────────────────
+  "zero_institucional_protege":       "respuesta_institucional",
+  "zero_institucional_protocolo":     "respuesta_institucional",
+  "zero_institucional_orientador":    "respuesta_institucional",
+  "zero_institucional_acceso_adulto": "respuesta_institucional",
+  "zero_institucional_sin_represalia":"respuesta_institucional",
+  "zero_institucional_seguimiento":   "respuesta_institucional",
+
+  // ── Inter-level / older students (zero_* format) ───────────────────────────
+  "zero_internivel_intimidacion":     "internivel",
+  "zero_internivel_coercion":         "internivel",
+  "zero_internivel_norma":            "internivel",
+  "zero_internivel_supervision":      "internivel",
+  "zero_internivel_intervencion":     "internivel",
+
+  // ── Ecology spaces (zero_* format) ─────────────────────────────────────────
+  "zero_ecologia_patio_v2":           "ecologia_patio",
+  "zero_ecologia_banos":              "ecologia_banos",
+  "zero_ecologia_aula_v2":            "ecologia_aula",
+  "zero_ecologia_cafeteria_v2":       "ecologia_cafeteria",
+  "zero_ecologia_entrada_salida_v2":  "ecologia_entrada",
+  "zero_ecologia_transporte_v2":      "ecologia_transporte",
 };
 
 const ECOLOGY_LABELS = {
-  "ecologia_patio":     "Patio principal",
-  "ecologia_banos":     "Baños y pasillos",
-  "ecologia_pasillos":  "Pasillos",
-  "ecologia_entrada":   "Entrada / salida",
-  "ecologia_biblioteca":"Biblioteca",
+  "ecologia_patio":      "Patio principal",
+  "ecologia_banos":      "Baños y pasillos",
+  "ecologia_aula":       "Sala de clases",
+  "ecologia_cafeteria":  "Cafetería",
+  "ecologia_entrada":    "Entrada / salida",
+  "ecologia_transporte": "Transporte",
+  "ecologia_biblioteca": "Biblioteca",
 };
 
 const DISPLAY_NAMES = {
   "victimizacion":          "Victimización",
   "perpetracion":           "Perpetración / Agresión",
   "cybervictimizacion":     "Cybervictimización",
+  "cyberagresion":          "Cyberagresión",
   "autoridad_docente":      "Autoridad Docente",
   "normas_grupo":           "Normas del Grupo",
   "respuesta_institucional":"Respuesta Institucional",
+  "internivel":             "Bullying entre niveles",
 };
 
-// Also support p4_* format for primaria surveys
-const P4_CONSTRUCT_MAP = {
-  "p4_victima_fisica":          "victimizacion",
-  "p4_victima_verbal":          "victimizacion",
-  "p4_victima_exclusion":       "victimizacion",
-  "p4_victima_amenazas":        "victimizacion",
-  "p4_victima_discriminacion":  "victimizacion",
-  "p4_agresor_fisico_verbal":   "perpetracion",
-  "p4_agresor_exclusion":       "perpetracion",
-  "p4_cyber_victima_mensajes":  "cybervictimizacion",
-  "p4_cyber_victima_foto":      "cybervictimizacion",
-  "p4_cyber_victima_exclusion": "cybervictimizacion",
-  "p4_maestro_reglas":          "autoridad_docente",
-  "p4_maestro_detiene_bullying":"autoridad_docente",
-  "p4_maestro_ayuda_conflictos":"autoridad_docente",
-  "p4_amigos_defienden":        "normas_grupo",
-  "p4_pertenencia_grupo":       "normas_grupo",
-  "p4_apoyo_companeros":        "normas_grupo",
-  "p4_grupo_evita_bullying":    "normas_grupo",
-  "p4_adultos_ayudan":          "respuesta_institucional",
-  "p4_conoce_adulto_ayuda":     "respuesta_institucional",
-  "p4_confianza_pedir_ayuda":   "respuesta_institucional",
-  "p4_mapa_patio":              "ecologia_patio",
-  "p4_mapa_banos_pasillos":     "ecologia_banos",
-  "p4_mapa_biblioteca":         "ecologia_biblioteca",
-  "p4_mapa_entrada_salida":     "ecologia_entrada",
-};
-
-const FULL_CONSTRUCT_MAP = { ...CONSTRUCT_MAP, ...P4_CONSTRUCT_MAP };
+// p4_* surveys are legacy dev data only — not supported in production
+const FULL_CONSTRUCT_MAP = { ...CONSTRUCT_MAP };
 
 // Demographic external IDs
 const DEMO_MAP = {
@@ -483,7 +497,11 @@ export default async function handler(req, res) {
   }
 
   // 17) Subgroups: aggressors and victims by grade and gender
-  const subgrupos = { agresion_por_grado: [], victimizacion_por_grado: [], agresion_por_genero: [], victimizacion_por_genero: [] };
+  const subgrupos = {
+    agresion_por_grado: [], victimizacion_por_grado: [],
+    agresion_por_genero: [], victimizacion_por_genero: [],
+    victimizacion_grado_genero: [], agresion_grado_genero: [],
+  };
 
   function prevByGroup(groupCol, freqConstruct) {
     const groups = {};
@@ -505,10 +523,35 @@ export default async function handler(req, res) {
       .sort((a, b) => b.pct - a.pct);
   }
 
-  subgrupos.agresion_por_grado       = prevByGroup("grado",  "perpetracion");
-  subgrupos.victimizacion_por_grado  = prevByGroup("grado",  "victimizacion");
-  subgrupos.agresion_por_genero      = prevByGroup("genero", "perpetracion");
-  subgrupos.victimizacion_por_genero = prevByGroup("genero", "victimizacion");
+  function prevByGradeGender(freqConstruct) {
+    const groups = {};
+    for (const rid of responseIds) {
+      const grado  = responseData[rid].grado;
+      const genero = responseData[rid].genero;
+      if (!grado || !genero) continue;
+      const key = `${grado}|||${genero}`;
+      if (!groups[key]) groups[key] = { grado, genero, total: 0, freq: 0 };
+      groups[key].total++;
+      const score = studentScores[rid]?.[freqConstruct];
+      if (score !== null && score !== undefined && score >= 2) groups[key].freq++;
+    }
+    return Object.values(groups)
+      .map(({ grado, genero, total, freq }) => ({
+        grado,
+        genero,
+        pct:     Math.round(freq / total * 1000) / 10,
+        n:       freq,
+        n_total: total,
+      }))
+      .sort((a, b) => b.pct - a.pct);
+  }
+
+  subgrupos.agresion_por_grado            = prevByGroup("grado",  "perpetracion");
+  subgrupos.victimizacion_por_grado       = prevByGroup("grado",  "victimizacion");
+  subgrupos.agresion_por_genero           = prevByGroup("genero", "perpetracion");
+  subgrupos.victimizacion_por_genero      = prevByGroup("genero", "victimizacion");
+  subgrupos.victimizacion_grado_genero    = prevByGradeGender("victimizacion");
+  subgrupos.agresion_grado_genero         = prevByGradeGender("perpetracion");
 
   // 18) Cyber overlap
   let cyberOverlap = null;
@@ -532,7 +575,7 @@ export default async function handler(req, res) {
 
   // 19) Cronbach alpha per construct (basic)
   const reliability = {};
-  const mainConstructs = ["victimizacion", "perpetracion", "cybervictimizacion", "autoridad_docente", "normas_grupo", "respuesta_institucional"];
+  const mainConstructs = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion", "autoridad_docente", "normas_grupo", "respuesta_institucional", "internivel"];
 
   for (const construct of mainConstructs) {
     // Build item matrix: each row = one respondent, columns = items for this construct
