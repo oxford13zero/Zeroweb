@@ -207,8 +207,8 @@
           callbacks: { label: ctx => ` ${ctx.parsed.x}%` }
         }},
         scales: {
-          x: { min: 0, max: 100, ticks: { callback: v => `${v}%` }, grid: { color: C.border } },
-          y: { grid: { display: false } },
+          x: { min: 0, max: 100, ticks: { callback: v => `${v}%`, color: '#ffffff' }, grid: { color: C.border } },
+          y: { grid: { display: false }, ticks: { color: '#ffffff' } },
         },
       },
     });
@@ -221,36 +221,48 @@
   }
 
   function renderGGChart(canvasId, byGrade, byGender, yLabel) {
-    // Build grade list from byGrade, then for each gender build a dataset
-    const grades  = byGrade.map(r => r.grupo);
-    const genders = [...new Set(byGender.map(r => r.grupo))];
+    const canvas = $(canvasId);
+    if (!canvas) return;
 
-    // We need the cross-tab: for each grade + gender combo.
-    // Since we only have marginals, we display by grade with gender as separate bars
-    // using the gender marginals scaled proportionally.
-    // Better: build datasets per gender from the subgroup data that includes both dimensions.
-    // Since dashboard-data.js only returns marginals, we show grade bars with gender color split.
-    // Use byGrade data and byGender data separately in two datasets:
+    // If no grade data, show "sin datos" message instead of empty chart
+    if (!byGrade || byGrade.length === 0) {
+      canvas.style.display = 'none';
+      const msg = document.createElement('div');
+      msg.style.cssText = 'color:#ffffff;font-size:13px;padding:20px 0;';
+      msg.textContent = 'Sin datos de grado para este análisis.';
+      canvas.parentElement.appendChild(msg);
+      return;
+    }
+
+    const grades  = byGrade.map(r => r.grupo);
+    const genders = [...new Set((byGender || []).map(r => r.grupo))];
 
     const datasets = [];
-    genders.forEach((gender, i) => {
-      const genderTotal = byGender.find(r => r.grupo === gender);
-      if (!genderTotal) return;
-      // Scale each grade's value by gender proportion
+    if (genders.length > 0) {
+      genders.forEach((gender, i) => {
+        const genderTotal = byGender.find(r => r.grupo === gender);
+        if (!genderTotal) return;
+        const total = byGender.reduce((s, g) => s + g.pct, 0) || 1;
+        datasets.push({
+          label: gender,
+          data: byGrade.map(r => Math.round(r.pct * (genderTotal.pct / total) * 10) / 10),
+          backgroundColor: GENDER_COLORS[i % GENDER_COLORS.length],
+          borderRadius: 3,
+          borderSkipped: false,
+        });
+      });
+    } else {
+      // No gender data — show plain grade bars
       datasets.push({
-        label: gender,
-        data: byGrade.map(r => {
-          const gPct  = genderTotal.pct;
-          const total = byGender.reduce((s, g) => s + g.pct, 0) || 1;
-          return Math.round(r.pct * (gPct / total) * 10) / 10;
-        }),
-        backgroundColor: GENDER_COLORS[i % GENDER_COLORS.length],
+        label: yLabel,
+        data: byGrade.map(r => r.pct),
+        backgroundColor: C.gold,
         borderRadius: 3,
         borderSkipped: false,
       });
-    });
+    }
 
-    new Chart($(canvasId), {
+    new Chart(canvas, {
       type: 'bar',
       data: { labels: grades, datasets },
       options: {
@@ -259,19 +271,22 @@
         plugins: {
           legend: {
             position: 'bottom',
-            labels: { boxWidth: 10, padding: 12 },
+            labels: { boxWidth: 10, padding: 12, color: '#ffffff' },
           },
           tooltip: {
             callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` }
           },
         },
         scales: {
-          x: { grid: { display: false } },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#ffffff' },
+          },
           y: {
             min: 0, max: 100,
-            ticks: { callback: v => `${v}%` },
+            ticks: { callback: v => `${v}%`, color: '#ffffff' },
             grid: { color: C.border },
-            title: { display: true, text: yLabel, color: C.muted },
+            title: { display: true, text: yLabel, color: '#ffffff' },
           },
         },
       },
@@ -294,7 +309,7 @@
         maintainAspectRatio: false,
         cutout: '60%',
         plugins: {
-          legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10 } },
+          legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, color: '#ffffff' } },
           tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} estudiantes` } },
         },
       },
@@ -309,7 +324,7 @@
     container.innerHTML = '';
 
     if (!eco.length) {
-      container.innerHTML = '<div style="color:var(--muted);font-size:13px;">Sin datos de espacios</div>';
+      container.innerHTML = '<div style="color:#ffffff;font-size:13px;">Sin datos de espacios</div>';
       return;
     }
 
@@ -350,8 +365,8 @@
         maintainAspectRatio: false,
         plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.y}%` } } },
         scales: {
-          x: { grid: { display: false } },
-          y: { min: 0, max: 100, ticks: { callback: v => `${v}%` }, grid: { color: C.border } },
+          x: { grid: { display: false }, ticks: { color: '#ffffff' } },
+          y: { min: 0, max: 100, ticks: { callback: v => `${v}%`, color: '#ffffff' }, grid: { color: C.border } },
         },
       },
     });
