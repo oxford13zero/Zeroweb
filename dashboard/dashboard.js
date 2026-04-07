@@ -34,7 +34,7 @@
   };
 
   // ── Chart.js defaults ─────────────────────────────────────────────────────
-  Chart.defaults.color          = C.muted;
+  Chart.defaults.color          = '#ffffff';
   Chart.defaults.borderColor    = C.border;
   Chart.defaults.font.family    = "'Open Sans', sans-serif";
   Chart.defaults.font.size      = 11;
@@ -120,7 +120,6 @@
     renderOlweusChart();
     renderEcology();
     renderCyberChart();
-    renderActions();
   }
 
   // ── Header ─────────────────────────────────────────────────────────────────
@@ -422,10 +421,11 @@
   }
 
   // ── PDF generation ─────────────────────────────────────────────────────────
-  window.generateReports = async function () {
-    const btn = $('btnGenReports');
-    btn.disabled = true;
-    btn.textContent = 'Generando...';
+  window.generateReport = async function (type) {
+    const btnDiag = $('btnGenDiag');
+    const btnPlan = $('btnGenPlan');
+    btnDiag.disabled = true;
+    btnPlan.disabled = true;
     $('pdfProgress').style.display = 'block';
     $('downloadRow').style.display = 'none';
 
@@ -434,8 +434,13 @@
       $('progressLabel').textContent = label;
     };
 
+    const labels = {
+      diagnostic:  'Informe de Diagnóstico',
+      action_plan: 'Plan de Acción',
+    };
+
     try {
-      setProgress(10, 'Iniciando generación...');
+      setProgress(10, `Generando ${labels[type]}...`);
 
       const res = await fetch('/api/generate-report', {
         method: 'POST',
@@ -443,46 +448,39 @@
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ school_id: dashData.school_id, analysis_dt: dashData.analysis_dt }),
+        body: JSON.stringify({
+          school_id:   dashData.school_id,
+          analysis_dt: dashData.analysis_dt,
+          type,
+        }),
       });
 
-      setProgress(80, 'Finalizando documentos...');
+      setProgress(80, 'Finalizando documento...');
 
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
-      setProgress(100, '✅ Documentos generados');
+      setProgress(100, `✅ ${labels[type]} generado`);
 
       const row = $('downloadRow');
       row.innerHTML = '';
       row.style.display = 'flex';
 
-      if (data.diagnostic_url) {
+      if (data.url) {
         const a = el('a', {
-          href: data.diagnostic_url, target: '_blank',
-          className: 'btn-gold',
+          href: data.url, target: '_blank',
+          className: type === 'diagnostic' ? 'btn-gold' : 'btn-outline',
           style: 'text-decoration:none;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;',
-          textContent: '📥 Informe de Diagnóstico (PDF)',
-        });
-        row.appendChild(a);
-      }
-
-      if (data.action_plan_url) {
-        const a = el('a', {
-          href: data.action_plan_url, target: '_blank',
-          className: 'btn-outline',
-          style: 'text-decoration:none;padding:8px 18px;border-radius:6px;font-size:13px;',
-          textContent: '📋 Plan de Acción (PDF)',
+          textContent: `📥 Descargar ${labels[type]} (PDF)`,
         });
         row.appendChild(a);
       }
 
     } catch (e) {
-      setProgress(0, '❌ Error generando documentos. Intenta nuevamente.');
-      btn.disabled    = false;
-      btn.textContent = 'Generar Informe de Diagnóstico + Plan de Acción (PDF)';
+      setProgress(0, '❌ Error generando documento. Intenta nuevamente.');
+    } finally {
+      btnDiag.disabled = false;
+      btnPlan.disabled = false;
     }
   };
 
