@@ -216,81 +216,80 @@
 
   // ── Grade × Gender grouped bar charts ─────────────────────────────────────
   function renderGradeGenderCharts() {
-    renderGGChart('chartAgr', dashData.subgrupos_reporte.agresion_por_grado,     dashData.subgrupos_reporte.agresion_por_genero,     '% Agresores');
-    renderGGChart('chartVic', dashData.subgrupos_reporte.victimizacion_por_grado, dashData.subgrupos_reporte.victimizacion_por_genero, '% Víctimas');
+    renderSubgrupoTable(
+      'tableVic',
+      dashData.subgrupos_reporte.victimizacion_grado_genero,
+      '% Victimización'
+    );
+    renderSubgrupoTable(
+      'tableAgr',
+      dashData.subgrupos_reporte.agresion_grado_genero,
+      '% Agresión'
+    );
   }
 
-  function renderGGChart(canvasId, byGrade, byGender, yLabel) {
-    const canvas = $(canvasId);
-    if (!canvas) return;
+  function renderSubgrupoTable(containerId, rows, pctLabel) {
+    const container = $(containerId);
+    if (!container) return;
+    container.innerHTML = '';
 
-    // If no grade data, show "sin datos" message instead of empty chart
-    if (!byGrade || byGrade.length === 0) {
-      canvas.style.display = 'none';
-      const msg = document.createElement('div');
-      msg.style.cssText = 'color:#ffffff;font-size:13px;padding:20px 0;';
-      msg.textContent = 'Sin datos de grado para este análisis.';
-      canvas.parentElement.appendChild(msg);
+    if (!rows || rows.length === 0) {
+      container.innerHTML = '<div style="color:#ffffff;font-size:13px;padding:12px 0;">Sin datos de grado y género para este análisis.</div>';
       return;
     }
 
-    const grades  = byGrade.map(r => r.grupo);
-    const genders = [...new Set((byGender || []).map(r => r.grupo))];
+    const CAT_SEMAFORO = {
+      CRISIS:       { label: 'CRISIS',       color: '#f09595', bg: '#2a0a0a', border: '#a32d2d' },
+      INTERVENCION: { label: 'INTERVENCIÓN', color: '#FAC775', bg: '#2a1500', border: '#854F0B' },
+      ATENCION:     { label: 'ATENCIÓN',     color: '#FAC775', bg: '#1a1500', border: '#634806' },
+      MONITOREO:    { label: 'MONITOREO',    color: '#9FE1CB', bg: '#0a1a0a', border: '#0F6E56' },
+    };
 
-    const datasets = [];
-    if (genders.length > 0) {
-      genders.forEach((gender, i) => {
-        const genderTotal = byGender.find(r => r.grupo === gender);
-        if (!genderTotal) return;
-        const total = byGender.reduce((s, g) => s + g.pct, 0) || 1;
-        datasets.push({
-          label: gender,
-          data: byGrade.map(r => Math.round(r.pct * (genderTotal.pct / total) * 10) / 10),
-          backgroundColor: GENDER_COLORS[i % GENDER_COLORS.length],
-          borderRadius: 3,
-          borderSkipped: false,
-        });
-      });
-    } else {
-      // No gender data — show plain grade bars
-      datasets.push({
-        label: yLabel,
-        data: byGrade.map(r => r.pct),
-        backgroundColor: C.gold,
-        borderRadius: 3,
-        borderSkipped: false,
-      });
+    function getSemaforo(pct) {
+      if (pct >= 20) return CAT_SEMAFORO.CRISIS;
+      if (pct >= 10) return CAT_SEMAFORO.INTERVENCION;
+      if (pct >= 5)  return CAT_SEMAFORO.ATENCION;
+      return CAT_SEMAFORO.MONITOREO;
     }
 
-    new Chart(canvas, {
-      type: 'bar',
-      data: { labels: grades, datasets },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { boxWidth: 10, padding: 12, color: '#ffffff' },
-          },
-          tooltip: {
-            callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` }
-          },
-        },
-        scales: {
-          x: {
-            grid: { display: false },
-            ticks: { color: '#ffffff' },
-          },
-          y: {
-            min: 0, max: 100,
-            ticks: { callback: v => `${v}%`, color: '#ffffff' },
-            grid: { color: C.border },
-            title: { display: true, text: yLabel, color: '#ffffff' },
-          },
-        },
-      },
+    // Table wrapper
+    const table = document.createElement('table');
+    table.style.cssText = 'width:100%;border-collapse:collapse;font-size:12px;';
+
+    // Header
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+      <tr style="border-bottom:0.5px solid #1e3040;">
+        <th style="text-align:left;padding:8px 6px;color:#ffffff;font-weight:600;">#</th>
+        <th style="text-align:left;padding:8px 6px;color:#ffffff;font-weight:600;">Grado</th>
+        <th style="text-align:left;padding:8px 6px;color:#ffffff;font-weight:600;">Género</th>
+        <th style="text-align:right;padding:8px 6px;color:#ffffff;font-weight:600;">${pctLabel}</th>
+        <th style="text-align:right;padding:8px 6px;color:#ffffff;font-weight:600;">N</th>
+        <th style="text-align:center;padding:8px 6px;color:#ffffff;font-weight:600;">Nivel</th>
+      </tr>`;
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    rows.forEach((row, i) => {
+      const sem = getSemaforo(row.pct);
+      const tr  = document.createElement('tr');
+      tr.style.cssText = `border-bottom:0.5px solid #1e3040;${i % 2 === 0 ? 'background:#0f1923;' : ''}`;
+      tr.innerHTML = `
+        <td style="padding:8px 6px;color:#7a9aaa;">${i + 1}</td>
+        <td style="padding:8px 6px;color:#ffffff;">${row.grado}</td>
+        <td style="padding:8px 6px;color:#ffffff;">${row.genero}</td>
+        <td style="padding:8px 6px;color:#ffffff;text-align:right;font-weight:600;">${row.pct}%</td>
+        <td style="padding:8px 6px;color:#7a9aaa;text-align:right;">${row.n} / ${row.n_total}</td>
+        <td style="padding:8px 6px;text-align:center;">
+          <span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;
+            color:${sem.color};background:${sem.bg};border:0.5px solid ${sem.border};">
+            ${sem.label}
+          </span>
+        </td>`;
+      tbody.appendChild(tr);
     });
+    table.appendChild(tbody);
+    container.appendChild(table);
   }
 
   // ── Olweus donut ───────────────────────────────────────────────────────────
