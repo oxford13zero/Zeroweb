@@ -148,31 +148,16 @@
     /* ── Bar list (ecology) ── */
     .bar-list { display: flex; flex-direction: column; gap: 10px; }
     .bar-row  { display: flex; align-items: center; gap: 10px; }
-    .bar-lbl  { font-size: 12px; color: var(--muted); width: 120px; flex-shrink: 0; }
+    .bar-lbl  { font-size: 12px; color: #ffffff; width: 120px; flex-shrink: 0; }
     .bar-track{ flex: 1; background: var(--bg3); border-radius: 3px; height: 8px; overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 3px; background: var(--purple); }
-    .bar-val  { font-size: 12px; color: var(--muted); width: 32px; text-align: right; }
-
-    /* ── Action items ── */
-    .actions-list { display: flex; flex-direction: column; gap: 10px; }
-    .action-item  {
-      display: flex; align-items: flex-start; gap: 12px;
-      padding: 12px; background: var(--bg2); border: 0.5px solid var(--border);
-      border-radius: 8px;
-    }
-    .action-icon {
-      width: 32px; height: 32px; border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; flex-shrink: 0;
-    }
-    .action-text { font-size: 13px; color: var(--text); font-weight: 600; }
-    .action-sub  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .bar-val  { font-size: 12px; color: #ffffff; width: 32px; text-align: right; }
 
     /* ── PDF button row ── */
     .pdf-row {
       display: flex; gap: 12px; flex-wrap: wrap;
       padding: 20px 0; border-top: 0.5px solid var(--border);
-      margin-top: 28px;
+      margin-top: 28px; align-items: center;
     }
     .pdf-progress { margin-top: 12px; }
     .progress-bar {
@@ -223,7 +208,6 @@
       </div>
     </div>
     <div class="topbar-right">
-      <span id="hdrSemaforo" class="semaforo-pill pill-SIN_DATOS">—</span>
       <button class="btn-outline" onclick="window.history.back()">← Volver</button>
     </div>
   </div>
@@ -231,7 +215,10 @@
   <div class="content">
 
     <!-- KPI metrics -->
-    <div class="section-title">Panorama general</div>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; margin-top:0;">
+      <div class="section-title" style="margin:0;">Panorama general</div>
+      <span id="hdrSemaforo" class="semaforo-pill pill-SIN_DATOS">—</span>
+    </div>
     <div class="metrics">
       <div class="metric-card" id="cardVict">
         <div class="metric-label">Victimización frecuente</div>
@@ -293,14 +280,14 @@
       </div>
     </div>
 
-    <!-- Row 2: ecology + actions -->
-    <div class="section-title">Espacios de riesgo y acciones prioritarias</div>
+    <!-- Row 2: ecology + cyber -->
+    <div class="section-title">Espacios de riesgo</div>
     <div class="charts-grid">
       <div class="chart-card">
         <div class="chart-title">Espacios de riesgo</div>
-        <div class="chart-sub">Puntuación media (0–4) — solo víctimas</div>
+        <div class="chart-sub">Puntuación media (0–4)</div>
         <div class="bar-list" id="ecologyBars">
-          <div style="color:var(--muted);font-size:13px;">Cargando...</div>
+          <div style="color:#ffffff;font-size:13px;">Cargando...</div>
         </div>
       </div>
       <div class="chart-card">
@@ -309,28 +296,24 @@
         <div class="chart-wrap" style="height:180px;">
           <canvas id="chartCyber"></canvas>
         </div>
-        <div id="cyberText" style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;"></div>
-      </div>
-      <div class="chart-card" style="grid-column: span 2;">
-        <div class="chart-title">Acciones prioritarias recomendadas</div>
-        <div class="chart-sub">Basadas en los datos de tu escuela</div>
-        <div class="actions-list" id="actionsList">
-          <div style="color:var(--muted);font-size:13px;">Cargando...</div>
-        </div>
+        <div id="cyberText" style="font-size:12px;color:#ffffff;margin-top:12px;line-height:1.6;"></div>
       </div>
     </div>
 
-    <!-- PDF generation -->
+    <!-- PDF generation — two horizontal buttons -->
     <div class="pdf-row">
-      <button class="btn-gold" id="btnGenReports" onclick="generateReports()">
-        Generar Informe de Diagnóstico + Plan de Acción (PDF)
+      <button class="btn-gold" id="btnGenDiag" onclick="generateReport('diagnostic')">
+        📄 Informe de Diagnóstico
+      </button>
+      <button class="btn-outline" id="btnGenPlan" onclick="generateReport('action_plan')">
+        📋 Plan de Acción
       </button>
     </div>
     <div class="pdf-progress" id="pdfProgress" style="display:none;">
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
       <div class="progress-label" id="progressLabel">Generando...</div>
     </div>
-    <div id="downloadRow" style="display:none; display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;"></div>
+    <div id="downloadRow" style="display:none; gap:12px; margin-top:16px; flex-wrap:wrap;"></div>
 
   </div><!-- /content -->
 
