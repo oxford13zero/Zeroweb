@@ -4321,11 +4321,22 @@ var navEnc = document.getElementById('navEncuesta');
   btnCancelSelectAnalysis?.addEventListener('click', closeSelectAnalysisModal);
   selectAnalysisModal?.addEventListener('click', (e) => { if (e.target === selectAnalysisModal) closeSelectAnalysisModal(); });
 
-  btnViewSelectedAnalysis?.addEventListener('click', () => {
-    if (!selectedAnalysisData) { alert('Por favor selecciona un análisis'); return; }
-    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
-    const url = `${baseUrl}?school_id=${encodeURIComponent(window.sessionState.school_id)}&analysis_dt=${encodeURIComponent(selectedAnalysisData.analysis_date)}`;
-    window.location.href = url;
+  btnViewSelectedAnalysis?.addEventListener('click', async () => {
+    if (!selectedAnalysisData) { alert('Please select an analysis'); return; }
+    try {
+      const res  = await fetch('/api/generate-dashboard-token', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          school_id:   window.sessionState.school_id,
+          analysis_dt: selectedAnalysisData.analysis_date,
+          role:        'school',
+        }),
+      });
+      const data = await res.json();
+      if (!data.ok) { alert('Error generating access. Please try again.'); return; }
+      window.location.href = `/dashboard/?token=${encodeURIComponent(data.token)}`;
+    } catch (e) { alert('Connection error. Please try again.'); }
   });
 
   // === ADMIN LOGIN SYSTEM ===
@@ -4556,10 +4567,17 @@ var navEnc = document.getElementById('navEncuesta');
     } catch (e) { console.error('Re-open error:', e); alert('Error rejecting survey'); }
   }
 
-  function previewSurvey(schoolId, analysisDate) {
-    const baseUrl = 'https://sreamlitzero-shmskdwqqlhrt4yc8soy5o.streamlit.app/';
-    const url = `${baseUrl}?school_id=${encodeURIComponent(schoolId)}&analysis_dt=${encodeURIComponent(analysisDate)}&preview=true`;
-    window.open(url, '_blank');
+  async function previewSurvey(schoolId, analysisDate) {
+    try {
+      const res  = await fetch('/api/generate-dashboard-token', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ school_id: schoolId, analysis_dt: analysisDate, role: 'admin' }),
+      });
+      const data = await res.json();
+      if (!data.ok) { alert('Error generating access. Please try again.'); return; }
+      window.open(`/dashboard/?token=${encodeURIComponent(data.token)}`, '_blank');
+    } catch (e) { alert('Connection error. Please try again.'); }
   }
 
   approveSurveysClose?.addEventListener('click', closeApproveSurveysModal);
