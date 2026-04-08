@@ -129,6 +129,23 @@
     }
     $('metN').textContent = d.n_estudiantes;
     $('subN').textContent = `Análisis: ${formatDate(d.analysis_dt)}`;
+
+    // Representativeness
+    const rep     = d.representatividad;
+    const repCard = $('cardRep');
+    if (rep && repCard) {
+      const ok = rep.es_representativa;
+      $('metRep').innerHTML = ok
+        ? '<span style="color:#9FE1CB;">✓ Representativa</span>'
+        : '<span style="color:#f09595;">✗ Insuficiente</span>';
+      $('subRep').innerHTML =
+        `${rep.pct_encuestados}% encuestados · ±${rep.margen_error_real}% error<br>` +
+        `<span style="font-size:10px;color:#7a9aaa;">Mínimo: ${rep.muestra_minima} de ${rep.total_matriculados}</span>`;
+      repCard.className = 'metric-card ' + (ok ? 'ok' : 'danger');
+    } else if (repCard) {
+      $('metRep').textContent = '—';
+      $('subRep').textContent = 'Sin datos de matrícula';
+    }
   }
 
   function renderPrevalenceChart() {
