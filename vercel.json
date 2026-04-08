@@ -1,12 +1,7 @@
 {
-  "name": "tech4zero",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
-    "@supabase/supabase-js": "^2.49.0",
-    "bcryptjs": "^2.4.3",
-    "cookie": "^0.6.0",
-    "resend": "^4.0.0"
-  }
+  "rewrites": [
+    { "source": "/en", "destination": "/en/index.html" },
+    { "source": "/en/(.*)", "destination": "/en/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
