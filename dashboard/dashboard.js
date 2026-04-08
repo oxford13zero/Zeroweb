@@ -215,71 +215,17 @@
   }
 
   // ── Grade × Gender grouped bar charts ─────────────────────────────────────
-  // ── Semáforo tooltip text ──────────────────────────────────────────────────
-  const SEMAFORO_TOOLTIP =
-    'CRISIS (≥20%): Requiere acción inmediata esta semana.\n' +
-    'INTERVENCIÓN (10–19%): Requiere atención urgente este mes.\n' +
-    'ATENCIÓN (5–9%): Merece seguimiento y monitoreo activo.\n' +
-    'MONITOREO (<5%): Está bajo control pero no se puede ignorar.\n\n' +
-    'Umbrales basados en el Programa ZERO — Universidad de Stavanger.';
-
-  function infoIcon() {
-    const span = document.createElement('span');
-    span.title = SEMAFORO_TOOLTIP;
-    span.style.cssText = [
-      'display:inline-flex;align-items:center;justify-content:center;',
-      'width:15px;height:15px;border-radius:50%;',
-      'background:#1e3040;color:#7a9aaa;',
-      'font-size:10px;font-weight:700;cursor:help;',
-      'margin-left:6px;flex-shrink:0;vertical-align:middle;',
-      'border:0.5px solid #7a9aaa;',
-    ].join('');
-    span.textContent = 'i';
-    return span;
-  }
-
-  // ── Semáforo helpers ───────────────────────────────────────────────────────
-  const CAT_STYLE = {
-    CRISIS:       { label:'CRISIS',        color:'#f09595', bg:'#2a0a0a', border:'#a32d2d' },
-    INTERVENCION: { label:'INTERVENCIÓN',  color:'#FAC775', bg:'#2a1500', border:'#854F0B' },
-    ATENCION:     { label:'ATENCIÓN',      color:'#FAC775', bg:'#1a1500', border:'#634806' },
-    MONITOREO:    { label:'MONITOREO',     color:'#9FE1CB', bg:'#0a1a0a', border:'#0F6E56' },
-  };
-
-  function getSem(pct) {
-    if (pct >= 20) return CAT_STYLE.CRISIS;
-    if (pct >= 10) return CAT_STYLE.INTERVENCION;
-    if (pct >= 5)  return CAT_STYLE.ATENCION;
-    return CAT_STYLE.MONITOREO;
-  }
-
-  function semTag(pct) {
-    const s = getSem(pct);
-    return `<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;color:${s.color};background:${s.bg};border:0.5px solid ${s.border};">${s.label}</span>`;
-  }
-
-  // ── 4-panel grade/gender section ───────────────────────────────────────────
   function renderGradeGenderCharts() {
-    const sub = dashData.subgrupos_reporte;
-
-    // Top 7 by grade
-    const victGrade = (sub.victimizacion_por_grado || []).slice(0, 7);
-    const agrGrade  = (sub.agresion_por_grado      || []).slice(0, 7);
-    const victGen   = sub.victimizacion_por_genero  || [];
-    const agrGen    = sub.agresion_por_genero        || [];
-
-    renderGradeBarChart('chartVicGrade', victGrade, '% Victimización');
-    renderGradeBarChart('chartAgrGrade', agrGrade,  '% Agresión');
-    renderGenderTable('tableVicGen', victGen);
-    renderGenderTable('tableAgrGen', agrGen);
+    renderGGChart('chartAgr', dashData.subgrupos_reporte.agresion_por_grado,     dashData.subgrupos_reporte.agresion_por_genero,     '% Agresores');
+    renderGGChart('chartVic', dashData.subgrupos_reporte.victimizacion_por_grado, dashData.subgrupos_reporte.victimizacion_por_genero, '% Víctimas');
   }
 
-  // Vertical bar chart by grade with semáforo colors
-  function renderGradeBarChart(canvasId, rows, yLabel) {
+  function renderGGChart(canvasId, byGrade, byGender, yLabel) {
     const canvas = $(canvasId);
     if (!canvas) return;
 
-    if (!rows || rows.length === 0) {
+    // If no grade data, show "sin datos" message instead of empty chart
+    if (!byGrade || byGrade.length === 0) {
       canvas.style.display = 'none';
       const msg = document.createElement('div');
       msg.style.cssText = 'color:#ffffff;font-size:13px;padding:20px 0;';
@@ -288,34 +234,54 @@
       return;
     }
 
-    const labels = rows.map(r => r.grupo);
-    const values = rows.map(r => r.pct);
-    const colors = rows.map(r => getSem(r.pct).color);
+    const grades  = byGrade.map(r => r.grupo);
+    const genders = [...new Set((byGender || []).map(r => r.grupo))];
+
+    const datasets = [];
+    if (genders.length > 0) {
+      genders.forEach((gender, i) => {
+        const genderTotal = byGender.find(r => r.grupo === gender);
+        if (!genderTotal) return;
+        const total = byGender.reduce((s, g) => s + g.pct, 0) || 1;
+        datasets.push({
+          label: gender,
+          data: byGrade.map(r => Math.round(r.pct * (genderTotal.pct / total) * 10) / 10),
+          backgroundColor: GENDER_COLORS[i % GENDER_COLORS.length],
+          borderRadius: 3,
+          borderSkipped: false,
+        });
+      });
+    } else {
+      // No gender data — show plain grade bars
+      datasets.push({
+        label: yLabel,
+        data: byGrade.map(r => r.pct),
+        backgroundColor: C.gold,
+        borderRadius: 3,
+        borderSkipped: false,
+      });
+    }
 
     new Chart(canvas, {
       type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          data: values,
-          backgroundColor: colors,
-          borderRadius: 4,
-          borderSkipped: false,
-        }],
-      },
+      data: { labels: grades, datasets },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false },
+          legend: {
+            position: 'bottom',
+            labels: { boxWidth: 10, padding: 12, color: '#ffffff' },
+          },
           tooltip: {
-            callbacks: {
-              label: ctx => ` ${ctx.parsed.y}% (${rows[ctx.dataIndex].n} de ${rows[ctx.dataIndex].n_total})`,
-            },
+            callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` }
           },
         },
         scales: {
-          x: { grid: { display: false }, ticks: { color: '#ffffff' } },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#ffffff' },
+          },
           y: {
             min: 0, max: 100,
             ticks: { callback: v => `${v}%`, color: '#ffffff' },
@@ -325,45 +291,6 @@
         },
       },
     });
-  }
-
-  // Gender table
-  function renderGenderTable(containerId, rows) {
-    const container = $(containerId);
-    if (!container) return;
-    container.innerHTML = '';
-
-    if (!rows || rows.length === 0) {
-      container.innerHTML = '<div style="color:#ffffff;font-size:13px;padding:12px 0;">Sin datos de género.</div>';
-      return;
-    }
-
-    const table = document.createElement('table');
-    table.style.cssText = 'width:100%;border-collapse:collapse;font-size:12px;';
-
-    table.innerHTML = `
-      <thead>
-        <tr style="border-bottom:0.5px solid #1e3040;">
-          <th style="text-align:left;padding:8px 6px;color:#ffffff;font-weight:600;">Género</th>
-          <th style="text-align:right;padding:8px 6px;color:#ffffff;font-weight:600;">%</th>
-          <th style="text-align:right;padding:8px 6px;color:#ffffff;font-weight:600;">N</th>
-          <th style="text-align:center;padding:8px 6px;color:#ffffff;font-weight:600;">Nivel</th>
-        </tr>
-      </thead>`;
-
-    const tbody = document.createElement('tbody');
-    rows.forEach((row, i) => {
-      const tr = document.createElement('tr');
-      tr.style.cssText = `border-bottom:0.5px solid #1e3040;${i % 2 === 0 ? 'background:#0f1923;' : ''}`;
-      tr.innerHTML = `
-        <td style="padding:8px 6px;color:#ffffff;">${row.grupo}</td>
-        <td style="padding:8px 6px;color:#ffffff;text-align:right;font-weight:600;">${row.pct}%</td>
-        <td style="padding:8px 6px;color:#7a9aaa;text-align:right;">${row.n} / ${row.n_total}</td>
-        <td style="padding:8px 6px;text-align:center;">${semTag(row.pct)}</td>`;
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    container.appendChild(table);
   }
 
   // ── Olweus donut ───────────────────────────────────────────────────────────
@@ -508,23 +435,19 @@
     });
   }
 
-  // ── PDF generation ─────────────────────────────────────────────────────────
+  // ── PDF/Markdown generation ────────────────────────────────────────────────
   window.generateReport = async function (type) {
     const btnDiag = $('btnGenDiag');
     const btnPlan = $('btnGenPlan');
-    btnDiag.disabled = true;
-    btnPlan.disabled = true;
+    if (btnDiag) btnDiag.disabled = true;
+    if (btnPlan) btnPlan.disabled = true;
     $('pdfProgress').style.display = 'block';
-    $('downloadRow').style.display = 'none';
+
+    const labels = { diagnostic: 'Informe de Diagnóstico', action_plan: 'Plan de Acción' };
 
     const setProgress = (pct, label) => {
       $('progressFill').style.width = pct + '%';
       $('progressLabel').textContent = label;
-    };
-
-    const labels = {
-      diagnostic:  'Informe de Diagnóstico',
-      action_plan: 'Plan de Acción',
     };
 
     try {
@@ -536,39 +459,39 @@
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          school_id:   dashData.school_id,
-          analysis_dt: dashData.analysis_dt,
-          type,
-        }),
+        body: JSON.stringify({ type, dashData }),
       });
 
       setProgress(80, 'Finalizando documento...');
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
-      setProgress(100, `✅ ${labels[type]} generado`);
-
-      const row = $('downloadRow');
-      row.innerHTML = '';
-      row.style.display = 'flex';
-
-      if (data.url) {
-        const a = el('a', {
-          href: data.url, target: '_blank',
-          className: type === 'diagnostic' ? 'btn-gold' : 'btn-outline',
-          style: 'text-decoration:none;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;',
-          textContent: `📥 Descargar ${labels[type]} (PDF)`,
-        });
-        row.appendChild(a);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
       }
 
+      // Get filename from Content-Disposition header
+      const disposition = res.headers.get('Content-Disposition') || '';
+      const match = disposition.match(/filename="([^"]+)"/);
+      const filename = match ? match[1] : `${type}_TECH4ZERO.md`;
+
+      // Download the markdown file
+      const blob = await res.blob();
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      setProgress(100, `✅ ${labels[type]} descargado`);
+
     } catch (e) {
-      setProgress(0, '❌ Error generando documento. Intenta nuevamente.');
+      setProgress(0, `❌ Error: ${e.message}. Intenta nuevamente.`);
     } finally {
-      btnDiag.disabled = false;
-      btnPlan.disabled = false;
+      if (btnDiag) btnDiag.disabled = false;
+      if (btnPlan) btnPlan.disabled = false;
     }
   };
 
