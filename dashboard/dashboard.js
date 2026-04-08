@@ -120,12 +120,6 @@
     renderOlweusChart();
     renderEcology();
     renderCyberChart();
-
-    // Set tooltip on all info icons
-    ['infoVicGrade','infoVicGen','infoAgrGrade','infoAgrGen'].forEach(id => {
-      const el = $(id);
-      if (el) el.title = SEMAFORO_TOOLTIP;
-    });
   }
 
   // ── Header ─────────────────────────────────────────────────────────────────
