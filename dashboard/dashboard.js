@@ -435,7 +435,7 @@
     });
   }
 
-  // ── PDF/Markdown generation ────────────────────────────────────────────────
+  // ── Report generation ──────────────────────────────────────────────────────
   window.generateReport = async function (type) {
     const btnDiag = $('btnGenDiag');
     const btnPlan = $('btnGenPlan');
@@ -446,7 +446,7 @@
     const labels = { diagnostic: 'Informe de Diagnóstico', action_plan: 'Plan de Acción' };
 
     const setProgress = (pct, label) => {
-      $('progressFill').style.width = pct + '%';
+      $('progressFill').style.width  = pct + '%';
       $('progressLabel').textContent = label;
     };
 
@@ -456,7 +456,7 @@
       const res = await fetch('/api/generate-report', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type':  'application/json',
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ type, dashData }),
@@ -471,10 +471,10 @@
 
       // Get filename from Content-Disposition header
       const disposition = res.headers.get('Content-Disposition') || '';
-      const match = disposition.match(/filename="([^"]+)"/);
-      const filename = match ? match[1] : `${type}_TECH4ZERO.md`;
+      const match       = disposition.match(/filename="([^"]+)"/);
+      const filename    = match ? match[1] : `${type}_TECH4ZERO.md`;
 
-      // Download the markdown file
+      // Trigger browser download
       const blob = await res.blob();
       const url  = URL.createObjectURL(blob);
       const a    = document.createElement('a');
