@@ -303,12 +303,18 @@ export default async function handler(req, res) {
   // 3) Load school info
   const { data: schoolData } = await supabaseAdmin
     .from("schools")
-    .select("name, country")
+    .select("name, country, students_primaria, students_secundaria, students_preparatoria")
     .eq("id", school_id)
     .single();
 
   const schoolName    = schoolData?.name    || "Escuela";
   const schoolCountry = schoolData?.country || "MX";
+
+  // Enrollment and sample representativeness
+  const enrollment_primaria      = schoolData?.students_primaria      || 0;
+  const enrollment_secundaria    = schoolData?.students_secundaria    || 0;
+  const enrollment_preparatoria  = schoolData?.students_preparatoria  || 0;
+  const total_matriculados       = enrollment_primaria + enrollment_secundaria + enrollment_preparatoria;
 
   // 4) Load all question answers in chunks
   const CHUNK = 100;
@@ -622,7 +628,43 @@ export default async function handler(req, res) {
     prevalenceSummary[DISPLAY_NAMES[k] || k] = v;
   }
 
-  // 22) Assemble final response
+  // 22) Sample representativeness (Wilson formula, 95% confidence, ±5% margin)
+  function calcRepresentativeness(population, sample) {
+    if (!population || population === 0) return null;
+    const Z = 1.96;   // 95% confidence
+    const p = 0.5;    // most conservative proportion
+    const e = 0.05;   // ±5% margin of error
+
+    // Minimum sample size needed (infinite population)
+    const n_inf = (Z * Z * p * (1 - p)) / (e * e);
+    // Correction for finite population
+    const n_min = Math.ceil(n_inf / (1 + (n_inf - 1) / population));
+
+    // Actual margin of error achieved with this sample
+    const actual_e = sample >= population
+      ? 0
+      : Math.round(Z * Math.sqrt((p * (1 - p) / sample) * (1 - sample / population)) * 1000) / 10;
+
+    const pct_encuestados = Math.round(sample / population * 1000) / 10;
+    const is_representative = sample >= n_min;
+
+    return {
+      total_matriculados:  population,
+      n_encuestados:       sample,
+      pct_encuestados,
+      muestra_minima:      n_min,
+      margen_error_real:   actual_e,
+      es_representativa:   is_representative,
+      nivel_confianza:     95,
+      margen_objetivo:     5,
+    };
+  }
+
+  const representatividad = total_matriculados > 0
+    ? calcRepresentativeness(total_matriculados, n)
+    : null;
+
+  // 23) Assemble final response
   const result = {
     ok:           true,
     escuela:      schoolName,
@@ -632,16 +674,16 @@ export default async function handler(req, res) {
     n_estudiantes: n,
     fecha:         new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" }),
 
-    prevalencias:      prevalenceSummary,
-    top3_riesgo:       top3,
-    ecologia_reporte:  ecologia,
-    tipologia:         typologyPct,
-    subgrupos_reporte: subgrupos,
-    cyber_overlap:     cyberOverlap,
-    indice_riesgo:     riskIndex,
-    fiabilidad:        reliability,
-    demograficos:      demoBreakdown,
+    prevalencias:       prevalenceSummary,
+    top3_riesgo:        top3,
+    ecologia_reporte:   ecologia,
+    tipologia:          typologyPct,
+    subgrupos_reporte:  subgrupos,
+    cyber_overlap:      cyberOverlap,
+    indice_riesgo:      riskIndex,
+    fiabilidad:         reliability,
+    demograficos:       demoBreakdown,
+    representatividad,
   };
 
   return res.status(200).json(result);
-}
