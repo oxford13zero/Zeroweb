@@ -232,7 +232,7 @@
       </div>
     </div>
     <div class="topbar-right">
-      <button class="btn-outline" onclick="window.close()">← Volver</button>
+      <button class="btn-outline" onclick="window.history.back()">← Volver</button>
     </div>
   </div>
 
@@ -269,6 +269,11 @@
         <div class="metric-value" id="metN">—</div>
         <div class="metric-sub" id="subN">—</div>
       </div>
+      <div class="metric-card" id="cardRep">
+        <div class="metric-label">Representatividad (95% confianza, ±5%)</div>
+        <div class="metric-value" style="font-size:16px;" id="metRep">—</div>
+        <div class="metric-sub" id="subRep">—</div>
+      </div>
     </div>
 
     <!-- Charts row 1: prevalence + Olweus side by side -->
@@ -291,7 +296,7 @@
     </div>
 
     <!-- Charts row 2: 4-panel 2x2 grade/gender -->
-    <div class="section-title">Victimización y agresores por grado y género</div>
+    <div class="section-title">Victimización y agresión por grado y género</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:4px;">
 
       <!-- Top left: Victimización por grado (bar chart) -->
@@ -336,10 +341,10 @@
         <div id="tableVicGen"></div>
       </div>
 
-      <!-- Bottom left: Agresores por grado (bar chart) -->
+      <!-- Bottom left: Agresión por grado (bar chart) -->
       <div class="chart-card">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-          <div class="chart-title" style="margin:0;">Agresores por grado</div>
+          <div class="chart-title" style="margin:0;">Agresión por grado</div>
           <div class="info-icon-wrap">
             <span class="info-icon">i</span>
             <div class="info-popup">
@@ -358,10 +363,10 @@
         </div>
       </div>
 
-      <!-- Bottom right: Agresores por género (table) -->
+      <!-- Bottom right: Agresión por género (table) -->
       <div class="chart-card">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-          <div class="chart-title" style="margin:0;">Agresores por género</div>
+          <div class="chart-title" style="margin:0;">Agresión por género</div>
           <div class="info-icon-wrap">
             <span class="info-icon">i</span>
             <div class="info-popup">
