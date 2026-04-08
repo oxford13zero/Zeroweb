@@ -257,17 +257,56 @@
           <canvas id="chartPrevalence"></canvas>
         </div>
       </div>
-      <div class="chart-card">
-        <div class="chart-title">Victimización por grado y género</div>
-        <div class="chart-sub">Ordenado de mayor a menor — % con victimización frecuente</div>
-        <div id="tableVic"></div>
+      <!-- 4-panel 2x2 grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+        <!-- Top left: Victimización por grado (bar chart) -->
+        <div class="chart-card">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <div class="chart-title" style="margin:0;">Victimización por grado</div>
+            <span id="infoVicGrade" style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#1e3040;color:#7a9aaa;font-size:10px;font-weight:700;cursor:help;border:0.5px solid #7a9aaa;flex-shrink:0;" title="">i</span>
+          </div>
+          <div class="chart-sub">Top 7 grados — % con victimización frecuente</div>
+          <div class="chart-wrap" style="height:200px;">
+            <canvas id="chartVicGrade"></canvas>
+          </div>
+        </div>
+
+        <!-- Top right: Victimización por género (table) -->
+        <div class="chart-card">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <div class="chart-title" style="margin:0;">Victimización por género</div>
+            <span id="infoVicGen" style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#1e3040;color:#7a9aaa;font-size:10px;font-weight:700;cursor:help;border:0.5px solid #7a9aaa;flex-shrink:0;" title="">i</span>
+          </div>
+          <div class="chart-sub">% con victimización frecuente</div>
+          <div id="tableVicGen"></div>
+        </div>
+
+        <!-- Bottom left: Agresión por grado (bar chart) -->
+        <div class="chart-card">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <div class="chart-title" style="margin:0;">Agresión por grado</div>
+            <span id="infoAgrGrade" style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#1e3040;color:#7a9aaa;font-size:10px;font-weight:700;cursor:help;border:0.5px solid #7a9aaa;flex-shrink:0;" title="">i</span>
+          </div>
+          <div class="chart-sub">Top 7 grados — % con perpetración frecuente</div>
+          <div class="chart-wrap" style="height:200px;">
+            <canvas id="chartAgrGrade"></canvas>
+          </div>
+        </div>
+
+        <!-- Bottom right: Agresión por género (table) -->
+        <div class="chart-card">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <div class="chart-title" style="margin:0;">Agresión por género</div>
+            <span id="infoAgrGen" style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#1e3040;color:#7a9aaa;font-size:10px;font-weight:700;cursor:help;border:0.5px solid #7a9aaa;flex-shrink:0;" title="">i</span>
+          </div>
+          <div class="chart-sub">% con perpetración frecuente</div>
+          <div id="tableAgrGen"></div>
+        </div>
+
       </div>
-      <div class="chart-card">
-        <div class="chart-title">Agresión por grado y género</div>
-        <div class="chart-sub">Ordenado de mayor a menor — % con perpetración frecuente</div>
-        <div id="tableAgr"></div>
-      </div>
-      <div class="chart-card">
+
+      <div class="chart-card" style="margin-top:16px;">
         <div class="chart-title">Perfiles Olweus</div>
         <div class="chart-sub">Distribución de la muestra</div>
         <div class="chart-wrap" style="height:220px;">
