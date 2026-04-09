@@ -5,7 +5,7 @@
   <title>TECH4ZERO – Educational Designs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Fonts aca-->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -543,7 +543,6 @@ window.addEventListener('popstate', function(e) {
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
         <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Ingresar a la encuesta</button>
-        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Solicitar analisis de la encuesta</button>
       </div>
 
       <div id="encuestaNeedLogin" class="statusMsg statusWarn" style="display:none;">
@@ -617,25 +616,58 @@ window.addEventListener('popstate', function(e) {
 
   
 <section id="resultados">
-  <h2>Resultados Encuesta</h2>
+  <h2>Resultados y Análisis</h2>
 
   <div class="card">
-    <p>
-      Para ver resultados debe estar autenticado desde <b>ACCESO USUARIOS</b>.
-    </p>
 
-    <div class="formPanel" style="display:block; max-width:520px;">
-      <div id="resultadosNeedLogin" class="statusMsg statusWarn" style="display:none;">
-        Debe iniciar sesión con <b>ACCESO USUARIOS</b> para mostrar resultados.
-      </div>
-
-      <div style="margin-top:10px;">
-        <button id="btnMostrarResultados" class="btnPrimary" type="button">
-          Mostrar resultados encuesta
-        </button>
-      </div>
+    <div id="resultadosNeedLogin" class="statusMsg statusWarn" style="display:none;">
+      Debe iniciar sesión con <b>ACCESO USUARIOS</b> para ver resultados.
     </div>
 
+    <div id="resultadosOK" style="display:block; max-width:560px;">
+
+      <div style="display:flex; gap:0; margin-bottom:20px; border-radius:8px; overflow:hidden; border:0.5px solid #2a3f52;">
+        <div style="flex:1; padding:12px 8px; text-align:center; background:#0a1a0a;">
+          <div style="width:22px; height:22px; border-radius:50%; background:#0F6E56; color:#9FE1CB; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; margin:0 auto 6px;">✓</div>
+          <div style="font-size:11px; color:#9FE1CB; line-height:1.3;">Escuela toma la encuesta</div>
+        </div>
+        <div style="flex:1; padding:12px 8px; text-align:center; background:#1a1200;">
+          <div style="width:22px; height:22px; border-radius:50%; background:#D6A21C; color:#0a1218; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; margin:0 auto 6px;">2</div>
+          <div style="font-size:11px; color:#D6A21C; line-height:1.3;">Solicita revisión a TECH4ZERO</div>
+        </div>
+        <div style="flex:1; padding:12px 8px; text-align:center; background:#0f1923;">
+          <div style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; margin:0 auto 6px;">3</div>
+          <div style="font-size:11px; color:#7a9aaa; line-height:1.3;">Aprobación en 48 hrs</div>
+        </div>
+        <div style="flex:1; padding:12px 8px; text-align:center; background:#0f1923;">
+          <div style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; margin:0 auto 6px;">4</div>
+          <div style="font-size:11px; color:#7a9aaa; line-height:1.3;">Resultados disponibles</div>
+        </div>
+      </div>
+
+      <div style="background:#1a1200; border:0.5px solid #854F0B; border-radius:8px; padding:12px 16px; font-size:13px; color:#FAC775; margin-bottom:20px; line-height:1.6;">
+        Una vez que tu escuela termine de tomar la encuesta, solicita la revisión. El equipo TECH4ZERO tiene <strong>48 horas</strong> para aprobarla. Solo las encuestas aprobadas aparecen en la lista de resultados.
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <button id="btnMostrarResultados" class="btnPrimary" type="button" style="width:100%;">
+          Ver resultados aprobados
+        </button>
+        <div style="font-size:11px; color:#5a7a8a; text-align:center; margin-top:4px; margin-bottom:16px;">
+          Solo muestra encuestas revisadas y aprobadas por TECH4ZERO
+        </div>
+      </div>
+
+      <div>
+        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button" style="width:100%;">
+          Solicitar revisión de encuesta
+        </button>
+        <div style="font-size:11px; color:#5a7a8a; text-align:center; margin-top:4px;">
+          Envía la solicitud al equipo TECH4ZERO para iniciar el proceso de aprobación
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
