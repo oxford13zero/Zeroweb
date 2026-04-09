@@ -604,30 +604,48 @@ window.addEventListener('popstate', function(e) {
 
   
 <section id="resultados">
-  <h2>Resultados Encuesta</h2>
+  <h2>Resultados y Análisis</h2>
 
-  <div class="card">
-    <p>
-      Para ver resultados debe estar autenticado desde <b>ACCESO USUARIOS</b>.
-    </p>
+  <div class="card" style="max-width:560px;">
 
-    <div class="formPanel" style="display:block; max-width:520px;">
-      <div id="resultadosNeedLogin" class="statusMsg statusWarn" style="display:none;">
-        Debe iniciar sesión con <b>ACCESO USUARIOS</b> para mostrar resultados.
-      </div>
-
-       <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
-        <button id="btnMostrarResultados" class="btnPrimary" type="button">
-          Mostrar resultados encuesta
-        </button>
-        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">
-          Solicitar revisión de encuesta
-        </button>
-      </div>
-
-
-      
+    <div id="resultadosNeedLogin" class="statusMsg statusWarn" style="display:none; margin-bottom:16px;">
+      Debe iniciar sesión con <b>ACCESO USUARIOS</b> para ver resultados.
     </div>
+
+    <div style="font-size:12px; color:#FAC775; background:#1a1200; border-left:2px solid #D6A21C; padding:10px 14px; border-radius:0 6px 6px 0; margin-bottom:20px; line-height:1.6;">
+      El equipo TECH4ZERO tiene <strong>48 horas</strong> para aprobar tu encuesta. Solo las encuestas aprobadas aparecen en resultados.
+    </div>
+
+    <div style="font-size:11px; font-weight:600; letter-spacing:1px; color:#5a7a8a; text-transform:uppercase; margin-bottom:14px;">Encuesta digital</div>
+
+    <button id="btnMostrarResultados" class="btnPrimary" type="button" style="width:100%; margin-bottom:10px;">
+      Ver resultados aprobados
+    </button>
+
+    <button id="btnSolicitarAnalisis" class="btnSecondary" type="button" style="width:100%;">
+      Solicitar revisión
+    </button>
+    <div style="font-size:11px; color:#5a7a8a; margin-top:5px; margin-bottom:0;">Envía la solicitud al equipo TECH4ZERO para iniciar la aprobación</div>
+
+    <hr style="border:none; border-top:0.5px solid #2a3f52; margin:22px 0;">
+
+    <div style="font-size:11px; font-weight:600; letter-spacing:1px; color:#5a7a8a; text-transform:uppercase; margin-bottom:14px;">Encuesta en papel</div>
+
+    <a id="btnDescargaSecundaria" href="/data/csv/plantilla_SURVEY_004_MX.csv" download
+       style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:transparent;">
+      ⬇ Plantilla Secundaria / Preparatoria
+    </a>
+
+    <a id="btnDescargaPrimaria" href="/data/csv/plantilla_SURVEY_004_MX_PRIMARIA.csv" download
+       style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:transparent;">
+      ⬇ Plantilla Primaria
+    </a>
+
+    <label id="btnSubirCSV"
+       style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:0; cursor:pointer; background:transparent;">
+      📂 Subir archivo CSV con respuestas
+      <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
+    </label>
 
   </div>
 </section>
