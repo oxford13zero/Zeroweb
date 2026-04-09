@@ -3135,6 +3135,7 @@ if (btnSec) {
           const a1 = document.createElement('a'); a1.href = base + 'plantilla_' + codes.sec + '.csv'; a1.download = 'plantilla_' + codes.sec + '.csv'; document.body.appendChild(a1); a1.click(); document.body.removeChild(a1);
           const a2 = document.createElement('a'); a2.href = base + 'referencia_' + codes.sec + '.pdf'; a2.download = 'referencia_' + codes.sec + '.pdf'; document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
         };
+        btnSec.textContent = '⬇ Plantilla ' + (country === 'CL' ? 'Media' : 'Secundaria / Preparatoria');
       }
       if (btnPri) {
         btnPri.href     = base + 'plantilla_' + codes.pri + '.csv';
@@ -3144,8 +3145,8 @@ if (btnSec) {
           const a1 = document.createElement('a'); a1.href = base + 'plantilla_' + codes.pri + '.csv'; a1.download = 'plantilla_' + codes.pri + '.csv'; document.body.appendChild(a1); a1.click(); document.body.removeChild(a1);
           const a2 = document.createElement('a'); a2.href = base + 'referencia_' + codes.pri + '.pdf'; a2.download = 'referencia_' + codes.pri + '.pdf'; document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
         };
+        btnPri.textContent = '⬇ Plantilla ' + (country === 'CL' ? 'Basica' : 'Primaria');
       }
-
 
 
       
