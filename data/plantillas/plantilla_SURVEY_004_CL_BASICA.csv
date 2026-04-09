@@ -1,0 +1,14 @@
+# PLANTILLA CSV -- SURVEY_004_CL_BASICA
+# Basica (6-12 anios) -- Chile
+# Una fila por estudiante. No modifiques los nombres de las columnas.
+# Valores validos:
+#   grado:  1B 2B 3B 4B 5B 6B  (grado de basica)
+#   q1 (edad):    6 7 8 9 10 11 12
+#   q2 (genero):  F (Nina)  M (Nino)  NR (Prefiero no decir)
+#   q3 (primer anio en esta escuela):  si  no
+#   q4 a q38:  1 2 3 4  (1=Nunca  2=A veces  3=Casi siempre  4=Siempre)
+#
+# NOTA: Esta encuesta usa escala 1-4 (no 0-4 como la de media)
+#
+grado,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38
+1B,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2

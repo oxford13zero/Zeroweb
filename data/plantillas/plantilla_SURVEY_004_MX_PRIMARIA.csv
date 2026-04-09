@@ -1,0 +1,27 @@
+# PLANTILLA CSV -- SURVEY_004_MX_PRIMARIA
+# Primaria (6-12 anios) -- Mexico
+# Una fila por estudiante. No modifiques los nombres de las columnas.
+# Valores validos:
+#   grado:  1 2 3 4 5 6  (grado de primaria)
+#   q1 (edad):    6 7 8 9 10 11 12
+#   q2 (genero):  F (Nina)  M (Nino)  NR (Prefiero no decir)
+#   q3 (primer anio en esta escuela):  si  no
+#   q4 a q38:  1 2 3 4  (1=Nunca  2=A veces  3=Casi siempre  4=Siempre)
+#
+# NOTA: Esta encuesta usa escala 1-4 (no 0-4 como la de secundaria)
+#
+# SECCIONES:
+#   q4-q6:   Autoridad Docente
+#   q7-q11:  Normas Grupales / Pares
+#   q12-q14: Respuesta Institucional
+#   q15-q19: Victimizacion
+#   q20:     Agresion
+#   q21-q22: Comportamiento Prosocial
+#   q23:     Agresor Exclusion
+#   q24-q30: Cyberbullying
+#   q31:     Violencia Internivel
+#   q32-q35: Ecologia / Espacios
+#   q36-q38: Bienestar General
+#
+grado,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38
+1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2

@@ -1,0 +1,24 @@
+# PLANTILLA CSV -- SURVEY_004_MX
+# Secundaria / Preparatoria / Media Superior -- Mexico
+# Una fila por estudiante. No modifiques los nombres de las columnas.
+# Valores validos:
+#   grado:        1S 2S 3S (Secundaria)  |  1P 2P 3P (Preparatoria)
+#   edad:         12 13 14 15 16 17 18
+#   genero:       F (Mujer)  M (Hombre)  O (Otra identidad)  N (Prefiero no responder)
+#   lengua:       S (Si)  N (No)  P (Prefiero no responder)
+#   tiempo:       1 (< 1 anio)  2 (1-2 anios)  3 (3-4 anios)  4 (> 4 anios)
+#   tipo_escuela: GEN TEC PRIV TELE OTR
+#   q7 a q57:     0 1 2 3 4  (frecuencia: 0=Nunca ... 4=Siempre)
+#
+# SECCIONES:
+#   q7-q13:  Autoridad Docente
+#   q14-q17: Normas Grupales
+#   q18-q23: Respuesta Institucional
+#   q24-q28: Violencia Internivel (solo K-12)
+#   q29-q36: Victimizacion
+#   q37-q43: Agresion / Perpetracion
+#   q44-q51: Cyberbullying
+#   q52-q57: Ecologia del Bullying (solo victimas)
+#
+grado,edad,genero,lengua,tiempo,tipo_escuela,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38,q39,q40,q41,q42,q43,q44,q45,q46,q47,q48,q49,q50,q51,q52,q53,q54,q55,q56,q57
+2S,15,M,N,2,GEN,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
