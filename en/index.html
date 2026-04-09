@@ -686,17 +686,42 @@ window.addEventListener('popstate', function(e) {
 </div>    
         
         
-        <div style="font-weight:700; margin-bottom:10px; color:#FAC775;">Warning</div>
-        <div style="margin-bottom:14px; font-size:14px; color:#d0e8f0; line-height:1.6;">
-          The system will perform a detailed statistical analysis of the school climate using surveys already submitted for your school, but no new surveys can be added.
-          <br /><br />
-          Do you want to continue?
+ <div id="analisisWarnPanel" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#0f1923; border-radius:12px; max-width:420px; width:90%; border:0.5px solid #1e3040; overflow:hidden;">
+    <div style="background:#D6A21C; padding:20px 24px; display:flex; align-items:center; gap:12px;">
+      <div style="font-size:22px;">📋</div>
+      <div>
+        <div style="color:#0a1218; font-size:16px; font-weight:600;">Request review</div>
+        <div style="color:#5a3a00; font-size:12px; margin-top:2px;">School Climate Survey</div>
+      </div>
+    </div>
+    <div style="padding:24px;">
+      <p style="color:#d0e8f0; font-size:14px; line-height:1.7; margin:0 0 16px 0;">
+        By confirming, you will send this survey to the TECH4ZERO team for review. You will not be able to add new responses while it is being processed.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="font-size:13px; color:#b0ccd8;">The TECH4ZERO team has <strong style="color:#ffffff;">48 hours</strong> to approve</div>
         </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continue</button>
-          <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancel</button>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="font-size:13px; color:#b0ccd8;">Only approved surveys appear in Results</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="font-size:13px; color:#b0ccd8;">No new responses can be added after confirming</div>
         </div>
       </div>
+      <div style="display:flex; gap:10px;">
+        <button id="btnAnalisisCancelar" class="btnSecondary" type="button" style="flex:1; padding:11px; font-size:14px; border-radius:8px;">Cancel</button>
+        <button id="btnAnalisisContinuar" class="btnPrimary" type="button" style="flex:1; padding:11px; font-size:14px; font-weight:600; border-radius:8px;">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
 
     </div>
   </div>
