@@ -3206,11 +3206,14 @@ var navEnc = document.getElementById('navEncuesta');
     openPrivacyModal();
   });
 
-document.addEventListener('click', (e) => {
-    if (e.target.id !== 'btnSolicitarAnalisis') return;
-    if (!window.sessionState.ok) { openModal(); return; }
-    if (analisisWarnPanel) { analisisWarnPanel.style.display = 'flex'; analisisWarnPanel.style.pointerEvents = 'auto'; }
-  });
+const btnSolicitarAnalisisEl = document.getElementById('btnSolicitarAnalisis');
+  if (btnSolicitarAnalisisEl) {
+    btnSolicitarAnalisisEl.onclick = () => {
+      if (!window.sessionState.ok) { openModal(); return; }
+      const p = document.getElementById('analisisWarnPanel');
+      if (p) { p.style.display = 'flex'; p.style.pointerEvents = 'auto'; }
+    };
+  }
 
   btnAnalisisCancelar?.addEventListener('click', () => {
     if (analisisWarnPanel) { analisisWarnPanel.style.display = 'none'; analisisWarnPanel.style.pointerEvents = 'none'; }
