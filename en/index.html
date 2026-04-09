@@ -539,9 +539,10 @@ window.addEventListener('popstate', function(e) {
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
         <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Enter the survey</button>
-        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">Request survey analysis</button>
       </div>
 
+
+      
       <div id="encuestaNeedLogin" class="statusMsg statusWarn" style="display:none;">
         You must log in via <b>USER ACCESS</b> to continue.
       </div>
@@ -646,11 +647,16 @@ window.addEventListener('popstate', function(e) {
         You must log in via <b>USER ACCESS</b> to view results.
       </div>
 
-      <div style="margin-top:10px;">
+       <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
         <button id="btnMostrarResultados" class="btnPrimary" type="button">
           Show survey results
         </button>
-      </div>
+        <button id="btnSolicitarAnalisis" class="btnSecondary" type="button">
+          Request survey review
+        </button>
+       </div>
+
+      
     </div>
 
   </div>
