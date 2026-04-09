@@ -550,19 +550,6 @@ window.addEventListener('popstate', function(e) {
       </div>
     </div>
 
-    <div id="analisisWarnPanel" class="formPanel" style="display:none; max-width:520px; border:1px solid #D6A21C;">
-      <div style="font-weight:700; margin-bottom:10px;">Advertencia</div>
-      <div style="margin-bottom:14px;">
-        El sistema realizara un analisis estadistico detallado del ambiente escolar con las encuestas introducidas en el sistema para su escuela, pero no podra adicionar nuevas encuestas.
-        <br /><br />
-        Desea continuar?
-      </div>
-
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continuar</button>
-        <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancelar</button>
-      </div>
-    </div>
 
     <!-- ROUTING QUESTION BOX: shown before survey loads -->
     <div id="routingBox" class="formPanel" style="display:none; margin-top:18px;">
@@ -664,6 +651,19 @@ window.addEventListener('popstate', function(e) {
         </button>
         <div style="font-size:11px; color:#5a7a8a; text-align:center; margin-top:4px;">
           Envía la solicitud al equipo TECH4ZERO para iniciar el proceso de aprobación
+        </div>
+      </div>
+
+      <div id="analisisWarnPanel" class="formPanel" style="display:none; margin-top:16px; max-width:560px; border:1px solid #D6A21C; border-radius:8px; padding:16px;">
+        <div style="font-weight:700; margin-bottom:10px; color:#FAC775;">Advertencia</div>
+        <div style="margin-bottom:14px; font-size:14px; color:#d0e8f0; line-height:1.6;">
+          El sistema realizará un análisis estadístico detallado del ambiente escolar con las encuestas registradas para tu escuela, pero no podrá adicionar nuevas encuestas.
+          <br /><br />
+          ¿Deseas continuar?
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnAnalisisContinuar" class="btnPrimary" type="button">Continuar</button>
+          <button id="btnAnalisisCancelar" class="btnSecondary" type="button">Cancelar</button>
         </div>
       </div>
 
