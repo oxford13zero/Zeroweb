@@ -3219,12 +3219,12 @@ const btnSolicitarAnalisisEl = document.getElementById('btnSolicitarAnalisis');
     };
   }
 
-document.getElementById('btnAnalisisCancelar')?.addEventListener('click', () => {
+window.cerrarAnalisisPanel = function() {
     const p = document.getElementById('analisisWarnPanel');
     if (p) { p.style.display = 'none'; p.style.pointerEvents = 'none'; }
-  });
+  };
 
-  document.getElementById('btnAnalisisContinuar')?.addEventListener('click', async () => {
+  window.confirmarAnalisis = async function() {
     try {
       const meRes = await fetch('/api/me', { credentials: 'include' });
       const meData = await meRes.json().catch(() => ({}));
@@ -3244,12 +3244,11 @@ document.getElementById('btnAnalisisCancelar')?.addEventListener('click', () => 
       }
 
       alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
-      const p2 = document.getElementById('analisisWarnPanel');
-if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
+      window.cerrarAnalisisPanel();
     } catch (e) {
       alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
     }
-  });
+  };
 
   btnMostrarResultados?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
@@ -4868,8 +4867,8 @@ if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
         </div>
       </div>
       <div style="display:flex; gap:10px;">
-        <button id="btnAnalisisCancelar" class="btnSecondary" type="button" style="flex:1; padding:11px; font-size:14px; border-radius:8px;">Cancelar</button>
-        <button id="btnAnalisisContinuar" class="btnPrimary" type="button" style="flex:1; padding:11px; font-size:14px; font-weight:600; border-radius:8px;">Confirmar</button>
+        <button id="btnAnalisisCancelar" class="btnSecondary" type="button" onclick="window.cerrarAnalisisPanel()" style="flex:1; padding:11px; font-size:14px; border-radius:8px;">Cancelar</button>
+        <button id="btnAnalisisContinuar" class="btnPrimary" type="button" onclick="window.confirmarAnalisis()" style="flex:1; padding:11px; font-size:14px; font-weight:600; border-radius:8px;">Confirmar</button>
       </div>
     </div>
   </div>
