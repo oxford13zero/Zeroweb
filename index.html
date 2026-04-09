@@ -3122,14 +3122,30 @@ if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
 
       const btnSec = document.getElementById('btnDescargaSecundaria');
       const btnPri = document.getElementById('btnDescargaPrimaria');
-      if (btnSec) {
+      
+      
+if (btnSec) {
         btnSec.href     = base + 'plantilla_' + codes.sec + '.csv';
         btnSec.download = 'plantilla_' + codes.sec + '.csv';
+        btnSec.onclick  = function(e) {
+          e.preventDefault();
+          const a1 = document.createElement('a'); a1.href = base + 'plantilla_' + codes.sec + '.csv'; a1.download = 'plantilla_' + codes.sec + '.csv'; document.body.appendChild(a1); a1.click(); document.body.removeChild(a1);
+          const a2 = document.createElement('a'); a2.href = base + 'referencia_' + codes.sec + '.pdf'; a2.download = 'referencia_' + codes.sec + '.pdf'; document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
+        };
       }
       if (btnPri) {
         btnPri.href     = base + 'plantilla_' + codes.pri + '.csv';
         btnPri.download = 'plantilla_' + codes.pri + '.csv';
+        btnPri.onclick  = function(e) {
+          e.preventDefault();
+          const a1 = document.createElement('a'); a1.href = base + 'plantilla_' + codes.pri + '.csv'; a1.download = 'plantilla_' + codes.pri + '.csv'; document.body.appendChild(a1); a1.click(); document.body.removeChild(a1);
+          const a2 = document.createElement('a'); a2.href = base + 'referencia_' + codes.pri + '.pdf'; a2.download = 'referencia_' + codes.pri + '.pdf'; document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
+        };
       }
+
+
+
+      
     }
   }
 
