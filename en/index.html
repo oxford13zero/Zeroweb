@@ -548,40 +548,7 @@ window.addEventListener('popstate', function(e) {
       </div>
     </div>
 
-<div id="analisisWarnPanel" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
-  <div style="background:#0f1923; border-radius:12px; max-width:420px; width:90%; border:0.5px solid #1e3040; overflow:hidden;">
-    <div style="background:#D6A21C; padding:20px 24px; display:flex; align-items:center; gap:12px;">
-      <div style="font-size:22px;">📋</div>
-      <div>
-        <div style="color:#0a1218; font-size:16px; font-weight:600;">Request review</div>
-        <div style="color:#5a3a00; font-size:12px; margin-top:2px;">School Climate Survey</div>
-      </div>
-    </div>
-    <div style="padding:24px;">
-      <p style="color:#d0e8f0; font-size:14px; line-height:1.7; margin:0 0 16px 0;">
-        By confirming, you will send this survey to the TECH4ZERO team for review. You will not be able to add new responses while it is being processed.
-      </p>
-      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
-          <div style="font-size:13px; color:#b0ccd8;">The TECH4ZERO team has <strong style="color:#ffffff;">48 hours</strong> to approve</div>
-        </div>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
-          <div style="font-size:13px; color:#b0ccd8;">Only approved surveys appear in Results</div>
-        </div>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
-          <div style="font-size:13px; color:#b0ccd8;">No new responses can be added after confirming</div>
-        </div>
-      </div>
-      <div style="display:flex; gap:10px;">
-        <button id="btnAnalisisCancelar" class="btnSecondary" type="button" style="flex:1; padding:11px; font-size:14px; border-radius:8px;">Cancel</button>
-        <button id="btnAnalisisContinuar" class="btnPrimary" type="button" style="flex:1; padding:11px; font-size:14px; font-weight:600; border-radius:8px;">Confirm</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
     <!-- ROUTING QUESTION BOX: shown before survey loads -->
     <div id="routingBox" class="formPanel" style="display:none; margin-top:18px;">
@@ -3124,7 +3091,7 @@ var navEnc = document.getElementById('navEncuesta');
 
     
     if (!ok) {
-      if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+      { const _p = document.getElementById('analisisWarnPanel'); if (_p) { _p.style.display = 'none'; _p.style.pointerEvents = 'none'; } }
       if (routingBox) routingBox.style.display = 'none';
       if (surveyBox) surveyBox.style.display = 'none';
     }
@@ -3280,7 +3247,7 @@ var navEnc = document.getElementById('navEncuesta');
   // === ACCIONES ENCUESTA ===
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
-    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+    { const _p = document.getElementById('analisisWarnPanel'); if (_p) { _p.style.display = 'none'; _p.style.pointerEvents = 'none'; } }
     CHOSEN_LANGUAGE = 'en'; // will be updated after language selector
     ROUTING_QUESTION = null;
     OPTIONS_CACHE = {};
@@ -3290,17 +3257,21 @@ var navEnc = document.getElementById('navEncuesta');
     await showRoutingQuestion();
   });
 
- document.addEventListener('click', (e) => {
-    if (e.target.id !== 'btnSolicitarAnalisis') return;
-    if (!window.sessionState.ok) { openModal(); return; }
-    if (analisisWarnPanel) analisisWarnPanel.style.display = 'flex';
-  });
+ const btnSolicitarAnalisisEl = document.getElementById('btnSolicitarAnalisis');
+  if (btnSolicitarAnalisisEl) {
+    btnSolicitarAnalisisEl.onclick = () => {
+      if (!window.sessionState.ok) { openModal(); return; }
+      const p = document.getElementById('analisisWarnPanel');
+      if (p) { p.style.display = 'flex'; p.style.pointerEvents = 'auto'; }
+    };
+  }
 
-  btnAnalisisCancelar?.addEventListener('click', () => {
-    if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
-  });
+  window.cerrarAnalisisPanel = function() {
+    const p = document.getElementById('analisisWarnPanel');
+    if (p) { p.style.display = 'none'; p.style.pointerEvents = 'none'; }
+  };
 
-  btnAnalisisContinuar?.addEventListener('click', async () => {
+  window.confirmarAnalisis = async function() {
     try {
       const meRes = await fetch('/api/me', { credentials: 'include' });
       const meData = await meRes.json().catch(() => ({}));
@@ -3315,16 +3286,16 @@ var navEnc = document.getElementById('navEncuesta');
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
       if (!res.ok || !data.ok) {
-        alert('No se pudo solicitar el análisis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'sin detalle'));
+        alert('Could not request analysis (HTTP ' + res.status + '):\n' + (data.error || data.raw || 'no detail'));
         return;
       }
 
-      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
-      if (analisisWarnPanel) analisisWarnPanel.style.display = 'none';
+      alert('Request sent.\n\nThe system will analyze the survey.\nGo to the RESULTS tab to view the analysis.');
+      window.cerrarAnalisisPanel();
     } catch (e) {
-      alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
+      alert('Connection error requesting analysis.\n\n' + (e?.message || String(e)));
     }
-  });
+  };
 
   btnMostrarResultados?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
@@ -4894,5 +4865,40 @@ var navEnc = document.getElementById('navEncuesta');
   </div>
 </div>
 
+
+<div id="analisisWarnPanel" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; pointer-events:none;">
+  <div style="background:#0f1923; border-radius:12px; max-width:420px; width:90%; border:0.5px solid #1e3040; overflow:hidden;">
+    <div style="background:#D6A21C; padding:20px 24px; display:flex; align-items:center; gap:12px;">
+      <div style="font-size:22px;">📋</div>
+      <div>
+        <div style="color:#0a1218; font-size:16px; font-weight:600;">Request review</div>
+        <div style="color:#5a3a00; font-size:12px; margin-top:2px;">School Climate Survey</div>
+      </div>
+    </div>
+    <div style="padding:24px;">
+      <p style="color:#d0e8f0; font-size:14px; line-height:1.7; margin:0 0 16px 0;">
+        By confirming, you will send this survey to the TECH4ZERO team for review. You will not be able to add new responses while it is being processed.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="font-size:13px; color:#b0ccd8;">The TECH4ZERO team has <strong style="color:#ffffff;">48 hours</strong> to approve</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="font-size:13px; color:#b0ccd8;">Only approved surveys appear in Results</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="font-size:13px; color:#b0ccd8;">No new responses can be added after confirming</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button id="btnAnalisisCancelar" class="btnSecondary" type="button" onclick="window.cerrarAnalisisPanel()" style="flex:1; padding:11px; font-size:14px; border-radius:8px;">Cancel</button>
+        <button id="btnAnalisisContinuar" class="btnPrimary" type="button" onclick="window.confirmarAnalisis()" style="flex:1; padding:11px; font-size:14px; font-weight:600; border-radius:8px;">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
