@@ -3079,7 +3079,10 @@ var navEnc = document.getElementById('navEncuesta');
 
     CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
     if (!ok) {
-      if (analisisWarnPanel) { analisisWarnPanel.style.display = 'none'; analisisWarnPanel.style.pointerEvents = 'none'; }
+
+const p2 = document.getElementById('analisisWarnPanel');
+if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
+      
       if (routingBox) routingBox.style.display = 'none';
       if (surveyBox) surveyBox.style.display = 'none';
     }
@@ -3197,7 +3200,8 @@ var navEnc = document.getElementById('navEncuesta');
   // === ACCIONES ENCUESTA ===
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
-    if (analisisWarnPanel) { analisisWarnPanel.style.display = 'none'; analisisWarnPanel.style.pointerEvents = 'none'; }
+    const p2 = document.getElementById('analisisWarnPanel');
+if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
     CHOSEN_LANGUAGE = window.sessionState.language || 'es';
     ROUTING_QUESTION = null;
      OPTIONS_CACHE = {};
@@ -3220,7 +3224,7 @@ document.getElementById('btnAnalisisCancelar')?.addEventListener('click', () => 
     if (p) { p.style.display = 'none'; p.style.pointerEvents = 'none'; }
   });
 
-  btnAnalisisContinuar?.addEventListener('click', async () => {
+  document.getElementById('btnAnalisisContinuar')?.addEventListener('click', async () => {
     try {
       const meRes = await fetch('/api/me', { credentials: 'include' });
       const meData = await meRes.json().catch(() => ({}));
@@ -3240,7 +3244,8 @@ document.getElementById('btnAnalisisCancelar')?.addEventListener('click', () => 
       }
 
       alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
-      if (analisisWarnPanel) { analisisWarnPanel.style.display = 'none'; analisisWarnPanel.style.pointerEvents = 'none'; }
+      const p2 = document.getElementById('analisisWarnPanel');
+if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
     } catch (e) {
       alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
     }
