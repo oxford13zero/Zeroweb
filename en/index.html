@@ -3290,7 +3290,8 @@ var navEnc = document.getElementById('navEncuesta');
     await showRoutingQuestion();
   });
 
-  btnSolicitarAnalisis?.addEventListener('click', () => {
+ document.addEventListener('click', (e) => {
+    if (e.target.id !== 'btnSolicitarAnalisis') return;
     if (!window.sessionState.ok) { openModal(); return; }
     if (analisisWarnPanel) analisisWarnPanel.style.display = 'flex';
   });
