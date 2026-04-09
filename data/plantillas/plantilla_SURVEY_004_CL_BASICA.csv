@@ -2,7 +2,7 @@
 # Basica (6-12 anios) -- Chile
 # Una fila por estudiante. No modifiques los nombres de las columnas.
 # Valores validos:
-#   grado:  1B 2B 3B 4B 5B 6B  (grado de basica)
+#   grado:  1B 2B 3B 4B 5B 6B 7B 8B  (grado de basica)
 #   q1 (edad):    6 7 8 9 10 11 12
 #   q2 (genero):  F (Nina)  M (Nino)  NR (Prefiero no decir)
 #   q3 (primer anio en esta escuela):  si  no
