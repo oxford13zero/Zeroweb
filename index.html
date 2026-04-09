@@ -612,8 +612,8 @@ window.addEventListener('popstate', function(e) {
       Debe iniciar sesión con <b>ACCESO USUARIOS</b> para ver resultados.
     </div>
 
-    <div style="font-size:12px; color:#FAC775; background:#1a1200; border-left:2px solid #D6A21C; padding:10px 14px; border-radius:0 6px 6px 0; margin-bottom:20px; line-height:1.6;">
-      El equipo TECH4ZERO tiene <strong>48 horas</strong> para aprobar tu encuesta. Solo las encuestas aprobadas aparecen en resultados.
+    <div style="font-size:12px; color:#7a9aaa; border-left:1.5px solid #2a3f52; padding:8px 12px; margin-bottom:20px; line-height:1.6;">
+      El equipo TECH4ZERO tiene <strong style="color:#a9c0d3;">48 horas</strong> para aprobar tu encuesta. Solo las encuestas aprobadas aparecen en resultados.
     </div>
 
     <div style="font-size:11px; font-weight:600; letter-spacing:1px; color:#5a7a8a; text-transform:uppercase; margin-bottom:14px;">Encuesta digital</div>
@@ -631,12 +631,12 @@ window.addEventListener('popstate', function(e) {
 
     <div style="font-size:11px; font-weight:600; letter-spacing:1px; color:#5a7a8a; text-transform:uppercase; margin-bottom:14px;">Encuesta en papel</div>
 
-    <a id="btnDescargaSecundaria" href="/data/csv/plantilla_SURVEY_004_MX.csv" download
+    <a id="btnDescargaSecundaria" href="#" download
        style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:transparent;">
       ⬇ Plantilla Secundaria / Preparatoria
     </a>
 
-    <a id="btnDescargaPrimaria" href="/data/csv/plantilla_SURVEY_004_MX_PRIMARIA.csv" download
+    <a id="btnDescargaPrimaria" href="#" download
        style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:transparent;">
       ⬇ Plantilla Primaria
     </a>
@@ -3109,6 +3109,26 @@ if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
       if (encuestaOK) {
         encuestaOK.style.pointerEvents = 'auto';
         encuestaOK.style.opacity = '';
+      }
+
+      // Set download links dynamically based on school country
+      const country = (window.sessionState.country || 'MX').toUpperCase();
+      const SURVEY_MAP = {
+        MX: { sec: 'SURVEY_004_MX',         pri: 'SURVEY_004_MX_PRIMARIA' },
+        CL: { sec: 'SURVEY_004_CL',         pri: 'SURVEY_004_CL_BASICA'  },
+      };
+      const codes = SURVEY_MAP[country] || SURVEY_MAP['MX'];
+      const base  = '/data/plantillas/';
+
+      const btnSec = document.getElementById('btnDescargaSecundaria');
+      const btnPri = document.getElementById('btnDescargaPrimaria');
+      if (btnSec) {
+        btnSec.href     = base + 'plantilla_' + codes.sec + '.csv';
+        btnSec.download = 'plantilla_' + codes.sec + '.csv';
+      }
+      if (btnPri) {
+        btnPri.href     = base + 'plantilla_' + codes.pri + '.csv';
+        btnPri.download = 'plantilla_' + codes.pri + '.csv';
       }
     }
   }
