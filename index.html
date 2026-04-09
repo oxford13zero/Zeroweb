@@ -3215,8 +3215,9 @@ const btnSolicitarAnalisisEl = document.getElementById('btnSolicitarAnalisis');
     };
   }
 
-  btnAnalisisCancelar?.addEventListener('click', () => {
-    if (analisisWarnPanel) { analisisWarnPanel.style.display = 'none'; analisisWarnPanel.style.pointerEvents = 'none'; }
+document.getElementById('btnAnalisisCancelar')?.addEventListener('click', () => {
+    const p = document.getElementById('analisisWarnPanel');
+    if (p) { p.style.display = 'none'; p.style.pointerEvents = 'none'; }
   });
 
   btnAnalisisContinuar?.addEventListener('click', async () => {
