@@ -4114,6 +4114,71 @@ window.cerrarAnalisisPanel = function() {
     }
   });
 
+// === CSV IMPORT ===
+  const csvFileInput = document.getElementById('csvFileInput');
+  csvFileInput?.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    csvFileInput.value = '';
+
+    const btnSubir = document.getElementById('btnSubirCSV');
+
+    if (btnSubir) btnSubir.style.opacity = '0.5';
+
+    try {
+      const fd1 = new FormData();
+      fd1.append('file', file);
+
+      const res1 = await fetch('/api/import-csv', {
+        method: 'POST', credentials: 'include', body: fd1,
+      });
+      const data1 = await res1.json();
+
+      if (!res1.ok || !data1.ok) {
+        alert('Error al procesar el CSV:\n' + (data1.error || 'Error desconocido'));
+        return;
+      }
+
+      let msg = `Encuesta detectada: ${data1.survey_code}\n`;
+      msg += `Filas válidas: ${data1.n_valid} de ${data1.n_total}\n`;
+      if (data1.n_errors > 0) {
+        msg += `\nErrores encontrados (${data1.n_errors}):\n`;
+        msg += data1.errors.slice(0, 10).join('\n');
+        if (data1.n_errors > 10) msg += `\n... y ${data1.n_errors - 10} más`;
+        msg += '\n';
+      }
+      msg += `\n¿Confirmar la importación de ${data1.n_valid} respuestas?`;
+
+      if (!confirm(msg)) return;
+
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const blob = new Blob([ev.target.result], { type: 'text/csv' });
+        const fd2 = new FormData();
+        fd2.append('file', blob, file.name);
+        fd2.append('confirm', 'true');
+
+        const res2 = await fetch('/api/import-csv', {
+          method: 'POST', credentials: 'include', body: fd2,
+        });
+        const data2 = await res2.json();
+
+        if (!res2.ok || !data2.ok) {
+          alert('Error al importar:\n' + (data2.error || 'Error desconocido'));
+          return;
+        }
+        alert(`✅ Importación completada.\n${data2.imported} respuestas importadas correctamente.`);
+      };
+      reader.readAsText(file);
+
+    } catch (err) {
+      alert('Error de conexión al importar el CSV.\n' + (err?.message || ''));
+    } finally {
+      if (btnSubir) btnSubir.style.opacity = '';
+    }
+  });
+
+    
   refreshSession();
 
   // === DATOS ===
