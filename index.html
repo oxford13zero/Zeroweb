@@ -648,6 +648,13 @@ window.addEventListener('popstate', function(e) {
         📂 Subir archivo CSV con respuestas
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
       </label>
+
+      <div id="csvProgressWrap" style="display:none; margin-top:12px;">
+        <div style="font-size:12px; color:#7a9aaa; margin-bottom:6px;" id="csvProgressLabel">Procesando...</div>
+        <div style="background:#0f1923; border:0.5px solid #2a3f52; border-radius:6px; height:8px; overflow:hidden;">
+          <div id="csvProgressBar" style="height:100%; width:0%; background:#D6A21C; border-radius:6px; transition:width 0.3s ease;"></div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -4121,13 +4128,30 @@ window.cerrarAnalisisPanel = function() {
     if (!file) return;
     csvFileInput.value = '';
 
-    const btnSubir = document.getElementById('btnSubirCSV');
+    const btnSubir      = document.getElementById('btnSubirCSV');
+    const progressWrap  = document.getElementById('csvProgressWrap');
+    const progressBar   = document.getElementById('csvProgressBar');
+    const progressLabel = document.getElementById('csvProgressLabel');
+
+    function setProgress(pct, label) {
+      if (progressWrap)  progressWrap.style.display = 'block';
+      if (progressBar)   progressBar.style.width = pct + '%';
+      if (progressLabel) progressLabel.textContent = label;
+    }
+
+    function hideProgress() {
+      if (progressWrap) progressWrap.style.display = 'none';
+      if (progressBar)  progressBar.style.width = '0%';
+    }
 
     if (btnSubir) btnSubir.style.opacity = '0.5';
+    setProgress(10, 'Leyendo archivo...');
 
     try {
+      // Step 1 — preview
       const fd1 = new FormData();
       fd1.append('file', file);
+      setProgress(25, 'Validando datos...');
 
       const res1 = await fetch('/api/import-csv', {
         method: 'POST', credentials: 'include', body: fd1,
@@ -4135,21 +4159,24 @@ window.cerrarAnalisisPanel = function() {
       const data1 = await res1.json();
 
       if (!res1.ok || !data1.ok) {
+        hideProgress();
         alert('Error al procesar el CSV:\n' + (data1.error || 'Error desconocido'));
         return;
       }
 
-      let msg = `Encuesta detectada: ${data1.survey_code}\n`;
-      msg += `Filas válidas: ${data1.n_valid} de ${data1.n_total}\n`;
-      if (data1.n_errors > 0) {
-        msg += `\nErrores encontrados (${data1.n_errors}):\n`;
-        msg += data1.errors.slice(0, 10).join('\n');
-        if (data1.n_errors > 10) msg += `\n... y ${data1.n_errors - 10} más`;
-        msg += '\n';
-      }
-      msg += `\n¿Confirmar la importación de ${data1.n_valid} respuestas?`;
+      setProgress(50, `${data1.n_valid} filas válidas detectadas — ${data1.survey_code}`);
 
-      if (!confirm(msg)) return;
+      // Show errors if any
+      if (data1.n_errors > 0) {
+        let errMsg = `Errores encontrados (${data1.n_errors}):\n`;
+        errMsg += data1.errors.slice(0, 10).join('\n');
+        if (data1.n_errors > 10) errMsg += `\n... y ${data1.n_errors - 10} más`;
+        errMsg += '\n\n¿Continuar importando las filas válidas?';
+        if (!confirm(errMsg)) { hideProgress(); return; }
+      }
+
+      // Step 2 — confirm import
+      setProgress(70, 'Importando respuestas...');
 
       const reader = new FileReader();
       reader.onload = async (ev) => {
@@ -4164,14 +4191,18 @@ window.cerrarAnalisisPanel = function() {
         const data2 = await res2.json();
 
         if (!res2.ok || !data2.ok) {
+          hideProgress();
           alert('Error al importar:\n' + (data2.error || 'Error desconocido'));
           return;
         }
-        alert(`✅ Importación completada.\n${data2.imported} respuestas importadas correctamente.`);
+
+        setProgress(100, `✅ ${data2.imported} respuestas importadas correctamente`);
+        setTimeout(hideProgress, 3000);
       };
       reader.readAsText(file);
 
     } catch (err) {
+      hideProgress();
       alert('Error de conexión al importar el CSV.\n' + (err?.message || ''));
     } finally {
       if (btnSubir) btnSubir.style.opacity = '';
