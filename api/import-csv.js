@@ -292,7 +292,7 @@ export default async function handler(req, res) {
     // Build answer map for this row
     const answers = [];
     for (const [col, extId] of Object.entries(colMap)) {
-      if (col === "grado") continue;
+      // grado is processed as zero_general_curso answer — do not skip
       const code = row[col];
       if (code === undefined || code === "") continue;
 
