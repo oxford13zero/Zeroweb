@@ -16,30 +16,19 @@ import crypto from "crypto";
 
 const SUPABASE_URL        = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY= process.env.SUPABASE_SERVICE_KEY;
-const JWT_SECRET          = process.env.JWT_SECRET;
 const NOW                 = () => new Date().toISOString();
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
-// ── JWT verification ──────────────────────────────────────────────────────────
-function getSessionFromCookie(req) {
-  const raw = req.headers.cookie || "";
-  const match = raw.match(/session=([^;]+)/);
-  if (!match) return null;
-  try {
-    const token = decodeURIComponent(match[1]);
-    const [header, body, sig] = token.split(".");
-    if (!header || !body || !sig) return null;
-    const signing  = `${header}.${body}`;
-    const expected = crypto.createHmac("sha256", JWT_SECRET)
-      .update(signing).digest("base64")
-      .replace(/\+/g,"-").replace(/\//g,"_").replace(/=/g,"");
-    if (sig.length !== expected.length) return null;
-    if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null;
-    const payload = JSON.parse(Buffer.from(body, "base64").toString("utf8"));
-    if (payload.exp && payload.exp < Math.floor(Date.now()/1000)) return null;
-    return payload;
-  } catch { return null; }
+// ── Session via cookie (same as /api/me.js) ──────────────────────────────────
+function parseCookies(cookieHeader = "") {
+  const out = {};
+  cookieHeader.split(";").forEach(part => {
+    const [k, ...v] = part.trim().split("=");
+    if (!k) return;
+    out[k] = decodeURIComponent(v.join("=") || "");
+  });
+  return out;
 }
 
 // ── Routing map: grado code → survey_uuid ────────────────────────────────────
@@ -202,14 +191,22 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: "METHOD_NOT_ALLOWED" });
   }
 
-  // Auth
-  const session = getSessionFromCookie(req);
-  if (!session?.ok) {
+  // Auth — same as /api/me.js
+  const cookies   = parseCookies(req.headers.cookie || "");
+  const school_id = cookies["t4z_session"];
+  if (!school_id) {
     return res.status(401).json({ ok: false, error: "NOT_AUTHENTICATED" });
   }
-  const school_id = session.school_id;
-  const country   = (session.country || "MX").toUpperCase();
-  const language  = session.language === "en" ? "en" : "es";
+  const { data: school } = await supabase
+    .from("schools")
+    .select("id, country, language")
+    .eq("id", school_id)
+    .maybeSingle();
+  if (!school) {
+    return res.status(401).json({ ok: false, error: "SCHOOL_NOT_FOUND" });
+  }
+  const country  = (school.country || "MX").toUpperCase();
+  const language = school.language === "en" ? "en" : "es";
 
   // Parse multipart
   let fields, fileText;
