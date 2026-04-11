@@ -105,6 +105,7 @@ const COL_TO_EXTERNAL_SEC = {
 };
 
 // For MX/CL primaria surveys (q1-q38)
+// Note: edad uses p4_edad, genero uses p4_genero (not the zero_general_* versions)
 const COL_TO_EXTERNAL_PRI = {
   grado: "zero_general_curso",
   q1:  "zero_general_edad_v2",
