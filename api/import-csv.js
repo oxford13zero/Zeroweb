@@ -335,47 +335,78 @@ export default async function handler(req, res) {
     });
   }
 
-  // Confirm mode — insert into Supabase
+  // Confirm mode — batch insert into Supabase
   if (!validRows.length) {
     return res.status(400).json({ ok: false, error: "NO_VALID_ROWS" });
   }
 
   const analysisNow = new Date().toISOString();
-  let imported = 0;
+
+  // Build all records in memory first
+  const responseRecords = [];
+  const qaRecords       = [];
+  const optionRecords   = [];
 
   for (const row of validRows) {
     const responseId = crypto.randomUUID();
+    responseRecords.push({
+      id:                   responseId,
+      school_id,
+      survey_id,
+      status:               "submitted",
+      started_at:           analysisNow,
+      submitted_at:         analysisNow,
+      language,
+      analysis_requested_dt: null,
+    });
 
-    // Insert survey_response
-    const { error: respErr } = await supabase
-      .from("survey_responses")
-      .insert({
-        id:          responseId,
-        school_id,
-        survey_id,
-        status:      "submitted",
-        started_at:  analysisNow,
-        submitted_at:analysisNow,
-        language,
-        analysis_requested_dt: null,
-      });
-    if (respErr) { console.error("Response insert error:", respErr); continue; }
-
-    // Insert question_answers + answer_selected_options
     for (const { questionId, optionId } of row.answers) {
       const qaId = crypto.randomUUID();
-      const { error: qaErr } = await supabase
-        .from("question_answers")
-        .insert({ id: qaId, survey_response_id: responseId, question_id: questionId, created_at: analysisNow });
-      if (qaErr) { console.error("QA insert error:", qaErr); continue; }
-
-      await supabase
-        .from("answer_selected_options")
-        .insert({ id: crypto.randomUUID(), question_answer_id: qaId, option_id: optionId });
+      qaRecords.push({
+        id:                 qaId,
+        survey_response_id: responseId,
+        question_id:        questionId,
+        created_at:         analysisNow,
+      });
+      optionRecords.push({
+        id:                 crypto.randomUUID(),
+        question_answer_id: qaId,
+        option_id:          optionId,
+      });
     }
-
-    imported++;
   }
 
-  return res.status(200).json({ ok: true, imported });
+  // Insert all survey_responses in one call
+  const { error: respErr } = await supabase
+    .from("survey_responses")
+    .insert(responseRecords);
+  if (respErr) {
+    console.error("Batch response insert error:", respErr);
+    return res.status(500).json({ ok: false, error: "RESPONSE_INSERT_FAILED", detail: respErr.message });
+  }
+
+  // Insert question_answers in chunks of 500
+  const CHUNK = 500;
+  for (let i = 0; i < qaRecords.length; i += CHUNK) {
+    const { error: qaErr } = await supabase
+      .from("question_answers")
+      .insert(qaRecords.slice(i, i + CHUNK));
+    if (qaErr) {
+      console.error("Batch QA insert error:", qaErr);
+      return res.status(500).json({ ok: false, error: "QA_INSERT_FAILED", detail: qaErr.message });
+    }
+  }
+
+  // Insert answer_selected_options in chunks of 500
+  for (let i = 0; i < optionRecords.length; i += CHUNK) {
+    const { error: optErr } = await supabase
+      .from("answer_selected_options")
+      .insert(optionRecords.slice(i, i + CHUNK));
+    if (optErr) {
+      console.error("Batch option insert error:", optErr);
+      return res.status(500).json({ ok: false, error: "OPTION_INSERT_FAILED", detail: optErr.message });
+    }
+  }
+
+  return res.status(200).json({ ok: true, imported: responseRecords.length });
 }
