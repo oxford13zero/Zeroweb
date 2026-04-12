@@ -4796,22 +4796,22 @@ window.cerrarAnalisisPanel = function() {
 
     }
 
-    function renderEnrollmentFields(country) {
+function renderEnrollmentFields(country) {
       const config = ENROLLMENT_CONFIG[country] || ENROLLMENT_CONFIG['MX'];
-      enrollmentFields.innerHTML = config
-        .filter(f => !f.hidden)
-        .map(f => `
-          <div style="display:inline-block; margin-right:12px; vertical-align:top;">
-            <label class="fieldLabel" for="${f.id}" style="font-size:11px; display:block; margin-bottom:4px; white-space:nowrap;">${f.label} *</label>
-            <input id="${f.id}" class="textInput" type="number" min="0" value="0"
-              data-key="${f.key}" style="width:80px;" />
-            <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:var(--color-text-secondary); white-space:nowrap;">enter students</div>
-          </div>
-        `).join('') + `
-        
-<div style="margin-top:14px; border:1px solid #D6A21C; border-radius:8px; overflow:hidden; width:100%;">
+      enrollmentFields.innerHTML = `
+        <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start;">
+          ${config.filter(f => !f.hidden).map(f => `
+            <div style="display:inline-block; vertical-align:top;">
+              <label class="fieldLabel" for="${f.id}" style="font-size:11px; display:block; margin-bottom:4px; white-space:nowrap;">${f.label} *</label>
+              <input id="${f.id}" class="textInput" type="number" min="0" value="0"
+                data-key="${f.key}" style="width:80px;" />
+              <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:var(--color-text-secondary); white-space:nowrap;">enter students</div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="margin-top:14px; border:1px solid #D6A21C; border-radius:8px; overflow:hidden;">
           <div style="background:#D6A21C; color:#16222D; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px;">Statistically valid</div>
-          <div style="background:#1E2F3F; display:flex; align-items:stretch; width:100%;">
+          <div style="background:#1E2F3F; display:flex; align-items:stretch;">
             <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
               <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Total students</div>
               <div style="font-size:16px; font-weight:500; color:#fff;" id="enrollTotal">0</div>
@@ -4825,8 +4825,7 @@ window.cerrarAnalisisPanel = function() {
               <div style="font-size:16px; font-weight:500; color:#fff;">95% ± 5%</div>
             </div>
           </div>
-        </div>
-        `;
+        </div>`;
 
       enrollmentFields.querySelectorAll('input[type=number]').forEach(inp => {
         inp.addEventListener('input', updateEnrollmentSummary);
@@ -5010,7 +5009,7 @@ window.cerrarAnalisisPanel = function() {
       </div>
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
         <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
-        <div id="enrollmentFields" style="display:grid; grid-template-columns:repeat(3, 110px); gap:12px;">
+        <div id="enrollmentFields" style="display:flex; flex-direction:column; gap:12px;">
           <!-- Filled dynamically based on country -->
         </div>
       </div>
