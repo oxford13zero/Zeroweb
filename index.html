@@ -4808,11 +4808,11 @@ window.cerrarAnalisisPanel = function() {
             <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:var(--color-text-secondary); white-space:nowrap;">enter students</div>
           </div>
         `).join('') + `
-        <div style="margin-top:14px; background:#1E2F3F; border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+        <div style="margin-top:14px; background:#1E2F3F; border-radius:8px; padding:10px 14px; display:flex; flex-direction:row; align-items:center; gap:24px; flex-wrap:nowrap;">
           <div><div style="font-size:11px; color:#7a9aaa;">Total students</div><div style="font-size:15px; font-weight:500; color:#fff;" id="enrollTotal">0</div></div>
           <div><div style="font-size:11px; color:#7a9aaa;">Min. responses needed</div><div style="font-size:15px; font-weight:500; color:#fff;" id="enrollMin">0</div></div>
           <div><div style="font-size:11px; color:#7a9aaa;">Confidence</div><div style="font-size:15px; font-weight:500; color:#fff;">95% ± 5%</div></div>
-          <span id="enrollBadge" style="display:none; font-size:11px; padding:4px 12px; border-radius:20px; background:#0F6E56; color:#9FE1CB;">Statistically valid</span>
+          <span id="enrollBadge" style="display:none; font-size:11px; padding:4px 12px; border-radius:20px; background:#D6A21C; color:#16222D;">Statistically valid</span>
         </div>`;
 
       enrollmentFields.querySelectorAll('input[type=number]').forEach(inp => {
