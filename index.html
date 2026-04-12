@@ -4781,7 +4781,7 @@ window.cerrarAnalisisPanel = function() {
         if (hint) {
           if (val > 0) {
             hint.textContent = `min. ${minN} required`;
-            hint.style.color = '#0F6E56';
+            hint.style.color = '#FAC775';
           } else {
             hint.textContent = 'enter students';
             hint.style.color = '';
@@ -4790,10 +4790,10 @@ window.cerrarAnalisisPanel = function() {
       });
       const totalEl  = document.getElementById('enrollTotal');
       const minEl    = document.getElementById('enrollMin');
-      const badgeEl  = document.getElementById('enrollBadge');
+
       if (totalEl) totalEl.textContent = total;
       if (minEl)   minEl.textContent   = wilsonMin(total);
-      if (badgeEl) badgeEl.style.display = total > 0 ? 'inline-block' : 'none';
+
     }
 
     function renderEnrollmentFields(country) {
@@ -4808,12 +4808,25 @@ window.cerrarAnalisisPanel = function() {
             <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:var(--color-text-secondary); white-space:nowrap;">enter students</div>
           </div>
         `).join('') + `
-        <div style="margin-top:14px; background:#1E2F3F; border-radius:8px; padding:10px 14px; display:flex; flex-direction:row; align-items:center; gap:24px; flex-wrap:nowrap;">
-          <div><div style="font-size:11px; color:#7a9aaa;">Total students</div><div style="font-size:15px; font-weight:500; color:#fff;" id="enrollTotal">0</div></div>
-          <div><div style="font-size:11px; color:#7a9aaa;">Min. responses needed</div><div style="font-size:15px; font-weight:500; color:#fff;" id="enrollMin">0</div></div>
-          <div><div style="font-size:11px; color:#7a9aaa;">Confidence</div><div style="font-size:15px; font-weight:500; color:#fff;">95% ± 5%</div></div>
-          <span id="enrollBadge" style="display:none; font-size:11px; padding:4px 12px; border-radius:20px; background:#D6A21C; color:#16222D;">Statistically valid</span>
-        </div>`;
+        
+<div style="margin-top:14px; border:1px solid #D6A21C; border-radius:8px; overflow:hidden;">
+          <div style="background:#D6A21C; color:#16222D; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px;">Statistically valid</div>
+          <div style="background:#1E2F3F; display:flex; align-items:stretch;">
+            <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
+              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Total students</div>
+              <div style="font-size:16px; font-weight:500; color:#fff;" id="enrollTotal">0</div>
+            </div>
+            <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
+              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Min. responses needed</div>
+              <div style="font-size:16px; font-weight:500; color:#fff;" id="enrollMin">0</div>
+            </div>
+            <div style="flex:1; padding:10px 14px;">
+              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Confidence</div>
+              <div style="font-size:16px; font-weight:500; color:#fff;">95% ± 5%</div>
+            </div>
+          </div>
+        </div>
+        `;
 
       enrollmentFields.querySelectorAll('input[type=number]').forEach(inp => {
         inp.addEventListener('input', updateEnrollmentSummary);
