@@ -4761,23 +4761,69 @@ window.cerrarAnalisisPanel = function() {
       ]
     };
 
+    
+    
+    
+    function wilsonMin(N) {
+      if (!N || N <= 0) return 0;
+      const Z = 1.96, p = 0.5, e = 0.05;
+      return Math.ceil((Z*Z*p*(1-p)*N) / (e*e*(N-1) + Z*Z*p*(1-p)));
+    }
+
+    function updateEnrollmentSummary() {
+      const inputs = enrollmentFields.querySelectorAll('input[type=number]');
+      let total = 0;
+      inputs.forEach(inp => {
+        const val = parseInt(inp.value) || 0;
+        total += val;
+        const minN = wilsonMin(val);
+        const hint = inp.parentElement.querySelector('.enroll-hint');
+        if (hint) {
+          if (val > 0) {
+            hint.textContent = `min. ${minN} required`;
+            hint.style.color = '#0F6E56';
+          } else {
+            hint.textContent = 'enter students';
+            hint.style.color = '';
+          }
+        }
+      });
+      const totalEl  = document.getElementById('enrollTotal');
+      const minEl    = document.getElementById('enrollMin');
+      const badgeEl  = document.getElementById('enrollBadge');
+      if (totalEl) totalEl.textContent = total;
+      if (minEl)   minEl.textContent   = wilsonMin(total);
+      if (badgeEl) badgeEl.style.display = total > 0 ? 'inline-block' : 'none';
+    }
+
     function renderEnrollmentFields(country) {
       const config = ENROLLMENT_CONFIG[country] || ENROLLMENT_CONFIG['MX'];
       enrollmentFields.innerHTML = config
         .filter(f => !f.hidden)
-       
-        
         .map(f => `
-          <div style="display:inline-block; margin-right:12px;">
+          <div style="display:inline-block; margin-right:12px; vertical-align:top;">
             <label class="fieldLabel" for="${f.id}" style="font-size:11px; display:block; margin-bottom:4px; white-space:nowrap;">${f.label} *</label>
             <input id="${f.id}" class="textInput" type="number" min="0" value="0"
               data-key="${f.key}" style="width:80px;" />
+            <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:var(--color-text-secondary); white-space:nowrap;">enter students</div>
           </div>
-        `).join('');
+        `).join('') + `
+        <div style="margin-top:14px; background:#1E2F3F; border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+          <div><div style="font-size:11px; color:#7a9aaa;">Total students</div><div style="font-size:15px; font-weight:500; color:#fff;" id="enrollTotal">0</div></div>
+          <div><div style="font-size:11px; color:#7a9aaa;">Min. responses needed</div><div style="font-size:15px; font-weight:500; color:#fff;" id="enrollMin">0</div></div>
+          <div><div style="font-size:11px; color:#7a9aaa;">Confidence</div><div style="font-size:15px; font-weight:500; color:#fff;">95% ± 5%</div></div>
+          <span id="enrollBadge" style="display:none; font-size:11px; padding:4px 12px; border-radius:20px; background:#0F6E56; color:#9FE1CB;">Statistically valid</span>
+        </div>`;
 
-      
+      enrollmentFields.querySelectorAll('input[type=number]').forEach(inp => {
+        inp.addEventListener('input', updateEnrollmentSummary);
+      });
+      updateEnrollmentSummary();
     }
 
+    
+
+    
     // Render on country change
     addSchoolCountry?.addEventListener('change', () => {
       renderEnrollmentFields(addSchoolCountry.value);
