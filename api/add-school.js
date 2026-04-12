@@ -18,12 +18,17 @@ export default async function handler(req, res) {
       username,
       password,
       country,
+      address,
+      phone,
       studentsPrimaria,
       studentsSecundaria,
       studentsPreparatoria,
       encFirstName,
       encPatLastName,
-      encMatLastName
+      encMatLastName,
+      encEmail,
+      encPhone,
+      encCargo
     } = req.body || {};
 
     // Validate required fields
@@ -89,6 +94,8 @@ export default async function handler(req, res) {
         username: username,
         password: password,
         country: schoolCountry,
+        address: address || null,
+        phone: phone || null,
         students_primaria: primaria,
         students_secundaria: secundaria,
         students_preparatoria: preparatoria
@@ -112,7 +119,10 @@ export default async function handler(req, res) {
         school_id: school.id,
         first_name: encFirstName,
         pat_last_name: encPatLastName,
-        mat_last_name: encMatLastName || null
+        mat_last_name: encMatLastName || null,
+        email: encEmail || null,
+        phone: encPhone || null,
+        cargo: encCargo || null
       })
       .select("enc_escolar_id, first_name, pat_last_name")
       .single();
