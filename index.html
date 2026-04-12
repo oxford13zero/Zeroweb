@@ -355,6 +355,7 @@ window.addEventListener('popstate', function(e) {
   <!-- ADMIN BUTTONS (hidden by default) -->
   <div id="adminNavButtons" class="adminNavButtons">
     <button id="btnAddSchool" class="btnPrimary" type="button">Add School</button>
+    <button id="btnListSchools" class="btnPrimary" type="button">Schools</button>
     <button id="btnApproveSurvey" class="btnPrimary" type="button">Approve Survey</button>
   </div>
 </nav>
@@ -5018,6 +5019,411 @@ window.cerrarAnalisisPanel = function() {
     document.getElementById('addEncEmail')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
   });
 
+  // === SCHOOLS LIST + EDIT MODAL SYSTEM ===
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // Wilson formula (same as Add School)
+    function wilsonMin(N) {
+      if (!N || N <= 0) return 0;
+      const Z = 1.96, p = 0.5, e = 0.05;
+      return Math.ceil((Z*Z*p*(1-p)*N) / (e*e*(N-1) + Z*Z*p*(1-p)));
+    }
+
+    // Enrollment config per country (mirrors Add School)
+    const ENROLLMENT_CONFIG_EDIT = {
+      MX: [
+        { id: 'editStudentsGroup1', label: 'Primaria (1°–6°)',      key: 'studentsPrimaria' },
+        { id: 'editStudentsGroup2', label: 'Secundaria (7°–9°)',     key: 'studentsSecundaria' },
+        { id: 'editStudentsGroup3', label: 'Preparatoria (10°–12°)', key: 'studentsPreparatoria' }
+      ],
+      CL: [
+        { id: 'editStudentsGroup1', label: 'Básica (1°–8°)',  key: 'studentsPrimaria' },
+        { id: 'editStudentsGroup2', label: 'Media (9°–12°)',  key: 'studentsSecundaria' },
+        { id: 'editStudentsGroup3', label: '',                key: 'studentsPreparatoria', hidden: true }
+      ],
+      CR: [
+        { id: 'editStudentsGroup1', label: 'Primaria (1°–6°)',    key: 'studentsPrimaria' },
+        { id: 'editStudentsGroup2', label: 'Secundaria (7°–11°)', key: 'studentsSecundaria' },
+        { id: 'editStudentsGroup3', label: '',                    key: 'studentsPreparatoria', hidden: true }
+      ],
+      DO: [
+        { id: 'editStudentsGroup1', label: 'Primaria (1°–6°)',    key: 'studentsPrimaria' },
+        { id: 'editStudentsGroup2', label: 'Secundaria (7°–12°)', key: 'studentsSecundaria' },
+        { id: 'editStudentsGroup3', label: '',                    key: 'studentsPreparatoria', hidden: true }
+      ],
+      US: [
+        { id: 'editStudentsGroup1', label: 'Elementary (K–5)', key: 'studentsPrimaria' },
+        { id: 'editStudentsGroup2', label: 'Middle (6–8)',      key: 'studentsSecundaria' },
+        { id: 'editStudentsGroup3', label: 'High (9–12)',       key: 'studentsPreparatoria' }
+      ]
+    };
+
+    // ── DOM refs: Schools List Modal ──
+    const schoolsListModal  = document.getElementById('schoolsListModal');
+    const schoolsListClose  = document.getElementById('schoolsListClose');
+    const schoolsListBody   = document.getElementById('schoolsListBody');
+    const schoolsListMsg    = document.getElementById('schoolsListMsg');
+    const btnListSchools    = document.getElementById('btnListSchools');
+
+    // ── DOM refs: Edit School Modals (3 steps) ──
+    const editModal1        = document.getElementById('editSchoolModal1');
+    const editModal2        = document.getElementById('editSchoolModal2');
+    const editModal3        = document.getElementById('editSchoolModal3');
+    const editClose1        = document.getElementById('editSchoolClose1');
+    const editClose2        = document.getElementById('editSchoolClose2');
+    const editClose3        = document.getElementById('editSchoolClose3');
+    const editMsg1          = document.getElementById('editSchoolMsg1');
+    const editMsg2          = document.getElementById('editSchoolMsg2');
+    const editMsg3          = document.getElementById('editSchoolMsg3');
+    const editEnrollFields  = document.getElementById('editEnrollmentFields');
+
+    // Buttons
+    const btnEditNext1  = document.getElementById('btnEditNext1');   // step1 → step2
+    const btnEditBack2  = document.getElementById('btnEditBack2');   // step2 → step1
+    const btnEditNext2  = document.getElementById('btnEditNext2');   // step2 → step3
+    const btnEditBack3  = document.getElementById('btnEditBack3');   // step3 → step2
+    const btnSaveSchool = document.getElementById('btnSaveSchool');  // step3 → save
+
+    let editFormData = {};   // accumulates data across steps
+    let currentEditSchoolId = null;
+
+    if (!schoolsListModal || !editModal1 || !editModal2 || !editModal3) {
+      console.error('❌ Schools List / Edit modals not found'); return;
+    }
+
+    // ── Step indicator renderer — updates all 3 modals' step bars ──
+    function renderEditSteps(activeStep) {
+      // Selects ALL elements matching each step position across modals
+      document.querySelectorAll('.editStepNum').forEach(el => {
+        const i = parseInt(el.dataset.step);
+        if (i < activeStep) {
+          el.style.background = '#2a5a2a'; el.style.color = '#b9ffcf'; el.textContent = '✓';
+        } else if (i === activeStep) {
+          el.style.background = '#D6A21C'; el.style.color = '#16222D'; el.textContent = String(i);
+        } else {
+          el.style.background = '#2a3f52'; el.style.color = '#7a9aaa'; el.textContent = String(i);
+        }
+      });
+      document.querySelectorAll('.editStepLabel').forEach(el => {
+        const i = parseInt(el.dataset.step);
+        el.style.color = i < activeStep ? '#b9ffcf' : i === activeStep ? '#D6A21C' : '#7a9aaa';
+      });
+    }
+
+    // ── Enrollment renderer for Edit ──
+    function renderEditEnrollment(country, values) {
+      const config = ENROLLMENT_CONFIG_EDIT[country] || ENROLLMENT_CONFIG_EDIT['MX'];
+      editEnrollFields.innerHTML = `
+        <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start;">
+          ${config.filter(f => !f.hidden).map(f => `
+            <div style="display:inline-block; vertical-align:top;">
+              <label style="font-size:11px; font-weight:600; display:block; margin-bottom:4px; white-space:nowrap; color:#fff;">${f.label} *</label>
+              <input id="${f.id}" class="textInput" type="number" min="0" value="${values?.[f.key] ?? 0}"
+                data-key="${f.key}" style="width:80px;" />
+              <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:#7a9aaa; white-space:nowrap;">enter students</div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="margin-top:14px; border:1px solid #D6A21C; border-radius:8px; overflow:hidden;">
+          <div style="background:#D6A21C; color:#16222D; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px;">Statistically valid</div>
+          <div style="background:#1E2F3F; display:flex; align-items:stretch;">
+            <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
+              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Total students</div>
+              <div style="font-size:16px; font-weight:500; color:#fff;" id="editEnrollTotal">0</div>
+            </div>
+            <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
+              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Min. responses needed</div>
+              <div style="font-size:16px; font-weight:500; color:#fff;" id="editEnrollMin">0</div>
+            </div>
+            <div style="flex:1; padding:10px 14px;">
+              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Confidence</div>
+              <div style="font-size:16px; font-weight:500; color:#fff;">95% ± 5%</div>
+            </div>
+          </div>
+        </div>`;
+
+      editEnrollFields.querySelectorAll('input[type=number]').forEach(inp => {
+        inp.addEventListener('input', updateEditEnrollSummary);
+      });
+      updateEditEnrollSummary();
+    }
+
+    function updateEditEnrollSummary() {
+      let total = 0;
+      editEnrollFields.querySelectorAll('input[type=number]').forEach(inp => {
+        const val = parseInt(inp.value) || 0;
+        total += val;
+        const hint = inp.parentElement.querySelector('.enroll-hint');
+        if (hint) {
+          hint.textContent = val > 0 ? `min. ${wilsonMin(val)} required` : 'enter students';
+          hint.style.color = val > 0 ? '#FAC775' : '#7a9aaa';
+        }
+      });
+      const totalEl = document.getElementById('editEnrollTotal');
+      const minEl   = document.getElementById('editEnrollMin');
+      if (totalEl) totalEl.textContent = total;
+      if (minEl)   minEl.textContent   = wilsonMin(total);
+    }
+
+    // ── Open / close helpers ──
+    function closeEditModals() {
+      editModal1.style.display = 'none';
+      editModal2.style.display = 'none';
+      editModal3.style.display = 'none';
+      editFormData = {};
+      currentEditSchoolId = null;
+    }
+
+    function openEditStep1(school) {
+      currentEditSchoolId = school.id;
+      editFormData = { country: school.country };   // keep country for enrollment config
+
+      // Pre-populate step 1 fields
+      document.getElementById('editSchoolName').value    = school.name || '';
+      document.getElementById('editSchoolAddress').value = school.address || '';
+      document.getElementById('editSchoolPhone').value   = school.phone || '';
+      document.getElementById('editNewPassword').value   = '';
+      // Read-only displays
+      document.getElementById('editSchoolUsernameDisplay').textContent = school.username || '—';
+      document.getElementById('editSchoolCountryDisplay').textContent  = school.country  || '—';
+
+      // Pre-populate step 2 enrollment values into formData for later restore
+      editFormData.studentsPrimaria     = school.students_primaria     || 0;
+      editFormData.studentsSecundaria   = school.students_secundaria   || 0;
+      editFormData.studentsPreparatoria = school.students_preparatoria || 0;
+
+      // Pre-populate step 3 encargado fields
+      const enc = school.encargado || {};
+      document.getElementById('editEncFirstName').value   = enc.first_name    || '';
+      document.getElementById('editEncPatLastName').value = enc.pat_last_name  || '';
+      document.getElementById('editEncMatLastName').value = enc.mat_last_name  || '';
+      document.getElementById('editEncEmail').value       = enc.email          || '';
+      document.getElementById('editEncPhone').value       = enc.phone          || '';
+      document.getElementById('editEncCargo').value       = enc.cargo          || '';
+
+      editMsg1.textContent = '';
+      editMsg2.textContent = '';
+      editMsg3.textContent = '';
+
+      renderEditSteps(1);
+      editModal1.style.display = 'flex';
+      editModal2.style.display = 'none';
+      editModal3.style.display = 'none';
+
+      // Render enrollment with current values
+      renderEditEnrollment(school.country, {
+        studentsPrimaria:     school.students_primaria,
+        studentsSecundaria:   school.students_secundaria,
+        studentsPreparatoria: school.students_preparatoria
+      });
+    }
+
+    // Expose globally so renderSchoolsTable can call it
+    window.openEditSchool = function(schoolId) {
+      const school = window._schoolsCache?.find(s => s.id === schoolId);
+      if (!school) { alert('School not found'); return; }
+      closeSchoolsListModal();
+      openEditStep1(school);
+    };
+
+    // ── Validate step 1 → save to editFormData ──
+    function validateEditStep1() {
+      const name    = document.getElementById('editSchoolName')?.value?.trim() || '';
+      const address = document.getElementById('editSchoolAddress')?.value?.trim() || '';
+      const phone   = document.getElementById('editSchoolPhone')?.value?.trim() || '';
+      const pw      = document.getElementById('editNewPassword')?.value?.trim() || '';
+
+      if (!name) { editMsg1.textContent = 'School name is required'; editMsg1.className = 'statusMsg statusErr'; return false; }
+      if (pw && pw.length < 6) { editMsg1.textContent = 'New password must be at least 6 characters'; editMsg1.className = 'statusMsg statusErr'; return false; }
+
+      editFormData = { ...editFormData, schoolName: name, address, phone, newPassword: pw };
+      editMsg1.textContent = '';
+      return true;
+    }
+
+    // ── Validate step 2 → save enrollment to editFormData ──
+    function validateEditStep2() {
+      const inputs = editEnrollFields.querySelectorAll('input[data-key]');
+      inputs.forEach(inp => {
+        editFormData[inp.dataset.key] = parseInt(inp.value) || 0;
+      });
+      editFormData.studentsPrimaria     = editFormData.studentsPrimaria     ?? 0;
+      editFormData.studentsSecundaria   = editFormData.studentsSecundaria   ?? 0;
+      editFormData.studentsPreparatoria = editFormData.studentsPreparatoria ?? 0;
+      editMsg2.textContent = '';
+      return true;
+    }
+
+    // ── Step navigation ──
+    btnEditNext1?.addEventListener('click', () => {
+      if (!validateEditStep1()) return;
+      renderEditSteps(2);
+      editModal1.style.display = 'none';
+      editModal2.style.display = 'flex';
+      // Restore enrollment values from editFormData (in case user went back)
+      const inputs = editEnrollFields.querySelectorAll('input[data-key]');
+      inputs.forEach(inp => { inp.value = editFormData[inp.dataset.key] ?? 0; });
+      updateEditEnrollSummary();
+    });
+
+    btnEditBack2?.addEventListener('click', () => {
+      // Save current enrollment values before going back
+      validateEditStep2();
+      renderEditSteps(1);
+      editModal2.style.display = 'none';
+      editModal1.style.display = 'flex';
+    });
+
+    btnEditNext2?.addEventListener('click', () => {
+      if (!validateEditStep2()) return;
+      renderEditSteps(3);
+      editModal2.style.display = 'none';
+      editModal3.style.display = 'flex';
+      setTimeout(() => document.getElementById('editEncFirstName')?.focus(), 100);
+    });
+
+    btnEditBack3?.addEventListener('click', () => {
+      renderEditSteps(2);
+      editModal3.style.display = 'none';
+      editModal2.style.display = 'flex';
+    });
+
+    // ── Save school ──
+    btnSaveSchool?.addEventListener('click', async () => {
+      const encFirstName   = document.getElementById('editEncFirstName')?.value?.trim() || '';
+      const encPatLastName = document.getElementById('editEncPatLastName')?.value?.trim() || '';
+      const encMatLastName = document.getElementById('editEncMatLastName')?.value?.trim() || '';
+      const encEmail       = document.getElementById('editEncEmail')?.value?.trim() || '';
+      const encPhone       = document.getElementById('editEncPhone')?.value?.trim() || '';
+      const encCargo       = document.getElementById('editEncCargo')?.value?.trim() || '';
+
+      if (!encFirstName)   { editMsg3.textContent = 'First name is required';         editMsg3.className = 'statusMsg statusErr'; return; }
+      if (!encPatLastName) { editMsg3.textContent = 'Paternal last name is required'; editMsg3.className = 'statusMsg statusErr'; return; }
+
+      const payload = {
+        school_id: currentEditSchoolId,
+        ...editFormData,
+        encFirstName, encPatLastName, encMatLastName,
+        encEmail, encPhone, encCargo
+      };
+
+      try {
+        btnSaveSchool.disabled = true;
+        editMsg3.textContent   = 'Saving changes...';
+        editMsg3.className     = 'statusMsg statusWarn';
+
+        const res = await fetch('/api/edit-school', {
+          method: 'PUT', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data.ok) {
+          editMsg3.textContent = data.error || 'Failed to save changes';
+          editMsg3.className   = 'statusMsg statusErr';
+          return;
+        }
+
+        editMsg3.textContent = `✅ "${data.school.name}" updated successfully!`;
+        editMsg3.className   = 'statusMsg statusOk';
+        setTimeout(() => closeEditModals(), 2000);
+
+      } catch (e) {
+        console.error('Error saving school:', e);
+        editMsg3.textContent = 'Connection error';
+        editMsg3.className   = 'statusMsg statusErr';
+      } finally {
+        btnSaveSchool.disabled = false;
+      }
+    });
+
+    // ── Close listeners ──
+    editClose1?.addEventListener('click', closeEditModals);
+    editClose2?.addEventListener('click', closeEditModals);
+    editClose3?.addEventListener('click', closeEditModals);
+    editModal1?.addEventListener('click', (e) => { if (e.target === editModal1) closeEditModals(); });
+    editModal2?.addEventListener('click', (e) => { if (e.target === editModal2) closeEditModals(); });
+    editModal3?.addEventListener('click', (e) => { if (e.target === editModal3) closeEditModals(); });
+
+    // ── Schools List Modal ──
+    window._schoolsCache = [];
+
+    function openSchoolsListModal() {
+      schoolsListModal.style.display = 'flex';
+      loadSchoolsList();
+    }
+    function closeSchoolsListModal() {
+      schoolsListModal.style.display = 'none';
+      schoolsListBody.innerHTML = '';
+      schoolsListMsg.textContent = '';
+    }
+
+    async function loadSchoolsList() {
+      schoolsListMsg.textContent = 'Loading schools...';
+      schoolsListMsg.className   = 'statusMsg statusWarn';
+      schoolsListBody.innerHTML  = '';
+      try {
+        const res  = await fetch('/api/list-schools', { credentials: 'include' });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) {
+          schoolsListMsg.textContent = data.error || 'Failed to load schools';
+          schoolsListMsg.className   = 'statusMsg statusErr';
+          return;
+        }
+        window._schoolsCache = data.schools || [];
+        schoolsListMsg.textContent = '';
+        renderSchoolsTable(window._schoolsCache);
+      } catch (e) {
+        schoolsListMsg.textContent = 'Connection error';
+        schoolsListMsg.className   = 'statusMsg statusErr';
+      }
+    }
+
+    function renderSchoolsTable(schools) {
+      if (!schools.length) {
+        schoolsListBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
+        return;
+      }
+      schoolsListBody.innerHTML = schools.map(s => {
+        const total   = (s.students_primaria || 0) + (s.students_secundaria || 0) + (s.students_preparatoria || 0);
+        const minResp = wilsonMin(total);
+        const enc     = s.encargado;
+        const encName = enc ? `${enc.first_name} ${enc.pat_last_name}` : '—';
+        return `<tr>
+          <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52;">
+            ${s.name}<br/>
+            <span style="font-size:11px; color:#7a9aaa;">${encName}</span>
+          </td>
+          <td style="padding:10px 12px; font-size:13px; color:#a9c0d3; border-bottom:1px solid #2a3f52; text-align:center;">
+            <span style="background:#1E2F3F; border:1px solid #365468; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:600;">${s.country}</span>
+          </td>
+          <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52; text-align:center;">${total.toLocaleString()}</td>
+          <td style="padding:10px 12px; font-size:13px; border-bottom:1px solid #2a3f52; text-align:center;">
+            <span style="color:${minResp > 0 ? '#FAC775' : '#7a9aaa'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
+          </td>
+          <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
+            <button onclick="window.openEditSchool('${s.id}')" style="background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;">✎ Edit</button>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    btnListSchools?.addEventListener('click', () => {
+      if (!window.adminState?.authenticated) { alert('Please login as admin first'); return; }
+      openSchoolsListModal();
+    });
+
+    schoolsListClose?.addEventListener('click', closeSchoolsListModal);
+    schoolsListModal?.addEventListener('click', (e) => { if (e.target === schoolsListModal) closeSchoolsListModal(); });
+
+    // Keypress shortcuts on edit modals
+    document.getElementById('editSchoolName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnEditNext1?.click(); });
+    document.getElementById('editEncPatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnSaveSchool?.click(); });
+    document.getElementById('editEncMatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnSaveSchool?.click(); });
+    document.getElementById('editEncEmail')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnSaveSchool?.click(); });
+  });
+
 </script>
 
 <!-- ADD SCHOOL MODAL - STEP 1: School Information -->
@@ -5172,5 +5578,207 @@ window.cerrarAnalisisPanel = function() {
     </div>
   </div>
 </div>
+<!-- SCHOOLS LIST MODAL -->
+<div id="schoolsListModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:800px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Schools</h3>
+      <button id="schoolsListClose" class="modalClose" type="button">X</button>
+    </div>
+    <div style="padding:8px 0;">
+      <div id="schoolsListMsg" class="statusMsg" style="margin-bottom:10px;"></div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="background:#1E2F3F;">
+              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:left; border-bottom:1px solid #365468;">Name / Encargado</th>
+              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Country</th>
+              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Students</th>
+              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Min. required</th>
+              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;"></th>
+            </tr>
+          </thead>
+          <tbody id="schoolsListBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT SCHOOL MODAL - STEP 1: School Information -->
+<div id="editSchoolModal1" class="modalOverlay">
+  <div class="modalBox" style="max-width:600px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Edit School — Step 1 of 3</h3>
+      <button id="editSchoolClose1" class="modalClose" type="button">X</button>
+    </div>
+    <!-- Step bar -->
+    <div style="display:flex; align-items:center; padding:10px 18px; gap:0; border-bottom:1px solid #2a3f52;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#D6A21C; color:#16222D; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
+        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#D6A21C;">School info</span>
+      </div>
+      <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
+        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#7a9aaa;">Enrollment</span>
+      </div>
+      <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
+        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#7a9aaa;">Encargado</span>
+      </div>
+    </div>
+    <div style="padding:8px 0 0 0;">
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin:0 18px 16px;">
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="editSchoolName">School Name *</label><br />
+          <input id="editSchoolName" class="textInput" type="text" style="width:100%; max-width:100%;" />
+        </div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="editSchoolAddress">Address</label><br />
+          <input id="editSchoolAddress" class="textInput" type="text" placeholder="optional" style="width:100%; max-width:100%;" />
+        </div>
+        <div style="display:flex; gap:12px;">
+          <div class="fieldBlock" style="flex:1;">
+            <label class="fieldLabel" for="editSchoolPhone">Phone</label><br />
+            <input id="editSchoolPhone" class="textInput" type="text" placeholder="optional" style="width:100%;" />
+          </div>
+          <div class="fieldBlock" style="flex:1;">
+            <label class="fieldLabel">Country</label><br />
+            <div style="padding:8px 10px; background:#0a141c; border:1px dashed #365468; border-radius:6px; font-size:14px; color:#7a9aaa;">
+              <span id="editSchoolCountryDisplay">—</span>
+              <span style="font-size:11px; color:#4a6a7a; margin-left:6px;">(not editable)</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:10px;">
+          <div class="fieldBlock" style="flex:1;">
+            <label class="fieldLabel">Username</label><br />
+            <div style="padding:8px 10px; background:#0a141c; border:1px dashed #365468; border-radius:6px; font-size:14px; color:#7a9aaa;">
+              <span id="editSchoolUsernameDisplay">—</span>
+              <span style="font-size:11px; color:#4a6a7a; margin-left:6px;">(not editable)</span>
+            </div>
+          </div>
+          <div class="fieldBlock" style="flex:1;">
+            <label class="fieldLabel" for="editNewPassword">New Password</label><br />
+            <input id="editNewPassword" class="textInput" type="password" placeholder="Leave blank to keep current" autocomplete="new-password" style="width:100%;" />
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; padding:0 18px 8px;">
+        <button id="btnEditNext1" class="btnPrimary" type="button">Next &gt;</button>
+      </div>
+      <div id="editSchoolMsg1" class="statusMsg statusErr" style="margin:0 18px 8px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT SCHOOL MODAL - STEP 2: Student Enrollment -->
+<div id="editSchoolModal2" class="modalOverlay">
+  <div class="modalBox" style="max-width:600px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Edit School — Step 2 of 3</h3>
+      <button id="editSchoolClose2" class="modalClose" type="button">X</button>
+    </div>
+    <!-- Step bar (JS updates .editStepNum/.editStepLabel across all modals) -->
+    <div style="display:flex; align-items:center; padding:10px 18px; gap:0; border-bottom:1px solid #2a3f52;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
+        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#7a9aaa;">School info</span>
+      </div>
+      <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#D6A21C; color:#16222D; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
+        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#D6A21C;">Enrollment</span>
+      </div>
+      <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
+        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#7a9aaa;">Encargado</span>
+      </div>
+    </div>
+    <div style="padding:8px 0 0 0;">
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin:0 18px 16px;">
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
+        <div id="editEnrollmentFields" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- Filled dynamically based on school country -->
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0 18px 8px;">
+        <button id="btnEditBack2" class="btnSecondary" type="button">&lt; Back</button>
+        <button id="btnEditNext2" class="btnPrimary" type="button">Next &gt;</button>
+      </div>
+      <div id="editSchoolMsg2" class="statusMsg statusErr" style="margin:0 18px 8px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT SCHOOL MODAL - STEP 3: Encargado Escolar -->
+<div id="editSchoolModal3" class="modalOverlay">
+  <div class="modalBox" style="max-width:600px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Edit School — Step 3 of 3</h3>
+      <button id="editSchoolClose3" class="modalClose" type="button">X</button>
+    </div>
+    <!-- Step bar -->
+    <div style="display:flex; align-items:center; padding:10px 18px; gap:0; border-bottom:1px solid #2a3f52;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
+        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#7a9aaa;">School info</span>
+      </div>
+      <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
+        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#7a9aaa;">Enrollment</span>
+      </div>
+      <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#D6A21C; color:#16222D; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
+        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#D6A21C;">Encargado</span>
+      </div>
+    </div>
+    <div style="padding:8px 0 0 0;">
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin:0 18px 16px;">
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <div class="fieldBlock" style="flex:1; min-width:140px;">
+            <label class="fieldLabel" for="editEncFirstName">First Name *</label><br />
+            <input id="editEncFirstName" class="textInput" type="text" style="width:100%;" />
+          </div>
+          <div class="fieldBlock" style="flex:1; min-width:140px;">
+            <label class="fieldLabel" for="editEncPatLastName">Paternal Last Name *</label><br />
+            <input id="editEncPatLastName" class="textInput" type="text" style="width:100%;" />
+          </div>
+          <div class="fieldBlock" style="flex:1; min-width:140px;">
+            <label class="fieldLabel" for="editEncMatLastName">Maternal Last Name</label><br />
+            <input id="editEncMatLastName" class="textInput" type="text" placeholder="optional" style="width:100%;" />
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+          <div class="fieldBlock" style="flex:1; min-width:180px;">
+            <label class="fieldLabel" for="editEncEmail">Email</label><br />
+            <input id="editEncEmail" class="textInput" type="email" placeholder="optional" style="width:100%;" />
+          </div>
+          <div class="fieldBlock" style="flex:1; min-width:140px;">
+            <label class="fieldLabel" for="editEncPhone">Phone</label><br />
+            <input id="editEncPhone" class="textInput" type="text" placeholder="optional" style="width:100%;" />
+          </div>
+        </div>
+        <div class="fieldBlock" style="margin-top:10px;">
+          <label class="fieldLabel" for="editEncCargo">Role / Cargo</label><br />
+          <input id="editEncCargo" class="textInput" type="text" placeholder="e.g. Director, Coordinador (optional)" style="width:100%; max-width:100%;" />
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:0 18px 8px;">
+        <button id="btnEditBack3" class="btnSecondary" type="button">&lt; Back</button>
+        <button id="btnSaveSchool" class="btnPrimary" type="button" style="background:#4CAF50; border-color:#4CAF50; color:#fff;">Save Changes</button>
+      </div>
+      <div id="editSchoolMsg3" class="statusMsg statusErr" style="margin:0 18px 8px;"></div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
