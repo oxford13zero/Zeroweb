@@ -4714,25 +4714,30 @@ window.cerrarAnalisisPanel = function() {
     openApproveSurveysModal();
   });
 
-  // === ADD SCHOOL MODAL - TWO STEP SYSTEM ===
+  // === ADD SCHOOL MODAL - THREE STEP SYSTEM ===
   document.addEventListener('DOMContentLoaded', () => {
     const addSchoolModal1 = document.getElementById('addSchoolModal1');
     const addSchoolModal2 = document.getElementById('addSchoolModal2');
+    const addSchoolModal3 = document.getElementById('addSchoolModal3');
     const addSchoolClose1 = document.getElementById('addSchoolClose1');
     const addSchoolClose2 = document.getElementById('addSchoolClose2');
+    const addSchoolClose3 = document.getElementById('addSchoolClose3');
     const btnAddSchool = document.getElementById('btnAddSchool');
     const btnCancelAddSchool1 = document.getElementById('btnCancelAddSchool1');
-    const btnNextToEncargado = document.getElementById('btnNextToEncargado');
-    const btnBackToSchoolInfo = document.getElementById('btnBackToSchoolInfo');
+    const btnNextToEnrollment  = document.getElementById('btnNextToEnrollment');
+    const btnBackToSchoolInfo  = document.getElementById('btnBackToSchoolInfo');
+    const btnNextToEncargado   = document.getElementById('btnNextToEncargado');
+    const btnBackToEnrollment  = document.getElementById('btnBackToEnrollment');
     const btnCreateSchool = document.getElementById('btnCreateSchool');
     const addSchoolMsg1 = document.getElementById('addSchoolMsg1');
     const addSchoolMsg2 = document.getElementById('addSchoolMsg2');
+    const addSchoolMsg3 = document.getElementById('addSchoolMsg3');
     const addSchoolCountry = document.getElementById('addSchoolCountry');
     const enrollmentFields = document.getElementById('enrollmentFields');
 
-    if (!addSchoolModal1 || !addSchoolModal2) { console.error('❌ Add School modals not found'); return; }
+    if (!addSchoolModal1 || !addSchoolModal2 || !addSchoolModal3) { console.error('❌ Add School modals not found'); return; }
 
-    // Enrollment config per country
+    // Enrollment config per country (unchanged)
     const ENROLLMENT_CONFIG = {
       MX: [
         { id: 'addStudentsGroup1', label: 'Primaria (1°–6°)',      key: 'studentsPrimaria' },
@@ -4761,9 +4766,6 @@ window.cerrarAnalisisPanel = function() {
       ]
     };
 
-    
-    
-    
     function wilsonMin(N) {
       if (!N || N <= 0) return 0;
       const Z = 1.96, p = 0.5, e = 0.05;
@@ -4788,15 +4790,13 @@ window.cerrarAnalisisPanel = function() {
           }
         }
       });
-      const totalEl  = document.getElementById('enrollTotal');
-      const minEl    = document.getElementById('enrollMin');
-
+      const totalEl = document.getElementById('enrollTotal');
+      const minEl   = document.getElementById('enrollMin');
       if (totalEl) totalEl.textContent = total;
       if (minEl)   minEl.textContent   = wilsonMin(total);
-
     }
 
-function renderEnrollmentFields(country) {
+    function renderEnrollmentFields(country) {
       const config = ENROLLMENT_CONFIG[country] || ENROLLMENT_CONFIG['MX'];
       enrollmentFields.innerHTML = `
         <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start;">
@@ -4826,17 +4826,13 @@ function renderEnrollmentFields(country) {
             </div>
           </div>
         </div>`;
-
       enrollmentFields.querySelectorAll('input[type=number]').forEach(inp => {
         inp.addEventListener('input', updateEnrollmentSummary);
       });
       updateEnrollmentSummary();
     }
 
-    
-
-    
-    // Render on country change
+    // Re-render enrollment when country changes (country lives in modal1)
     addSchoolCountry?.addEventListener('change', () => {
       renderEnrollmentFields(addSchoolCountry.value);
     });
@@ -4846,46 +4842,54 @@ function renderEnrollmentFields(country) {
 
     let schoolFormData = {};
 
+    function closeAllModals() {
+      addSchoolModal1.style.display = 'none';
+      addSchoolModal2.style.display = 'none';
+      addSchoolModal3.style.display = 'none';
+    }
+
     function clearAllFields() {
-      document.getElementById('addSchoolName').value = '';
+      document.getElementById('addSchoolName').value    = '';
+      document.getElementById('addSchoolAddress').value = '';
+      document.getElementById('addSchoolPhone').value   = '';
       document.getElementById('addSchoolUsername').value = '';
       document.getElementById('addSchoolPassword').value = '';
       if (addSchoolCountry) addSchoolCountry.value = 'MX';
       renderEnrollmentFields('MX');
-      document.getElementById('addEncFirstName').value = '';
-      document.getElementById('addEncPatLastName').value = '';
-      document.getElementById('addEncMatLastName').value = '';
+      document.getElementById('addEncFirstName').value    = '';
+      document.getElementById('addEncPatLastName').value  = '';
+      document.getElementById('addEncMatLastName').value  = '';
+      document.getElementById('addEncEmail').value        = '';
+      document.getElementById('addEncPhone').value        = '';
+      document.getElementById('addEncCargo').value        = '';
       addSchoolMsg1.textContent = '';
       addSchoolMsg2.textContent = '';
+      addSchoolMsg3.textContent = '';
       schoolFormData = {};
     }
 
-    function openModal1() { clearAllFields(); addSchoolModal1.style.display = 'flex'; addSchoolModal2.style.display = 'none'; }
-    function closeAllModals() { addSchoolModal1.style.display = 'none'; addSchoolModal2.style.display = 'none'; }
+    function openModal1() {
+      clearAllFields();
+      addSchoolModal1.style.display = 'flex';
+      addSchoolModal2.style.display = 'none';
+      addSchoolModal3.style.display = 'none';
+    }
 
+    // STEP 1 → validate school info, save to schoolFormData, open modal2
     function validateStep1() {
       const schoolName = document.getElementById('addSchoolName')?.value?.trim() || '';
       const username   = document.getElementById('addSchoolUsername')?.value?.trim() || '';
       const password   = document.getElementById('addSchoolPassword')?.value?.trim() || '';
       const country    = addSchoolCountry?.value || 'MX';
+      const address    = document.getElementById('addSchoolAddress')?.value?.trim() || '';
+      const phone      = document.getElementById('addSchoolPhone')?.value?.trim() || '';
 
       if (!schoolName) { addSchoolMsg1.textContent = 'School name is required'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
       if (!username)   { addSchoolMsg1.textContent = 'Username is required';    addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
       if (!password)   { addSchoolMsg1.textContent = 'Password is required';    addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
       if (password.length < 6) { addSchoolMsg1.textContent = 'Password must be at least 6 characters'; addSchoolMsg1.className = 'statusMsg statusErr'; return false; }
 
-      // Collect enrollment fields dynamically
-      const enrollmentInputs = enrollmentFields.querySelectorAll('input[data-key]');
-      const enrollmentData = {};
-      for (const input of enrollmentInputs) {
-        enrollmentData[input.dataset.key] = parseInt(input.value) || 0;
-      }
-      // Fill missing keys with 0
-      enrollmentData.studentsPrimaria    = enrollmentData.studentsPrimaria    ?? 0;
-      enrollmentData.studentsSecundaria  = enrollmentData.studentsSecundaria  ?? 0;
-      enrollmentData.studentsPreparatoria= enrollmentData.studentsPreparatoria?? 0;
-
-      schoolFormData = { schoolName, username, password, country, ...enrollmentData };
+      schoolFormData = { schoolName, username, password, country, address, phone };
       addSchoolMsg1.textContent = '';
       return true;
     }
@@ -4893,24 +4897,57 @@ function renderEnrollmentFields(country) {
     function openModal2() {
       addSchoolModal1.style.display = 'none';
       addSchoolModal2.style.display = 'flex';
+      addSchoolModal3.style.display = 'none';
+    }
+
+    // STEP 2 → collect enrollment, save to schoolFormData, open modal3
+    function validateStep2() {
+      const enrollmentInputs = enrollmentFields.querySelectorAll('input[data-key]');
+      const enrollmentData = {};
+      for (const input of enrollmentInputs) {
+        enrollmentData[input.dataset.key] = parseInt(input.value) || 0;
+      }
+      enrollmentData.studentsPrimaria     = enrollmentData.studentsPrimaria     ?? 0;
+      enrollmentData.studentsSecundaria   = enrollmentData.studentsSecundaria   ?? 0;
+      enrollmentData.studentsPreparatoria = enrollmentData.studentsPreparatoria ?? 0;
+
+      schoolFormData = { ...schoolFormData, ...enrollmentData };
+      addSchoolMsg2.textContent = '';
+      return true;
+    }
+
+    function openModal3() {
+      addSchoolModal1.style.display = 'none';
+      addSchoolModal2.style.display = 'none';
+      addSchoolModal3.style.display = 'flex';
       setTimeout(() => document.getElementById('addEncFirstName')?.focus(), 100);
     }
 
+    // Back from modal2 → modal1, restore fields
     function backToModal1() {
       addSchoolModal2.style.display = 'none';
       addSchoolModal1.style.display = 'flex';
       if (schoolFormData.schoolName) {
         document.getElementById('addSchoolName').value     = schoolFormData.schoolName;
+        document.getElementById('addSchoolAddress').value  = schoolFormData.address || '';
+        document.getElementById('addSchoolPhone').value    = schoolFormData.phone || '';
         document.getElementById('addSchoolUsername').value = schoolFormData.username;
         document.getElementById('addSchoolPassword').value = schoolFormData.password;
         if (addSchoolCountry) addSchoolCountry.value       = schoolFormData.country || 'MX';
         renderEnrollmentFields(schoolFormData.country || 'MX');
-        // Restore enrollment values
-        const inputs = enrollmentFields.querySelectorAll('input[data-key]');
-        for (const input of inputs) {
-          input.value = schoolFormData[input.dataset.key] ?? 0;
-        }
       }
+    }
+
+    // Back from modal3 → modal2, restore enrollment values
+    function backToModal2() {
+      addSchoolModal3.style.display = 'none';
+      addSchoolModal2.style.display = 'flex';
+      // Restore enrollment values saved in schoolFormData
+      const inputs = enrollmentFields.querySelectorAll('input[data-key]');
+      for (const input of inputs) {
+        input.value = schoolFormData[input.dataset.key] ?? 0;
+      }
+      updateEnrollmentSummary();
     }
 
     btnAddSchool?.addEventListener('click', () => {
@@ -4920,26 +4957,34 @@ function renderEnrollmentFields(country) {
 
     addSchoolClose1?.addEventListener('click', closeAllModals);
     addSchoolClose2?.addEventListener('click', closeAllModals);
+    addSchoolClose3?.addEventListener('click', closeAllModals);
     btnCancelAddSchool1?.addEventListener('click', closeAllModals);
     addSchoolModal1?.addEventListener('click', (e) => { if (e.target === addSchoolModal1) closeAllModals(); });
     addSchoolModal2?.addEventListener('click', (e) => { if (e.target === addSchoolModal2) closeAllModals(); });
-    btnNextToEncargado?.addEventListener('click', () => { if (validateStep1()) openModal2(); });
+    addSchoolModal3?.addEventListener('click', (e) => { if (e.target === addSchoolModal3) closeAllModals(); });
+
+    btnNextToEnrollment?.addEventListener('click', () => { if (validateStep1()) openModal2(); });
     btnBackToSchoolInfo?.addEventListener('click', backToModal1);
+    btnNextToEncargado?.addEventListener('click', () => { if (validateStep2()) openModal3(); });
+    btnBackToEnrollment?.addEventListener('click', backToModal2);
 
     btnCreateSchool?.addEventListener('click', async () => {
       const encFirstName   = document.getElementById('addEncFirstName')?.value?.trim() || '';
       const encPatLastName = document.getElementById('addEncPatLastName')?.value?.trim() || '';
       const encMatLastName = document.getElementById('addEncMatLastName')?.value?.trim() || '';
+      const encEmail       = document.getElementById('addEncEmail')?.value?.trim() || '';
+      const encPhone       = document.getElementById('addEncPhone')?.value?.trim() || '';
+      const encCargo       = document.getElementById('addEncCargo')?.value?.trim() || '';
 
-      if (!encFirstName)   { addSchoolMsg2.textContent = 'Encargado first name is required';          addSchoolMsg2.className = 'statusMsg statusErr'; return; }
-      if (!encPatLastName) { addSchoolMsg2.textContent = 'Encargado paternal last name is required';  addSchoolMsg2.className = 'statusMsg statusErr'; return; }
+      if (!encFirstName)   { addSchoolMsg3.textContent = 'Encargado first name is required';         addSchoolMsg3.className = 'statusMsg statusErr'; return; }
+      if (!encPatLastName) { addSchoolMsg3.textContent = 'Encargado paternal last name is required'; addSchoolMsg3.className = 'statusMsg statusErr'; return; }
 
-      const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName };
+      const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName, encEmail, encPhone, encCargo };
 
       try {
         btnCreateSchool.disabled = true;
-        addSchoolMsg2.textContent = 'Creating school...';
-        addSchoolMsg2.className = 'statusMsg statusWarn';
+        addSchoolMsg3.textContent = 'Creating school...';
+        addSchoolMsg3.className = 'statusMsg statusWarn';
 
         const res = await fetch('/api/add-school', {
           method: 'POST', credentials: 'include',
@@ -4949,36 +4994,37 @@ function renderEnrollmentFields(country) {
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok || !data.ok) {
-          addSchoolMsg2.textContent = data.error || 'Failed to create school';
-          addSchoolMsg2.className = 'statusMsg statusErr';
+          addSchoolMsg3.textContent = data.error || 'Failed to create school';
+          addSchoolMsg3.className = 'statusMsg statusErr';
           btnCreateSchool.disabled = false;
           return;
         }
 
-        addSchoolMsg2.textContent = `✅ School "${data.school.name}" (${data.school.country}) created successfully!`;
-        addSchoolMsg2.className = 'statusMsg statusOk';
+        addSchoolMsg3.textContent = `✅ School "${data.school.name}" (${data.school.country}) created successfully!`;
+        addSchoolMsg3.className = 'statusMsg statusOk';
         setTimeout(() => closeAllModals(), 2000);
       } catch (e) {
         console.error('Error creating school:', e);
-        addSchoolMsg2.textContent = 'Connection error';
-        addSchoolMsg2.className = 'statusMsg statusErr';
+        addSchoolMsg3.textContent = 'Connection error';
+        addSchoolMsg3.className = 'statusMsg statusErr';
       } finally {
         btnCreateSchool.disabled = false;
       }
     });
 
-    document.getElementById('addSchoolPassword')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnNextToEncargado?.click(); });
+    document.getElementById('addSchoolPassword')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnNextToEnrollment?.click(); });
     document.getElementById('addEncPatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
     document.getElementById('addEncMatLastName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
+    document.getElementById('addEncEmail')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnCreateSchool?.click(); });
   });
 
 </script>
 
-<!-- ADD SCHOOL MODAL - STEP 1 -->
+<!-- ADD SCHOOL MODAL - STEP 1: School Information -->
 <div id="addSchoolModal1" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
     <div class="modalHeader">
-      <h3 class="modalTitle">Add New School - Step 1 of 2</h3>
+      <h3 class="modalTitle">Add New School - Step 1 of 3</h3>
       <button id="addSchoolClose1" class="modalClose" type="button">X</button>
     </div>
     <div style="padding:8px 0;">
@@ -4987,6 +5033,14 @@ function renderEnrollmentFields(country) {
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolName">School Name *</label><br />
           <input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Escuela Primaria Benito Juárez" style="width:100%; max-width:100%;" />
+        </div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addSchoolAddress">Address</label><br />
+          <input id="addSchoolAddress" class="textInput" type="text" placeholder="e.g., Av. Insurgentes 123, Col. Centro (optional)" style="width:100%; max-width:100%;" />
+        </div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addSchoolPhone">Phone</label><br />
+          <input id="addSchoolPhone" class="textInput" type="text" placeholder="e.g., +52 55 1234 5678 (optional)" style="width:100%; max-width:100%;" />
         </div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolUsername">Username *</label><br />
@@ -5007,27 +5061,44 @@ function renderEnrollmentFields(country) {
           </select>
         </div>
       </div>
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
-        <div id="enrollmentFields" style="display:flex; flex-direction:column; gap:12px;">
-          <!-- Filled dynamically based on country -->
-        </div>
-      </div>
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnCancelAddSchool1" class="btnSecondary" type="button">Cancel</button>
-        <button id="btnNextToEncargado" class="btnPrimary" type="button">Next &gt;</button>
+        <button id="btnNextToEnrollment" class="btnPrimary" type="button">Next &gt;</button>
       </div>
       <div id="addSchoolMsg1" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
 </div>
 
-<!-- ADD SCHOOL MODAL - STEP 2 -->
+<!-- ADD SCHOOL MODAL - STEP 2: Student Enrollment -->
 <div id="addSchoolModal2" class="modalOverlay">
   <div class="modalBox" style="max-width:600px;">
     <div class="modalHeader">
-      <h3 class="modalTitle">Add New School - Step 2 of 2</h3>
+      <h3 class="modalTitle">Add New School - Step 2 of 3</h3>
       <button id="addSchoolClose2" class="modalClose" type="button">X</button>
+    </div>
+    <div style="padding:8px 0;">
+      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
+        <div id="enrollmentFields" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- Filled dynamically based on country selected in step 1 -->
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <button id="btnBackToSchoolInfo" class="btnSecondary" type="button">&lt; Back</button>
+        <button id="btnNextToEncargado" class="btnPrimary" type="button">Next &gt;</button>
+      </div>
+      <div id="addSchoolMsg2" class="statusMsg statusErr" style="margin-top:12px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD SCHOOL MODAL - STEP 3: Encargado Escolar -->
+<div id="addSchoolModal3" class="modalOverlay">
+  <div class="modalBox" style="max-width:600px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Add New School - Step 3 of 3</h3>
+      <button id="addSchoolClose3" class="modalClose" type="button">X</button>
     </div>
     <div style="padding:8px 0;">
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
@@ -5044,12 +5115,24 @@ function renderEnrollmentFields(country) {
           <label class="fieldLabel" for="addEncMatLastName">Maternal Last Name</label><br />
           <input id="addEncMatLastName" class="textInput" type="text" placeholder="e.g., López (optional)" style="width:100%; max-width:100%;" />
         </div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addEncEmail">Email</label><br />
+          <input id="addEncEmail" class="textInput" type="email" placeholder="e.g., maria.garcia@escuela.edu (optional)" style="width:100%; max-width:100%;" />
+        </div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addEncPhone">Phone</label><br />
+          <input id="addEncPhone" class="textInput" type="text" placeholder="e.g., +52 55 1234 5678 (optional)" style="width:100%; max-width:100%;" />
+        </div>
+        <div class="fieldBlock">
+          <label class="fieldLabel" for="addEncCargo">Role / Cargo</label><br />
+          <input id="addEncCargo" class="textInput" type="text" placeholder="e.g., Director, Coordinador (optional)" style="width:100%; max-width:100%;" />
+        </div>
       </div>
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-        <button id="btnBackToSchoolInfo" class="btnSecondary" type="button">&lt; Back</button>
+        <button id="btnBackToEnrollment" class="btnSecondary" type="button">&lt; Back</button>
         <button id="btnCreateSchool" class="btnPrimary" type="button">Create School</button>
       </div>
-      <div id="addSchoolMsg2" class="statusMsg statusErr" style="margin-top:12px;"></div>
+      <div id="addSchoolMsg3" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
 </div>
