@@ -4765,13 +4765,17 @@ window.cerrarAnalisisPanel = function() {
       const config = ENROLLMENT_CONFIG[country] || ENROLLMENT_CONFIG['MX'];
       enrollmentFields.innerHTML = config
         .filter(f => !f.hidden)
+       
+        
         .map(f => `
-          <div class="fieldBlock">
-            <label class="fieldLabel" for="${f.id}" style="font-size:12px;">${f.label} *</label><br />
+          <div style="display:inline-block; margin-right:12px;">
+            <label class="fieldLabel" for="${f.id}" style="font-size:11px; display:block; margin-bottom:4px;">${f.label} *</label>
             <input id="${f.id}" class="textInput" type="number" min="0" value="0"
-              data-key="${f.key}" style="width:100%; max-width:110px;" />
+              data-key="${f.key}" style="width:80px;" />
           </div>
         `).join('');
+
+      
     }
 
     // Render on country change
