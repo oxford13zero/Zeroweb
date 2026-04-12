@@ -247,6 +247,7 @@
 
 /* Admin buttons styling - yellow circle borders */
 #btnAddSchool,
+#btnListSchools,
 #btnApproveSurvey {
   background-color: #1E2F3F;
   color: white;
@@ -261,6 +262,7 @@
 }
 
 #btnAddSchool:hover,
+#btnListSchools:hover,
 #btnApproveSurvey:hover {
   background-color: #D6A21C;
   color: #16222D;
@@ -5580,17 +5582,20 @@ window.cerrarAnalisisPanel = function() {
 </div>
 <!-- SCHOOLS LIST MODAL -->
 <div id="schoolsListModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:800px;">
+  <div class="modalBox" style="max-width:800px; display:flex; flex-direction:column; max-height:85vh;">
+    
     <div class="modalHeader">
       <h3 class="modalTitle">Schools</h3>
       <button id="schoolsListClose" class="modalClose" type="button">X</button>
     </div>
     <div style="padding:8px 0;">
-      <div id="schoolsListMsg" class="statusMsg" style="margin-bottom:10px;"></div>
-      <div style="overflow-x:auto;">
+      
+<div id="schoolsListMsg" class="statusMsg" style="padding:0 8px; min-height:18px;"></div>
+      <div style="overflow-x:auto; overflow-y:auto; flex:1; min-height:0;">
         <table style="width:100%; border-collapse:collapse;">
-          <thead>
+          <thead style="position:sticky; top:0; z-index:1;">
             <tr style="background:#1E2F3F;">
+              
               <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:left; border-bottom:1px solid #365468;">Name / Encargado</th>
               <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Country</th>
               <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Students</th>
