@@ -104,23 +104,28 @@
 
     /* Modal */
     .modalOverlay {
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.65);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-    }
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  z-index:9999;
+  align-items:flex-start;
+  justify-content:center;
+  padding:18px;
+  overflow-y:auto;
+}
     .modalBox {
-      width:min(620px, 95vw);
-      background:#16222D;
-      border:1px solid #365468;
-      border-radius:12px;
-      padding:18px;
-      box-shadow:0 20px 60px rgba(0,0,0,0.35);
-    }
+  width:min(620px, 95vw);
+  background:#16222D;
+  border:1px solid #365468;
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.35);
+  max-height:90vh;
+  overflow-y:auto;
+}
+
+    
     .modalHeader {
       display:flex;
       justify-content:space-between;
