@@ -343,7 +343,17 @@ function showTab(tabId) {
   // close mobile nav
   var mn = document.getElementById('mobileNav');
   if (mn) mn.style.display = 'none';
+  // Active tab highlight
+  document.querySelectorAll('#desktopLinks a, #mobileNav a').forEach(function(a) {
+  var onclick = a.getAttribute('onclick') || '';
+  var isActive = onclick.indexOf("'" + tabId + "'") !== -1;
+  a.style.color = isActive ? '#D6A21C' : '#a9c0d3';
+  a.style.background = isActive ? 'rgba(214,162,28,0.12)' : 'transparent';
+  a.style.borderLeftColor = isActive ? '#D6A21C' : 'transparent';
+});
 }
+
+    
 window.addEventListener('popstate', function(e) {
   var tab = (e.state && e.state.tab) || location.hash.replace('#','') || 'home';
   document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
@@ -364,7 +374,7 @@ window.addEventListener('popstate', function(e) {
 
   /* Active tab highlight */
   .nav-tab-active { color: #D6A21C !important; }
-
+  #desktopLinks a:visited, #mobileNav a:visited { color: #a9c0d3; }
   /* Hamburger responsive */
   @media (max-width: 860px) {
     #desktopLinks { display: none !important; }
