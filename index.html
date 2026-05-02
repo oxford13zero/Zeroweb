@@ -65,8 +65,22 @@
     .badgeOk { color:#b9ffcf; }
     .badgeNo { color:#ffdca8; }
 
-    section { display:none; padding:50px 20px; max-width:1000px; margin:auto; }
-    section.active { display:block; }
+    section {
+      display: none;
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    section.active {
+      display: block;
+    }
+    section.active.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     h2 { font-family:'Playfair Display', serif; color:#D6A21C; font-size:32px; margin-top:0; }
 
@@ -310,10 +324,25 @@
 
     
 function showTab(tabId) {
-  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
+  document.querySelectorAll('section').forEach(function(s) {
+    s.classList.remove('active');
+    s.classList.remove('visible');
+  });
+  var el = document.getElementById(tabId);
+  if (!el) return;
+  el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // trigger fade after display:block is applied
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      el.classList.add('visible');
+    });
+  });
   if (tabId === 'datos') window.loadDatosIfNeeded?.();
   history.pushState({ tab: tabId }, '', '#' + tabId);
+  // close mobile nav
+  var mn = document.getElementById('mobileNav');
+  if (mn) mn.style.display = 'none';
 }
 window.addEventListener('popstate', function(e) {
   var tab = (e.state && e.state.tab) || location.hash.replace('#','') || 'home';
@@ -326,46 +355,103 @@ window.addEventListener('popstate', function(e) {
 
     
   </script>
+
+<style>
+  /* Hide old header */
+  header { display: none !important; }
+  /* Old nav hidden */
+  nav:not(#siteNav) { display: none !important; }
+
+  /* Active tab highlight */
+  .nav-tab-active { color: #D6A21C !important; }
+
+  /* Hamburger responsive */
+  @media (max-width: 860px) {
+    #desktopLinks { display: none !important; }
+    #navHamburger { display: flex !important; }
+    #btnAccesoUsuarios { display: none !important; }
+  }
+  @media (min-width: 861px) {
+    #mobileNav { display: none !important; }
+  }
+</style>
+<script>
+function toggleMobileNav() {
+  var mn = document.getElementById('mobileNav');
+  if (!mn) return;
+  mn.style.display = mn.style.display === 'flex' ? 'none' : 'flex';
+}
+// On load, show home with fade
+document.addEventListener('DOMContentLoaded', function() {
+  var startTab = location.hash ? location.hash.replace('#','') : 'home';
+  showTab(startTab);
+});
+</script>
+
 </head>
 
 <body>
 
-<header>
-  <h1>TECH4ZERO</h1>
-  <p>EDUCATION+IA</p>
-</header>
+<!-- ADMIN ICON -->
+<button id="adminIcon" class="adminIcon" type="button" title="Admin Access" onclick="openAdminModal()">🔐</button>
 
-<!-- ADMIN ICON - Top Right Corner -->
-<button id="adminIcon" class="adminIcon" type="button" title="Admin Access" onclick="openAdminModal()">
-  🔐
-</button>
+<!-- STICKY NAV -->
+<nav id="siteNav" style="
+  position:sticky; top:0; z-index:1000;
+  background:rgba(12,22,32,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(54,84,104,0.5);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 24px; height:62px;
+  transition:box-shadow 0.3s;
+  box-shadow:0 2px 24px rgba(0,0,0,0.3);
+">
+  <!-- Logo -->
+  <div style="font-family:'Playfair Display',serif; font-size:19px; font-weight:600; color:#fff; letter-spacing:0.5px; flex-shrink:0;">
+    TECH4<span style="color:#D6A21C;">ZERO</span>
+  </div>
 
+  <!-- Desktop links -->
+  <div id="desktopLinks" style="display:flex; align-items:center; gap:2px; flex-wrap:nowrap;">
+    <a href="#" onclick="showTab('home');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">INICIO</a>
+    <a href="#" onclick="showTab('programa');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">PROGRAMA</a>
+    <a href="#" onclick="showTab('testimonios');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">TESTIMONIOS</a>
+    <a href="#" onclick="showTab('equipo');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">EQUIPO</a>
+    <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">INVERSIÓN</a>
+    <a href="#" onclick="showTab('contacto');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">CONTACTO</a>
+    <a id="navEncuesta" href="#" onclick="showTab('encuesta');return false;" style="display:none;color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">ENCUESTA</a>
+    <a id="navResultados" href="#" onclick="showTab('resultados');return false;" style="display:none;color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">RESULTADOS</a>
+  </div>
 
-  
-<nav>
-  <a href="#" onclick="showTab('home'); return false;">INICIO</a>
-  <a href="#" onclick="showTab('programa'); return false;">PROGRAMA</a>
-
-<!--  <a href="#" onclick="showTab('encuesta'); return false;">ENCUESTA</a>   -->
-<!--  <a href="#" onclick="showTab('resultados'); return false;">RESULTADOS</a>   -->
-  <a id="navEncuesta" href="#" onclick="showTab('encuesta'); return false;" style="display:none;">ENCUESTA</a>
-  <a id="navResultados" href="#" onclick="showTab('resultados'); return false;" style="display:none;">RESULTADOS</a>
-  
-  
-  <a href="#" onclick="showTab('testimonios'); return false;">TESTIMONIOS</a>
- <!-- <a href="#" onclick="showTab('inversion'); return false;">INVERSIÓN</a>  -->
-  <a href="#" onclick="showTab('equipo'); return false;">EQUIPO</a>
-  <a href="#" onclick="showTab('contacto'); return false;">CONTACTO</a>
-
-  <button id="btnAccesoUsuarios" class="btnPrimary navAccess" type="button" onclick="openAccesoUsuarios()">ACCESO USUARIOS</button>
-
-  <!-- ADMIN BUTTONS (hidden by default) -->
-  <div id="adminNavButtons" class="adminNavButtons">
-    <button id="btnAddSchool" class="btnPrimary" type="button">Add School</button>
-    <button id="btnListSchools" class="btnPrimary" type="button">Schools</button>
-    <button id="btnApproveSurvey" class="btnPrimary" type="button">Approve Survey</button>
+  <!-- Right side -->
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+    <button id="btnAccesoUsuarios" class="btnPrimary" type="button" onclick="openAccesoUsuarios()" style="padding:7px 16px;font-size:13px;border-radius:6px;white-space:nowrap;">ACCESO USUARIOS</button>
+    <div id="adminNavButtons" class="adminNavButtons">
+      <button id="btnAddSchool" type="button" style="background:#1E2F3F;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(214,162,28,0);font-size:13px;font-weight:600;cursor:pointer;">Add School</button>
+      <button id="btnListSchools" type="button" style="background:#1E2F3F;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(214,162,28,0);font-size:13px;font-weight:600;cursor:pointer;">Schools</button>
+      <button id="btnApproveSurvey" type="button" style="background:#1E2F3F;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(214,162,28,0);font-size:13px;font-weight:600;cursor:pointer;">Approve Survey</button>
+    </div>
+    <!-- Hamburger -->
+    <button id="navHamburger" type="button" onclick="toggleMobileNav()" aria-label="Menu" style="display:none;flex-direction:column;gap:5px;background:transparent;border:none;cursor:pointer;padding:4px;">
+      <span style="display:block;width:22px;height:2px;background:#a9c0d3;border-radius:2px;transition:all 0.3s;"></span>
+      <span style="display:block;width:22px;height:2px;background:#a9c0d3;border-radius:2px;transition:all 0.3s;"></span>
+      <span style="display:block;width:22px;height:2px;background:#a9c0d3;border-radius:2px;transition:all 0.3s;"></span>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile dropdown -->
+<div id="mobileNav" style="display:none;position:sticky;top:62px;z-index:999;background:rgba(8,18,26,0.98);backdrop-filter:blur(16px);border-bottom:1px solid #365468;flex-direction:column;padding:10px 0;">
+  <a href="#" onclick="showTab('home');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;transition:all 0.2s;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">INICIO</a>
+  <a href="#" onclick="showTab('programa');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">PROGRAMA</a>
+  <a href="#" onclick="showTab('testimonios');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">TESTIMONIOS</a>
+  <a href="#" onclick="showTab('equipo');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">EQUIPO</a>
+  <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">INVERSIÓN</a>
+  <a href="#" onclick="showTab('contacto');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">CONTACTO</a>
+  <div style="padding:12px 24px;">
+    <button onclick="openAccesoUsuarios()" style="width:100%;padding:11px;background:#D6A21C;color:#0f1d27;font-weight:700;font-size:14px;border:none;border-radius:8px;cursor:pointer;font-family:'Open Sans',sans-serif;">ACCESO USUARIOS</button>
+  </div>
+</div>
 
 <!-- BARRA GLOBAL DE SESIÓN -->
 <div class="sessionBar">
