@@ -48,14 +48,24 @@
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token }),
       });
-      const data = await res.json();
+
+      
+const data = await res.json();
       if (!data.ok) {
         showAuthError(data.error === 'TOKEN_EXPIRED'
           ? 'El enlace ha expirado. Por favor solicita un nuevo acceso desde Resultados.'
           : 'Acceso no válido. Por favor solicita un nuevo acceso desde Resultados.');
         return;
       }
+      // Hide report buttons for non-admin users
+      if (data.role !== 'admin') {
+        const pdfRow = document.querySelector('.pdf-row');
+        if (pdfRow) pdfRow.style.display = 'none';
+      }
     } catch (e) { showAuthError('Error de conexión. Por favor intenta nuevamente.'); return; }
+    
+
+    
 
     try {
       const res  = await fetch('/api/dashboard-data', { headers: { 'Authorization': `Bearer ${token}` } });
