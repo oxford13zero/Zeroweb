@@ -3163,6 +3163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         school_name: data?.school_name || null,
         country: data?.country || 'MX',
         language: data?.language || 'es'
+        must_change_password: data?.must_change_password ?? false  
       };
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
@@ -3170,6 +3171,95 @@ document.addEventListener('DOMContentLoaded', function() {
     applySessionToUI();
   }
 
+// === FORCE CHANGE PASSWORD MODAL ===
+function openForceChangeModal() {
+  const modal = document.getElementById('forceChangeModal');
+  if (!modal) return;
+
+  // Clear fields
+  document.getElementById('fcp_current').value = '';
+  document.getElementById('fcp_new').value = '';
+  document.getElementById('fcp_confirm').value = '';
+  document.getElementById('forceChangeMsg').textContent = '';
+  document.getElementById('forceChangeMsg').className = 'statusMsg';
+
+  modal.style.display = 'flex';
+}
+
+function setForceChangeMsg(text, type) {
+  const el = document.getElementById('forceChangeMsg');
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'statusMsg ' + (type || 'statusWarn');
+}
+
+document.getElementById('btnForceChangeSubmit')?.addEventListener('click', async () => {
+  const current = document.getElementById('fcp_current')?.value?.trim() || '';
+  const newPwd   = document.getElementById('fcp_new')?.value?.trim() || '';
+  const confirm  = document.getElementById('fcp_confirm')?.value?.trim() || '';
+  const btn      = document.getElementById('btnForceChangeSubmit');
+
+  // Client-side validation
+  if (!current || !newPwd || !confirm) {
+    setForceChangeMsg('Por favor completa todos los campos.', 'statusWarn');
+    return;
+  }
+  if (newPwd.length < 8) {
+    setForceChangeMsg('La nueva contraseña debe tener al menos 8 caracteres.', 'statusWarn');
+    return;
+  }
+  if (newPwd !== confirm) {
+    setForceChangeMsg('Las contraseñas no coinciden.', 'statusErr');
+    return;
+  }
+  if (current === newPwd) {
+    setForceChangeMsg('La nueva contraseña debe ser diferente a la actual.', 'statusWarn');
+    return;
+  }
+
+  try {
+    btn.disabled = true;
+    setForceChangeMsg('Guardando...', 'statusWarn');
+
+    const res = await fetch('/api/change-password', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentPassword: current, newPassword: newPwd })
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data.ok) {
+      const msg = data.error === 'WRONG_CURRENT_PASSWORD'
+        ? 'La contraseña actual es incorrecta.'
+        : data.detail || 'No se pudo actualizar. Intenta de nuevo.';
+      setForceChangeMsg(msg, 'statusErr');
+      return;
+    }
+
+    // Success — update local state and close modal
+    setForceChangeMsg('✅ Contraseña actualizada.', 'statusOk');
+    window.sessionState.must_change_password = false;
+
+    setTimeout(() => {
+      document.getElementById('forceChangeModal').style.display = 'none';
+    }, 1200);
+
+  } catch (e) {
+    setForceChangeMsg('Error de conexión. Intenta de nuevo.', 'statusErr');
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// Prevent closing by clicking outside
+document.getElementById('forceChangeModal')?.addEventListener('click', function(e) {
+  if (e.target === this) {
+    setForceChangeMsg('Debes establecer tu contraseña para continuar.', 'statusWarn');
+  }
+});
+    
   function applySessionToUI() {
     const ok = window.sessionState.ok;
     const schoolName = window.sessionState.school_name || '';
@@ -3230,6 +3320,9 @@ var navEnc = document.getElementById('navEncuesta');
     }
 
     CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
+    if (ok && window.sessionState.must_change_password) {
+  openForceChangeModal();
+      
     if (!ok) {
 
 const p2 = document.getElementById('analisisWarnPanel');
@@ -5905,6 +5998,56 @@ window.cerrarAnalisisPanel = function() {
     </div>
   </div>
 </div>
+.<!-- MODAL: FORCE CHANGE PASSWORD -->
+<div id="forceChangeModal" class="modalOverlay" style="display:none;">
+  <div class="modalBox" style="max-width:460px;">
 
+    <div class="modalHeader">
+      <h3 class="modalTitle">🔒 Cambia tu contraseña</h3>
+    </div>
+
+    <div style="background:#1E2F3F; border:1px solid #D6A21C; border-radius:8px; padding:14px; margin-bottom:18px;">
+      <p style="margin:0; font-size:14px; line-height:1.6; color:#ffdca8;">
+        Por seguridad, debes establecer una contraseña personal antes de continuar.
+        Esta acción es obligatoria y no puede omitirse.
+      </p>
+    </div>
+
+    <div class="formPanel" style="margin-top:0; max-width:100%;">
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="fcp_current">Contraseña actual</label><br/>
+        <input id="fcp_current" class="textInput" type="password"
+               placeholder="La contraseña que te dieron"
+               style="width:100%; max-width:100%;" />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="fcp_new">Nueva contraseña</label><br/>
+        <input id="fcp_new" class="textInput" type="password"
+               placeholder="Mínimo 8 caracteres"
+               style="width:100%; max-width:100%;" />
+      </div>
+
+      <div class="fieldBlock">
+        <label class="fieldLabel" for="fcp_confirm">Confirmar nueva contraseña</label><br/>
+        <input id="fcp_confirm" class="textInput" type="password"
+               placeholder="Repite la nueva contraseña"
+               style="width:100%; max-width:100%;" />
+      </div>
+
+      <div style="margin-top:16px;">
+        <button id="btnForceChangeSubmit" class="btnPrimary"
+                type="button" style="width:100%; padding:12px; font-size:15px;">
+          Establecer contraseña
+        </button>
+      </div>
+
+      <div id="forceChangeMsg" class="statusMsg" style="min-height:18px; margin-top:10px;"></div>
+
+    </div>
+  </div>
+</div>
+  
 </body>
 </html>
