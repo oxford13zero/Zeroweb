@@ -1,6 +1,6 @@
 import { serialize } from "cookie";
 import { createClient } from "@supabase/supabase-js";
-
+import bcrypt from 'bcryptjs';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -27,14 +27,11 @@ function setSessionCookie(res, schoolId) {
     httpOnly: true,
     secure: true,
     sameSite: "lax",
-    path: "/",              // CLAVE
-    maxAge: 60 * 60 * 24    // 1 día
+    path: "/",
+    maxAge: 60 * 60 * 24
   });
-
   res.setHeader("Set-Cookie", cookie);
 }
-
-
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -48,10 +45,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: "MISSING_FIELDS" });
     }
 
-    // Busca escuela por username
     const { data: school, error } = await supabase
       .from("schools")
-      .select("id, name, username, password")
+      .select("id, name, username, password, password_hash, must_change_password")
       .eq("username", username)
       .single();
 
@@ -59,20 +55,28 @@ export default async function handler(req, res) {
       return res.status(401).json({ ok: false, error: "INVALID_CREDENTIALS" });
     }
 
-    // Password en texto plano por ahora (más adelante hash)
-    if (school.password !== password) {
+    // New schools: use bcrypt hash
+    // Existing schools: use plaintext comparison (unchanged)
+    let isValid = false;
+
+    if (school.password_hash) {
+      isValid = await bcrypt.compare(password, school.password_hash);
+    } else if (school.password) {
+      isValid = (school.password === password);
+    }
+
+    if (!isValid) {
       return res.status(401).json({ ok: false, error: "INVALID_CREDENTIALS" });
     }
 
-   // Login OK → crear cookie de sesión
-setSessionCookie(res, school.id);
+    setSessionCookie(res, school.id);
 
-return res.status(200).json({
-  ok: true,
-  school_id: school.id,
-  school_name: school.name
-});
-
+    return res.status(200).json({
+      ok: true,
+      school_id: school.id,
+      school_name: school.name,
+      must_change_password: school.must_change_password ?? false
+    });
 
   } catch (e) {
     console.error("login error:", e);
