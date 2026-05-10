@@ -395,6 +395,72 @@ function toggleMobileNav() {
 document.addEventListener('DOMContentLoaded', function() {
   var startTab = location.hash ? location.hash.replace('#','') : 'home';
   showTab(startTab);
+
+  // === FORCE CHANGE PASSWORD MODAL ===
+  document.getElementById('btnForceChangeSubmit')?.addEventListener('click', async () => {
+    const current = document.getElementById('fcp_current')?.value?.trim() || '';
+    const newPwd   = document.getElementById('fcp_new')?.value?.trim() || '';
+    const confirm  = document.getElementById('fcp_confirm')?.value?.trim() || '';
+    const btn      = document.getElementById('btnForceChangeSubmit');
+
+    if (!current || !newPwd || !confirm) {
+      setForceChangeMsg('Por favor completa todos los campos.', 'statusWarn');
+      return;
+    }
+    if (newPwd.length < 8) {
+      setForceChangeMsg('La nueva contraseña debe tener al menos 8 caracteres.', 'statusWarn');
+      return;
+    }
+    if (newPwd !== confirm) {
+      setForceChangeMsg('Las contraseñas no coinciden.', 'statusErr');
+      return;
+    }
+    if (current === newPwd) {
+      setForceChangeMsg('La nueva contraseña debe ser diferente a la actual.', 'statusWarn');
+      return;
+    }
+
+    try {
+      btn.disabled = true;
+      setForceChangeMsg('Guardando...', 'statusWarn');
+
+      const res = await fetch('/api/change-password', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPassword: current, newPassword: newPwd })
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        const msg = data.error === 'WRONG_CURRENT_PASSWORD'
+          ? 'La contraseña actual es incorrecta.'
+          : data.detail || 'No se pudo actualizar. Intenta de nuevo.';
+        setForceChangeMsg(msg, 'statusErr');
+        return;
+      }
+
+      setForceChangeMsg('✅ Contraseña actualizada.', 'statusOk');
+      window.sessionState.must_change_password = false;
+
+      setTimeout(() => {
+        document.getElementById('forceChangeModal').style.display = 'none';
+      }, 1200);
+
+    } catch (e) {
+      setForceChangeMsg('Error de conexión. Intenta de nuevo.', 'statusErr');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // Prevent closing by clicking outside
+  document.getElementById('forceChangeModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+      setForceChangeMsg('Debes establecer tu contraseña para continuar.', 'statusWarn');
+    }
+  });
 });
 </script>
 
@@ -3193,72 +3259,7 @@ function setForceChangeMsg(text, type) {
   el.className = 'statusMsg ' + (type || 'statusWarn');
 }
 
-document.getElementById('btnForceChangeSubmit')?.addEventListener('click', async () => {
-  const current = document.getElementById('fcp_current')?.value?.trim() || '';
-  const newPwd   = document.getElementById('fcp_new')?.value?.trim() || '';
-  const confirm  = document.getElementById('fcp_confirm')?.value?.trim() || '';
-  const btn      = document.getElementById('btnForceChangeSubmit');
 
-  // Client-side validation
-  if (!current || !newPwd || !confirm) {
-    setForceChangeMsg('Por favor completa todos los campos.', 'statusWarn');
-    return;
-  }
-  if (newPwd.length < 8) {
-    setForceChangeMsg('La nueva contraseña debe tener al menos 8 caracteres.', 'statusWarn');
-    return;
-  }
-  if (newPwd !== confirm) {
-    setForceChangeMsg('Las contraseñas no coinciden.', 'statusErr');
-    return;
-  }
-  if (current === newPwd) {
-    setForceChangeMsg('La nueva contraseña debe ser diferente a la actual.', 'statusWarn');
-    return;
-  }
-
-  try {
-    btn.disabled = true;
-    setForceChangeMsg('Guardando...', 'statusWarn');
-
-    const res = await fetch('/api/change-password', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ currentPassword: current, newPassword: newPwd })
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok || !data.ok) {
-      const msg = data.error === 'WRONG_CURRENT_PASSWORD'
-        ? 'La contraseña actual es incorrecta.'
-        : data.detail || 'No se pudo actualizar. Intenta de nuevo.';
-      setForceChangeMsg(msg, 'statusErr');
-      return;
-    }
-
-    // Success — update local state and close modal
-    setForceChangeMsg('✅ Contraseña actualizada.', 'statusOk');
-    window.sessionState.must_change_password = false;
-
-    setTimeout(() => {
-      document.getElementById('forceChangeModal').style.display = 'none';
-    }, 1200);
-
-  } catch (e) {
-    setForceChangeMsg('Error de conexión. Intenta de nuevo.', 'statusErr');
-  } finally {
-    btn.disabled = false;
-  }
-});
-
-// Prevent closing by clicking outside
-document.getElementById('forceChangeModal')?.addEventListener('click', function(e) {
-  if (e.target === this) {
-    setForceChangeMsg('Debes establecer tu contraseña para continuar.', 'statusWarn');
-  }
-});
     
   function applySessionToUI() {
     const ok = window.sessionState.ok;
@@ -5975,34 +5976,6 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
             <input id="editNewPassword" class="textInput" type="password" placeholder="Leave blank to keep current" autocomplete="new-password" style="width:100%;" />
           </div>
         </div>
-<!-- Active/Disabled toggle -->
-        <div class="fieldBlock" style="margin-top:14px;">
-          <label class="fieldLabel">Estado de la escuela</label><br/>
-          <div style="display:flex; align-items:center; gap:12px; margin-top:6px;">
-            <label style="position:relative; display:inline-block; width:44px; height:24px; flex-shrink:0;">
-              <input type="checkbox" id="schoolActiveToggle" style="opacity:0; width:0; height:0;">
-              <span id="schoolActiveSlider" style="
-                position:absolute; cursor:pointer; inset:0;
-                background:#ff6b6b; border-radius:24px;
-                transition:background 0.3s;
-              "></span>
-              <span id="schoolActiveThumb" style="
-                position:absolute; height:18px; width:18px;
-                left:3px; top:3px;
-                background:#fff; border-radius:50%;
-                transition:transform 0.3s;
-              "></span>
-            </label>
-            <span id="schoolActiveLabel" style="font-size:14px; font-weight:600; color:#b9ffcf;">Escuela activa</span>
-          </div>
-          <div id="schoolActiveWarning" style="display:none; margin-top:8px; padding:8px 12px;
-               background:rgba(255,107,107,0.1); border:1px solid rgba(255,107,107,0.3);
-               border-radius:6px; font-size:13px; color:#ffb4b4;">
-            ⚠️ Esta escuela no podrá iniciar sesión mientras esté desactivada.
-          </div>
-        </div>
-
-        
       </div>
       <div style="display:flex; justify-content:flex-end; padding:0 18px 8px;">
         <button id="btnEditNext1" class="btnPrimary" type="button">Next &gt;</button>
