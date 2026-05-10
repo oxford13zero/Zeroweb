@@ -3436,10 +3436,15 @@ if (btnSec) {
       let data = {};
       try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
 
-      if (!res.ok || !data.ok) {
-        globalLoginMsg.textContent = `Login falló (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`;
-        return;
-      }
+      
+if (!res.ok || !data.ok) {
+  const msg = data.error === 'ACCOUNT_DISABLED'
+    ? 'Esta cuenta ha sido desactivada. Contacta al administrador.'
+    : 'Usuario o contraseña incorrectos.';
+  globalLoginMsg.textContent = msg;
+  return;
+}
+      
       globalLoginMsg.textContent = '';
       closeModal();
       await refreshSession();
