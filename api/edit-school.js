@@ -19,6 +19,7 @@ export default async function handler(req, res) {
       address,
       phone,
       newPassword,
+      is_active,
       // Enrollment
       studentsPrimaria,
       studentsSecundaria,
@@ -65,16 +66,22 @@ export default async function handler(req, res) {
       phone: phone?.trim() || null,
       students_primaria: primaria,
       students_secundaria: secundaria,
-      students_preparatoria: preparatoria
+      students_preparatoria: preparatoria,
+      is_active: is_active !== false  // defaults to true if not provided
     };
 
     // Only update password if a new one was provided
     if (newPassword?.trim()) {
       if (newPassword.trim().length < 6) {
-        return res.status(400).json({ ok: false, error: "PASSWORD_TOO_SHORT", detail: "Password must be at least 6 characters" });
+        return res.status(400).json({
+          ok: false,
+          error: "PASSWORD_TOO_SHORT",
+          detail: "Password must be at least 6 characters"
+        });
       }
-      const hash = await bcrypt.hash(newPassword.trim(), 10);
-      schoolUpdate.password = hash;
+      const hash = await bcrypt.hash(newPassword.trim(), 12);
+      schoolUpdate.password_hash = hash;  // save to correct column
+      schoolUpdate.password = null;       // clear plaintext
     }
 
     // 1. Update school
@@ -85,7 +92,11 @@ export default async function handler(req, res) {
 
     if (schoolError) {
       console.error("edit-school school update error:", schoolError);
-      return res.status(500).json({ ok: false, error: "SCHOOL_UPDATE_FAILED", detail: schoolError.message });
+      return res.status(500).json({
+        ok: false,
+        error: "SCHOOL_UPDATE_FAILED",
+        detail: schoolError.message
+      });
     }
 
     // 2. Upsert encargado (UPDATE if exists, INSERT if not)
@@ -115,7 +126,11 @@ export default async function handler(req, res) {
 
       if (encError) {
         console.error("edit-school encargado update error:", encError);
-        return res.status(500).json({ ok: false, error: "ENCARGADO_UPDATE_FAILED", detail: encError.message });
+        return res.status(500).json({
+          ok: false,
+          error: "ENCARGADO_UPDATE_FAILED",
+          detail: encError.message
+        });
       }
     } else {
       // INSERT new encargado
@@ -125,7 +140,11 @@ export default async function handler(req, res) {
 
       if (encError) {
         console.error("edit-school encargado insert error:", encError);
-        return res.status(500).json({ ok: false, error: "ENCARGADO_INSERT_FAILED", detail: encError.message });
+        return res.status(500).json({
+          ok: false,
+          error: "ENCARGADO_INSERT_FAILED",
+          detail: encError.message
+        });
       }
     }
 
@@ -133,12 +152,17 @@ export default async function handler(req, res) {
       ok: true,
       school: {
         id: school_id,
-        name: schoolName.trim()
+        name: schoolName.trim(),
+        is_active: is_active !== false
       }
     });
 
   } catch (e) {
     console.error("Unhandled error in edit-school:", e);
-    return res.status(500).json({ ok: false, error: "INTERNAL_SERVER_ERROR", detail: e?.message || String(e) });
+    return res.status(500).json({
+      ok: false,
+      error: "INTERNAL_SERVER_ERROR",
+      detail: e?.message || String(e)
+    });
   }
 }
