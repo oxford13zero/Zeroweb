@@ -3162,7 +3162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
         country: data?.country || 'MX',
-        language: data?.language || 'es'
+        language: data?.language || 'es',
         must_change_password: data?.must_change_password ?? false  
       };
     } catch (e) {
@@ -3322,6 +3322,7 @@ var navEnc = document.getElementById('navEncuesta');
     CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
     if (ok && window.sessionState.must_change_password) {
   openForceChangeModal();
+    }
       
     if (!ok) {
 
@@ -5998,7 +5999,7 @@ window.cerrarAnalisisPanel = function() {
     </div>
   </div>
 </div>
-.<!-- MODAL: FORCE CHANGE PASSWORD -->
+<!-- MODAL: FORCE CHANGE PASSWORD -->
 <div id="forceChangeModal" class="modalOverlay" style="display:none;">
   <div class="modalBox" style="max-width:460px;">
 
