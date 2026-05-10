@@ -1,4 +1,5 @@
 // /api/add-school.js
+import bcrypt from 'bcryptjs';
 import { supabaseAdmin } from "./_lib/supabaseAdmin.js";
 import { requireAdminAuth } from "./_lib/adminAuth.js";
 
@@ -87,21 +88,26 @@ export default async function handler(req, res) {
     }
 
     // 1. Create school
-    const { data: school, error: schoolError } = await supabaseAdmin
-      .from("schools")
-      .insert({
-        name: schoolName,
-        username: username,
-        password: password,
-        country: schoolCountry,
-        address: address || null,
-        phone: phone || null,
-        students_primaria: primaria,
-        students_secundaria: secundaria,
-        students_preparatoria: preparatoria
-      })
-      .select("id, name, username, country")
-      .single();
+    const passwordHash = await bcrypt.hash(password, 12);
+
+const { data: school, error: schoolError } = await supabaseAdmin
+  .from("schools")
+  .insert({
+    name: schoolName,
+    username: username,
+    password_hash: passwordHash,
+    must_change_password: true,
+    country: schoolCountry,
+    address: address || null,
+    phone: phone || null,
+    students_primaria: primaria,
+    students_secundaria: secundaria,
+    students_preparatoria: preparatoria
+  })
+  .select("id, name, username, country")
+  .single();
+
+    
 
     if (schoolError || !school) {
       console.error("School creation failed:", schoolError);
