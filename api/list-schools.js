@@ -21,6 +21,7 @@ export default async function handler(req, res) {
         country,
         address,
         phone,
+        is_active,
         students_primaria,
         students_secundaria,
         students_preparatoria,
@@ -52,6 +53,7 @@ export default async function handler(req, res) {
       students_primaria: s.students_primaria || 0,
       students_secundaria: s.students_secundaria || 0,
       students_preparatoria: s.students_preparatoria || 0,
+      is_active: s.is_active !== false,
       encargado: s.encargado_escolar?.[0] || null
     }));
 
