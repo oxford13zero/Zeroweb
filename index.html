@@ -5401,10 +5401,24 @@ window.cerrarAnalisisPanel = function() {
       editFormData = { country: school.country };   // keep country for enrollment config
 
       // Pre-populate step 1 fields
-      document.getElementById('editSchoolName').value    = school.name || '';
-      document.getElementById('editSchoolAddress').value = school.address || '';
-      document.getElementById('editSchoolPhone').value   = school.phone || '';
-      document.getElementById('editNewPassword').value   = '';
+document.getElementById('editSchoolName').value    = school.name || '';
+document.getElementById('editSchoolAddress').value = school.address || '';
+document.getElementById('editSchoolPhone').value   = school.phone || '';
+document.getElementById('editNewPassword').value   = '';
+
+// Set active toggle
+const toggle = document.getElementById('schoolActiveToggle');
+const toggleLabel = document.getElementById('schoolActiveLabel');
+const toggleWarning = document.getElementById('schoolActiveWarning');
+if (toggle) {
+  toggle.checked = school.is_active !== false;
+  toggleLabel.textContent = toggle.checked ? 'Escuela activa' : 'Escuela desactivada';
+  toggleLabel.style.color = toggle.checked ? '#b9ffcf' : '#ffb4b4';
+  toggleWarning.style.display = 'none';
+}
+
+
+      
       // Read-only displays
       document.getElementById('editSchoolUsernameDisplay').textContent = school.username || '—';
       document.getElementById('editSchoolCountryDisplay').textContent  = school.country  || '—';
@@ -5458,8 +5472,11 @@ window.cerrarAnalisisPanel = function() {
       if (!name) { editMsg1.textContent = 'School name is required'; editMsg1.className = 'statusMsg statusErr'; return false; }
       if (pw && pw.length < 6) { editMsg1.textContent = 'New password must be at least 6 characters'; editMsg1.className = 'statusMsg statusErr'; return false; }
 
-      editFormData = { ...editFormData, schoolName: name, address, phone, newPassword: pw };
+      const toggle = document.getElementById('schoolActiveToggle');
+      const isActive = toggle ? toggle.checked : true;
+      editFormData = { ...editFormData, schoolName: name, address, phone, newPassword: pw, is_active: isActive };
       editMsg1.textContent = '';
+      
       return true;
     }
 
@@ -5602,34 +5619,49 @@ window.cerrarAnalisisPanel = function() {
       }
     }
 
-    function renderSchoolsTable(schools) {
-      if (!schools.length) {
-        schoolsListBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
-        return;
-      }
-      schoolsListBody.innerHTML = schools.map(s => {
-        const total   = (s.students_primaria || 0) + (s.students_secundaria || 0) + (s.students_preparatoria || 0);
-        const minResp = wilsonMin(total);
-        const enc     = s.encargado;
-        const encName = enc ? `${enc.first_name} ${enc.pat_last_name}` : '—';
-        return `<tr>
-          <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52;">
-            ${s.name}<br/>
-            <span style="font-size:11px; color:#7a9aaa;">${encName}</span>
-          </td>
-          <td style="padding:10px 12px; font-size:13px; color:#a9c0d3; border-bottom:1px solid #2a3f52; text-align:center;">
-            <span style="background:#1E2F3F; border:1px solid #365468; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:600;">${s.country}</span>
-          </td>
-          <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52; text-align:center;">${total.toLocaleString()}</td>
-          <td style="padding:10px 12px; font-size:13px; border-bottom:1px solid #2a3f52; text-align:center;">
-            <span style="color:${minResp > 0 ? '#FAC775' : '#7a9aaa'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
-          </td>
-          <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
-            <button onclick="window.openEditSchool('${s.id}')" style="background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;">✎ Edit</button>
-          </td>
-        </tr>`;
-      }).join('');
-    }
+
+    
+   function renderSchoolsTable(schools) {
+  if (!schools.length) {
+    schoolsListBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
+    return;
+  }
+  schoolsListBody.innerHTML = schools.map(s => {
+    const total   = (s.students_primaria || 0) + (s.students_secundaria || 0) + (s.students_preparatoria || 0);
+    const minResp = wilsonMin(total);
+    const enc     = s.encargado;
+    const encName = enc ? `${enc.first_name} ${enc.pat_last_name}` : '—';
+    const isActive = s.is_active !== false;
+    const badge = isActive
+      ? '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(185,255,207,0.1);border:1px solid rgba(185,255,207,0.3);color:#b9ffcf;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;">● Activa</span>'
+      : '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:#ffb4b4;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;">● Desactivada</span>';
+    return `<tr style="opacity:${isActive ? '1' : '0.55'};">
+      <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52;">
+        ${s.name}<br/>
+        <span style="font-size:11px; color:#7a9aaa;">${encName}</span>
+      </td>
+      <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
+        ${badge}
+      </td>
+      <td style="padding:10px 12px; font-size:13px; color:#a9c0d3; border-bottom:1px solid #2a3f52; text-align:center;">
+        <span style="background:#1E2F3F; border:1px solid #365468; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:600;">${s.country}</span>
+      </td>
+      <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52; text-align:center;">${total.toLocaleString()}</td>
+      <td style="padding:10px 12px; font-size:13px; border-bottom:1px solid #2a3f52; text-align:center;">
+        <span style="color:${minResp > 0 ? '#FAC775' : '#7a9aaa'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
+      </td>
+      <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
+        <button onclick="window.openEditSchool('${s.id}')" style="background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;">✎ Edit</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+
+
+
+
+    
 
     btnListSchools?.addEventListener('click', () => {
       if (!window.adminState?.authenticated) { alert('Please login as admin first'); return; }
@@ -5638,6 +5670,46 @@ window.cerrarAnalisisPanel = function() {
 
     schoolsListClose?.addEventListener('click', closeSchoolsListModal);
     schoolsListModal?.addEventListener('click', (e) => { if (e.target === schoolsListModal) closeSchoolsListModal(); });
+// === ACTIVE TOGGLE BEHAVIOR ===
+document.getElementById('schoolActiveToggle')?.addEventListener('change', function() {
+  const slider = document.getElementById('schoolActiveSlider');
+  const thumb  = document.getElementById('schoolActiveThumb');
+  const label  = document.getElementById('schoolActiveLabel');
+  const warning = document.getElementById('schoolActiveWarning');
+
+  if (this.checked) {
+    slider.style.background = '#4CAF50';
+    thumb.style.transform   = 'translateX(20px)';
+    label.textContent       = 'Escuela activa';
+    label.style.color       = '#b9ffcf';
+    warning.style.display   = 'none';
+  } else {
+    slider.style.background = '#ff6b6b';
+    thumb.style.transform   = 'translateX(0)';
+    label.textContent       = 'Escuela desactivada';
+    label.style.color       = '#ffb4b4';
+    warning.style.display   = 'block';
+  }
+});
+
+       // === FILTER DROPDOWN === (Part H)
+    document.getElementById('schoolsFilterSelect')?.addEventListener('change', function() {
+      const filter = this.value;
+      const filtered = filter === 'active'
+        ? window._schoolsCache.filter(s => s.is_active !== false)
+        : filter === 'disabled'
+        ? window._schoolsCache.filter(s => s.is_active === false)
+        : window._schoolsCache;
+      renderSchoolsTable(filtered);
+    });
+
+    btnListSchools?.addEventListener('click', () => {   // ← this line was already there
+      if (!window.adminState?.authenticated) { alert('Please login as admin first'); return; }
+      openSchoolsListModal();
+    });
+
+
+    
 
     // Keypress shortcuts on edit modals
     document.getElementById('editSchoolName')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnEditNext1?.click(); });
@@ -5810,17 +5882,29 @@ window.cerrarAnalisisPanel = function() {
     </div>
     <div style="padding:8px 0;">
       
-<div id="schoolsListMsg" class="statusMsg" style="padding:0 8px; min-height:18px;"></div>
+<div style="display:flex; align-items:center; justify-content:space-between; padding:0 8px 10px; flex-wrap:wrap; gap:10px;">
+  <div id="schoolsListMsg" class="statusMsg" style="min-height:18px;"></div>
+  <select id="schoolsFilterSelect" class="textInput" style="width:auto; padding:6px 12px; font-size:13px;">
+    <option value="all">Todas las escuelas</option>
+    <option value="active">Solo activas</option>
+    <option value="disabled">Solo desactivadas</option>
+  </select>
+</div>
+
+      
       <div style="overflow-x:auto; overflow-y:auto; flex:1; min-height:0;">
         <table style="width:100%; border-collapse:collapse;">
           <thead style="position:sticky; top:0; z-index:1;">
             <tr style="background:#1E2F3F;">
               
-              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:left; border-bottom:1px solid #365468;">Name / Encargado</th>
-              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Country</th>
-              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Students</th>
-              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Min. required</th>
-              <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;"></th>
+<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:left; border-bottom:1px solid #365468;">Name / Encargado</th>
+<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Estado</th>
+<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Country</th>
+<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Students</th>
+<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Min. required</th>
+<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;"></th>
+
+              
             </tr>
           </thead>
           <tbody id="schoolsListBody"></tbody>
