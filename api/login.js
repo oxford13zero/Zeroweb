@@ -45,16 +45,30 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: "MISSING_FIELDS" });
     }
 
-    const { data: school, error } = await supabase
-      .from("schools")
-      .select("id, name, username, password, password_hash, must_change_password")
-      .eq("username", username)
-      .single();
 
-    if (error || !school) {
-      return res.status(401).json({ ok: false, error: "INVALID_CREDENTIALS" });
-    }
 
+    
+const { data: school, error } = await supabase
+  .from("schools")
+  .select("id, name, username, password, password_hash, must_change_password, is_active")
+  .eq("username", username)
+  .single();
+
+if (error || !school) {
+  return res.status(401).json({ ok: false, error: "INVALID_CREDENTIALS" });
+}
+
+if (school.is_active === false) {
+  return res.status(403).json({
+    ok: false,
+    error: "ACCOUNT_DISABLED",
+    detail: "Esta cuenta ha sido desactivada. Contacta al administrador."
+  });
+}
+
+
+
+    
     // New schools: use bcrypt hash
     // Existing schools: use plaintext comparison (unchanged)
     let isValid = false;
