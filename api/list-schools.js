@@ -35,6 +35,7 @@ export default async function handler(req, res) {
           cargo
         )
       `)
+      .order("created_at", { ascending: false })
       .order("name", { ascending: true });
 
     if (error) {
