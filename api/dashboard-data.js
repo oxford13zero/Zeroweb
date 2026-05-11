@@ -321,6 +321,8 @@ const DEMO_MAP = {
   "zero_general_tipo_escuela_v2": "tipo_escuela",
   "p4_genero":                    "genero",
   "p4_edad":                      "edad",
+  "p4_primer_anio":               "primer_anio",
+  "zero_general_tiempo_v2":       "primer_anio",
 };
 
 // ── Main handler ─────────────────────────────────────────────────────────────
@@ -438,8 +440,7 @@ export default async function handler(req, res) {
 
   // 9) Build per-response data structure
   const responseData = {};
-  for (const rid of responseIds) {
-    responseData[rid] = { items: {}, genero: null, edad: null, grado: null, tipo_escuela: null };
+  for (const rid of responseIds) {responseData[rid] = { items: {}, genero: null, edad: null, grado: null, tipo_escuela: null, primer_anio: null };
   }
 
   for (const answer of answersData) {
@@ -561,7 +562,7 @@ export default async function handler(req, res) {
 
   // 16) Demographics breakdown
   const demoBreakdown = {};
-  for (const col of ["genero", "grado", "tipo_escuela"]) {
+  for (const col of ["genero", "grado", "tipo_escuela", "primer_anio"]) {
     const counts = {};
     for (const rid of responseIds) {
       const val = responseData[rid][col];
