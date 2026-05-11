@@ -5513,13 +5513,26 @@ document.getElementById('editSchoolPhone').value   = school.phone || '';
 document.getElementById('editNewPassword').value   = '';
 
 // Set active toggle
+      
+// Set active toggle
 const toggle = document.getElementById('schoolActiveToggle');
 const toggleLabel = document.getElementById('schoolActiveLabel');
 const toggleWarning = document.getElementById('schoolActiveWarning');
+const slider = document.getElementById('schoolActiveSlider');
+const thumb = document.getElementById('schoolActiveThumb');
 if (toggle) {
   toggle.checked = school.is_active !== false;
-  toggleLabel.textContent = toggle.checked ? 'Escuela activa' : 'Escuela desactivada';
-  toggleLabel.style.color = toggle.checked ? '#b9ffcf' : '#ffb4b4';
+  if (toggle.checked) {
+    slider.style.background = '#4CAF50';
+    thumb.style.transform   = 'translateX(20px)';
+    toggleLabel.textContent = 'Escuela activa';
+    toggleLabel.style.color = '#b9ffcf';
+  } else {
+    slider.style.background = '#ff6b6b';
+    thumb.style.transform   = 'translateX(0)';
+    toggleLabel.textContent = 'Escuela desactivada';
+    toggleLabel.style.color = '#ffb4b4';
+  }
   toggleWarning.style.display = 'none';
 }
 
