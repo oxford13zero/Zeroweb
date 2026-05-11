@@ -5716,9 +5716,22 @@ if (toggle) {
           schoolsListMsg.className   = 'statusMsg statusErr';
           return;
         }
-        window._schoolsCache = data.schools || [];
-        schoolsListMsg.textContent = '';
-        renderSchoolsTable(window._schoolsCache);
+
+        
+window._schoolsCache = data.schools || [];
+schoolsListMsg.textContent = '';
+
+// Apply current filter selection before rendering
+const currentFilter = document.getElementById('schoolsFilterSelect')?.value || 'all';
+const filtered = currentFilter === 'active'
+  ? window._schoolsCache.filter(s => s.is_active !== false)
+  : currentFilter === 'disabled'
+  ? window._schoolsCache.filter(s => s.is_active === false)
+  : window._schoolsCache;
+renderSchoolsTable(filtered);
+
+
+        
       } catch (e) {
         schoolsListMsg.textContent = 'Connection error';
         schoolsListMsg.className   = 'statusMsg statusErr';
