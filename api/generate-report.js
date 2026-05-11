@@ -174,6 +174,7 @@ ${bystanderStr}
 
 ESTUDIANTES NUEVOS EN LA ESCUELA:
 ${newStudentsStr}
+${d.nuevos_estudiantes ? `  - De los nuevos: ${d.nuevos_estudiantes.pct_victim}% víctimas, ${d.nuevos_estudiantes.pct_aggr}% agresores, ${d.nuevos_estudiantes.pct_bystander}% defensores activos` : ''}
 `.trim();
 }
 
