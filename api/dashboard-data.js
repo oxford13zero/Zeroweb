@@ -317,7 +317,10 @@ const DEMO_MAP = {
   "zero_general_genero_v2":       "genero",
   "zero_general_edad_v2":         "edad",
   "zero_general_curso":           "grado",
+  "zero_general_grado":           "grado",
   "zero_general_tipo_escuela_v2": "tipo_escuela",
+  "p4_genero":                    "genero",
+  "p4_edad":                      "edad",
 };
 
 // ── Main handler ─────────────────────────────────────────────────────────────
