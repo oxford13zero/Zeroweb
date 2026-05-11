@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
     // Filter by language if provided
     if (lang === 'en' || lang === 'es') {
-    let filteredQuery = supabase
+      let filteredQuery = supabase
         .from("question_options")
         .select("id, option_text, option_code, language, position")
         .eq("question_id", questionId)
@@ -22,12 +22,10 @@ export default async function handler(req, res) {
       if (surveyId) filteredQuery = filteredQuery.eq("survey_id", surveyId);
       const { data: filtered, error: filteredErr } = await filteredQuery
         .order("position", { ascending: true });
-
-     if (!filteredErr && filtered && filtered.length > 0) {
+      if (!filteredErr && filtered && filtered.length > 0) {
         res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
         res.setHeader('Pragma', 'no-cache');
         return res.status(200).json({ ok: true, options: filtered });
-      }
       }
     }
 
@@ -41,6 +39,7 @@ export default async function handler(req, res) {
       .order("position", { ascending: true });
 
     if (error) return res.status(500).json({ ok: false, error: error.message });
+
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
     res.setHeader('Pragma', 'no-cache');
     return res.status(200).json({ ok: true, options: data || [] });
