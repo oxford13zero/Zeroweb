@@ -96,6 +96,7 @@ const data = await res.json();
     renderOlweusChart();
     renderEcology();
     renderCyberChart();
+    renderNewStudentsCard();
   }
 
   function renderHeader() {
@@ -349,6 +350,62 @@ function renderGradeGenderCharts() {
       `Esto significa que ${co.ambos} estudiantes enfrentan agresiones en dos frentes simultáneamente.`;
   }
 
+
+function renderNewStudentsCard() {
+    const ns = dashData.nuevos_estudiantes;
+    const container = $('cyberText')?.parentElement?.parentElement;
+    if (!container || !ns) return;
+
+    // Create card
+    const card = document.createElement('div');
+    card.className = 'chart-card';
+    card.style.cssText = 'margin-top:16px;';
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <div class="chart-title" style="margin:0;">Estudiantes nuevos en la escuela</div>
+        <div class="info-icon-wrap">
+          <span class="info-icon">i</span>
+          <div class="info-popup">
+            Los estudiantes que llevan menos de 1 año en la escuela tienen mayor vulnerabilidad al bullying por falta de redes sociales establecidas.
+          </div>
+        </div>
+      </div>
+      <div class="chart-sub">${ns.n_new} estudiantes nuevos · ${ns.pct_of_total}% del total encuestado</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px;">
+        ${nsMetric('Víctimas', ns.n_victim, ns.pct_victim, ns.n_new, '#f09595')}
+        ${nsMetric('Agresores', ns.n_aggr, ns.pct_aggr, ns.n_new, '#FAC775')}
+        ${nsMetric('Víctima + Agresor', ns.n_both, ns.pct_both, ns.n_new, '#E24B4A')}
+        ${nsMetric('Defensores activos', ns.n_bystander, ns.pct_bystander, ns.n_new, '#1D9E75')}
+      </div>
+      ${ns.pct_victim >= 30 ? `
+      <div style="margin-top:14px;padding:10px 12px;background:#2a0a0a;border:0.5px solid #a32d2d;border-radius:6px;font-size:12px;color:#f09595;line-height:1.6;">
+        ⚠️ <strong>${ns.pct_victim}% de los estudiantes nuevos son víctimas</strong> — los estudiantes recién llegados requieren atención prioritaria para su integración.
+      </div>` : ''}
+    `;
+
+    // Insert after the cyber chart card
+    const cyberCard = $('chartCyber')?.closest('.chart-card');
+    if (cyberCard?.parentElement) {
+      cyberCard.parentElement.insertAdjacentElement('afterend', card);
+    } else {
+      container.appendChild(card);
+    }
+  }
+
+  function nsMetric(label, n, pct, total, color) {
+    const barPct = total > 0 ? Math.round(n / total * 100) : 0;
+    return `
+      <div style="background:#0f1923;border:0.5px solid #1e3040;border-radius:8px;padding:12px;">
+        <div style="font-size:11px;color:#7a9aaa;margin-bottom:4px;">${label}</div>
+        <div style="font-size:22px;font-weight:600;color:${color};">${pct}%</div>
+        <div style="font-size:11px;color:#7a9aaa;margin-bottom:8px;">${n} de ${total}</div>
+        <div style="height:4px;background:#1e3040;border-radius:2px;">
+          <div style="width:${barPct}%;height:100%;background:${color};border-radius:2px;"></div>
+        </div>
+      </div>`;
+  }
+
+  
   // ── Report generation ──────────────────────────────────────────────────────
   window.generateReport = async function (type) {
     const btnDiag = $('btnGenDiag');
