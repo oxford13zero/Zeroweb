@@ -198,13 +198,35 @@ const data = await res.json();
   }
 
   // ── 4-panel grade/gender section ───────────────────────────────────────────
-  function renderGradeGenderCharts() {
-    const sub = dashData.subgrupos_reporte;
-    renderGradeBarChart('chartVicGrade', (sub.victimizacion_por_grado || []).slice(0, 7), '% Victimización');
-    renderGradeBarChart('chartAgrGrade', (sub.agresion_por_grado      || []).slice(0, 7), '% Agresión');
-    renderGenderTable('tableVicGen', sub.victimizacion_por_genero || []);
-    renderGenderTable('tableAgrGen', sub.agresion_por_genero      || []);
-  }
+// Grade sort order: 1°Básico → 2°Básico → ... → 8°Básico → 1°Medio → ... → 1°Primaria → ... → 1°Secundaria → ...
+const GRADE_ORDER = [
+  '1° Básico','2° Básico','3° Básico','4° Básico','5° Básico','6° Básico','7° Básico','8° Básico',
+  '1° Medio','2° Medio','3° Medio','4° Medio',
+  '1° Primaria','2° Primaria','3° Primaria','4° Primaria','5° Primaria','6° Primaria',
+  '1° Secundaria','2° Secundaria','3° Secundaria',
+  '1° Preparatoria','2° Preparatoria','3° Preparatoria',
+  'Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6',
+  'Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12',
+];
+
+function sortByGrade(rows) {
+  return [...rows].sort((a, b) => {
+    const ai = GRADE_ORDER.indexOf(a.grupo);
+    const bi = GRADE_ORDER.indexOf(b.grupo);
+    if (ai === -1 && bi === -1) return a.grupo.localeCompare(b.grupo);
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+}
+
+function renderGradeGenderCharts() {
+  const sub = dashData.subgrupos_reporte;
+  renderGradeBarChart('chartVicGrade', sortByGrade(sub.victimizacion_por_grado || []).slice(0, 7), '% Victimización');
+  renderGradeBarChart('chartAgrGrade', sortByGrade(sub.agresion_por_grado      || []).slice(0, 7), '% Agresión');
+  renderGenderTable('tableVicGen', sub.victimizacion_por_genero || []);
+  renderGenderTable('tableAgrGen', sub.agresion_por_genero      || []);
+}
 
   function renderGradeBarChart(canvasId, rows, yLabel) {
     const canvas = $(canvasId);
