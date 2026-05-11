@@ -5655,8 +5655,9 @@ if (toggle) {
       const encPhone       = document.getElementById('editEncPhone')?.value?.trim() || '';
       const encCargo       = document.getElementById('editEncCargo')?.value?.trim() || '';
 
-      if (!encFirstName)   { editMsg3.textContent = 'First name is required';         editMsg3.className = 'statusMsg statusErr'; return; }
-      if (!encPatLastName) { editMsg3.textContent = 'Paternal last name is required'; editMsg3.className = 'statusMsg statusErr'; return; }
+if (!encFirstName)   { editMsg3.textContent = 'First name is required';         editMsg3.className = 'statusMsg statusErr'; return; }
+if (!encPatLastName) { editMsg3.textContent = 'Paternal last name is required'; editMsg3.className = 'statusMsg statusErr'; return; }
+if (!encEmail)       { editMsg3.textContent = 'Email is required';              editMsg3.className = 'statusMsg statusErr'; return; }
 
       const payload = {
         school_id: currentEditSchoolId,
