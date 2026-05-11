@@ -5310,8 +5310,9 @@ window.cerrarAnalisisPanel = function() {
      if (!encPatLastName) { addSchoolMsg3.textContent = 'Encargado paternal last name is required'; addSchoolMsg3.className = 'statusMsg statusErr'; return; }
      if (!encEmail)       { addSchoolMsg3.textContent = 'Encargado email is required';              addSchoolMsg3.className = 'statusMsg statusErr'; return; }
 
-      const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName, encEmail, encPhone, encCargo };
-
+      const sendWelcomeEmail = document.getElementById('chkSendWelcomeEmail')?.checked ?? true;
+const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName, encEmail, encPhone, encCargo, sendWelcomeEmail };
+      
       try {
         btnCreateSchool.disabled = true;
         addSchoolMsg3.textContent = 'Creating school...';
@@ -5958,15 +5959,31 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
           <label class="fieldLabel" for="addEncPhone">Phone</label><br />
           <input id="addEncPhone" class="textInput" type="text" placeholder="e.g., +52 55 1234 5678 (optional)" style="width:100%; max-width:100%;" />
         </div>
-        <div class="fieldBlock">
+
+        
+<div class="fieldBlock">
           <label class="fieldLabel" for="addEncCargo">Role / Cargo</label><br />
           <input id="addEncCargo" class="textInput" type="text" placeholder="e.g., Director, Coordinador (optional)" style="width:100%; max-width:100%;" />
+        </div>
+
+        <!-- Welcome email checkbox -->
+        <div class="fieldBlock" style="margin-top:14px;">
+          <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+            <input type="checkbox" id="chkSendWelcomeEmail" checked
+              style="width:16px; height:16px; cursor:pointer; accent-color:#D6A21C;" />
+            <span style="font-size:13px; color:#a9c0d3; line-height:1.5;">
+              Enviar email al encargado con toda la información necesaria
+            </span>
+          </label>
         </div>
       </div>
       <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <button id="btnBackToEnrollment" class="btnSecondary" type="button">&lt; Back</button>
         <button id="btnCreateSchool" class="btnPrimary" type="button">Create School</button>
       </div>
+
+
+      
       <div id="addSchoolMsg3" class="statusMsg statusErr" style="margin-top:12px;"></div>
     </div>
   </div>
