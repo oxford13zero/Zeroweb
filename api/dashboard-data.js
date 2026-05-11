@@ -726,6 +726,34 @@ export default async function handler(req, res) {
     ? calcRepresentativeness(total_matriculados, n)
     : null;
 
+// 22b) New students cross-analysis
+  const newStudentsAnalysis = (() => {
+    const newRids = responseIds.filter(rid => {
+      const val = responseData[rid].primer_anio;
+      return val === 'Sí, es mi primer año aquí' || val === 'Menos de 1 año';
+    });
+    const n_new = newRids.length;
+    if (n_new === 0) return null;
+
+    const n_victim   = newRids.filter(rid => (studentScores[rid]?.victimizacion    ?? 0) >= 2).length;
+    const n_aggr     = newRids.filter(rid => (studentScores[rid]?.perpetracion     ?? 0) >= 2).length;
+    const n_bystander= newRids.filter(rid => (studentScores[rid]?.normas_grupo     ?? 0) >= 2).length;
+    const n_both     = newRids.filter(rid =>
+      (studentScores[rid]?.victimizacion ?? 0) >= 2 &&
+      (studentScores[rid]?.perpetracion  ?? 0) >= 2
+    ).length;
+
+    return {
+      n_new,
+      pct_of_total:    Math.round(n_new / n * 1000) / 10,
+      n_victim,        pct_victim:    n_new ? Math.round(n_victim    / n_new * 1000) / 10 : 0,
+      n_aggr,          pct_aggr:      n_new ? Math.round(n_aggr      / n_new * 1000) / 10 : 0,
+      n_bystander,     pct_bystander: n_new ? Math.round(n_bystander / n_new * 1000) / 10 : 0,
+      n_both,          pct_both:      n_new ? Math.round(n_both      / n_new * 1000) / 10 : 0,
+    };
+  })();
+
+  
   // 23) Assemble final response
   const result = {
     ok:           true,
@@ -746,6 +774,7 @@ export default async function handler(req, res) {
     fiabilidad:         reliability,
     demograficos:       demoBreakdown,
     representatividad,
+    nuevos_estudiantes:    newStudentsAnalysis,
   };
 
   return res.status(200).json(result);
