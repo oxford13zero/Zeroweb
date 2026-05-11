@@ -282,12 +282,13 @@ export default async function handler(req, res) {
   const { school_id, analysis_dt } = payload;
 
   // 2) Load survey responses for this school + analysis date
-  const { data: responses, error: respErr } = await supabaseAdmin
-    .from("survey_responses")
-    .select("id, survey_id, status, analysis_requested_dt")
-    .eq("school_id", school_id)
-    .eq("analysis_requested_dt", analysis_dt)
-    .eq("status", "submitted");
+   const { data: responses, error: respErr } = await supabaseAdmin
+  .from("survey_responses")
+  .select("id, survey_id, status, analysis_requested_dt")
+  .eq("school_id", school_id)
+  .eq("status", "submitted")
+  .eq("analysis_approved", false)
+  .not("analysis_requested_dt", "is", null);
 
   if (respErr) {
     return res.status(500).json({ ok: false, error: "DB_ERROR", detail: respErr.message });
