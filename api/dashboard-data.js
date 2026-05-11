@@ -82,7 +82,6 @@ function semaforo(pct) {
 
 // Cronbach alpha from item scores matrix (array of arrays)
 function cronbachAlpha(matrix) {
-  // matrix: each row = one respondent, each column = one item
   if (!matrix.length || !matrix[0].length) return null;
   const k = matrix[0].length;
   if (k < 2) return null;
@@ -100,9 +99,7 @@ function cronbachAlpha(matrix) {
   return Math.round(alpha * 1000) / 1000;
 }
 
-// Olweus typology: classify each student
-// aggressor: perpetracion mean >= 1.0
-// victim:    victimizacion mean >= 1.0
+// Olweus typology
 function classifyOlweus(perpScore, victScore) {
   const isAggr = perpScore !== null && perpScore >= 1.0;
   const isVict = victScore !== null && victScore >= 1.0;
@@ -112,7 +109,7 @@ function classifyOlweus(perpScore, victScore) {
   return "No Involucrado";
 }
 
-// Risk index (0-100): combines risk factors and protective factors
+// Risk index (0-100)
 function calcRiskIndex(prevalences) {
   const riskKeys       = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion", "internivel"];
   const protectiveKeys = ["autoridad_docente", "normas_grupo", "respuesta_institucional"];
@@ -128,7 +125,6 @@ function calcRiskIndex(prevalences) {
   let protSum = 0, protCount = 0;
   for (const k of protectiveKeys) {
     if (prevalences[k]?.pct !== undefined && prevalences[k].pct !== null) {
-      // High prevalence of protective factor = low risk contribution
       protSum += 100 - prevalences[k].pct;
       protCount++;
     }
@@ -150,10 +146,6 @@ function calcRiskIndex(prevalences) {
     componente_protector: protComponent !== null ? 100 - protComponent : null,
   };
 }
-
-// ── Construct definitions (external_id → construct name) ────────────────────
-// Covers all survey variants: SURVEY_004, SURVEY_004_MX, SURVEY_004_CL,
-// SURVEY_004_EN, and all PRIMARIA variants.
 
 // ── p4_* primaria/básica format ──────────────────────────────────────────────
 const P4_CONSTRUCT_MAP = {
@@ -207,8 +199,7 @@ const P4_CONSTRUCT_MAP = {
   "p4_mapa_entrada_salida":      "ecologia_entrada",
 };
 
-const CONSTRUCT_MAP = {
-
+// ── Construct definitions (external_id → construct name) ────────────────────
 const CONSTRUCT_MAP = {
   // ── Victimization (zero_* format) ──────────────────────────────────────────
   "zero_victima_agresion_fisica_v2":  "victimizacion",
@@ -232,7 +223,7 @@ const CONSTRUCT_MAP = {
   // ── Cybervictimization (zero_* format) ─────────────────────────────────────
   "zero_cybervictima_mensajes":       "cybervictimizacion",
   "zero_cybervictima_fotos":          "cybervictimizacion",
-  "zero_cybervictima_exclusion":      "cybervictimizacion",  // if present
+  "zero_cybervictima_exclusion":      "cybervictimizacion",
   "zero_cybervictima_anonimo":        "cybervictimizacion",
   "zero_cybervictima_continua":       "cybervictimizacion",
   "zero_cybervictima_extorsion":      "cybervictimizacion",
@@ -302,14 +293,12 @@ const DISPLAY_NAMES = {
   "internivel":             "Bullying entre niveles",
 };
 
-// p4_* surveys are legacy dev data only — not supported in production
 const FULL_CONSTRUCT_MAP = { ...CONSTRUCT_MAP, ...P4_CONSTRUCT_MAP };
 
 // p4_* questions use scale 1-4; zero_* uses 0-3 — conversion needed
 const P4_SCALE_IDS = new Set(Object.keys(P4_CONSTRUCT_MAP));
 
 // p4_* questions stated in positive/safe direction — invert to get risk score
-// Applies to: victimization (stated as "treated well"), internivel, ecology spaces
 const P4_REVERSE_SCORED = new Set([
   "p4_victima_fisica",
   "p4_victima_verbal",
@@ -322,8 +311,6 @@ const P4_REVERSE_SCORED = new Set([
   "p4_mapa_biblioteca",
   "p4_mapa_entrada_salida",
 ]);
-// All other p4_* use direct shift: score = option_code - 1
-// (NUNCA=1 → 0, SIEMPRE=4 → 3)
 
 // Demographic external IDs
 const DEMO_MAP = {
@@ -355,14 +342,14 @@ export default async function handler(req, res) {
 
   const { school_id, analysis_dt } = payload;
 
-  // 2) Load survey responses for this school + analysis date
-   const { data: responses, error: respErr } = await supabaseAdmin
-  .from("survey_responses")
-  .select("id, survey_id, status, analysis_requested_dt")
-  .eq("school_id", school_id)
-  .eq("status", "submitted")
-  .eq("analysis_approved", false)
-  .not("analysis_requested_dt", "is", null);
+  // 2) Load survey responses for this school
+  const { data: responses, error: respErr } = await supabaseAdmin
+    .from("survey_responses")
+    .select("id, survey_id, status, analysis_requested_dt")
+    .eq("school_id", school_id)
+    .eq("status", "submitted")
+    .eq("analysis_approved", false)
+    .not("analysis_requested_dt", "is", null);
 
   if (respErr) {
     return res.status(500).json({ ok: false, error: "DB_ERROR", detail: respErr.message });
@@ -385,7 +372,6 @@ export default async function handler(req, res) {
   const schoolName    = schoolData?.name    || "Escuela";
   const schoolCountry = schoolData?.country || "MX";
 
-  // Enrollment and sample representativeness
   const enrollment_primaria      = schoolData?.students_primaria      || 0;
   const enrollment_secundaria    = schoolData?.students_secundaria    || 0;
   const enrollment_preparatoria  = schoolData?.students_preparatoria  || 0;
@@ -443,13 +429,12 @@ export default async function handler(req, res) {
 
   const optionMap = Object.fromEntries(optionsData.map(o => [o.id, o]));
 
-  // 8) Build answer lookup: answerId → optionCode (numeric score)
+  // 8) Build answer lookup: answerId → optionId
   const answerToOption = Object.fromEntries(
     selectedData.map(s => [s.question_answer_id, s.option_id])
   );
 
   // 9) Build per-response data structure
-  // responseData[responseId] = { external_id → score, demographics }
   const responseData = {};
   for (const rid of responseIds) {
     responseData[rid] = { items: {}, genero: null, edad: null, grado: null, tipo_escuela: null };
@@ -469,7 +454,7 @@ export default async function handler(req, res) {
       continue;
     }
 
-// Construct item — numeric score from option_code
+    // Construct item — numeric score from option_code
     const construct = FULL_CONSTRUCT_MAP[extId];
     if (construct && opt) {
       let score = parseFloat(opt.option_code);
@@ -490,14 +475,9 @@ export default async function handler(req, res) {
         responseData[answer.survey_response_id].items[construct].push(score);
       }
     }
-
-
-
-    
   }
 
   // 10) Compute per-student construct mean scores
-  // studentScores[responseId][construct] = mean score
   const studentScores = {};
   for (const [rid, data] of Object.entries(responseData)) {
     studentScores[rid] = {};
@@ -519,12 +499,11 @@ export default async function handler(req, res) {
   // 12) Compute prevalences
   const prevalences = {};
   for (const [construct, scores] of Object.entries(constructScores)) {
-    if (!ECOLOGY_LABELS[construct]) { // skip ecology from prevalence
+    if (!ECOLOGY_LABELS[construct]) {
       prevalences[construct] = calcPrevalence(scores);
     }
   }
 
-  // Add semáforo to prevalences
   for (const [k, v] of Object.entries(prevalences)) {
     if (v) v.categoria = semaforo(v.pct);
   }
@@ -591,7 +570,7 @@ export default async function handler(req, res) {
       .sort((a, b) => b.n - a.n);
   }
 
-  // 17) Subgroups: aggressors and victims by grade and gender
+  // 17) Subgroups
   const subgrupos = {
     agresion_por_grado: [], victimizacion_por_grado: [],
     agresion_por_genero: [], victimizacion_por_genero: [],
@@ -668,19 +647,17 @@ export default async function handler(req, res) {
     };
   }
 
-  // 19) Cronbach alpha per construct (basic)
+  // 19) Cronbach alpha per construct
   const reliability = {};
   const mainConstructs = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion", "autoridad_docente", "normas_grupo", "respuesta_institucional", "internivel"];
 
   for (const construct of mainConstructs) {
-    // Build item matrix: each row = one respondent, columns = items for this construct
     const itemExtIds = Object.entries(FULL_CONSTRUCT_MAP)
       .filter(([, c]) => c === construct)
       .map(([extId]) => extId);
 
     if (itemExtIds.length < 2) continue;
 
-    // Find question IDs for these external IDs
     const qIds = questionsData
       .filter(q => itemExtIds.includes(q.external_id))
       .map(q => q.id);
@@ -717,26 +694,19 @@ export default async function handler(req, res) {
     prevalenceSummary[DISPLAY_NAMES[k] || k] = v;
   }
 
-  // 22) Sample representativeness (Wilson formula, 95% confidence, ±5% margin)
+  // 22) Sample representativeness
   function calcRepresentativeness(population, sample) {
     if (!population || population === 0) return null;
-    const Z = 1.96;   // 95% confidence
-    const p = 0.5;    // most conservative proportion
-    const e = 0.05;   // ±5% margin of error
-
-    // Minimum sample size needed (infinite population)
+    const Z = 1.96;
+    const p = 0.5;
+    const e = 0.05;
     const n_inf = (Z * Z * p * (1 - p)) / (e * e);
-    // Correction for finite population
     const n_min = Math.ceil(n_inf / (1 + (n_inf - 1) / population));
-
-    // Actual margin of error achieved with this sample
     const actual_e = sample >= population
       ? 0
       : Math.round(Z * Math.sqrt((p * (1 - p) / sample) * (1 - sample / population)) * 1000) / 10;
-
     const pct_encuestados = Math.round(sample / population * 1000) / 10;
     const is_representative = sample >= n_min;
-
     return {
       total_matriculados:  population,
       n_encuestados:       sample,
