@@ -5305,8 +5305,9 @@ window.cerrarAnalisisPanel = function() {
       const encPhone       = document.getElementById('addEncPhone')?.value?.trim() || '';
       const encCargo       = document.getElementById('addEncCargo')?.value?.trim() || '';
 
-      if (!encFirstName)   { addSchoolMsg3.textContent = 'Encargado first name is required';         addSchoolMsg3.className = 'statusMsg statusErr'; return; }
-      if (!encPatLastName) { addSchoolMsg3.textContent = 'Encargado paternal last name is required'; addSchoolMsg3.className = 'statusMsg statusErr'; return; }
+     if (!encFirstName)   { addSchoolMsg3.textContent = 'Encargado first name is required';         addSchoolMsg3.className = 'statusMsg statusErr'; return; }
+     if (!encPatLastName) { addSchoolMsg3.textContent = 'Encargado paternal last name is required'; addSchoolMsg3.className = 'statusMsg statusErr'; return; }
+     if (!encEmail)       { addSchoolMsg3.textContent = 'Encargado email is required';              addSchoolMsg3.className = 'statusMsg statusErr'; return; }
 
       const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastName, encEmail, encPhone, encCargo };
 
@@ -6228,7 +6229,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
         <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
           <div class="fieldBlock" style="flex:1; min-width:180px;">
             <label class="fieldLabel" for="editEncEmail">Email</label><br />
-            <input id="editEncEmail" class="textInput" type="email" placeholder="optional" style="width:100%;" />
+            <input id="editEncEmail" class="textInput" type="email" placeholder="email@escuela.com" style="width:100%;" />
           </div>
           <div class="fieldBlock" style="flex:1; min-width:140px;">
             <label class="fieldLabel" for="editEncPhone">Phone</label><br />
