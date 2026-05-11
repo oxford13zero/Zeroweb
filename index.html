@@ -3728,6 +3728,7 @@ window.cerrarAnalisisPanel = function() {
       const surveyRes = await fetch(targetSurveyFile, { cache: 'no-store' });
       if (!surveyRes.ok) { alert('No se pudo cargar la encuesta'); btnRoutingNext.disabled = false; return; }
       SURVEY = await surveyRes.json();
+      OPTIONS_CACHE = {};
 
       targetSurveyId = SURVEY.survey?.survey_uuid;
       if (!targetSurveyId) { alert('Error: survey_uuid no encontrado en el archivo de encuesta.'); btnRoutingNext.disabled = false; return; }
