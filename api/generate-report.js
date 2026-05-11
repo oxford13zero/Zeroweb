@@ -114,19 +114,17 @@ function buildDataSummary(d) {
     .map(r => `  - ${r.grupo}: ${r.pct}%`)
     .join("\n");
 
-const cyberStr = co
+  const cyberStr = co
     ? `  - Víctimas tradicionales: ${co.pct_tradicionales}% (${co.victimas_tradicionales})\n` +
       `  - Cybervíctimas: ${co.pct_cyber}% (${co.cibervictimas})\n` +
       `  - Afectados en ambos: ${co.pct_ambos_de_trad}% de las víctimas tradicionales`
     : "  - Sin datos";
 
-  // Bystander behavior (from normas_grupo construct)
   const normas = d.prevalencias?.["Normas del Grupo"];
   const bystanderStr = normas
     ? `  - ${normas.pct}% de estudiantes muestra comportamiento activo de defensa/intervención (${normas.n_true} de ${normas.n_total}) — ${semaforo(normas.pct)}`
     : "  - Sin datos";
 
-  // New students
   const primerAnio = (d.demograficos?.primer_anio || []);
   const newStudents = primerAnio.find(r =>
     r.val === 'Sí, es mi primer año aquí' || r.val === 'Menos de 1 año'
@@ -135,8 +133,9 @@ const cyberStr = co
     ? `  - ${newStudents.pct}% son nuevos en la escuela (${newStudents.n} estudiantes) — grupo de mayor vulnerabilidad`
     : "  - Sin datos o todos llevan más de 1 año";
 
-  return `
-ESCUELA: ${d.escuela}
+  const nsDetail = d.nuevos_estudiantes
+    ? `  - De los nuevos: ${d.nuevos_estudiantes.pct_victim}% víctimas, ${d.nuevos_estudiantes.pct_aggr}% agresores, ${d.nuevos_estudiantes.pct_bystander}% defensores activos`
+    : '';
 
   return `
 ESCUELA: ${d.escuela}
@@ -174,7 +173,7 @@ ${bystanderStr}
 
 ESTUDIANTES NUEVOS EN LA ESCUELA:
 ${newStudentsStr}
-${d.nuevos_estudiantes ? `  - De los nuevos: ${d.nuevos_estudiantes.pct_victim}% víctimas, ${d.nuevos_estudiantes.pct_aggr}% agresores, ${d.nuevos_estudiantes.pct_bystander}% defensores activos` : ''}
+${nsDetail}
 `.trim();
 }
 
@@ -210,7 +209,7 @@ Párrafo con grados y géneros específicos. Si hay estudiantes nuevos en la esc
 
 ## 3b. Observadores y defensores
 Párrafo sobre el rol de los estudiantes que observan o defienden a las víctimas. Usa los datos de bystanders. Si el porcentaje es bajo, señala la oportunidad de activar más defensores.
-  
+
 ## 4. Espacios de riesgo
 Menciona los espacios físicos donde más ocurren las agresiones según la encuesta.
 
@@ -271,11 +270,12 @@ ESTRUCTURA OBLIGATORIA:
 - Fecha de implementación: ___________________
 
 ## Pilar 3 — Prevenir
-  **Acción 3.0 — Integración de estudiantes nuevos**
+**Acción 3.0 — Integración de estudiantes nuevos**
 - Qué hacer: Programa de bienvenida y seguimiento para estudiantes que llevan menos de 1 año en la escuela.
 - Por qué: Los datos muestran que los estudiantes nuevos tienen mayor vulnerabilidad al bullying. [Usar datos de nuevos estudiantes]
 - Responsable: ___________________
 - Fecha de inicio: ___________________
+
 **Acción 3.1 — Zona de Seguridad${eco ? " — " + eco.lugar : ""}**
 - Qué hacer: Supervisión adulta activa y visible en los espacios críticos identificados por la encuesta.
 - Por qué: [justificación con datos de ecología]
