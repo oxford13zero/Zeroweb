@@ -13,43 +13,34 @@
     "note": "Preguntas simplificadas para comprensión de 1° grado (6-7 años). El maestro debe leer en voz alta para grados 1-2."
   },
   "questions": [
-    {
-      "number": 1,
-      "question_id": "zero_general_edad_v2",
-      "type": "single_choice",
-      "text": "¿Cuántos años tienes?",
-      "required": true,
-      "options": [
-        {
-          "code": "6",
-          "text": "6 años"
-        },
-        {
-          "code": "7",
-          "text": "7 años"
-        },
-        {
-          "code": "8",
-          "text": "8 años"
-        },
-        {
-          "code": "9",
-          "text": "9 años"
-        },
-        {
-          "code": "10",
-          "text": "10 años"
-        },
-        {
-          "code": "11",
-          "text": "11 años"
-        },
-        {
-          "code": "12",
-          "text": "12 años"
-        }
-      ]
-    },
+    
+    
+    
+   {
+  "number": 1,
+  "question_id": "zero_general_edad_v2",
+  "type": "single_choice",
+  "text": "¿Cuántos años tienes?",
+  "required": true,
+  "options": [
+    { "code": "5", "text": "5 años" },
+    { "code": "6", "text": "6 años" },
+    { "code": "7", "text": "7 años" },
+    { "code": "8", "text": "8 años" },
+    { "code": "9", "text": "9 años" },
+    { "code": "10", "text": "10 años" },
+    { "code": "11", "text": "11 años" },
+    { "code": "12", "text": "12 años" },
+    { "code": "13", "text": "13 años" },
+    { "code": "14", "text": "14 años" },
+    { "code": "15", "text": "15 años" }
+  ]
+},
+
+
+
+
+    
     {
       "number": 2,
      "question_id": "zero_general_genero_v2",
