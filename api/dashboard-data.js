@@ -155,6 +155,60 @@ function calcRiskIndex(prevalences) {
 // Covers all survey variants: SURVEY_004, SURVEY_004_MX, SURVEY_004_CL,
 // SURVEY_004_EN, and all PRIMARIA variants.
 
+// ── p4_* primaria/básica format ──────────────────────────────────────────────
+const P4_CONSTRUCT_MAP = {
+  // Victimization (reverse-scored: high = safe → inverted to risk)
+  "p4_victima_fisica":           "victimizacion",
+  "p4_victima_verbal":           "victimizacion",
+  "p4_victima_exclusion":        "victimizacion",
+  "p4_victima_amenazas":         "victimizacion",
+  "p4_victima_discriminacion":   "victimizacion",
+
+  // Perpetration (direct-scored)
+  "p4_agresor_fisico_verbal":    "perpetracion",
+  "p4_agresor_exclusion":        "perpetracion",
+
+  // Cybervictimization (direct-scored)
+  "p4_cyber_victima_mensajes":   "cybervictimizacion",
+  "p4_cyber_victima_foto":       "cybervictimizacion",
+  "p4_cyber_victima_exclusion":  "cybervictimizacion",
+  "p4_cyber_victima_general":    "cybervictimizacion",
+
+  // Cyberaggression (direct-scored)
+  "p4_cyber_agresor":            "cyberagresion",
+
+  // Autoridad docente (protective, direct-scored)
+  "p4_maestro_reglas":           "autoridad_docente",
+  "p4_maestro_detiene_bullying": "autoridad_docente",
+  "p4_maestro_ayuda_conflictos": "autoridad_docente",
+  "p4_cyber_educacion_maestro":  "autoridad_docente",
+
+  // Respuesta institucional (protective, direct-scored)
+  "p4_adultos_ayudan":           "respuesta_institucional",
+  "p4_conoce_adulto_ayuda":      "respuesta_institucional",
+  "p4_confianza_pedir_ayuda":    "respuesta_institucional",
+  "p4_cyber_confianza_adulto":   "respuesta_institucional",
+
+  // Normas del grupo (protective, direct-scored)
+  "p4_amigos_defienden":         "normas_grupo",
+  "p4_grupo_evita_bullying":     "normas_grupo",
+  "p4_apoyo_al_defender":        "normas_grupo",
+  "p4_pertenencia_grupo":        "normas_grupo",
+  "p4_defensor_activo":          "normas_grupo",
+  "p4_inclusion_activa":         "normas_grupo",
+
+  // Internivel (reverse-scored: high = safe → inverted to risk)
+  "p4_internivel_trato":         "internivel",
+
+  // Ecología (reverse-scored: high = safe → inverted to risk)
+  "p4_mapa_patio":               "ecologia_patio",
+  "p4_mapa_banos_pasillos":      "ecologia_banos",
+  "p4_mapa_biblioteca":          "ecologia_biblioteca",
+  "p4_mapa_entrada_salida":      "ecologia_entrada",
+};
+
+const CONSTRUCT_MAP = {
+
 const CONSTRUCT_MAP = {
   // ── Victimization (zero_* format) ──────────────────────────────────────────
   "zero_victima_agresion_fisica_v2":  "victimizacion",
@@ -249,7 +303,27 @@ const DISPLAY_NAMES = {
 };
 
 // p4_* surveys are legacy dev data only — not supported in production
-const FULL_CONSTRUCT_MAP = { ...CONSTRUCT_MAP };
+const FULL_CONSTRUCT_MAP = { ...CONSTRUCT_MAP, ...P4_CONSTRUCT_MAP };
+
+// p4_* questions use scale 1-4; zero_* uses 0-3 — conversion needed
+const P4_SCALE_IDS = new Set(Object.keys(P4_CONSTRUCT_MAP));
+
+// p4_* questions stated in positive/safe direction — invert to get risk score
+// Applies to: victimization (stated as "treated well"), internivel, ecology spaces
+const P4_REVERSE_SCORED = new Set([
+  "p4_victima_fisica",
+  "p4_victima_verbal",
+  "p4_victima_exclusion",
+  "p4_victima_amenazas",
+  "p4_victima_discriminacion",
+  "p4_internivel_trato",
+  "p4_mapa_patio",
+  "p4_mapa_banos_pasillos",
+  "p4_mapa_biblioteca",
+  "p4_mapa_entrada_salida",
+]);
+// All other p4_* use direct shift: score = option_code - 1
+// (NUNCA=1 → 0, SIEMPRE=4 → 3)
 
 // Demographic external IDs
 const DEMO_MAP = {
@@ -395,17 +469,31 @@ export default async function handler(req, res) {
       continue;
     }
 
-    // Construct item — numeric score from option_code
+// Construct item — numeric score from option_code
     const construct = FULL_CONSTRUCT_MAP[extId];
     if (construct && opt) {
-      const score = parseFloat(opt.option_code);
+      let score = parseFloat(opt.option_code);
       if (!isNaN(score)) {
+        if (P4_SCALE_IDS.has(extId)) {
+          // Convert p4_* scale (1-4) to zero_* scale (0-3)
+          if (P4_REVERSE_SCORED.has(extId)) {
+            // Reverse scored: SIEMPRE(4)→0 risk, NUNCA(1)→3 risk
+            score = 4 - score;
+          } else {
+            // Direct scored: NUNCA(1)→0, SIEMPRE(4)→3
+            score = score - 1;
+          }
+        }
         if (!responseData[answer.survey_response_id].items[construct]) {
           responseData[answer.survey_response_id].items[construct] = [];
         }
         responseData[answer.survey_response_id].items[construct].push(score);
       }
     }
+
+
+
+    
   }
 
   // 10) Compute per-student construct mean scores
