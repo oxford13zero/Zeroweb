@@ -349,8 +349,7 @@ export default async function handler(req, res) {
     .eq("school_id", school_id)
     .eq("status", "submitted")
     .eq("analysis_approved", false)
-    .not("analysis_requested_dt", "is", null);
-
+    .eq("analysis_requested_dt", analysis_dt);
   if (respErr) {
     return res.status(500).json({ ok: false, error: "DB_ERROR", detail: respErr.message });
   }
