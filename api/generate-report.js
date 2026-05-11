@@ -220,7 +220,7 @@ Menciona los espacios físicos donde más ocurren las agresiones según la encue
 1 párrafo de transición hacia el Plan de Acción.
 
 ---
-*Informe generado por TECH4ZERO · Programa ZERO · Universidad de Stavanger*
+*Informe generado por TECH4ZERO *
 
 DATOS DE LA ENCUESTA:
 ${buildDataSummary(data)}`;
@@ -296,7 +296,7 @@ ESTRUCTURA OBLIGATORIA:
 - Fecha propuesta: ___________________
 
 ---
-*Plan elaborado por TECH4ZERO · Programa ZERO · Universidad de Stavanger*
+*Plan elaborado por TECH4ZERO · Programa ZERO *
 *"Este remedio está garantizado que sí funciona. Lo que resta ahora es saber tomárselo." — Prof. Erling Roland*
 
 DATOS DE LA ENCUESTA:
