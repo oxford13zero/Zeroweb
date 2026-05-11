@@ -73,8 +73,18 @@ export default async function handler(req, res) {
 
 function gradeLabel(code, groupLabel, language) {
   const groupName = groupLabel.split("(")[0].trim();
+
+  // Strip trailing letter(s) to get numeric part
+  // "1S" → "1", "3B" → "3", "1M" → "1"
+  // Pure letters like "K" stay as-is
+  // Pure numbers like "1","2" stay as-is
+  const numericPart = /^\d+[A-Za-z]+$/.test(code)
+    ? code.replace(/[A-Za-z]+$/, '')
+    : code;
+
   if (language === "en") {
-    return `${groupName} — Grade ${code}`;
+    const gradeDisplay = code === 'K' ? 'Kindergarten' : `Grade ${numericPart}`;
+    return `${groupName} — ${gradeDisplay}`;
   }
-  return `${code}° de ${groupName}`;
+  return `${numericPart}° de ${groupName}`;
 }
