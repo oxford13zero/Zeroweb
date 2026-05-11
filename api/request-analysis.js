@@ -40,12 +40,16 @@ export default async function handler(req, res) {
     // 3) Guardar TIMESTAMPTZ (ISO8601) en analysis_requested_dt
     const ts = new Date().toISOString();
 
-    const { data, error } = await supabase
-      .from("survey_responses")
-      .update({ analysis_requested_dt: ts })
-      .eq("school_id", school_id)
-      .is("analysis_requested_dt", null)
-      .select("id");
+const { data, error } = await supabase
+  .from("survey_responses")
+  .update({ 
+    analysis_requested_dt: ts,
+    status: 'submitted'
+  })
+  .eq("school_id", school_id)
+  .is("analysis_requested_dt", null)
+  .select("id");
+    
 
     if (error) {
       console.error("request-analysis supabase error:", error);
