@@ -118,7 +118,7 @@ function buildWelcomeEmail({ schoolName, username, password, encFirstName, langu
           ${pinSection}
           <div style="border-top:1px solid #1e3040;padding-top:20px;">
             <p style="color:#a9c0d3;font-size:13px;line-height:1.6;margin:0 0 10px;">Encuentra el <strong style="color:#fff;">Manual de Usuario</strong> con instrucciones paso a paso para comenzar.</p>
-            <a href="https://tech4zero.com/instrucciones.pdf" style="display:inline-block;color:#D6A21C;font-size:13px;font-weight:600;text-decoration:underline;">Descargar Manual de Usuario</a>
+            <a href="https://tech4zero.com/Instrucciones.pdf" style="display:inline-block;color:#D6A21C;font-size:13px;font-weight:600;text-decoration:underline;">Descargar Manual de Usuario</a>
           </div>
           
           <p style="color:#4a6070;font-size:12px;margin:20px 0 0;text-align:center;">¡Juntos hacemos escuelas más seguras!</p>
