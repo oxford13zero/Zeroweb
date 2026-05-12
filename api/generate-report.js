@@ -188,7 +188,9 @@ Escribe el INFORME DE DIAGNÓSTICO para ${data.escuela} en formato Markdown.
 REGLAS ABSOLUTAS:
 - NUNCA uses términos estadísticos sin explicarlos: prohibido "prevalencia", "IC 95%", "Cronbach", "percentil", "p-valor". Usa lenguaje cotidiano.
 - Menciona grados y géneros específicos cuando los datos lo permitan.
-- Máximo 800 palabras en total.
+- Cuando menciones un porcentaje, explica qué significa en términos concretos — usa frases como "esto significa que aproximadamente X de cada 10 estudiantes...".
+- No solo reportes los números, interprétalos: explica qué significan para la vida diaria de esos estudiantes.
+- Entre 1000 y 1400 palabras en total.
 - Usa el formato Markdown con encabezados ##, negritas y listas.
 
 ESTRUCTURA OBLIGATORIA:
@@ -205,10 +207,10 @@ Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo 
 Lista con las 3 áreas de mayor preocupación con datos exactos y nivel de semáforo.
 
 ## 3. ¿Quiénes son más afectados?
-Párrafo con grados y géneros específicos. Si hay estudiantes nuevos en la escuela, menciona su mayor vulnerabilidad. Basarse en los datos de subgrupos y nuevos estudiantes.
+Párrafo con grados y géneros específicos. Elabora con ejemplos concretos usando los datos — explica qué significan estos números para la vida diaria de esos estudiantes. Si hay estudiantes nuevos en la escuela, explica por qué son más vulnerables y qué los hace un grupo de riesgo prioritario.
 
 ## 3b. Observadores y defensores
-Párrafo sobre el rol de los estudiantes que observan o defienden a las víctimas. Usa los datos de bystanders. Si el porcentaje es bajo, señala la oportunidad de activar más defensores.
+Párrafo sobre el rol de los estudiantes que observan o defienden a las víctimas. Usa los datos de bystanders. Explica el concepto de "espectador activo" y su importancia en la reducción del bullying. Si el porcentaje es bajo, señala la oportunidad concreta de activar más defensores y el impacto que esto tendría.
 
 ## 4. Espacios de riesgo
 Menciona los espacios físicos donde más ocurren las agresiones según la encuesta.
@@ -218,6 +220,9 @@ Menciona los espacios físicos donde más ocurren las agresiones según la encue
 
 ## 6. Próximos pasos
 1 párrafo de transición hacia el Plan de Acción.
+
+## 7. Nota técnica
+Párrafo dirigido a psicólogos o coordinadores con formación técnica. Menciona la fiabilidad de las escalas, si la muestra es representativa, y las principales limitaciones del análisis. Aquí sí puedes usar terminología técnica pero explica cada término brevemente entre paréntesis. Máximo 150 palabras.
 
 ---
 *Informe generado por TECH4ZERO *
@@ -343,7 +348,7 @@ export default async function handler(req, res) {
 
     const message = await client.messages.create({
       model:      "claude-haiku-4-5",
-      max_tokens: 2000,
+      max_tokens: 3000,
       messages:   [{ role: "user", content: prompt }],
     });
 
