@@ -353,7 +353,7 @@ export default async function handler(req, res) {
     .select("id, survey_id, status, analysis_requested_dt")
     .eq("school_id", school_id)
     .eq("status", "submitted")
-    .eq("analysis_approved", false)
+    .eq("analysis_approved", payload.role === "admin" ? false : true)
     .eq("analysis_requested_dt", analysis_dt);
   if (respErr) {
     return res.status(500).json({ ok: false, error: "DB_ERROR", detail: respErr.message });
