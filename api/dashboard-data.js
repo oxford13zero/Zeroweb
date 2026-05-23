@@ -72,11 +72,11 @@ function calcPrevalence(scores) {
 }
 
 // Semáforo threshold for victimization
+// DESPUÉS:
 function semaforo(pct) {
-  if (pct === null) return "SIN_DATOS";
-  if (pct >= 20)   return "CRISIS";
-  if (pct >= 10)   return "INTERVENCION";
-  if (pct >= 5)    return "ATENCION";
+  if (pct > 25)   return "CRISIS";        // > promedio global (meta-análisis 2025)
+  if (pct > 15)   return "INTERVENCION";  // > techo histórico Chile/México
+  if (pct >  7)   return "ATENCION";      // > mínimo España (6.2%)
   return "MONITOREO";
 }
 
