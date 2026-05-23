@@ -233,13 +233,13 @@
   // DISEÑO INTENCIONAL — dos grupos con semántica opuesta:
   //
   // FACTORES DE RIESGO (barras en color del semáforo):
-  //   victimizacion, perpetracion, cybervictimizacion, cyberagresion,
-  //   violencia_internivel
+  //   "Victimización", "Perpetración / Agresión", "Cybervictimización",
+  //   "Cyberagresión", "Bullying entre niveles"
   //   → Barra LARGA = MAL. % de estudiantes AFECTADOS frecuentemente.
   //   → Color según semáforo calibrado con evidencia regional.
   //
   // FACTORES PROTECTORES (barras siempre en verde):
-  //   autoridad_docente, normas_grupo, respuesta_institucional
+  //   "Autoridad Docente", "Normas del Grupo", "Respuesta Institucional"
   //   → Barra LARGA = BIEN. % de estudiantes que LO PERCIBEN POSITIVAMENTE.
   //   → Siempre verde porque un valor alto es siempre deseable.
   //
@@ -255,8 +255,8 @@
     const d = dashData;
 
     // Clasificación de constructos por dirección
-    const RISK_KEYS       = ['victimizacion', 'perpetracion', 'cybervictimizacion', 'cyberagresion', 'violencia_internivel'];
-    const PROTECTIVE_KEYS = ['autoridad_docente', 'normas_grupo', 'respuesta_institucional'];
+    const RISK_KEYS       = ["Victimización", "Perpetración / Agresión", "Cybervictimización", "Cyberagresión", "Bullying entre niveles"];
+    const PROTECTIVE_KEYS = ["Autoridad Docente", "Normas del Grupo", "Respuesta Institucional"];
     const DISPLAY         = d.display_names || {};
 
     // Separar keys según tipo
@@ -292,7 +292,9 @@
               label: ctx => {
                 // El separador no tiene tooltip
                 if (ctx.dataIndex === sepIndex) return '';
-                const k = orderedKeys[ctx.dataIndex < sepIndex ? ctx.dataIndex : ctx.dataIndex - 1];
+                // ctx.dataIndex includes the separator row, so offset by 1 after it
+                const rawIdx = ctx.dataIndex < sepIndex ? ctx.dataIndex : ctx.dataIndex - 1;
+                const k = orderedKeys[rawIdx];
                 if (!k) return ` ${ctx.parsed.x}%`;
                 // Tooltip diferenciado por tipo de constructo
                 const suffix = PROTECTIVE_KEYS.includes(k)
