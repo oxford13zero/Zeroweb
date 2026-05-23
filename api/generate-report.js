@@ -85,11 +85,28 @@ function buildDataSummary(d) {
   const sub  = d.subgrupos_reporte || {};
   const co   = d.cyber_overlap || null;
 
-  const prevLines = Object.entries(prev)
-    .filter(([, v]) => v?.pct !== null && v?.pct !== undefined)
-    .map(([k, v]) => `  - ${k}: ${v.pct}% (${v.n_true} de ${v.n_total}) — ${semaforo(v.pct)}`)
-    .join("\n");
 
+  
+// DESPUÉS:
+// El campo "tipo" fue agregado en dashboard-data.js para que Claude
+// pueda distinguir la dirección de cada indicador:
+//   "riesgo"    → % alto = MAL  (victimización, agresión, cyber)
+//   "protector" → % alto = BIEN (autoridad docente, normas, respuesta institucional)
+// Sin esta distinción Claude interpretaría un 80% en "Autoridad Docente"
+// como un problema, cuando en realidad es una fortaleza institucional.
+const prevLines = Object.entries(prev)
+  .filter(([, v]) => v?.pct !== null && v?.pct !== undefined)
+  .map(([k, v]) => {
+    const esProtector = v.tipo === 'protector';
+    const direccion   = esProtector
+      ? `✅ FORTALEZA — % alto es positivo`
+      : `⚠️ RIESGO — % alto indica más estudiantes afectados`;
+    return `  - ${k}: ${v.pct}% (${v.n_true} de ${v.n_total}) — ${semaforo(v.pct)} [${direccion}]`;
+  })
+  .join("\n");
+
+
+  
   const ecoLines = eco
     .map(e => `  - ${e.lugar}: puntuación ${e.puntuacion_media} (${e.pct_alta_frecuencia}% alta frecuencia)`)
     .join("\n");
@@ -191,7 +208,12 @@ REGLAS ABSOLUTAS:
 - Cuando menciones un porcentaje, explica qué significa en términos concretos — usa frases como "esto significa que aproximadamente X de cada 10 estudiantes...".
 - No solo reportes los números, interprétalos: explica qué significan para la vida diaria de esos estudiantes.
 - Entre 1000 y 1400 palabras en total.
+// DESPUÉS:
 - Usa el formato Markdown con encabezados ##, negritas y listas.
+- En los DATOS DE LA ENCUESTA encontrarás dos tipos de indicadores:
+  [⚠️ RIESGO] → un porcentaje ALTO es una mala señal. Más estudiantes afectados.
+  [✅ FORTALEZA] → un porcentaje ALTO es una buena señal. Más estudiantes perciben ese factor positivamente.
+  Nunca interpretes un porcentaje ALTO en un indicador [✅ FORTALEZA] como un problema.
 
 ESTRUCTURA OBLIGATORIA:
 
