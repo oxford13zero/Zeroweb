@@ -499,11 +499,11 @@
     container.innerHTML = '';
     if (!eco.length) { container.innerHTML = '<div style="color:#ffffff;font-size:13px;">Sin datos de espacios</div>'; return; }
     eco.forEach(e => {
-      const pct = Math.round(e.puntuacion_media / 4 * 100);
+      const pct = e.pct_alta_frecuencia;
       container.appendChild(el('div', { className: 'bar-row' }, [
         el('div', { className: 'bar-lbl', textContent: e.lugar }),
         el('div', { className: 'bar-track' }, [el('div', { className: 'bar-fill', style: `width:${pct}%` })]),
-        el('div', { className: 'bar-val', textContent: e.puntuacion_media.toFixed(1) }),
+        el('div', { className: 'bar-val', textContent: `${e.pct_alta_frecuencia}%` }),
       ]));
     });
   }
