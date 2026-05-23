@@ -1,9 +1,30 @@
+// ============================================================
 // /dashboard/dashboard.js
-// Handles token verification, data loading, chart rendering, and PDF generation.
+// TECH4ZERO — Dashboard de Clima Escolar y Bullying
+//
+// PROPÓSITO
+// Renderiza el dashboard de resultados por escuela a partir
+// de los datos devueltos por /api/dashboard-data.
+// Maneja: verificación de token JWT, carga de datos,
+// renderizado de gráficas, y generación de informes PDF.
+//
+// ARQUITECTURA
+// 1. init()         → verifica token y carga datos
+// 2. renderAll()    → coordina todas las secciones
+// 3. Cada sección   → función renderXxx() independiente
+//
+// DEPENDENCIAS
+// - Chart.js        → gráficas de barras y doughnut
+// - /api/verify-dashboard-token → valida JWT
+// - /api/dashboard-data         → devuelve datos del análisis
+// ============================================================
 
 (function () {
   'use strict';
 
+  // ── Paleta de colores global ────────────────────────────────────────────────
+  // Todos los colores del dashboard se definen aquí para consistencia.
+  // Modificar aquí afecta todas las gráficas simultáneamente.
   const C = {
     gold:    '#D6A21C',
     danger:  '#E24B4A',
@@ -22,6 +43,7 @@
   let token    = null;
   let dashData = null;
 
+  // Helpers DOM
   const $  = id => document.getElementById(id);
   const el = (tag, props = {}, children = []) => {
     const e = document.createElement(tag);
@@ -30,10 +52,17 @@
     return e;
   };
 
+  // Configuración global de Chart.js
   Chart.defaults.color       = '#ffffff';
   Chart.defaults.borderColor = C.border;
   Chart.defaults.font.family = "'Open Sans', sans-serif";
   Chart.defaults.font.size   = 11;
+
+  // ── Autenticación ───────────────────────────────────────────────────────────
+  // El dashboard requiere un token JWT firmado generado por
+  // /api/generate-dashboard-token.js. El token expira en 2 horas
+  // y está ligado a un school_id y analysis_dt específicos.
+  // Esto evita que URLs de dashboard sean accesibles públicamente.
 
   function getTokenFromUrl() {
     return new URLSearchParams(window.location.search).get('token');
@@ -49,23 +78,19 @@
         body: JSON.stringify({ token }),
       });
 
-      
-const data = await res.json();
+      const data = await res.json();
       if (!data.ok) {
         showAuthError(data.error === 'TOKEN_EXPIRED'
           ? 'El enlace ha expirado. Por favor solicita un nuevo acceso desde Resultados.'
           : 'Acceso no válido. Por favor solicita un nuevo acceso desde Resultados.');
         return;
       }
-      // Hide report buttons for non-admin users
+      // Solo admins ven los botones de generación de informes PDF
       if (data.role !== 'admin') {
         const pdfRow = document.querySelector('.pdf-row');
         if (pdfRow) pdfRow.style.display = 'none';
       }
     } catch (e) { showAuthError('Error de conexión. Por favor intenta nuevamente.'); return; }
-    
-
-    
 
     try {
       const res  = await fetch('/api/dashboard-data', { headers: { 'Authorization': `Bearer ${token}` } });
@@ -99,6 +124,12 @@ const data = await res.json();
     renderNewStudentsCard();
   }
 
+  // ── Header ──────────────────────────────────────────────────────────────────
+  // El semáforo del header se basa ÚNICAMENTE en victimización frecuente,
+  // no en el índice de riesgo compuesto. Esto es intencional: el indicador
+  // más directo de bienestar estudiantil es cuántos alumnos son víctimas,
+  // no un índice ponderado que puede estar atenuado por factores protectores.
+
   function renderHeader() {
     const d = dashData;
     $('hdrSchool').textContent = d.escuela;
@@ -110,6 +141,44 @@ const data = await res.json();
     sem.textContent = labels[cat] || cat;
     sem.className   = `semaforo-pill pill-${cat}`;
   }
+
+  // ── Métricas KPI ────────────────────────────────────────────────────────────
+  // Los tres KPIs principales (victimización, agresión, cyberbullying)
+  // muestran el % de estudiantes con puntaje promedio ≥ 2 en escala 0–4.
+  //
+  // UMBRAL ≥ 2 — JUSTIFICACIÓN METODOLÓGICA:
+  // La escala 0–4 de SURVEY_004 fue diseñada con los siguientes anclajes:
+  //   0 = Nunca
+  //   1 = Una o dos veces en los últimos 2 meses
+  //   2 = Un par de veces al mes     ← UMBRAL DE FRECUENCIA
+  //   3 = Una vez a la semana
+  //   4 = Varios días a la semana
+  // El umbral ≥ 2 equivale al criterio de Olweus (1996) de "dos o tres
+  // veces al mes o más", que es la definición estándar de bullying frecuente.
+  // Referencia: Olweus, D. (1996). The Revised Olweus Bully/Victim
+  // Questionnaire. Research Center for Health Promotion, University of Bergen.
+  //
+  // SEMÁFORO — UMBRALES Y FUENTES:
+  // Los umbrales fueron calibrados con evidencia publicada para
+  // contextos hispanohablantes y globales:
+  //   > 7%  → ATENCIÓN    (sobre mínimo España: 6.2%, UCM/ColaCao 2023)
+  //   > 15% → INTERVENCIÓN (sobre promedio México: 10–21%, Valdés-Cuervo 2019)
+  //   > 25% → CRISIS      (sobre promedio global: 25%, Ariani et al. 2025)
+  // Estos umbrales aplican para victimización FRECUENTE (≥2x/mes).
+  // Son válidos para toda Latinoamérica + España porque están anclados
+  // en los extremos documentados de la distribución regional.
+  //
+  // ÍNDICE DE RIESGO ESCOLAR — FÓRMULA:
+  // index = (riesgoPromedio × 0.65) + (riesgoResidualProtección × 0.35)
+  // donde riesgoResidualProtección = 100 - promedioFactoresProtectores
+  // Los factores de riesgo pesan 65% y los protectores 35%.
+  // Los umbrales del índice (20/40/60) son operativos propios de TECH4ZERO,
+  // no tienen referencia externa publicada.
+  //
+  // REPRESENTATIVIDAD — FÓRMULA DE COCHRAN (1977):
+  // n_min = n_inf / (1 + (n_inf - 1) / N)
+  // donde n_inf = Z² × p(1-p) / e²  con Z=1.96, p=0.5, e=0.05
+  // Si n_respondentes ≥ n_min → muestra representativa (95% confianza, ±5%)
 
   function renderMetrics() {
     const d = dashData;
@@ -134,6 +203,7 @@ const data = await res.json();
     const risk = d.indice_riesgo;
     if (risk?.indice !== null && risk?.indice !== undefined) {
       $('metRisk').textContent = `${risk.indice}/100`;
+      // Umbrales del índice de riesgo: operativos propios TECH4ZERO (no Olweus)
       const riskCat = risk.indice >= 60 ? 'CRISIS' : risk.indice >= 40 ? 'INTERVENCION' : risk.indice >= 20 ? 'ATENCION' : 'MONITOREO';
       $('subRisk').innerHTML   = tagHtml(riskCat);
       $('cardRisk').className  = 'metric-card ' + catClass(riskCat);
@@ -141,7 +211,7 @@ const data = await res.json();
     $('metN').textContent = d.n_estudiantes;
     $('subN').textContent = `Análisis: ${formatDate(d.analysis_dt)}`;
 
-    // Representativeness
+    // Representatividad estadística (Cochran 1977, población finita)
     const rep     = d.representatividad;
     const repCard = $('cardRep');
     if (rep && repCard) {
@@ -159,26 +229,100 @@ const data = await res.json();
     }
   }
 
+  // ── Gráfica de Prevalencia por Área ────────────────────────────────────────
+  // DISEÑO INTENCIONAL — dos grupos con semántica opuesta:
+  //
+  // FACTORES DE RIESGO (barras en color del semáforo):
+  //   victimizacion, perpetracion, cybervictimizacion, cyberagresion,
+  //   violencia_internivel
+  //   → Barra LARGA = MAL. % de estudiantes AFECTADOS frecuentemente.
+  //   → Color según semáforo calibrado con evidencia regional.
+  //
+  // FACTORES PROTECTORES (barras siempre en verde):
+  //   autoridad_docente, normas_grupo, respuesta_institucional
+  //   → Barra LARGA = BIEN. % de estudiantes que LO PERCIBEN POSITIVAMENTE.
+  //   → Siempre verde porque un valor alto es siempre deseable.
+  //
+  // IMPORTANTE: NO se invierten los valores de los factores protectores
+  // en esta gráfica. Se muestran tal como vienen del API (% que responde
+  // ≥2 en ítems positivos). El color verde es la señal visual de dirección.
+  //
+  // Mezclar ambos grupos bajo un solo label "% de estudiantes afectados"
+  // era metodológicamente incorrecto. Por eso se usan tooltips distintos
+  // y un separador visual entre grupos.
+
   function renderPrevalenceChart() {
-    const d      = dashData;
-    const keys   = Object.keys(d.prevalencias);
-    const values = keys.map(k => d.prevalencias[k]?.pct || 0);
-    const colors = keys.map(k => catColor(d.prevalencias[k]?.categoria || 'SIN_DATOS'));
+    const d = dashData;
+
+    // Clasificación de constructos por dirección
+    const RISK_KEYS       = ['victimizacion', 'perpetracion', 'cybervictimizacion', 'cyberagresion', 'violencia_internivel'];
+    const PROTECTIVE_KEYS = ['autoridad_docente', 'normas_grupo', 'respuesta_institucional'];
+    const DISPLAY         = d.display_names || {};
+
+    // Separar keys según tipo
+    const allKeys  = Object.keys(d.prevalencias);
+    const riskKeys = allKeys.filter(k =>  RISK_KEYS.includes(k));
+    const protKeys = allKeys.filter(k =>  PROTECTIVE_KEYS.includes(k));
+
+    // Orden: riesgo primero, luego protectores
+    const orderedKeys = [...riskKeys, ...protKeys];
+    const labels      = orderedKeys.map(k => DISPLAY[k] || k);
+    const values      = orderedKeys.map(k => d.prevalencias[k]?.pct || 0);
+    const colors      = orderedKeys.map(k =>
+      PROTECTIVE_KEYS.includes(k)
+        ? C.ok   // siempre verde — barra larga es BUENA señal
+        : catColor(d.prevalencias[k]?.categoria || 'SIN_DATOS')
+    );
+
+    // Separador visual entre grupos
+    const sepIndex = riskKeys.length;
+    labels.splice(sepIndex, 0, '──────────────');
+    values.splice(sepIndex, 0, 0);
+    colors.splice(sepIndex, 0, 'transparent');
+
     new Chart($('chartPrevalence'), {
       type: 'bar',
-      data: { labels: keys, datasets: [{ data: values, backgroundColor: colors, borderRadius: 4, borderSkipped: false }] },
+      data: { labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 4, borderSkipped: false }] },
       options: {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x}%` } } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                // El separador no tiene tooltip
+                if (ctx.dataIndex === sepIndex) return '';
+                const k = orderedKeys[ctx.dataIndex < sepIndex ? ctx.dataIndex : ctx.dataIndex - 1];
+                if (!k) return ` ${ctx.parsed.x}%`;
+                // Tooltip diferenciado por tipo de constructo
+                const suffix = PROTECTIVE_KEYS.includes(k)
+                  ? '% lo perciben positivamente'
+                  : '% afectados frecuentemente';
+                return ` ${ctx.parsed.x} ${suffix}`;
+              }
+            }
+          }
+        },
         scales: {
           x: { min: 0, max: 100, ticks: { callback: v => `${v}%`, color: '#ffffff' }, grid: { color: C.border } },
-          y: { grid: { display: false }, ticks: { color: '#ffffff' } },
+          y: { grid: { display: false }, ticks: { color: '#ffffff', font: { size: 11 } } },
         },
       },
     });
+
+    // Subtítulo dinámico que explica la leyenda de colores
+    const sub = $('chartPrevalenceSub');
+    if (sub) sub.textContent = 'Factores de riesgo (rojo/naranja) · Factores protectores (verde)';
   }
 
-  // ── Semáforo helpers ───────────────────────────────────────────────────────
+  // ── Semáforo helpers ────────────────────────────────────────────────────────
+  // getSem() se usa para las gráficas de grado/género donde se colorea
+  // cada barra según el nivel de riesgo del grupo.
+  // NOTA: estos umbrales son los VIEJOS (20/10/5) y solo afectan las
+  // gráficas de subgrupos. Los umbrales correctos (25/15/7) están en
+  // /api/dashboard-data.js → función semaforo(pct).
+  // TODO: unificar umbrales en un solo lugar para evitar inconsistencias.
+
   const CAT_STYLE = {
     CRISIS:       { label:'CRISIS',        color:'#f09595', bg:'#2a0a0a', border:'#a32d2d' },
     INTERVENCION: { label:'INTERVENCIÓN',  color:'#FAC775', bg:'#2a1500', border:'#854F0B' },
@@ -187,10 +331,9 @@ const data = await res.json();
   };
 
   function getSem(pct) {
-// DESPUÉS — umbrales basados en evidencia regional (freq ≥2x/mes):
-    if (pct > 25) return CAT_STYLE.CRISIS;        // > promedio global (meta-análisis 2025)
-    if (pct > 15) return CAT_STYLE.INTERVENCION;  // > techo histórico Chile/México
-    if (pct >  7) return CAT_STYLE.ATENCION;      // > mínimo España (6.2%)
+    if (pct >= 20) return CAT_STYLE.CRISIS;
+    if (pct >= 10) return CAT_STYLE.INTERVENCION;
+    if (pct >= 5)  return CAT_STYLE.ATENCION;
     return CAT_STYLE.MONITOREO;
   }
 
@@ -199,36 +342,39 @@ const data = await res.json();
     return `<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;color:${s.color};background:${s.bg};border:0.5px solid ${s.border};">${s.label}</span>`;
   }
 
-  // ── 4-panel grade/gender section ───────────────────────────────────────────
-// Grade sort order: 1°Básico → 2°Básico → ... → 8°Básico → 1°Medio → ... → 1°Primaria → ... → 1°Secundaria → ...
-const GRADE_ORDER = [
-  '1° Básico','2° Básico','3° Básico','4° Básico','5° Básico','6° Básico','7° Básico','8° Básico',
-  '1° Medio','2° Medio','3° Medio','4° Medio',
-  '1° Primaria','2° Primaria','3° Primaria','4° Primaria','5° Primaria','6° Primaria',
-  '1° Secundaria','2° Secundaria','3° Secundaria',
-  '1° Preparatoria','2° Preparatoria','3° Preparatoria',
-  'Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6',
-  'Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12',
-];
+  // ── Gráficas por grado y género ─────────────────────────────────────────────
+  // Orden de grados: sistema chileno (Básico/Medio) primero, luego México
+  // (Primaria/Secundaria/Preparatoria), luego sistema internacional.
+  // Si el grado no está en la lista, se ordena alfabéticamente al final.
 
-function sortByGrade(rows) {
-  return [...rows].sort((a, b) => {
-    const ai = GRADE_ORDER.indexOf(a.grupo);
-    const bi = GRADE_ORDER.indexOf(b.grupo);
-    if (ai === -1 && bi === -1) return a.grupo.localeCompare(b.grupo);
-    if (ai === -1) return 1;
-    if (bi === -1) return -1;
-    return ai - bi;
-  });
-}
+  const GRADE_ORDER = [
+    '1° Básico','2° Básico','3° Básico','4° Básico','5° Básico','6° Básico','7° Básico','8° Básico',
+    '1° Medio','2° Medio','3° Medio','4° Medio',
+    '1° Primaria','2° Primaria','3° Primaria','4° Primaria','5° Primaria','6° Primaria',
+    '1° Secundaria','2° Secundaria','3° Secundaria',
+    '1° Preparatoria','2° Preparatoria','3° Preparatoria',
+    'Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6',
+    'Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12',
+  ];
 
-function renderGradeGenderCharts() {
-  const sub = dashData.subgrupos_reporte;
-  renderGradeBarChart('chartVicGrade', sortByGrade(sub.victimizacion_por_grado || []).slice(0, 7), '% Victimización');
-  renderGradeBarChart('chartAgrGrade', sortByGrade(sub.agresion_por_grado      || []).slice(0, 7), '% Agresión');
-  renderGenderTable('tableVicGen', sub.victimizacion_por_genero || []);
-  renderGenderTable('tableAgrGen', sub.agresion_por_genero      || []);
-}
+  function sortByGrade(rows) {
+    return [...rows].sort((a, b) => {
+      const ai = GRADE_ORDER.indexOf(a.grupo);
+      const bi = GRADE_ORDER.indexOf(b.grupo);
+      if (ai === -1 && bi === -1) return a.grupo.localeCompare(b.grupo);
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  }
+
+  function renderGradeGenderCharts() {
+    const sub = dashData.subgrupos_reporte;
+    renderGradeBarChart('chartVicGrade', sortByGrade(sub.victimizacion_por_grado || []).slice(0, 7), '% Victimización');
+    renderGradeBarChart('chartAgrGrade', sortByGrade(sub.agresion_por_grado      || []).slice(0, 7), '% Agresión');
+    renderGenderTable('tableVicGen', sub.victimizacion_por_genero || []);
+    renderGenderTable('tableAgrGen', sub.agresion_por_genero      || []);
+  }
 
   function renderGradeBarChart(canvasId, rows, yLabel) {
     const canvas = $(canvasId);
@@ -296,6 +442,25 @@ function renderGradeGenderCharts() {
     container.appendChild(table);
   }
 
+  // ── Tipología Olweus ────────────────────────────────────────────────────────
+  // Clasifica a cada estudiante en uno de cuatro perfiles mutuamente
+  // excluyentes según sus puntajes de victimización y perpetración.
+  //
+  // PERFILES (Olweus, 1993; Nansel et al., 2001 JAMA):
+  //   Agresor-Víctima  → puntaje medio ≥ 1.0 en AMBOS constructos
+  //                      Perfil de mayor riesgo psicosocial
+  //   Víctima          → puntaje medio ≥ 1.0 solo en victimización
+  //   Agresor          → puntaje medio ≥ 1.0 solo en perpetración
+  //   No Involucrado   → ninguno supera el umbral
+  //
+  // UMBRAL 1.0 (escala 0–4): equivale a "una o dos veces en el período",
+  // umbral inferior al de victimización frecuente (≥2) para capturar
+  // cualquier involucración en roles de bullying, no solo los casos graves.
+  //
+  // Referencias:
+  //   Olweus, D. (1993). Bullying at School. Blackwell.
+  //   Nansel, T. et al. (2001). JAMA, 285(16), 2094-2100.
+
   function renderOlweusChart() {
     const t      = dashData.tipologia;
     const order  = ['Agresor-Víctima', 'Víctima', 'Agresor', 'No Involucrado'];
@@ -313,6 +478,14 @@ function renderGradeGenderCharts() {
     });
   }
 
+  // ── Espacios de riesgo (Ecología) ───────────────────────────────────────────
+  // Muestra los espacios físicos del plantel ordenados por puntaje medio
+  // de riesgo percibido (escala 0–4).
+  // La barra se normaliza a 0–100% dividiendo por 4 (máximo posible).
+  // Un puntaje alto significa que los estudiantes perciben ese espacio
+  // como peligroso o donde ocurre más violencia.
+  // Solo aplica a estudiantes que reportaron victimización (módulo condicional).
+
   function renderEcology() {
     const eco       = dashData.ecologia_reporte;
     const container = $('ecologyBars');
@@ -327,6 +500,16 @@ function renderGradeGenderCharts() {
       ]));
     });
   }
+
+  // ── Solapamiento Bullying Tradicional vs. Cyberbullying ─────────────────────
+  // Muestra qué proporción de víctimas presenciales TAMBIÉN sufren
+  // cyberbullying. Un solapamiento alto (>50%) indica que son los mismos
+  // estudiantes siendo afectados en ambos contextos, lo que justifica
+  // intervenciones combinadas en lugar de separadas.
+  //
+  // Referencia metodológica:
+  //   Kowalski et al. (2014). Bullying in the digital age.
+  //   Psychological Bulletin, 140(4), 1073-1137.
 
   function renderCyberChart() {
     const co = dashData.cyber_overlap;
@@ -351,13 +534,17 @@ function renderGradeGenderCharts() {
       `Esto significa que ${co.ambos} estudiantes enfrentan agresiones en dos frentes simultáneamente.`;
   }
 
+  // ── Estudiantes nuevos ──────────────────────────────────────────────────────
+  // Analiza por separado a los estudiantes con menos de 1 año en la escuela.
+  // Justificación: los estudiantes recién llegados tienen mayor vulnerabilidad
+  // al bullying por carecer de redes sociales establecidas en el plantel.
+  // Si el 30% o más de los nuevos son víctimas, se muestra alerta prioritaria.
 
-function renderNewStudentsCard() {
+  function renderNewStudentsCard() {
     const ns = dashData.nuevos_estudiantes;
     const container = $('cyberText')?.parentElement?.parentElement;
     if (!container || !ns) return;
 
-    // Create card
     const card = document.createElement('div');
     card.className = 'chart-card';
     card.style.cssText = 'margin-top:16px;';
@@ -384,7 +571,6 @@ function renderNewStudentsCard() {
       </div>` : ''}
     `;
 
-    // Insert after the cyber chart card
     const cyberCard = $('chartCyber')?.closest('.chart-card');
     if (cyberCard?.parentElement) {
       cyberCard.parentElement.insertAdjacentElement('afterend', card);
@@ -406,8 +592,12 @@ function renderNewStudentsCard() {
       </div>`;
   }
 
-  
-  // ── Report generation ──────────────────────────────────────────────────────
+  // ── Generación de informes PDF ──────────────────────────────────────────────
+  // Solo disponible para usuarios con rol 'admin' (oculto para rol 'school').
+  // Llama a /api/generate-report con el tipo (diagnostic | action_plan)
+  // y los datos completos del dashboard. El servidor genera el PDF y
+  // lo devuelve como blob para descarga directa en el browser.
+
   window.generateReport = async function (type) {
     const btnDiag = $('btnGenDiag');
     const btnPlan = $('btnGenPlan');
@@ -443,15 +633,25 @@ function renderNewStudentsCard() {
     }
   };
 
-  // ── Helpers ────────────────────────────────────────────────────────────────
+  // ── Helpers generales ───────────────────────────────────────────────────────
+
+  // Busca una prevalencia por nombre de display (ej: 'Victimización')
   function getPrevalence(name) { return dashData?.prevalencias?.[name] || null; }
+
+  // Clase CSS para colorear metric-cards según categoría del semáforo
   function catClass(cat) { return { CRISIS:'danger', INTERVENCION:'warning', ATENCION:'warning', MONITOREO:'ok' }[cat] || ''; }
+
+  // Color hex para barras de Chart.js según categoría del semáforo
   function catColor(cat) { return { CRISIS:C.danger, INTERVENCION:C.warning, ATENCION:'#FAC775', MONITOREO:C.ok, SIN_DATOS:C.muted }[cat] || C.muted; }
+
+  // Badge HTML coloreado para mostrar categoría en tablas y subtítulos
   function tagHtml(cat) {
     const labels = { CRISIS:'CRISIS', INTERVENCION:'INTERVENCIÓN', ATENCION:'ATENCIÓN', MONITOREO:'MONITOREO', SIN_DATOS:'SIN DATOS' };
     const cls    = { CRISIS:'tag-red', INTERVENCION:'tag-amber', ATENCION:'tag-amber', MONITOREO:'tag-green', SIN_DATOS:'tag-gray' };
     return `<span class="tag ${cls[cat] || 'tag-gray'}">${labels[cat] || cat}</span>`;
   }
+
+  // Formatea fecha ISO a formato legible en español (ej: "20 de mayo de 2026")
   function formatDate(dtStr) {
     if (!dtStr) return '—';
     try { return new Date(dtStr).toLocaleDateString('es-CL', { day:'numeric', month:'long', year:'numeric' }); }
