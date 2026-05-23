@@ -187,9 +187,10 @@ const data = await res.json();
   };
 
   function getSem(pct) {
-    if (pct >= 20) return CAT_STYLE.CRISIS;
-    if (pct >= 10) return CAT_STYLE.INTERVENCION;
-    if (pct >= 5)  return CAT_STYLE.ATENCION;
+// DESPUÉS — umbrales basados en evidencia regional (freq ≥2x/mes):
+    if (pct > 25) return CAT_STYLE.CRISIS;        // > promedio global (meta-análisis 2025)
+    if (pct > 15) return CAT_STYLE.INTERVENCION;  // > techo histórico Chile/México
+    if (pct >  7) return CAT_STYLE.ATENCION;      // > mínimo España (6.2%)
     return CAT_STYLE.MONITOREO;
   }
 
