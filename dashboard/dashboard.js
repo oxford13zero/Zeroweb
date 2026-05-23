@@ -208,8 +208,13 @@
       $('subRisk').innerHTML   = tagHtml(riskCat);
       $('cardRisk').className  = 'metric-card ' + catClass(riskCat);
     }
+// DESPUÉS:
     $('metN').textContent = d.n_estudiantes;
-    $('subN').textContent = `Análisis: ${formatDate(d.analysis_dt)}`;
+    $('subN').innerHTML =
+      `Análisis: ${formatDate(d.analysis_dt)}` +
+      (d.n_incompletos > 0
+        ? `<br><span style="font-size:10px;color:#7a9aaa;">+ ${d.n_incompletos} no completaron</span>`
+        : '');
 
     // Representatividad estadística (Cochran 1977, población finita)
     const rep     = d.representatividad;
