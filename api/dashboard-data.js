@@ -348,9 +348,10 @@ export default async function handler(req, res) {
   const { school_id, analysis_dt } = payload;
 
   // 2) Load survey responses for this school
+// DESPUÉS:
   const { data: responses, error: respErr } = await supabaseAdmin
     .from("survey_responses")
-    .select("id, survey_id, status, analysis_requested_dt")
+    .select("id, survey_id, status, submitted_at, analysis_requested_dt")
     .eq("school_id", school_id)
     .eq("status", "submitted")
     .eq("analysis_approved", payload.role === "admin" ? false : true)
@@ -363,6 +364,15 @@ export default async function handler(req, res) {
     return res.status(404).json({ ok: false, error: "NO_RESPONSES_FOUND" });
   }
 
+  // Separar completos (submitted_at != null) de incompletos (submitted_at = null).
+  // Solo los completos entran en cálculos estadísticos.
+  // Los incompletos se reportan por transparencia únicamente.
+  const responseIds   = responses.filter(r => r.submitted_at !== null).map(r => r.id);
+  const n_incompletos = responses.filter(r => r.submitted_at === null).length;
+  const n             = responseIds.length;
+
+
+  
   const responseIds = responses.map(r => r.id);
   const n = responseIds.length;
 
@@ -795,7 +805,10 @@ for (const [k, v] of Object.entries(prevalences)) {
     school_id,
     school_country: schoolCountry,
     analysis_dt,
-    n_estudiantes: n,
+    // DESPUÉS:
+    n_estudiantes:   n,
+    n_incompletos:   n_incompletos,
+    n_participantes: n + n_incompletos,
     fecha:         new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" }),
 
     prevalencias:       prevalenceSummary,
