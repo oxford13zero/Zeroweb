@@ -691,12 +691,46 @@ export default async function handler(req, res) {
   const riskIndex = calcRiskIndex(prevalences);
 
   // 21) Prevalence summary with display names
-  const prevalenceSummary = {};
-  for (const [k, v] of Object.entries(prevalences)) {
-    if (!v) continue;
-    prevalenceSummary[DISPLAY_NAMES[k] || k] = v;
-  }
 
+
+
+  
+// DESPUÉS:
+// Clasificación de constructos por tipo — usado por Claude para
+// interpretar correctamente la dirección de cada indicador:
+//   "riesgo"    → % ALTO = MAL   (victimización, agresión, cyber)
+//   "protector" → % ALTO = BIEN  (autoridad, normas, respuesta institucional)
+// Sin esta distinción, Claude no puede saber si un 80% en "Autoridad Docente"
+// es una buena noticia (el 80% lo percibe positivamente) o una mala
+// (el 80% tiene problemas con la autoridad docente).
+const CONSTRUCT_TYPE = {
+  victimizacion:            'riesgo',
+  perpetracion:             'riesgo',
+  cybervictimizacion:       'riesgo',
+  cyberagresion:            'riesgo',
+  internivel:               'riesgo',
+  autoridad_docente:        'protector',
+  normas_grupo:             'protector',
+  respuesta_institucional:  'protector',
+};
+
+const prevalenceSummary = {};
+for (const [k, v] of Object.entries(prevalences)) {
+  if (!v) continue;
+  prevalenceSummary[DISPLAY_NAMES[k] || k] = {
+    ...v,
+    tipo: CONSTRUCT_TYPE[k] || 'riesgo',
+    // interpretacion_direccion explica a Claude cómo leer el %:
+    interpretacion_direccion: CONSTRUCT_TYPE[k] === 'protector'
+      ? '% alto indica FORTALEZA — más estudiantes perciben este factor positivamente'
+      : '% alto indica RIESGO — más estudiantes están afectados frecuentemente',
+  };
+}
+
+
+
+  
+  
   // 22) Sample representativeness
   function calcRepresentativeness(population, sample) {
     if (!population || population === 0) return null;
