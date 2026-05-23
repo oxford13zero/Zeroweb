@@ -371,11 +371,6 @@ export default async function handler(req, res) {
   const n_incompletos = responses.filter(r => r.submitted_at === null).length;
   const n             = responseIds.length;
 
-
-  
-  const responseIds = responses.map(r => r.id);
-  const n = responseIds.length;
-
   // 3) Load school info
   const { data: schoolData } = await supabaseAdmin
     .from("schools")
