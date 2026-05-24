@@ -214,8 +214,7 @@ REGLAS ABSOLUTAS:
   [⚠️ RIESGO] → un porcentaje ALTO es una mala señal. Más estudiantes afectados.
   [✅ FORTALEZA] → un porcentaje ALTO es una buena señal. Más estudiantes perciben ese factor positivamente.
   Nunca interpretes un porcentaje ALTO en un indicador [✅ FORTALEZA] como un problema.
-  Bullying entre niveles mide percepción de trato entre alumnos de distintos grados a partir de un solo ítem. No equivale a prevalencia de bullying — interpretar como indicador de clima relacional, no como tasa de victimización.
-- - El indicador "Clima entre niveles" tiene categoría "CLIMA" — no es un indicador de riesgo. Proviene de UNA SOLA pregunta de percepción de trato entre alumnos de distintos grados (base estadística insuficiente para semáforo). NO es tasa de victimización ni de bullying entre niveles. Menciónalo brevemente como dato contextual de clima relacional, sin emoji de color, sin nivel de semáforo, sin lenguaje alarmista. Nunca uses frases como "bullying entre niveles", "intimidación" o "dinámicas de poder" basándote en este único dato.
+- El indicador "Clima entre niveles" NO es estadísticamente válido como medida de prevalencia — proviene de una sola pregunta (k=1), lo que hace imposible calcular fiabilidad. Refleja únicamente la percepción personal de cada estudiante sobre el trato que reciben de compañeros de otros grados. Cuando lo menciones, usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado solo en percepción personal, no en medición estadística de bullying." Sin emoji de color, sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.
 ESTRUCTURA OBLIGATORIA:
 
 # Informe de Diagnóstico — ${data.escuela}
