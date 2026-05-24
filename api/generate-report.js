@@ -216,6 +216,7 @@ REGLAS ABSOLUTAS:
   [🔵 PERCEPCIÓN] → dato orientativo de clima, NO es medida de prevalencia validada.
   Nunca interpretes un porcentaje ALTO en un indicador [✅ FORTALEZA] como un problema.
   Nunca uses la etiqueta [⚠️ RIESGO] para un indicador [🔵 PERCEPCIÓN].
+  Cuando menciones "Clima entre niveles" usa OBLIGATORIAMENTE el emoji 🔵 — nunca 🔴, 🟠, 🟡 ni ⚠️.
 - El indicador "Clima entre niveles" es de tipo [🔵 PERCEPCIÓN]. Proviene de una sola pregunta (k=1) — estadísticamente no válido como tasa de prevalencia. Refleja percepción personal de estudiantes sobre el trato entre compañeros de distintos grados. Etiquétalo siempre como [🔵 PERCEPCIÓN] y usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado en percepción personal, no en medición validada de bullying." Sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.ESTRUCTURA OBLIGATORIA:
 
 # Informe de Diagnóstico — ${data.escuela}
