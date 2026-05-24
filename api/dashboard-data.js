@@ -302,7 +302,7 @@ const DISPLAY_NAMES = {
   "autoridad_docente":      "Autoridad Docente",
   "normas_grupo":           "Normas del Grupo",
   "respuesta_institucional":"Respuesta Institucional",
-  "internivel":             "Clima 'percibido' entre niveles",
+  "internivel":             "Clima entre niveles",
 };
 
 const FULL_CONSTRUCT_MAP = { ...CONSTRUCT_MAP, ...P4_CONSTRUCT_MAP };
