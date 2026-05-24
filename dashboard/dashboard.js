@@ -377,8 +377,8 @@
 
   function renderGradeGenderCharts() {
     const sub = dashData.subgrupos_reporte;
-    renderGradeBarChart('chartVicGrade', sortByGrade(sub.victimizacion_por_grado || []).slice(0, 7), '% Victimización');
-    renderGradeBarChart('chartAgrGrade', sortByGrade(sub.agresion_por_grado      || []).slice(0, 7), '% Agresión');
+renderGradeBarChart('chartVicGrade', sortByGrade(sub.victimizacion_por_grado || []), '% Victimización');
+    renderGradeBarChart('chartAgrGrade', sortByGrade(sub.agresion_por_grado      || []), '% Agresión');
     renderGenderTable('tableVicGen', sub.victimizacion_por_genero || []);
     renderGenderTable('tableAgrGen', sub.agresion_por_genero      || []);
   }
