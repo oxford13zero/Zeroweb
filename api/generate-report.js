@@ -210,12 +210,13 @@ REGLAS ABSOLUTAS:
 - Entre 1000 y 1400 palabras en total.
 // DESPUÉS:
 - Usa el formato Markdown con encabezados ##, negritas y listas.
-- En los DATOS DE LA ENCUESTA encontrarás dos tipos de indicadores:
+- En los DATOS DE LA ENCUESTA encontrarás TRES tipos de indicadores:
   [⚠️ RIESGO] → un porcentaje ALTO es una mala señal. Más estudiantes afectados.
   [✅ FORTALEZA] → un porcentaje ALTO es una buena señal. Más estudiantes perciben ese factor positivamente.
+  [🔵 PERCEPCIÓN] → dato orientativo de clima, NO es medida de prevalencia validada.
   Nunca interpretes un porcentaje ALTO en un indicador [✅ FORTALEZA] como un problema.
-- El indicador "Clima entre niveles" NO es estadísticamente válido como medida de prevalencia — proviene de una sola pregunta (k=1), lo que hace imposible calcular fiabilidad. Refleja únicamente la percepción personal de cada estudiante sobre el trato que reciben de compañeros de otros grados. Cuando lo menciones, usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado solo en percepción personal, no en medición estadística de bullying." Sin emoji de color, sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.
-ESTRUCTURA OBLIGATORIA:
+  Nunca uses la etiqueta [⚠️ RIESGO] para un indicador [🔵 PERCEPCIÓN].
+- El indicador "Clima entre niveles" es de tipo [🔵 PERCEPCIÓN]. Proviene de una sola pregunta (k=1) — estadísticamente no válido como tasa de prevalencia. Refleja percepción personal de estudiantes sobre el trato entre compañeros de distintos grados. Etiquétalo siempre como [🔵 PERCEPCIÓN] y usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado en percepción personal, no en medición validada de bullying." Sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.ESTRUCTURA OBLIGATORIA:
 
 # Informe de Diagnóstico — ${data.escuela}
 **Fecha:** ${new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" })}
