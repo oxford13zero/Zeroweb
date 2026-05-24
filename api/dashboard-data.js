@@ -119,7 +119,7 @@ function classifyOlweus(perpScore, victScore) {
 // riskComponent  = mean prevalence of risk constructs
 // protComponent  = mean of (100 - prevalence) of protective constructs
 function calcRiskIndex(prevalences) {
-  const riskKeys       = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion", "internivel"];
+  const riskKeys       = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion"];
   const protectiveKeys = ["autoridad_docente", "normas_grupo", "respuesta_institucional"];
 
   let riskSum = 0, riskCount = 0;
