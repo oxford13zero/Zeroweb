@@ -4212,16 +4212,30 @@ window.cerrarAnalisisPanel = function() {
     return true;
   }
 
-  document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
+document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
     if (!SURVEY) return;
+    const btnNext = document.getElementById('btnSurveyModalNext');
+    const btnPrev = document.getElementById('btnSurveyModalPrev');
     if (currentQuestionIndex > 0) {
+      btnNext.disabled = true;     // bloquea "Siguiente" mientras las opciones cargan
+      btnPrev.disabled = true;     // bloquea doble retroceso
       currentQuestionIndex--;
       renderCurrentQuestion();
+      // Rehabilitar tras 300ms — tiempo suficiente para que el async IIFE
+      // de renderCurrentQuestion() termine de cargar opciones desde OPTIONS_CACHE
+      setTimeout(() => {
+        btnNext.disabled = false;
+        btnPrev.disabled = (currentQuestionIndex === 0);
+      }, 300);
     }
   });
 
-  document.getElementById('btnSurveyModalNext')?.addEventListener('click', async () => {
+ document.getElementById('btnSurveyModalNext')?.addEventListener('click', async () => {
+    const btn = document.getElementById('btnSurveyModalNext');
+    if (btn.disabled) return;      // bloquea doble clic
+    btn.disabled = true;           // deshabilita durante el await del fetch
     const ok = await saveCurrentAnswerOrStop();
+    btn.disabled = false;          // siempre rehabilita al terminar
     if (!ok) return;
 
     if (currentQuestionIndex < SURVEY.questions.length - 1) {
