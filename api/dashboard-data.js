@@ -423,7 +423,7 @@ export default async function handler(req, res) {
     const { data } = await supabaseAdmin
       .from("question_answers")
       .select("id, survey_response_id, question_id")
-      .in("survey_response_id", chunk);
+      .in("survey_response_id", chunk)
       .limit(10000);
     if (data) answersData.push(...data);
   }
@@ -450,7 +450,7 @@ export default async function handler(req, res) {
     const { data } = await supabaseAdmin
       .from("answer_selected_options")
       .select("question_answer_id, option_id")
-      .in("question_answer_id", chunk);
+      .in("question_answer_id", chunk)
       .limit(10000);
     if (data) selectedData.push(...data);
   }
