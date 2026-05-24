@@ -63,6 +63,8 @@ function wilsonCI(k, n, z = 1.96) {
 }
 
 // Prevalence: % of responses with mean score >= 2 (frequent)
+// Threshold >= 2 corresponds to Olweus (1996) criterion of
+// "2 or 3 times a month or more", adapted to the 0-3 scale.
 function calcPrevalence(scores) {
   if (!scores.length) return null;
   const n_true = scores.filter(s => s >= 2).length;
@@ -71,12 +73,14 @@ function calcPrevalence(scores) {
   return { pct, n_true, n_total: scores.length, ci_lower, ci_upper };
 }
 
-// Semáforo threshold for victimization
-// DESPUÉS:
+// Semáforo thresholds — calibrated from published evidence:
+//   > 7%  → ATENCIÓN    (above Spain minimum: 6.2%, UCM/ColaCao 2023)
+//   > 15% → INTERVENCIÓN (above Mexico average: 10-21%, Valdés-Cuervo 2019)
+//   > 25% → CRISIS      (above global average: 25%, Ariani et al. 2025)
 function semaforo(pct) {
-  if (pct > 25)   return "CRISIS";        // > promedio global (meta-análisis 2025)
-  if (pct > 15)   return "INTERVENCION";  // > techo histórico Chile/México
-  if (pct >  7)   return "ATENCION";      // > mínimo España (6.2%)
+  if (pct > 25) return "CRISIS";
+  if (pct > 15) return "INTERVENCION";
+  if (pct >  7) return "ATENCION";
   return "MONITOREO";
 }
 
@@ -99,7 +103,8 @@ function cronbachAlpha(matrix) {
   return Math.round(alpha * 1000) / 1000;
 }
 
-// Olweus typology
+// Olweus typology — four mutually exclusive profiles
+// Reference: Olweus (1993); Nansel et al. (2001) JAMA 285(16)
 function classifyOlweus(perpScore, victScore) {
   const isAggr = perpScore !== null && perpScore >= 1.0;
   const isVict = victScore !== null && victScore >= 1.0;
@@ -110,6 +115,9 @@ function classifyOlweus(perpScore, victScore) {
 }
 
 // Risk index (0-100)
+// Formula: index = riskComponent * 0.65 + protComponent * 0.35
+// riskComponent  = mean prevalence of risk constructs
+// protComponent  = mean of (100 - prevalence) of protective constructs
 function calcRiskIndex(prevalences) {
   const riskKeys       = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion", "internivel"];
   const protectiveKeys = ["autoridad_docente", "normas_grupo", "respuesta_institucional"];
@@ -130,8 +138,8 @@ function calcRiskIndex(prevalences) {
     }
   }
 
-  const riskComponent  = riskCount  ? Math.round(riskSum / riskCount)  : null;
-  const protComponent  = protCount  ? Math.round(protSum / protCount)  : null;
+  const riskComponent = riskCount  ? Math.round(riskSum / riskCount)  : null;
+  const protComponent = protCount  ? Math.round(protSum / protCount)  : null;
 
   let index = null;
   if (riskComponent !== null && protComponent !== null) {
@@ -147,7 +155,10 @@ function calcRiskIndex(prevalences) {
   };
 }
 
-// ── p4_* primaria/básica format ──────────────────────────────────────────────
+// ── p4_* primaria/básica format ───────────────────────────────────────────────
+// Used by "Encuesta Clima Escolar — Chile (Básica)" and similar instruments.
+// Scale: 1-4 (NUNCA=1, A VECES=2, CASI SIEMPRE=3, SIEMPRE=4)
+// Converted to 0-3 scale to match zero_* format before scoring.
 const P4_CONSTRUCT_MAP = {
   // Victimization (reverse-scored: high = safe → inverted to risk)
   "p4_victima_fisica":           "victimizacion",
@@ -188,6 +199,7 @@ const P4_CONSTRUCT_MAP = {
   "p4_pertenencia_grupo":        "normas_grupo",
   "p4_defensor_activo":          "normas_grupo",
   "p4_inclusion_activa":         "normas_grupo",
+  "p4_apoyo_companeros":         "normas_grupo",
 
   // Internivel (reverse-scored: high = safe → inverted to risk)
   "p4_internivel_trato":         "internivel",
@@ -199,7 +211,7 @@ const P4_CONSTRUCT_MAP = {
   "p4_mapa_entrada_salida":      "ecologia_entrada",
 };
 
-// ── Construct definitions (external_id → construct name) ────────────────────
+// ── Construct definitions (external_id → construct name) ─────────────────────
 const CONSTRUCT_MAP = {
   // ── Victimization (zero_* format) ──────────────────────────────────────────
   "zero_victima_agresion_fisica_v2":  "victimizacion",
@@ -312,7 +324,7 @@ const P4_REVERSE_SCORED = new Set([
   "p4_mapa_entrada_salida",
 ]);
 
-// Demographic external IDs
+// Demographic external IDs → response data field
 const DEMO_MAP = {
   "zero_general_genero_v2":       "genero",
   "zero_general_edad_v2":         "edad",
@@ -325,7 +337,23 @@ const DEMO_MAP = {
   "zero_general_tiempo_v2":       "primer_anio",
 };
 
-// ── Main handler ─────────────────────────────────────────────────────────────
+// ── Construct type classification — used by Claude for report generation ──────
+// "riesgo"    → % HIGH = BAD  (victimization, aggression, cyber)
+// "protector" → % HIGH = GOOD (teacher authority, group norms, institutional response)
+// Without this distinction, Claude cannot know if 80% in "Autoridad Docente"
+// is good news (80% perceive it positively) or bad (80% have problems with it).
+const CONSTRUCT_TYPE = {
+  victimizacion:            "riesgo",
+  perpetracion:             "riesgo",
+  cybervictimizacion:       "riesgo",
+  cyberagresion:            "riesgo",
+  internivel:               "riesgo",
+  autoridad_docente:        "protector",
+  normas_grupo:             "protector",
+  respuesta_institucional:  "protector",
+};
+
+// ── Main handler ──────────────────────────────────────────────────────────────
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -348,7 +376,6 @@ export default async function handler(req, res) {
   const { school_id, analysis_dt } = payload;
 
   // 2) Load survey responses for this school
-// DESPUÉS:
   const { data: responses, error: respErr } = await supabaseAdmin
     .from("survey_responses")
     .select("id, survey_id, status, submitted_at, analysis_requested_dt")
@@ -356,6 +383,7 @@ export default async function handler(req, res) {
     .eq("status", "submitted")
     .eq("analysis_approved", payload.role === "admin" ? false : true)
     .eq("analysis_requested_dt", analysis_dt);
+
   if (respErr) {
     return res.status(500).json({ ok: false, error: "DB_ERROR", detail: respErr.message });
   }
@@ -364,9 +392,9 @@ export default async function handler(req, res) {
     return res.status(404).json({ ok: false, error: "NO_RESPONSES_FOUND" });
   }
 
-  // Separar completos (submitted_at != null) de incompletos (submitted_at = null).
-  // Solo los completos entran en cálculos estadísticos.
-  // Los incompletos se reportan por transparencia únicamente.
+  // Separate completed (submitted_at != null) from incomplete (submitted_at = null).
+  // Only completed responses enter statistical calculations.
+  // Incomplete responses are reported for transparency only.
   const responseIds   = responses.filter(r => r.submitted_at !== null).map(r => r.id);
   const n_incompletos = responses.filter(r => r.submitted_at === null).length;
   const n             = responseIds.length;
@@ -381,10 +409,10 @@ export default async function handler(req, res) {
   const schoolName    = schoolData?.name    || "Escuela";
   const schoolCountry = schoolData?.country || "MX";
 
-  const enrollment_primaria      = schoolData?.students_primaria      || 0;
-  const enrollment_secundaria    = schoolData?.students_secundaria    || 0;
-  const enrollment_preparatoria  = schoolData?.students_preparatoria  || 0;
-  const total_matriculados       = enrollment_primaria + enrollment_secundaria + enrollment_preparatoria;
+  const enrollment_primaria     = schoolData?.students_primaria     || 0;
+  const enrollment_secundaria   = schoolData?.students_secundaria   || 0;
+  const enrollment_preparatoria = schoolData?.students_preparatoria || 0;
+  const total_matriculados      = enrollment_primaria + enrollment_secundaria + enrollment_preparatoria;
 
   // 4) Load all question answers in chunks
   const CHUNK = 100;
@@ -445,7 +473,8 @@ export default async function handler(req, res) {
 
   // 9) Build per-response data structure
   const responseData = {};
-  for (const rid of responseIds) {responseData[rid] = { items: {}, genero: null, edad: null, grado: null, tipo_escuela: null, primer_anio: null };
+  for (const rid of responseIds) {
+    responseData[rid] = { items: {}, genero: null, edad: null, grado: null, tipo_escuela: null, primer_anio: null };
   }
 
   for (const answer of answersData) {
@@ -518,7 +547,7 @@ export default async function handler(req, res) {
 
   // 13) Top 3 risk areas
   const top3 = Object.entries(prevalences)
-    .filter(([k, v]) => v && v.pct !== null && ["victimizacion","perpetracion","cybervictimizacion"].includes(k))
+    .filter(([k, v]) => v && v.pct !== null && ["victimizacion", "perpetracion", "cybervictimizacion"].includes(k))
     .sort((a, b) => b[1].pct - a[1].pct)
     .slice(0, 3)
     .map(([k, v]) => ({
@@ -628,19 +657,19 @@ export default async function handler(req, res) {
       .sort((a, b) => b.pct - a.pct);
   }
 
-  subgrupos.agresion_por_grado            = prevByGroup("grado",  "perpetracion");
-  subgrupos.victimizacion_por_grado       = prevByGroup("grado",  "victimizacion");
-  subgrupos.agresion_por_genero           = prevByGroup("genero", "perpetracion");
-  subgrupos.victimizacion_por_genero      = prevByGroup("genero", "victimizacion");
-  subgrupos.victimizacion_grado_genero    = prevByGradeGender("victimizacion");
-  subgrupos.agresion_grado_genero         = prevByGradeGender("perpetracion");
+  subgrupos.agresion_por_grado         = prevByGroup("grado",  "perpetracion");
+  subgrupos.victimizacion_por_grado    = prevByGroup("grado",  "victimizacion");
+  subgrupos.agresion_por_genero        = prevByGroup("genero", "perpetracion");
+  subgrupos.victimizacion_por_genero   = prevByGroup("genero", "victimizacion");
+  subgrupos.victimizacion_grado_genero = prevByGradeGender("victimizacion");
+  subgrupos.agresion_grado_genero      = prevByGradeGender("perpetracion");
 
   // 18) Cyber overlap
   let cyberOverlap = null;
   const n_trad  = responseIds.filter(rid => (studentScores[rid]?.victimizacion    ?? 0) >= 2).length;
   const n_cyber = responseIds.filter(rid => (studentScores[rid]?.cybervictimizacion ?? 0) >= 2).length;
   const n_both  = responseIds.filter(rid =>
-    (studentScores[rid]?.victimizacion ?? 0) >= 2 &&
+    (studentScores[rid]?.victimizacion     ?? 0) >= 2 &&
     (studentScores[rid]?.cybervictimizacion ?? 0) >= 2
   ).length;
 
@@ -657,7 +686,10 @@ export default async function handler(req, res) {
 
   // 19) Cronbach alpha per construct
   const reliability = {};
-  const mainConstructs = ["victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion", "autoridad_docente", "normas_grupo", "respuesta_institucional", "internivel"];
+  const mainConstructs = [
+    "victimizacion", "perpetracion", "cybervictimizacion", "cyberagresion",
+    "autoridad_docente", "normas_grupo", "respuesta_institucional", "internivel",
+  ];
 
   for (const construct of mainConstructs) {
     const itemExtIds = Object.entries(FULL_CONSTRUCT_MAP)
@@ -686,8 +718,8 @@ export default async function handler(req, res) {
     if (matrix.length > 1) {
       reliability[construct] = {
         cronbach_alpha: cronbachAlpha(matrix),
-        n_items: qIds.length,
-        n_respondents: matrix.length,
+        n_items:        qIds.length,
+        n_respondents:  matrix.length,
       };
     }
   }
@@ -696,47 +728,22 @@ export default async function handler(req, res) {
   const riskIndex = calcRiskIndex(prevalences);
 
   // 21) Prevalence summary with display names
+  // Adds tipo and interpretacion_direccion fields so Claude can correctly
+  // interpret the direction of each indicator when generating reports.
+  const prevalenceSummary = {};
+  for (const [k, v] of Object.entries(prevalences)) {
+    if (!v) continue;
+    prevalenceSummary[DISPLAY_NAMES[k] || k] = {
+      ...v,
+      tipo: CONSTRUCT_TYPE[k] || "riesgo",
+      interpretacion_direccion: CONSTRUCT_TYPE[k] === "protector"
+        ? "% alto indica FORTALEZA — más estudiantes perciben este factor positivamente"
+        : "% alto indica RIESGO — más estudiantes están afectados frecuentemente",
+    };
+  }
 
-
-
-  
-// DESPUÉS:
-// Clasificación de constructos por tipo — usado por Claude para
-// interpretar correctamente la dirección de cada indicador:
-//   "riesgo"    → % ALTO = MAL   (victimización, agresión, cyber)
-//   "protector" → % ALTO = BIEN  (autoridad, normas, respuesta institucional)
-// Sin esta distinción, Claude no puede saber si un 80% en "Autoridad Docente"
-// es una buena noticia (el 80% lo percibe positivamente) o una mala
-// (el 80% tiene problemas con la autoridad docente).
-const CONSTRUCT_TYPE = {
-  victimizacion:            'riesgo',
-  perpetracion:             'riesgo',
-  cybervictimizacion:       'riesgo',
-  cyberagresion:            'riesgo',
-  internivel:               'riesgo',
-  autoridad_docente:        'protector',
-  normas_grupo:             'protector',
-  respuesta_institucional:  'protector',
-};
-
-const prevalenceSummary = {};
-for (const [k, v] of Object.entries(prevalences)) {
-  if (!v) continue;
-  prevalenceSummary[DISPLAY_NAMES[k] || k] = {
-    ...v,
-    tipo: CONSTRUCT_TYPE[k] || 'riesgo',
-    // interpretacion_direccion explica a Claude cómo leer el %:
-    interpretacion_direccion: CONSTRUCT_TYPE[k] === 'protector'
-      ? '% alto indica FORTALEZA — más estudiantes perciben este factor positivamente'
-      : '% alto indica RIESGO — más estudiantes están afectados frecuentemente',
-  };
-}
-
-
-
-  
-  
-  // 22) Sample representativeness
+  // 22) Sample representativeness (Cochran 1977, finite population)
+  // n_min = n_inf / (1 + (n_inf - 1) / N)  where n_inf = Z²·p(1-p)/e²
   function calcRepresentativeness(population, sample) {
     if (!population || population === 0) return null;
     const Z = 1.96;
@@ -765,58 +772,58 @@ for (const [k, v] of Object.entries(prevalences)) {
     ? calcRepresentativeness(total_matriculados, n)
     : null;
 
-// 22b) New students cross-analysis
+  // 22b) New students cross-analysis
+  // Students in their first year have higher bullying vulnerability
+  // due to lack of established social networks.
   const newStudentsAnalysis = (() => {
     const newRids = responseIds.filter(rid => {
       const val = responseData[rid].primer_anio;
-      return val === 'Sí, es mi primer año aquí' || val === 'Menos de 1 año';
+      return val === "Sí, es mi primer año aquí" || val === "Menos de 1 año";
     });
     const n_new = newRids.length;
     if (n_new === 0) return null;
 
-    const n_victim   = newRids.filter(rid => (studentScores[rid]?.victimizacion    ?? 0) >= 2).length;
-    const n_aggr     = newRids.filter(rid => (studentScores[rid]?.perpetracion     ?? 0) >= 2).length;
-    const n_bystander= newRids.filter(rid => (studentScores[rid]?.normas_grupo     ?? 0) >= 2).length;
-    const n_both     = newRids.filter(rid =>
+    const n_victim    = newRids.filter(rid => (studentScores[rid]?.victimizacion    ?? 0) >= 2).length;
+    const n_aggr      = newRids.filter(rid => (studentScores[rid]?.perpetracion     ?? 0) >= 2).length;
+    const n_bystander = newRids.filter(rid => (studentScores[rid]?.normas_grupo     ?? 0) >= 2).length;
+    const n_both      = newRids.filter(rid =>
       (studentScores[rid]?.victimizacion ?? 0) >= 2 &&
       (studentScores[rid]?.perpetracion  ?? 0) >= 2
     ).length;
 
     return {
       n_new,
-      pct_of_total:    Math.round(n_new / n * 1000) / 10,
-      n_victim,        pct_victim:    n_new ? Math.round(n_victim    / n_new * 1000) / 10 : 0,
-      n_aggr,          pct_aggr:      n_new ? Math.round(n_aggr      / n_new * 1000) / 10 : 0,
-      n_bystander,     pct_bystander: n_new ? Math.round(n_bystander / n_new * 1000) / 10 : 0,
-      n_both,          pct_both:      n_new ? Math.round(n_both      / n_new * 1000) / 10 : 0,
+      pct_of_total:  Math.round(n_new / n * 1000) / 10,
+      n_victim,      pct_victim:    n_new ? Math.round(n_victim    / n_new * 1000) / 10 : 0,
+      n_aggr,        pct_aggr:      n_new ? Math.round(n_aggr      / n_new * 1000) / 10 : 0,
+      n_bystander,   pct_bystander: n_new ? Math.round(n_bystander / n_new * 1000) / 10 : 0,
+      n_both,        pct_both:      n_new ? Math.round(n_both      / n_new * 1000) / 10 : 0,
     };
   })();
 
-  
   // 23) Assemble final response
   const result = {
-    ok:           true,
-    escuela:      schoolName,
+    ok:             true,
+    escuela:        schoolName,
     school_id,
     school_country: schoolCountry,
     analysis_dt,
-    // DESPUÉS:
-    n_estudiantes:   n,
-    n_incompletos:   n_incompletos,
+    n_estudiantes:  n,
+    n_incompletos:  n_incompletos,
     n_participantes: n + n_incompletos,
-    fecha:         new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" }),
+    fecha:          new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" }),
 
-    prevalencias:       prevalenceSummary,
-    top3_riesgo:        top3,
-    ecologia_reporte:   ecologia,
-    tipologia:          typologyPct,
-    subgrupos_reporte:  subgrupos,
-    cyber_overlap:      cyberOverlap,
-    indice_riesgo:      riskIndex,
-    fiabilidad:         reliability,
-    demograficos:       demoBreakdown,
+    prevalencias:      prevalenceSummary,
+    top3_riesgo:       top3,
+    ecologia_reporte:  ecologia,
+    tipologia:         typologyPct,
+    subgrupos_reporte: subgrupos,
+    cyber_overlap:     cyberOverlap,
+    indice_riesgo:     riskIndex,
+    fiabilidad:        reliability,
+    demograficos:      demoBreakdown,
     representatividad,
-    nuevos_estudiantes:    newStudentsAnalysis,
+    nuevos_estudiantes: newStudentsAnalysis,
   };
 
   return res.status(200).json(result);
