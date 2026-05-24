@@ -229,6 +229,8 @@ Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo 
 
 ## 2. Áreas más críticas
 Lista con las 3 áreas de mayor preocupación con datos exactos y nivel de semáforo.
+Ordena siempre los indicadores [⚠️ RIESGO] primero, de mayor a menor porcentaje.
+Los indicadores [🔵 PERCEPCIÓN] van siempre AL FINAL, después de todos los [⚠️ RIESGO], sin importar su porcentaje.
 
 ## 3. ¿Quiénes son más afectados?
 Párrafo con grados y géneros específicos. Elabora con ejemplos concretos usando los datos — explica qué significan estos números para la vida diaria de esos estudiantes. Si hay estudiantes nuevos en la escuela, explica por qué son más vulnerables y qué los hace un grupo de riesgo prioritario.
