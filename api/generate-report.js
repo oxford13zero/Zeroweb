@@ -214,6 +214,7 @@ REGLAS ABSOLUTAS:
   [⚠️ RIESGO] → un porcentaje ALTO es una mala señal. Más estudiantes afectados.
   [✅ FORTALEZA] → un porcentaje ALTO es una buena señal. Más estudiantes perciben ese factor positivamente.
   Nunca interpretes un porcentaje ALTO en un indicador [✅ FORTALEZA] como un problema.
+  Bullying entre niveles mide percepción de trato entre alumnos de distintos grados a partir de un solo ítem. No equivale a prevalencia de bullying — interpretar como indicador de clima relacional, no como tasa de victimización.
 
 ESTRUCTURA OBLIGATORIA:
 
