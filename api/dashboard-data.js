@@ -545,8 +545,46 @@ export default async function handler(req, res) {
     }
   }
 
+  // ── Asignación de categoría de semáforo por constructo ───────────────────
+  // La función semaforo(pct) asigna MONITOREO/ATENCIÓN/INTERVENCIÓN/CRISIS
+  // basada en umbrales calibrados con evidencia publicada para VICTIMIZACIÓN
+  // FRECUENTE (≥2x/mes). Esos umbrales son válidos para constructos de riesgo
+  // directo (victimizacion, perpetracion, cybervictimizacion, cyberagresion).
+  //
+  // EXCEPCIÓN — "internivel":
+  // Este constructo se basa en UNA SOLA pregunta (p4_internivel_trato) de
+  // percepción de trato entre alumnos de distintos grados. Tiene dos problemas
+  // que lo hacen incompatible con el semáforo estándar:
+  //
+  // 1. PROBLEMA ESTADÍSTICO: Un constructo de 1 ítem tiene fiabilidad
+  //    desconocida (Cronbach α no es calculable con k=1). Los umbrales del
+  //    semáforo (7%, 15%, 25%) fueron calibrados contra tasas de victimización
+  //    frecuente de MÚLTIPLES ítems — aplicarlos a 1 ítem produce categorías
+  //    sin respaldo metodológico.
+  //
+  // 2. PROBLEMA CONCEPTUAL: La pregunta mide si los alumnos mayores tratan
+  //    bien a los menores — no mide victimización directa. Un 31% en este
+  //    ítem significa "31% percibe trato inconsistente entre niveles", NO
+  //    "31% es víctima de bullying entre niveles". Asignar CRISIS a este
+  //    valor induce a Claude a sobreinterpretar el dato como evidencia de
+  //    violencia grave cuando en realidad es un indicador de clima relacional.
+  //
+  // SOLUCIÓN: Se asigna la categoría especial "CLIMA" a internivel.
+  // Esta categoría no tiene color de semáforo asociado en el dashboard
+  // y le indica a Claude que lo trate como dato contextual, no como
+  // indicador de riesgo urgente.
+  //
+  // Referencias metodológicas:
+  //   Nunnally, J.C. (1978). Psychometric Theory. McGraw-Hill.
+  //     → mínimo k=3 ítems para fiabilidad aceptable
+  //   Olweus, D. (1993). Bullying at School. Blackwell.
+  //     → define bullying como patrón repetido, no percepción puntual
   for (const [k, v] of Object.entries(prevalences)) {
-    if (v) v.categoria = semaforo(v.pct);
+    if (v) {
+      v.categoria = k === "internivel"
+        ? "CLIMA"           // indicador de percepción relacional — sin semáforo de riesgo
+        : semaforo(v.pct);  // constructos de riesgo y protección — semáforo estándar
+    }
   }
 
   // 13) Top 3 risk areas
