@@ -347,7 +347,7 @@ const CONSTRUCT_TYPE = {
   perpetracion:             "riesgo",
   cybervictimizacion:       "riesgo",
   cyberagresion:            "riesgo",
-  internivel:               "riesgo",
+  internivel:               "clima_relacional",
   autoridad_docente:        "protector",
   normas_grupo:             "protector",
   respuesta_institucional:  "protector",
@@ -742,6 +742,8 @@ export default async function handler(req, res) {
       tipo: CONSTRUCT_TYPE[k] || "riesgo",
       interpretacion_direccion: CONSTRUCT_TYPE[k] === "protector"
         ? "% alto indica FORTALEZA — más estudiantes perciben este factor positivamente"
+        : CONSTRUCT_TYPE[k] === "clima_relacional"
+        ? "% alto indica TENSIÓN RELACIONAL — basado en 1 ítem de percepción de trato entre niveles. NO es tasa de victimización. Interpretar como indicador de clima, no como bullying."
         : "% alto indica RIESGO — más estudiantes están afectados frecuentemente",
     };
   }
