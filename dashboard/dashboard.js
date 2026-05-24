@@ -303,8 +303,10 @@
                 if (!k) return ` ${ctx.parsed.x}%`;
                 // Tooltip diferenciado por tipo de constructo
                 const suffix = PROTECTIVE_KEYS.includes(k)
-                  ? '% lo perciben positivamente'
-                  : '% afectados frecuentemente';
+                ? '% lo perciben positivamente'
+                : k === 'Clima entre niveles'
+                ? '% percibe tensiones en el trato entre niveles (percepción personal)'
+                : '% afectados frecuentemente';
                 return ` ${ctx.parsed.x} ${suffix}`;
               }
             }
