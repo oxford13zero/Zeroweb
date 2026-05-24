@@ -398,6 +398,7 @@ export default async function handler(req, res) {
   const responseIds   = responses.filter(r => r.submitted_at !== null).map(r => r.id);
   const n_incompletos = responses.filter(r => r.submitted_at === null).length;
   const n             = responseIds.length;
+  console.log('[DEBUG1]', JSON.stringify({ n_responseIds: responseIds.length, n_fullConstructMap: Object.keys(FULL_CONSTRUCT_MAP).length, p4_victima_fisica: FULL_CONSTRUCT_MAP['p4_victima_fisica'] || 'NOT FOUND' }));
 
   // 3) Load school info
   const { data: schoolData } = await supabaseAdmin
@@ -533,6 +534,7 @@ export default async function handler(req, res) {
       .filter(v => v !== undefined && v !== null);
   }
 
+  console.log('[DEBUG2]', JSON.stringify({ victimizacion_n: constructScores['victimizacion']?.length, answersData_n: answersData.length, selectedData_n: selectedData.length }));
   // 12) Compute prevalences
   const prevalences = {};
   for (const [construct, scores] of Object.entries(constructScores)) {
