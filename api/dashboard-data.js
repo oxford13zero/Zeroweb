@@ -424,6 +424,7 @@ export default async function handler(req, res) {
       .from("question_answers")
       .select("id, survey_response_id, question_id")
       .in("survey_response_id", chunk);
+      .limit(10000);
     if (data) answersData.push(...data);
   }
 
@@ -450,6 +451,7 @@ export default async function handler(req, res) {
       .from("answer_selected_options")
       .select("question_answer_id, option_id")
       .in("question_answer_id", chunk);
+      .limit(10000);
     if (data) selectedData.push(...data);
   }
 
