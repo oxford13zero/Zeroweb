@@ -260,7 +260,7 @@
     const d = dashData;
 
     // Clasificación de constructos por dirección
-    const RISK_KEYS       = ["Victimización", "Perpetración / Agresión", "Cybervictimización", "Cyberagresión", "Bullying entre niveles"];
+    const RISK_KEYS       = ["Victimización", "Perpetración / Agresión", "Cybervictimización", "Cyberagresión", "Clima entre niveles"];
     const PROTECTIVE_KEYS = ["Autoridad Docente", "Normas del Grupo", "Respuesta Institucional"];
     const DISPLAY         = d.display_names || {};
 
