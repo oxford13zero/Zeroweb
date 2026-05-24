@@ -471,7 +471,7 @@ renderGradeBarChart('chartVicGrade', sortByGrade(sub.victimizacion_por_grado || 
   function renderOlweusChart() {
     const t      = dashData.tipologia;
     const order  = ['Agresor-Víctima', 'Víctima', 'Agresor', 'No Involucrado'];
-    const colors = [C.danger, C.warning, '#FAC775', C.ok];
+    const colors = ['#378ADD', '#85B7EB', '#7F77DD', '#888780'];
     new Chart($('chartOlweus'), {
       type: 'doughnut',
       data: { labels: order.map(k => `${k} (${t[k]?.pct || 0}%)`), datasets: [{ data: order.map(k => t[k]?.n || 0), backgroundColor: colors, borderWidth: 2, borderColor: C.bg }] },
