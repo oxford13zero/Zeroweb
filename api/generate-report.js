@@ -209,7 +209,7 @@ function buildActionPlanPrompt(data, cc) {
 
 // ── Chile ─────────────────────────────────────────────────
 function buildDiagnosticPromptCL(data, cc) {
-   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega).
+   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega) y un especialista de convivencia escolar del MINEDUC de Chile.
 Idioma: ${cc.idioma}. País: ${cc.pais}. Marco: ${cc.marco}.
 
 Escribe el INFORME DE DIAGNÓSTICO para ${data.escuela} en formato Markdown.
