@@ -209,7 +209,7 @@ function buildActionPlanPrompt(data, cc) {
 
 // ── Chile ─────────────────────────────────────────────────
 function buildDiagnosticPromptCL(data, cc) {
-   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega) y un especialista de convivencia escolar del MINEDUC de Chile.
+   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega).
 Idioma: ${cc.idioma}. País: ${cc.pais}. Marco: ${cc.marco}.
 
 Escribe el INFORME DE DIAGNÓSTICO para ${data.escuela} en formato Markdown.
@@ -269,9 +269,7 @@ DATOS DE LA ENCUESTA:
 ${buildDataSummary(data)}`;
 }
 
-function buildActionPlanPromptCL(data, cc) {
-  // pega aquí el prompt actual sin cambiar nada
-}
+
 
 // ── México ────────────────────────────────────────────────
 function buildDiagnosticPromptMX(data, cc) {
@@ -401,7 +399,7 @@ DATOS DE LA ENCUESTA:
 ${buildDataSummary(data)}`;
 }
 */
-function buildActionPlanPrompt(data, cc) {
+function buildActionPlanPromptCL(data, cc) {
   const topRisk = data.top3_riesgo?.[0];
   const eco     = data.ecologia_reporte?.[0];
   const riskIdx = data.indice_riesgo?.indice;
@@ -524,102 +522,15 @@ export default async function handler(req, res) {
 
     const markdown = message.content[0]?.text || "";
 
-    // ── Convert Markdown → Word (.docx) ──────────────────────────────────────
-    // Uses docx-js (v9+) with:
-    //   - Proper heading styles (H1/H2/H3) with color and spacing
-    //   - LevelFormat.BULLET for lists (never unicode bullets — breaks Word)
-    //   - Inline bold parsing (**text** → TextRun bold:true)
-    //   - A4 page size with 1-inch margins
-    //   - No outlineLevel → headings are styled but NOT collapsible in Word
-    // Reference: docx-js docs, SKILL.md critical rules
-    const { Document, Packer, Paragraph, TextRun, HeadingLevel,
-            LevelFormat, AlignmentType } = await import("docx");
-
-    // Parse **bold** inline syntax into TextRun array
-    function parseBold(text) {
-      return text.split(/\*\*(.*?)\*\*/g)
-        .filter(p => p !== "")
-        .map((part, i) => new TextRun({
-          text: part, bold: i % 2 === 1, font: "Arial", size: 24
-        }));
-    }
-
-    // Convert Markdown lines to docx Paragraph nodes
-    const docChildren = [];
-    for (const line of markdown.split("\n")) {
-      if (line.startsWith("# ")) {
-        docChildren.push(new Paragraph({
-          heading: HeadingLevel.HEADING_1,
-          children: [new TextRun({ text: line.replace(/^# /, ""), font: "Arial" })],
-        }));
-      } else if (line.startsWith("## ")) {
-        docChildren.push(new Paragraph({
-          heading: HeadingLevel.HEADING_2,
-          children: [new TextRun({ text: line.replace(/^## /, ""), font: "Arial" })],
-        }));
-      } else if (line.startsWith("### ")) {
-        docChildren.push(new Paragraph({
-          heading: HeadingLevel.HEADING_3,
-          children: [new TextRun({ text: line.replace(/^### /, ""), font: "Arial" })],
-        }));
-      } else if (line.startsWith("- ") || line.startsWith("* ")) {
-        // Use numbering config — never unicode/raw bullet characters
-        docChildren.push(new Paragraph({
-          numbering: { reference: "bullets", level: 0 },
-          children: parseBold(line.replace(/^[-*] /, "")),
-        }));
-      } else if (line.trim() === "" || line.startsWith("---")) {
-        docChildren.push(new Paragraph({ text: "" }));
-      } else {
-        docChildren.push(new Paragraph({ children: parseBold(line) }));
-      }
-    }
-
-    const doc = new Document({
-      styles: {
-        default: { document: { run: { font: "Arial", size: 24 } } },
-        paragraphStyles: [
-          // No outlineLevel → headings are visually styled but NOT collapsible
-          { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal",
-            run: { size: 36, bold: true, font: "Arial", color: "1F3864" },
-            paragraph: { spacing: { before: 240, after: 120 } } },
-          { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal",
-            run: { size: 28, bold: true, font: "Arial", color: "2E75B6" },
-            paragraph: { spacing: { before: 200, after: 100 } } },
-          { id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal",
-            run: { size: 24, bold: true, font: "Arial" },
-            paragraph: { spacing: { before: 160, after: 80 } } },
-        ]
-      },
-      numbering: {
-        config: [{
-          reference: "bullets",
-          levels: [{ level: 0, format: LevelFormat.BULLET, text: "•",
-            alignment: AlignmentType.LEFT,
-            style: { paragraph: { indent: { left: 720, hanging: 360 } } } }]
-        }]
-      },
-      sections: [{
-        properties: {
-          page: {
-            size: { width: 11906, height: 16838 }, // A4
-            margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }, // 1-inch margins
-          }
-        },
-        children: docChildren,
-      }]
-    });
-
-    const buffer = await Packer.toBuffer(doc);
-
+    // Return as downloadable .md file
     const escuela  = (dashData.escuela || "escuela").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
     const dateStr  = new Date().toISOString().slice(0, 10);
     const typeStr  = type === "diagnostic" ? "diagnostico" : "plan_accion";
-    const filename = `${typeStr}_TECH4ZERO_${escuela}_${dateStr}.docx`;
+    const filename = `${typeStr}_TECH4ZERO_${escuela}_${dateStr}.md`;
 
-    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+    res.setHeader("Content-Type", "text/markdown; charset=utf-8");
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-    return res.status(200).send(buffer);
+    return res.status(200).send(markdown);
 
   } catch (e) {
     console.error("Anthropic error:", e);
