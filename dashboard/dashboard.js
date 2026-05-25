@@ -136,7 +136,7 @@
     $('hdrMeta').textContent   = `${d.n_estudiantes} estudiantes · ${formatDate(d.analysis_dt)}`;
     const victPrev = getPrevalence('Victimización');
     const cat      = victPrev?.categoria || 'SIN_DATOS';
-    const labels   = { CRISIS:'CRISIS', INTERVENCION:'INTERVENCIÓN', ATENCION:'ATENCIÓN', MONITOREO:'MONITOREO', SIN_DATOS:'SIN DATOS' };
+    const labels   = { CRISIS:'INTERVENCIÓN DE URGENCIA', INTERVENCION:'INTERVENCIÓN FORMATIVA', ATENCION:'ACCIÓN PREVENTIVA', MONITOREO:'SEGUIMIENTO ACTIVO', SIN_DATOS:'SIN DATOS' };
     const sem = $('hdrSemaforo');
     sem.textContent = labels[cat] || cat;
     sem.className   = `semaforo-pill pill-${cat}`;
@@ -333,10 +333,10 @@
   // TODO: unificar umbrales en un solo lugar para evitar inconsistencias.
 
   const CAT_STYLE = {
-    CRISIS:       { label:'CRISIS',        color:'#f09595', bg:'#2a0a0a', border:'#a32d2d' },
-    INTERVENCION: { label:'INTERVENCIÓN',  color:'#FAC775', bg:'#2a1500', border:'#854F0B' },
-    ATENCION:     { label:'ATENCIÓN',      color:'#FAC775', bg:'#1a1500', border:'#634806' },
-    MONITOREO:    { label:'MONITOREO',     color:'#9FE1CB', bg:'#0a1a0a', border:'#0F6E56' },
+    CRISIS:       { label:'INTERVENCIÓN DE URGENCIA', color:'#f09595', bg:'#2a0a0a', border:'#a32d2d' },
+    INTERVENCION: { label:'INTERVENCIÓN FORMATIVA',   color:'#FAC775', bg:'#2a1500', border:'#854F0B' },
+    ATENCION:     { label:'ACCIÓN PREVENTIVA',        color:'#FAC775', bg:'#1a1500', border:'#634806' },
+    MONITOREO:    { label:'SEGUIMIENTO ACTIVO',       color:'#9FE1CB', bg:'#0a1a0a', border:'#0F6E56' },
   };
 
   function getSem(pct) {
@@ -655,7 +655,7 @@ renderGradeBarChart('chartVicGrade', sortByGrade(sub.victimizacion_por_grado || 
 
   // Badge HTML coloreado para mostrar categoría en tablas y subtítulos
   function tagHtml(cat) {
-    const labels = { CRISIS:'CRISIS', INTERVENCION:'INTERVENCIÓN', ATENCION:'ATENCIÓN', MONITOREO:'MONITOREO', SIN_DATOS:'SIN DATOS' };
+    const labels = { CRISIS:'INTERVENCIÓN DE URGENCIA', INTERVENCION:'INTERVENCIÓN FORMATIVA', ATENCION:'ACCIÓN PREVENTIVA', MONITOREO:'SEGUIMIENTO ACTIVO', SIN_DATOS:'SIN DATOS' };
     const cls    = { CRISIS:'tag-red', INTERVENCION:'tag-amber', ATENCION:'tag-amber', MONITOREO:'tag-green', SIN_DATOS:'tag-gray' };
     return `<span class="tag ${cls[cat] || 'tag-gray'}">${labels[cat] || cat}</span>`;
   }
