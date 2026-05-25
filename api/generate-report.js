@@ -546,15 +546,52 @@ export default async function handler(req, res) {
 
     const markdown = message.content[0]?.text || "";
 
-    // Return as downloadable .md file
+   // Convert markdown to Word document
     const escuela  = (dashData.escuela || "escuela").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
     const dateStr  = new Date().toISOString().slice(0, 10);
     const typeStr  = type === "diagnostic" ? "diagnostico" : "plan_accion";
-    const filename = `${typeStr}_TECH4ZERO_${escuela}_${dateStr}.md`;
+    const filename = `${typeStr}_TECH4ZERO_${escuela}_${dateStr}.docx`;
 
-    res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+    const { Document, Paragraph, TextRun, HeadingLevel, Packer, AlignmentType } = await import("docx");
+
+    const children = [];
+    const lines = markdown.split("\n");
+
+    for (const line of lines) {
+      if (line.startsWith("### ")) {
+        children.push(new Paragraph({ text: line.replace("### ", ""), heading: HeadingLevel.HEADING_3 }));
+      } else if (line.startsWith("## ")) {
+        children.push(new Paragraph({ text: line.replace("## ", ""), heading: HeadingLevel.HEADING_2 }));
+      } else if (line.startsWith("# ")) {
+        children.push(new Paragraph({ text: line.replace("# ", ""), heading: HeadingLevel.HEADING_1 }));
+      } else if (line.startsWith("- ") || line.startsWith("* ")) {
+        const text = line.replace(/^[-*] /, "").replace(/\*\*(.*?)\*\*/g, "$1");
+        const bold = /\*\*(.*?)\*\*/.test(line);
+        children.push(new Paragraph({
+          bullet: { level: 0 },
+          children: [new TextRun({ text, bold })],
+        }));
+      } else if (line.trim() === "" || line.startsWith("---")) {
+        children.push(new Paragraph({ text: "" }));
+      } else {
+        // Parse inline bold (**text**)
+        const parts = line.split(/\*\*(.*?)\*\*/g);
+        const runs = parts.map((part, i) =>
+          new TextRun({ text: part, bold: i % 2 === 1 })
+        );
+        children.push(new Paragraph({ children: runs }));
+      }
+    }
+
+    const doc = new Document({
+      sections: [{ properties: {}, children }],
+    });
+
+    const buffer = await Packer.toBuffer(doc);
+
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-    return res.status(200).send(markdown);
+    return res.status(200).send(buffer);
 
   } catch (e) {
     console.error("Anthropic error:", e);
