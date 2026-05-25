@@ -401,7 +401,7 @@ DATOS DE LA ENCUESTA:
 ${buildDataSummary(data)}`;
 }
 */
-function buildActionPlanPrompt(data, cc) {
+function buildActionPlanPrompt_UNUSED(data, cc) {
   const topRisk = data.top3_riesgo?.[0];
   const eco     = data.ecologia_reporte?.[0];
   const riskIdx = data.indice_riesgo?.indice;
