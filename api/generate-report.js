@@ -61,10 +61,10 @@ const COUNTRY_CTX = {
 
 function semaforo(pct) {
   if (pct === null || pct === undefined) return "SIN DATOS";
-  if (pct >= 20) return "CRISIS";
-  if (pct >= 10) return "INTERVENCIÓN";
-  if (pct >= 5)  return "ATENCIÓN";
-  return "MONITOREO";
+  if (pct >= 25) return "INTERVENCIÓN DE URGENCIA";
+  if (pct >= 15) return "INTERVENCIÓN FORMATIVA";
+  if (pct >= 7)  return "ACCIÓN PREVENTIVA";
+  return "SEGUIMIENTO ACTIVO";
 }
 
 function riskLabel(idx) {
