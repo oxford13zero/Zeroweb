@@ -209,7 +209,7 @@ function buildActionPlanPrompt(data, cc) {
 
 // ── Chile ─────────────────────────────────────────────────
 function buildDiagnosticPromptCL(data, cc) {
-   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega).
+   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega) y un especialista de Convivencia escolar del MINEDUC de Chile.
 Idioma: ${cc.idioma}. País: ${cc.pais}. Marco: ${cc.marco}.
 
 Escribe el INFORME DE DIAGNÓSTICO para ${data.escuela} en formato Markdown.
@@ -523,7 +523,7 @@ export default async function handler(req, res) {
 
 const markdown = message.content[0]?.text || "";
 
-    const { Document, Packer, Paragraph, TextRun, HeadingLevel,
+    const { Document, Packer, Paragraph, TextRun,
             LevelFormat, AlignmentType } = await import("docx");
 
     function parseBold(text) {
@@ -537,13 +537,37 @@ const markdown = message.content[0]?.text || "";
     const docChildren = [];
     for (const line of markdown.split("\n")) {
       if (line.startsWith("# ")) {
-        docChildren.push(new Paragraph({ heading: HeadingLevel.HEADING_1, children: [new TextRun({ text: line.replace(/^# /, ""), font: "Arial" })] }));
+        // Título principal — negrita grande, azul oscuro, sin HeadingLevel
+        docChildren.push(new Paragraph({
+          spacing: { before: 240, after: 120 },
+          children: [new TextRun({
+            text: line.replace(/^# /, ""),
+            bold: true, font: "Arial", size: 36, color: "1F3864"
+          })]
+        }));
       } else if (line.startsWith("## ")) {
-        docChildren.push(new Paragraph({ heading: HeadingLevel.HEADING_2, children: [new TextRun({ text: line.replace(/^## /, ""), font: "Arial" })] }));
+        // Subtítulo — negrita mediana, azul, sin HeadingLevel
+        docChildren.push(new Paragraph({
+          spacing: { before: 200, after: 100 },
+          children: [new TextRun({
+            text: line.replace(/^## /, ""),
+            bold: true, font: "Arial", size: 28, color: "2E75B6"
+          })]
+        }));
       } else if (line.startsWith("### ")) {
-        docChildren.push(new Paragraph({ heading: HeadingLevel.HEADING_3, children: [new TextRun({ text: line.replace(/^### /, ""), font: "Arial" })] }));
+        // Sub-subtítulo — negrita normal, sin HeadingLevel
+        docChildren.push(new Paragraph({
+          spacing: { before: 160, after: 80 },
+          children: [new TextRun({
+            text: line.replace(/^### /, ""),
+            bold: true, font: "Arial", size: 24
+          })]
+        }));
       } else if (line.startsWith("- ") || line.startsWith("* ")) {
-        docChildren.push(new Paragraph({ numbering: { reference: "bullets", level: 0 }, children: parseBold(line.replace(/^[-*] /, "")) }));
+        docChildren.push(new Paragraph({
+          numbering: { reference: "bullets", level: 0 },
+          children: parseBold(line.replace(/^[-*] /, ""))
+        }));
       } else if (line.trim() === "" || line.startsWith("---")) {
         docChildren.push(new Paragraph({ text: "" }));
       } else {
@@ -553,18 +577,7 @@ const markdown = message.content[0]?.text || "";
 
     const doc = new Document({
       styles: {
-        default: { document: { run: { font: "Arial", size: 24 } } },
-        paragraphStyles: [
-          { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal",
-            run: { size: 36, bold: true, font: "Arial", color: "1F3864" },
-            paragraph: { spacing: { before: 240, after: 120 } } },
-          { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal",
-            run: { size: 28, bold: true, font: "Arial", color: "2E75B6" },
-            paragraph: { spacing: { before: 200, after: 100 } } },
-          { id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal",
-            run: { size: 24, bold: true, font: "Arial" },
-            paragraph: { spacing: { before: 160, after: 80 } } },
-        ]
+        default: { document: { run: { font: "Arial", size: 24 } } }
       },
       numbering: {
         config: [{ reference: "bullets",
@@ -574,7 +587,10 @@ const markdown = message.content[0]?.text || "";
         }]
       },
       sections: [{
-        properties: { page: { size: { width: 11906, height: 16838 }, margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 } } },
+        properties: { page: {
+          size: { width: 11906, height: 16838 },
+          margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
+        }},
         children: docChildren,
       }]
     });
