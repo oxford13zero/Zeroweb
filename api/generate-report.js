@@ -196,7 +196,85 @@ ${nsDetail}
 
 // ── Prompts ───────────────────────────────────────────────────────────────────
 
+// ── Router — selecciona prompt según país ─────────────────
 function buildDiagnosticPrompt(data, cc) {
+  if (data.school_country === 'MX') return buildDiagnosticPromptMX(data, cc);
+  return buildDiagnosticPromptCL(data, cc);
+}
+
+function buildActionPlanPrompt(data, cc) {
+  if (data.school_country === 'MX') return buildActionPlanPromptMX(data, cc);
+  return buildActionPlanPromptCL(data, cc);
+}
+
+// ── Chile ─────────────────────────────────────────────────
+function buildDiagnosticPromptCL(data, cc) {
+   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega).
+Idioma: ${cc.idioma}. País: ${cc.pais}. Marco: ${cc.marco}.
+
+Escribe el INFORME DE DIAGNÓSTICO para ${data.escuela} en formato Markdown.
+
+REGLAS ABSOLUTAS:
+- NUNCA uses términos estadísticos sin explicarlos: prohibido "prevalencia", "IC 95%", "Cronbach", "percentil", "p-valor". Usa lenguaje cotidiano.
+- Menciona grados y géneros específicos cuando los datos lo permitan.
+- Cuando menciones un porcentaje, explica qué significa en términos concretos — usa frases como "esto significa que aproximadamente X de cada 10 estudiantes...".
+- No solo reportes los números, interprétalos: explica qué significan para la vida diaria de esos estudiantes.
+- Entre 1000 y 1400 palabras en total.
+// DESPUÉS:
+- Usa el formato Markdown con encabezados ##, negritas y listas.
+- En los DATOS DE LA ENCUESTA encontrarás TRES tipos de indicadores:
+  [⚠️ RIESGO] → un porcentaje ALTO es una mala señal. Más estudiantes afectados.
+  [✅ FORTALEZA] → un porcentaje ALTO es una buena señal. Más estudiantes perciben ese factor positivamente.
+  [🔵 PERCEPCIÓN] → dato orientativo de clima, NO es medida de prevalencia validada.
+  Nunca interpretes un porcentaje ALTO en un indicador [✅ FORTALEZA] como un problema.
+  Nunca uses la etiqueta [⚠️ RIESGO] para un indicador [🔵 PERCEPCIÓN].
+  Cuando menciones "Clima entre niveles" usa OBLIGATORIAMENTE el emoji 🔵 — nunca 🔴, 🟠, 🟡 ni ⚠️.
+- El indicador "Clima entre niveles" es de tipo [🔵 PERCEPCIÓN]. Proviene de una sola pregunta (k=1) — estadísticamente no válido como tasa de prevalencia. Refleja percepción personal de estudiantes sobre el trato entre compañeros de distintos grados. Etiquétalo siempre como [🔵 PERCEPCIÓN] y usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado en percepción personal, no en medición validada de bullying." Sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.ESTRUCTURA OBLIGATORIA:
+
+# Informe de Diagnóstico — ${data.escuela}
+**Fecha:** ${new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" })}
+**Estudiantes encuestados:** ${data.n_estudiantes}
+**Marco:** ${cc.marco}
+
+## 1. ¿Qué encontramos en tu escuela?
+Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo en lenguaje simple (${riskLabel(data.indice_riesgo?.indice)}). Cuántos estudiantes están afectados en las áreas más críticas.
+
+## 2. Áreas más críticas
+Lista con las 3 áreas de mayor preocupación con datos exactos y nivel de semáforo.
+Ordena siempre los indicadores [⚠️ RIESGO] primero, de mayor a menor porcentaje.
+Los indicadores [🔵 PERCEPCIÓN] van siempre AL FINAL, después de todos los [⚠️ RIESGO], sin importar su porcentaje.
+
+## 3. ¿Quiénes son más afectados?
+Párrafo con grados y géneros específicos. Elabora con ejemplos concretos usando los datos — explica qué significan estos números para la vida diaria de esos estudiantes. Si hay estudiantes nuevos en la escuela, explica por qué son más vulnerables y qué los hace un grupo de riesgo prioritario.
+
+## 3b. Observadores y defensores
+Párrafo sobre el rol de los estudiantes que observan o defienden a las víctimas. Usa los datos de bystanders. Explica el concepto de "espectador activo" y su importancia en la reducción del bullying. Si el porcentaje es bajo, señala la oportunidad concreta de activar más defensores y el impacto que esto tendría.
+
+## 4. Espacios de riesgo
+Menciona los espacios físicos donde más ocurren las agresiones según la encuesta.
+
+## 5. Lo que está funcionando
+2-3 fortalezas de la escuela basadas en los datos de factores protectores.
+
+## 6. Próximos pasos
+1 párrafo de transición hacia el Plan de Acción.
+
+## 7. Nota técnica
+Párrafo dirigido a psicólogos o coordinadores con formación técnica. Menciona la fiabilidad de las escalas, si la muestra es representativa, y las principales limitaciones del análisis. Aquí sí puedes usar terminología técnica pero explica cada término brevemente entre paréntesis. Máximo 150 palabras.
+
+---
+*Informe generado por TECH4ZERO *
+
+DATOS DE LA ENCUESTA:
+${buildDataSummary(data)}`;
+}
+
+function buildActionPlanPromptCL(data, cc) {
+  // pega aquí el prompt actual sin cambiar nada
+}
+
+// ── México ────────────────────────────────────────────────
+function buildDiagnosticPromptMX(data, cc) {
   return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega).
 Idioma: ${cc.idioma}. País: ${cc.pais}. Marco: ${cc.marco}.
 
@@ -257,6 +335,72 @@ DATOS DE LA ENCUESTA:
 ${buildDataSummary(data)}`;
 }
 
+function buildActionPlanPromptMX(data, cc) {
+  // prompt nuevo para México
+}
+
+/*
+function buildDiagnosticPrompt(data, cc) {
+  return `Eres un especialista senior en convivencia escolar del Programa ZERO (Universidad de Stavanger, Noruega).
+Idioma: ${cc.idioma}. País: ${cc.pais}. Marco: ${cc.marco}.
+
+Escribe el INFORME DE DIAGNÓSTICO para ${data.escuela} en formato Markdown.
+
+REGLAS ABSOLUTAS:
+- NUNCA uses términos estadísticos sin explicarlos: prohibido "prevalencia", "IC 95%", "Cronbach", "percentil", "p-valor". Usa lenguaje cotidiano.
+- Menciona grados y géneros específicos cuando los datos lo permitan.
+- Cuando menciones un porcentaje, explica qué significa en términos concretos — usa frases como "esto significa que aproximadamente X de cada 10 estudiantes...".
+- No solo reportes los números, interprétalos: explica qué significan para la vida diaria de esos estudiantes.
+- Entre 1000 y 1400 palabras en total.
+// DESPUÉS:
+- Usa el formato Markdown con encabezados ##, negritas y listas.
+- En los DATOS DE LA ENCUESTA encontrarás TRES tipos de indicadores:
+  [⚠️ RIESGO] → un porcentaje ALTO es una mala señal. Más estudiantes afectados.
+  [✅ FORTALEZA] → un porcentaje ALTO es una buena señal. Más estudiantes perciben ese factor positivamente.
+  [🔵 PERCEPCIÓN] → dato orientativo de clima, NO es medida de prevalencia validada.
+  Nunca interpretes un porcentaje ALTO en un indicador [✅ FORTALEZA] como un problema.
+  Nunca uses la etiqueta [⚠️ RIESGO] para un indicador [🔵 PERCEPCIÓN].
+  Cuando menciones "Clima entre niveles" usa OBLIGATORIAMENTE el emoji 🔵 — nunca 🔴, 🟠, 🟡 ni ⚠️.
+- El indicador "Clima entre niveles" es de tipo [🔵 PERCEPCIÓN]. Proviene de una sola pregunta (k=1) — estadísticamente no válido como tasa de prevalencia. Refleja percepción personal de estudiantes sobre el trato entre compañeros de distintos grados. Etiquétalo siempre como [🔵 PERCEPCIÓN] y usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado en percepción personal, no en medición validada de bullying." Sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.ESTRUCTURA OBLIGATORIA:
+
+# Informe de Diagnóstico — ${data.escuela}
+**Fecha:** ${new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" })}
+**Estudiantes encuestados:** ${data.n_estudiantes}
+**Marco:** ${cc.marco}
+
+## 1. ¿Qué encontramos en tu escuela?
+Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo en lenguaje simple (${riskLabel(data.indice_riesgo?.indice)}). Cuántos estudiantes están afectados en las áreas más críticas.
+
+## 2. Áreas más críticas
+Lista con las 3 áreas de mayor preocupación con datos exactos y nivel de semáforo.
+Ordena siempre los indicadores [⚠️ RIESGO] primero, de mayor a menor porcentaje.
+Los indicadores [🔵 PERCEPCIÓN] van siempre AL FINAL, después de todos los [⚠️ RIESGO], sin importar su porcentaje.
+
+## 3. ¿Quiénes son más afectados?
+Párrafo con grados y géneros específicos. Elabora con ejemplos concretos usando los datos — explica qué significan estos números para la vida diaria de esos estudiantes. Si hay estudiantes nuevos en la escuela, explica por qué son más vulnerables y qué los hace un grupo de riesgo prioritario.
+
+## 3b. Observadores y defensores
+Párrafo sobre el rol de los estudiantes que observan o defienden a las víctimas. Usa los datos de bystanders. Explica el concepto de "espectador activo" y su importancia en la reducción del bullying. Si el porcentaje es bajo, señala la oportunidad concreta de activar más defensores y el impacto que esto tendría.
+
+## 4. Espacios de riesgo
+Menciona los espacios físicos donde más ocurren las agresiones según la encuesta.
+
+## 5. Lo que está funcionando
+2-3 fortalezas de la escuela basadas en los datos de factores protectores.
+
+## 6. Próximos pasos
+1 párrafo de transición hacia el Plan de Acción.
+
+## 7. Nota técnica
+Párrafo dirigido a psicólogos o coordinadores con formación técnica. Menciona la fiabilidad de las escalas, si la muestra es representativa, y las principales limitaciones del análisis. Aquí sí puedes usar terminología técnica pero explica cada término brevemente entre paréntesis. Máximo 150 palabras.
+
+---
+*Informe generado por TECH4ZERO *
+
+DATOS DE LA ENCUESTA:
+${buildDataSummary(data)}`;
+}
+*/
 function buildActionPlanPrompt(data, cc) {
   const topRisk = data.top3_riesgo?.[0];
   const eco     = data.ecologia_reporte?.[0];
