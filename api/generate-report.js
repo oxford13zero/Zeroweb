@@ -61,9 +61,9 @@ const COUNTRY_CTX = {
 
 function semaforo(pct) {
   if (pct === null || pct === undefined) return "SIN DATOS";
-  if (pct >= 20) return "CRISIS";
-  if (pct >= 10) return "INTERVENCIÓN";
-  if (pct >= 5)  return "ATENCIÓN";
+  if (pct >= 25) return "CRISIS";
+  if (pct >= 15) return "INTERVENCIÓN";
+  if (pct >= 7)  return "ATENCIÓN";
   return "MONITOREO";
 }
 
@@ -230,11 +230,18 @@ REGLAS ABSOLUTAS:
   Nunca uses la etiqueta [⚠️ RIESGO] para un indicador [🔵 PERCEPCIÓN].
   Cuando menciones "Clima entre niveles" usa OBLIGATORIAMENTE el emoji 🔵 — nunca 🔴, 🟠, 🟡 ni ⚠️.
 - El indicador "Clima entre niveles" es de tipo [🔵 PERCEPCIÓN]. Proviene de una sola pregunta (k=1) — estadísticamente no válido como tasa de prevalencia. Refleja percepción personal de estudiantes sobre el trato entre compañeros de distintos grados. Etiquétalo siempre como [🔵 PERCEPCIÓN] y usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado en percepción personal, no en medición validada de bullying." Sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.ESTRUCTURA OBLIGATORIA:
+- La sección "## Fundamento del Instrumento" debe reproducirse TEXTUALMENTE como aparece en la estructura — sin parafrasear, sin resumir, sin modificar ninguna palabra.
+- La sección "Parrafo textual" de la seccion "## 7. Nota técnica" debe reproducirse TEXTUALMENTE como aparece en la estructura — sin parafrasear, sin resumir, sin modificar ninguna palabra.
 
 # Informe de Diagnóstico — ${data.escuela}
 **Fecha:** ${new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" })}
 **Estudiantes encuestados:** ${data.n_estudiantes}
 **Marco:** ${cc.marco}
+
+## Fundamento del Instrumento
+
+TECH4ZERO es un instrumento de diagnóstico de convivencia escolar basado en el cuestionario de bullying más utilizado del mundo: el Revised Olweus Bully/Victim Questionnaire (OBVQ-R). Con más de 50 años de validaciones científicas y aplicación en más de 40 países, el instrumento cuenta con una cadena de evidencia que va desde su creación en Noruega (1970) hasta su validación específica para Chile en 2021, realizada por Gaete et al. con 2.775 estudiantes de distintos niveles socioeconómicos y en colaboración con universidades chilenas y King's College London.
+El instrumento mide diversas formas de acoso escolar —físico, verbal, indirecto, racial y sexual— diferenciando los roles de víctima, agresor/a y espectador/a, y considerando los espacios donde ocurre el acoso, la percepción del entorno y la frecuencia mediante una escala Likert validada. Está alineado con la Política Nacional de Convivencia Educativa 2024–2030 del MINEDUC, lo que lo convierte en una herramienta académicamente sólida y apta para sustentar decisiones de gestión escolar con respaldo científico.
 
 ## 1. ¿Qué encontramos en tu escuela?
 Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo en lenguaje simple (${riskLabel(data.indice_riesgo?.indice)}). Cuántos estudiantes están afectados en las áreas más críticas.
@@ -261,6 +268,8 @@ Menciona los espacios físicos donde más ocurren las agresiones según la encue
 
 ## 7. Nota técnica
 Párrafo dirigido a psicólogos o coordinadores con formación técnica. Menciona la fiabilidad de las escalas, si la muestra es representativa, y las principales limitaciones del análisis. Aquí sí puedes usar terminología técnica pero explica cada término brevemente entre paréntesis. Máximo 150 palabras.
+Parrafo textual: El sistema de semáforo de TECH4ZERO clasifica el riesgo de bullying en las escuelas en cuatro niveles —Monitoreo, Atención, Intervención y Crisis— según la prevalencia de victimización frecuente. Cada umbral está anclado en evidencia científica internacional: el 7% en datos de España (6.2%, 20.662 estudiantes), el 15% en la prevalencia nacional mexicana (19–21%), y el 25% en el promedio mundial reportado por un meta-análisis de 116 estudios con más de 600.000 participantes. Las escuelas que no superan ningún umbral quedan en Monitoreo, indicando una situación dentro del rango esperado.
+La validez del sistema para contextos latinoamericanos se apoya en tres argumentos: los umbrales están construidos de forma escalonada entre el país hispanohablante con menor prevalencia documentada (España) y el promedio global, conteniendo así la variación regional observada. Además, los datos chilenos —donde la victimización frecuente pasó del 11% al 19% entre 2012 y 2022— caen coherentemente dentro de las categorías del semáforo. Por último, una revisión latinoamericana reporta prevalencias de entre 4.6% y 50% según país e instrumento, rango que el semáforo cubre en su totalidad, lo que lo hace aplicable como referencia comparativa en cualquier país de la región.
 
 ---
 *Informe generado por TECH4ZERO *
@@ -296,11 +305,18 @@ REGLAS ABSOLUTAS:
   Nunca uses la etiqueta [⚠️ RIESGO] para un indicador [🔵 PERCEPCIÓN].
   Cuando menciones "Clima entre niveles" usa OBLIGATORIAMENTE el emoji 🔵 — nunca 🔴, 🟠, 🟡 ni ⚠️.
 - El indicador "Clima entre niveles" es de tipo [🔵 PERCEPCIÓN]. Proviene de una sola pregunta (k=1) — estadísticamente no válido como tasa de prevalencia. Refleja percepción personal de estudiantes sobre el trato entre compañeros de distintos grados. Etiquétalo siempre como [🔵 PERCEPCIÓN] y usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado en percepción personal, no en medición validada de bullying." Sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.ESTRUCTURA OBLIGATORIA:
+- La sección "## Fundamento del Instrumento" debe reproducirse TEXTUALMENTE como aparece en la estructura — sin parafrasear, sin resumir, sin modificar ninguna palabra.
+- La sección "Parrafo textual" de la seccion "## 7. Nota técnica" debe reproducirse TEXTUALMENTE como aparece en la estructura — sin parafrasear, sin resumir, sin modificar ninguna palabra.
 
 # Informe de Diagnóstico — ${data.escuela}
 **Fecha:** ${new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" })}
 **Estudiantes encuestados:** ${data.n_estudiantes}
 **Marco:** ${cc.marco}
+
+## Fundamento del Instrumento
+
+TECH4ZERO es un instrumento de diagnóstico de convivencia escolar basado en el cuestionario de bullying más utilizado del mundo: el Revised Olweus Bully/Victim Questionnaire (OBVQ-R). Con más de 50 años de validaciones científicas y aplicación en más de 40 países, el instrumento cuenta con una cadena de evidencia que va desde su creación en Noruega (1970) hasta su validación específica para Chile en 2021, realizada por Gaete et al. con 2.775 estudiantes de distintos niveles socioeconómicos y en colaboración con universidades chilenas y King's College London.
+El instrumento mide diversas formas de acoso escolar —físico, verbal, indirecto, racial y sexual— diferenciando los roles de víctima, agresor/a y espectador/a, y considerando los espacios donde ocurre el acoso, la percepción del entorno y la frecuencia mediante una escala Likert validada. Está alineado con la Política Nacional de Convivencia Educativa 2024–2030 del MINEDUC, lo que lo convierte en una herramienta académicamente sólida y apta para sustentar decisiones de gestión escolar con respaldo científico.
 
 ## 1. ¿Qué encontramos en tu escuela?
 Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo en lenguaje simple (${riskLabel(data.indice_riesgo?.indice)}). Cuántos estudiantes están afectados en las áreas más críticas.
@@ -327,6 +343,8 @@ Menciona los espacios físicos donde más ocurren las agresiones según la encue
 
 ## 7. Nota técnica
 Párrafo dirigido a psicólogos o coordinadores con formación técnica. Menciona la fiabilidad de las escalas, si la muestra es representativa, y las principales limitaciones del análisis. Aquí sí puedes usar terminología técnica pero explica cada término brevemente entre paréntesis. Máximo 150 palabras.
+Parrafo textual: El sistema de semáforo de TECH4ZERO clasifica el riesgo de bullying en las escuelas en cuatro niveles —Monitoreo, Atención, Intervención y Crisis— según la prevalencia de victimización frecuente. Cada umbral está anclado en evidencia científica internacional: el 7% en datos de España (6.2%, 20.662 estudiantes), el 15% en la prevalencia nacional mexicana (19–21%), y el 25% en el promedio mundial reportado por un meta-análisis de 116 estudios con más de 600.000 participantes. Las escuelas que no superan ningún umbral quedan en Monitoreo, indicando una situación dentro del rango esperado.
+La validez del sistema para contextos latinoamericanos se apoya en tres argumentos: los umbrales están construidos de forma escalonada entre el país hispanohablante con menor prevalencia documentada (España) y el promedio global, conteniendo así la variación regional observada. Además, los datos chilenos —donde la victimización frecuente pasó del 11% al 19% entre 2012 y 2022— caen coherentemente dentro de las categorías del semáforo. Por último, una revisión latinoamericana reporta prevalencias de entre 4.6% y 50% según país e instrumento, rango que el semáforo cubre en su totalidad, lo que lo hace aplicable como referencia comparativa en cualquier país de la región.
 
 ---
 *Informe generado por TECH4ZERO *
@@ -362,6 +380,8 @@ REGLAS ABSOLUTAS:
   Nunca uses la etiqueta [⚠️ RIESGO] para un indicador [🔵 PERCEPCIÓN].
   Cuando menciones "Clima entre niveles" usa OBLIGATORIAMENTE el emoji 🔵 — nunca 🔴, 🟠, 🟡 ni ⚠️.
 - El indicador "Clima entre niveles" es de tipo [🔵 PERCEPCIÓN]. Proviene de una sola pregunta (k=1) — estadísticamente no válido como tasa de prevalencia. Refleja percepción personal de estudiantes sobre el trato entre compañeros de distintos grados. Etiquétalo siempre como [🔵 PERCEPCIÓN] y usa exactamente este encuadre: "X% de los estudiantes percibe que el trato entre alumnos de distintos grados no siempre es respetuoso — dato orientativo basado en percepción personal, no en medición validada de bullying." Sin semáforo, sin lenguaje alarmista, sin recomendaciones de intervención urgente basadas exclusivamente en este dato.ESTRUCTURA OBLIGATORIA:
+- La sección "## Fundamento del Instrumento" debe reproducirse TEXTUALMENTE como aparece en la estructura — sin parafrasear, sin resumir, sin modificar ninguna palabra.
+- La sección "## Fundamento del Instrumento" debe reproducirse TEXTUALMENTE como aparece en la estructura — sin parafrasear, sin resumir, sin modificar ninguna palabra.
 
 # Informe de Diagnóstico — ${data.escuela}
 **Fecha:** ${new Date().toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" })}
@@ -393,6 +413,8 @@ Menciona los espacios físicos donde más ocurren las agresiones según la encue
 
 ## 7. Nota técnica
 Párrafo dirigido a psicólogos o coordinadores con formación técnica. Menciona la fiabilidad de las escalas, si la muestra es representativa, y las principales limitaciones del análisis. Aquí sí puedes usar terminología técnica pero explica cada término brevemente entre paréntesis. Máximo 150 palabras.
+Parrafo textual: El sistema de semáforo de TECH4ZERO clasifica el riesgo de bullying en las escuelas en cuatro niveles —Monitoreo, Atención, Intervención y Crisis— según la prevalencia de victimización frecuente. Cada umbral está anclado en evidencia científica internacional: el 7% en datos de España (6.2%, 20.662 estudiantes), el 15% en la prevalencia nacional mexicana (19–21%), y el 25% en el promedio mundial reportado por un meta-análisis de 116 estudios con más de 600.000 participantes. Las escuelas que no superan ningún umbral quedan en Monitoreo, indicando una situación dentro del rango esperado.
+La validez del sistema para contextos latinoamericanos se apoya en tres argumentos: los umbrales están construidos de forma escalonada entre el país hispanohablante con menor prevalencia documentada (España) y el promedio global, conteniendo así la variación regional observada. Además, los datos chilenos —donde la victimización frecuente pasó del 11% al 19% entre 2012 y 2022— caen coherentemente dentro de las categorías del semáforo. Por último, una revisión latinoamericana reporta prevalencias de entre 4.6% y 50% según país e instrumento, rango que el semáforo cubre en su totalidad, lo que lo hace aplicable como referencia comparativa en cualquier país de la región.
 
 ---
 *Informe generado por TECH4ZERO *
