@@ -520,18 +520,78 @@ export default async function handler(req, res) {
       messages:   [{ role: "user", content: prompt }],
     });
 
-    const markdown = message.content[0]?.text || "";
 
-    // Return as downloadable .md file
+const markdown = message.content[0]?.text || "";
+
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel,
+            LevelFormat, AlignmentType } = await import("docx");
+
+    function parseBold(text) {
+      return text.split(/\*\*(.*?)\*\*/g)
+        .filter(p => p !== "")
+        .map((part, i) => new TextRun({
+          text: part, bold: i % 2 === 1, font: "Arial", size: 24
+        }));
+    }
+
+    const docChildren = [];
+    for (const line of markdown.split("\n")) {
+      if (line.startsWith("# ")) {
+        docChildren.push(new Paragraph({ heading: HeadingLevel.HEADING_1, children: [new TextRun({ text: line.replace(/^# /, ""), font: "Arial" })] }));
+      } else if (line.startsWith("## ")) {
+        docChildren.push(new Paragraph({ heading: HeadingLevel.HEADING_2, children: [new TextRun({ text: line.replace(/^## /, ""), font: "Arial" })] }));
+      } else if (line.startsWith("### ")) {
+        docChildren.push(new Paragraph({ heading: HeadingLevel.HEADING_3, children: [new TextRun({ text: line.replace(/^### /, ""), font: "Arial" })] }));
+      } else if (line.startsWith("- ") || line.startsWith("* ")) {
+        docChildren.push(new Paragraph({ numbering: { reference: "bullets", level: 0 }, children: parseBold(line.replace(/^[-*] /, "")) }));
+      } else if (line.trim() === "" || line.startsWith("---")) {
+        docChildren.push(new Paragraph({ text: "" }));
+      } else {
+        docChildren.push(new Paragraph({ children: parseBold(line) }));
+      }
+    }
+
+    const doc = new Document({
+      styles: {
+        default: { document: { run: { font: "Arial", size: 24 } } },
+        paragraphStyles: [
+          { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal",
+            run: { size: 36, bold: true, font: "Arial", color: "1F3864" },
+            paragraph: { spacing: { before: 240, after: 120 } } },
+          { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal",
+            run: { size: 28, bold: true, font: "Arial", color: "2E75B6" },
+            paragraph: { spacing: { before: 200, after: 100 } } },
+          { id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal",
+            run: { size: 24, bold: true, font: "Arial" },
+            paragraph: { spacing: { before: 160, after: 80 } } },
+        ]
+      },
+      numbering: {
+        config: [{ reference: "bullets",
+          levels: [{ level: 0, format: LevelFormat.BULLET, text: "•",
+            alignment: AlignmentType.LEFT,
+            style: { paragraph: { indent: { left: 720, hanging: 360 } } } }]
+        }]
+      },
+      sections: [{
+        properties: { page: { size: { width: 11906, height: 16838 }, margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 } } },
+        children: docChildren,
+      }]
+    });
+
+    const buffer = await Packer.toBuffer(doc);
     const escuela  = (dashData.escuela || "escuela").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
     const dateStr  = new Date().toISOString().slice(0, 10);
     const typeStr  = type === "diagnostic" ? "diagnostico" : "plan_accion";
-    const filename = `${typeStr}_TECH4ZERO_${escuela}_${dateStr}.md`;
+    const filename = `${typeStr}_TECH4ZERO_${escuela}_${dateStr}.docx`;
 
-    res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-    return res.status(200).send(markdown);
+    return res.status(200).send(buffer);
 
+
+
+    
   } catch (e) {
     console.error("Anthropic error:", e);
     return res.status(500).json({ ok: false, error: "GENERATION_FAILED", detail: e.message });
