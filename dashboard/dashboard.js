@@ -339,10 +339,10 @@
     MONITOREO:    { label:'SEGUIMIENTO ACTIVO',       color:'#9FE1CB', bg:'#0a1a0a', border:'#0F6E56' },
   };
 
-  function getSem(pct) {
-    if (pct >= 20) return CAT_STYLE.CRISIS;
-    if (pct >= 10) return CAT_STYLE.INTERVENCION;
-    if (pct >= 5)  return CAT_STYLE.ATENCION;
+function getSem(pct) {
+    if (pct >= 25) return CAT_STYLE.CRISIS;
+    if (pct >= 15) return CAT_STYLE.INTERVENCION;
+    if (pct >=  7) return CAT_STYLE.ATENCION;
     return CAT_STYLE.MONITOREO;
   }
 
