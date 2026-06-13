@@ -3604,21 +3604,43 @@ btnCerrarSesion?.addEventListener('click', async () => {
     if (privacyAccept) privacyAccept.checked = false;
     if (btnPrivacyContinue) btnPrivacyContinue.disabled = true;
 
-    // Switch privacy modal text based on chosen language
     const isES = (CHOSEN_LANGUAGE === 'es');
+
+    // Title
     const titleEl = privacyModal.querySelector('.modalTitle');
+    if (titleEl) titleEl.textContent = isES ? '🔒 Tu privacidad está protegida' : '🔒 Your privacy is protected';
+
+    // Buttons
     const continueBtn = document.getElementById('btnPrivacyContinue');
     const cancelBtn = document.getElementById('btnPrivacyCancel');
-    if (titleEl) titleEl.textContent = isES ? '🔒 Tu privacidad está protegida' : '🔒 Your privacy is protected';
     if (continueBtn) continueBtn.textContent = isES ? 'Continuar con la encuesta' : 'Continue to the survey';
     if (cancelBtn) cancelBtn.textContent = isES ? 'Cancelar' : 'Cancel';
 
-    // Switch privacy text paragraphs
-    const paras = privacyModal.querySelectorAll('p');
-    if (paras.length > 0) {
-      paras[0].innerHTML = isES
+    // Checkbox label
+    const checkLabel = privacyModal.querySelector('label span');
+    if (checkLabel) checkLabel.textContent = isES
+      ? 'He leído y entiendo que esta encuesta es anónima y confidencial'
+      : 'I have read and understand that this survey is anonymous and confidential';
+
+    // Main content box
+    const box = privacyModal.querySelector('.modalBox > div');
+    if (box) {
+      const paras = box.querySelectorAll('p');
+      if (paras[0]) paras[0].innerHTML = isES
         ? '<strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>'
         : '<strong style="color:#D6A21C;">This survey is 100% anonymous and confidential.</strong>';
+      if (paras[1]) paras[1].innerHTML = isES
+        ? '✅ No guardamos tu nombre, ni preguntamos quién eres.'
+        : '✅ We do not store your name or ask who you are.';
+      if (paras[2]) paras[2].innerHTML = isES
+        ? '✅ Nadie -ni profesores, ni directores, ni otros estudiantes- pueden conocer tus respuestas.'
+        : '✅ No one — not teachers, principals, or other students — can see your answers.';
+      if (paras[3]) paras[3].innerHTML = isES
+        ? '✅ Tu sinceridad ayuda a crear una escuela más segura para todos.'
+        : '✅ Your honesty helps create a safer school for everyone.';
+      if (paras[4]) paras[4].innerHTML = isES
+        ? '<em><strong>Gracias por participar</strong></em>'
+        : '<em><strong>Thank you for participating</strong></em>';
     }
 
     privacyModal.style.display = 'flex';
