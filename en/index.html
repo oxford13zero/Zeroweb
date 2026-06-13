@@ -4164,7 +4164,7 @@ window.cerrarAnalisisPanel = function() {
         })();
       } else {
         optionsDiv.innerHTML = `<div class="statusMsg statusWarn">Cargando opciones...</div>`;
-        const iconLabels = ['A','B','C','D','E','F'];
+        const iconLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
         (async () => {
           try {
             const opts = await getOptionsForQuestion(dbQid);
