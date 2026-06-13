@@ -404,25 +404,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const btn      = document.getElementById('btnForceChangeSubmit');
 
     if (!current || !newPwd || !confirm) {
-      setForceChangeMsg('Por favor completa todos los campos.', 'statusWarn');
+      setForceChangeMsg('Please complete all fields.', 'statusWarn');
       return;
     }
     if (newPwd.length < 8) {
-      setForceChangeMsg('La nueva contraseña debe tener al menos 8 caracteres.', 'statusWarn');
+      setForceChangeMsg('The new password must be at least 8 characters.', 'statusWarn');
       return;
     }
     if (newPwd !== confirm) {
-      setForceChangeMsg('Las contraseñas no coinciden.', 'statusErr');
+      setForceChangeMsg('Passwords do not match.', 'statusErr');
       return;
     }
     if (current === newPwd) {
-      setForceChangeMsg('La nueva contraseña debe ser diferente a la actual.', 'statusWarn');
+      setForceChangeMsg('The new password must be different from the current one.', 'statusWarn');
       return;
     }
 
     try {
       btn.disabled = true;
-      setForceChangeMsg('Guardando...', 'statusWarn');
+      setForceChangeMsg('Saving...', 'statusWarn');
 
       const res = await fetch('/api/change-password', {
         method: 'POST',
@@ -436,12 +436,12 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!res.ok || !data.ok) {
         const msg = data.error === 'WRONG_CURRENT_PASSWORD'
           ? 'La contraseña actual es incorrecta.'
-          : data.detail || 'No se pudo actualizar. Intenta de nuevo.';
+          : data.detail || 'Could not update. Please try again.';
         setForceChangeMsg(msg, 'statusErr');
         return;
       }
 
-      setForceChangeMsg('✅ Current passwordizada.', 'statusOk');
+      setForceChangeMsg('✅ Password updated.', 'statusOk');
       window.sessionState.must_change_password = false;
 
       setTimeout(() => {
@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 1200);
 
     } catch (e) {
-      setForceChangeMsg('Error de conexión. Intenta de nuevo.', 'statusErr');
+      setForceChangeMsg('Connection error. Please try again.', 'statusErr');
     } finally {
       btn.disabled = false;
     }
@@ -458,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Prevent closing by clicking outside
   document.getElementById('forceChangeModal')?.addEventListener('click', function(e) {
     if (e.target === this) {
-      setForceChangeMsg('Debes establecer tu contraseña para continuar.', 'statusWarn');
+      setForceChangeMsg('You must set your password to continue.', 'statusWarn');
     }
   });
 });
@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="#" onclick="showTab('programa');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">PROGRAM</a>
     <a href="#" onclick="showTab('testimonios');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">TESTIMONIALS</a>
     <a href="#" onclick="showTab('equipo');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">TEAM</a>
-    <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">INVESTMENT</a>
+    <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">INVERSIÓN</a>
     <a href="#" onclick="showTab('contacto');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">CONTACT</a>
     <a id="navEncuesta" href="#" onclick="showTab('encuesta');return false;" style="display:none;color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">SURVEY</a>
     <a id="navResultados" href="#" onclick="showTab('resultados');return false;" style="display:none;color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">RESULTS</a>
@@ -522,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <a href="#" onclick="showTab('programa');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">PROGRAM</a>
   <a href="#" onclick="showTab('testimonios');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">TESTIMONIALS</a>
   <a href="#" onclick="showTab('equipo');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">TEAM</a>
-  <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">INVESTMENT</a>
+  <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">INVERSIÓN</a>
   <a href="#" onclick="showTab('contacto');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">CONTACT</a>
   <div style="padding:12px 24px;">
     <button onclick="openAccesoUsuarios()" style="width:100%;padding:11px;background:#D6A21C;color:#0f1d27;font-weight:700;font-size:14px;border:none;border-radius:8px;cursor:pointer;font-family:'Open Sans',sans-serif;">USER ACCESS</button>
@@ -542,14 +542,14 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="heroSection">
     <div class="heroGlow"></div>
     <div class="heroContent">
-      <h1 class="heroHeadline">¿Sabes realmente lo que está<br>pasando en tu escuela?</h1>
+      <h1 class="heroHeadline">Do you really know what's<br>happening in your school?</h1>
       <p class="heroSubheadline">En 48 horas te entregamos un diagnóstico completo del clima escolar y un plan de accion 
        respaldado por UNESCO y ESSA, listo para implementar.<br>
       Identificamos acoso, zonas de riesgo, clima por salón y señales tempranas que el ojo humano no detecta.<br>
         No recibirás un informe estándar.
         Recibirás recomendaciones personalizadas para tu escuela</p><br>
       <!-- CHANGE 1: quiz trigger -->
-      <button class="heroCTA" type="button" onclick="openQuiz()">¿Quieres ver tu escuela con los ojos de tus estudiantes? — Mini evaluación en 2 minutos</button>
+      <button class="heroCTA" type="button" onclick="openQuiz()">Want to see your school through your students' eyes? — 2-minute self-assessment</button>
     </div>
   </div>
 <!-- comentario -->
@@ -562,11 +562,11 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 
   <div class="credibilityBar">
-    ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
+    ✅ &nbsp;+300 schools assessed &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;Mexico · Chile · Costa Rica · Dominican Rep. · USA &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Aligned with UNESCO and ESSA
   </div>
 </section>
 
-  <!---------------------  PROGRAM ----------------------------->
+  <!---------------------  PROGRAMA ----------------------------->
 
   
 <section id="programa">
@@ -574,10 +574,10 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- SECCIÓN 2 — EL PROBLEMA -->
   <div class="programaSection" style="background:#0a1520;">
     <div class="sectionInner">
-      <h3>Un problema generalizado</h3>
+      <h3>A widespread problem</h3>
       <p class="sectionBody">
-        La mayoría de los incidentes de violencia escolar nunca llegan a tu escritorio. Los estudiantes no reportan. Los docentes no siempre identifican las señales. Y cuando el problema se hace visible, ya escaló.<br><br>
-        Mientras tanto, tú eres responsable de lo que ocurre en cada salón, en cada pasillo, en cada espacio digital de tu comunidad escolar.
+        Most school violence incidents never reach your desk. Students don't report. Teachers don't always identify the warning signs. And by the time the problem becomes visible, it has already escalated.<br><br>
+        Meanwhile, you are responsible for what happens in every classroom, every hallway, every digital space in your school community.
       </p>
       <div class="overlayGrid">
         <div class="overlayCard">
@@ -585,9 +585,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <span class="oIcon">🎯</span><div class="oLine"></div>
-            <div class="oTitle">El 70% del acoso ocurre fuera del aula</div>
-            <div class="oText">En pasillos, baños y entornos digitales que no supervisas.</div>
-            <span class="oTag">📍 Zona ciega</span>
+            <div class="oTitle">70% of bullying happens outside the classroom</div>
+            <div class="oText">In hallways, bathrooms and digital spaces you don't supervise.</div>
+            <span class="oTag">📍 Blind spot</span>
           </div>
         </div>
         <div class="overlayCard">
@@ -595,9 +595,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <span class="oIcon">📉</span><div class="oLine"></div>
-            <div class="oTitle">Rinden hasta 18 puntos menos en matemáticas y lectura</div>
-            <div class="oText">Los estudiantes afectados. <em style="color:#4a6070;">(Fuente: UNESCO/TERCE, 16 países)</em></div>
-            <span class="oTag">📊 Impacto académico</span>
+            <div class="oTitle">Up to 18 points lower in math and reading</div>
+            <div class="oText">Among affected students. <em style="color:#4a6070;">(Source: UNESCO/TERCE, 16 countries)</em></div>
+            <span class="oTag">📊 Academic impact</span>
           </div>
         </div>
         <div class="overlayCard">
@@ -605,9 +605,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <span class="oIcon">⚖️</span><div class="oLine"></div>
-            <div class="oTitle">Una denuncia mal gestionada puede escalar</div>
-            <div class="oText">Consecuencias legales, mediáticas y reputacionales para tu institución.</div>
-            <span class="oTag">⚠️ Riesgo institucional</span>
+            <div class="oTitle">A mishandled complaint can escalate fast</div>
+            <div class="oText">Legal, media and reputational consequences for your institution.</div>
+            <span class="oTag">⚠️ Institutional risk</span>
           </div>
         </div>
       </div>
@@ -617,7 +617,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- SECCIÓN 3 — LA SOLUCIÓN -->
   <div class="programaSection" style="background:#1E2F3F;">
     <div class="sectionInner">
-      <h3>Te entregamos: el diagnóstico exacto de tu escuela y el plan concreto para actuar.</h3>
+      <h3>We deliver: the exact diagnosis of your school and a concrete plan to act.</h3>
       <p class="sectionBody">
         En 3 pasos y 48 horas, TECH4ZERO te entrega un diagnóstico completo del clima escolar de tu escuela y recomendaciones para implementar.
         Primero, toda tu comunidad escolar — estudiantes y docentes — responde una encuesta online, anónima y confidencial.
@@ -631,12 +631,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
-              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">STEP</span>
               <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">1</span>
             </div>
             <div class="oLine"></div>
-            <div class="oTitle">Tu comunidad responde</div>
-            <div class="oText">Estudiantes y docentes completan una encuesta online, anónima y confidencial — desde cualquier dispositivo.</div>
+            <div class="oTitle">Your community responds</div>
+            <div class="oText">Students and teachers complete an online, anonymous and confidential survey — from any device.</div>
           </div>
         </div>
         <div class="overlayCard">
@@ -644,12 +644,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
-              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">STEP</span>
               <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">2</span>
             </div>
             <div class="oLine"></div>
-            <div class="oTitle">Nuestros expertos analizan</div>
-            <div class="oText">Procesamos los resultados con estadística avanzada e IA — detectando patrones, zonas de riesgo y predicciones precisas.</div>
+            <div class="oTitle">Our experts analyze</div>
+            <div class="oText">We process results with advanced statistics and AI — detecting patterns, risk zones and precise predictions.</div>
           </div>
         </div>
         <div class="overlayCard">
@@ -657,11 +657,11 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="overlayDark"></div>
           <div class="overlayContent">
             <div style="display:inline-flex;align-items:center;gap:8px;background:#27AE60;border-radius:8px;padding:8px 16px;margin-bottom:12px;">
-              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">PASO</span>
+              <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;font-family:'Open Sans',sans-serif;">STEP</span>
               <span style="font-size:28px;font-weight:900;color:#fff;line-height:1;font-family:'Open Sans',sans-serif;">3</span>
             </div>
             <div class="oLine"></div>
-            <div class="oTitle">Tú recibes en 48 horas</div>
+            <div class="oTitle">You receive in 48 hours</div>
             <div class="oText">Dos documentos: el diagnóstico exacto de tu escuela y recomendaciones a la medida — listo para implementar de inmediato.</div>
           </div>
         </div>
@@ -669,16 +669,16 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 
-  <!-- SECCIÓN 4 — RESULTS REALES -->
+  <!-- SECCIÓN 4 — RESULTADOS REALES -->
   <div class="programaSection" style="background:#16222D;">
     <div class="sectionInner">
-      <h3>Los números hablan por sí solos</h3>
+      <h3>The numbers speak for themselves</h3>
       <div class="statsGrid">
-        <div class="statCard"><div class="statNumber">37%</div><div class="statDesc">reducción promedio de incidentes reportados a los 90 días</div></div>
-        <div class="statCard"><div class="statNumber">92%</div><div class="statDesc">de docentes reportan mayor confianza para identificar señales tempranas</div></div>
-        <div class="statCard"><div class="statNumber">4.2x</div><div class="statDesc">más intervenciones preventivas vs. reactivas en escuelas implementadas</div></div>
+        <div class="statCard"><div class="statNumber">37%</div><div class="statDesc">average reduction in reported incidents at 90 days</div></div>
+        <div class="statCard"><div class="statNumber">92%</div><div class="statDesc">of teachers report greater confidence identifying early warning signs</div></div>
+        <div class="statCard"><div class="statNumber">4.2x</div><div class="statDesc">more preventive vs. reactive interventions in implemented schools</div></div>
       </div>
-      <p class="statsNote">Datos consolidados de cohortes 2023–2025. Resultados varían según contexto institucional.</p>
+      <p class="statsNote">Consolidated data from 2023–2025 cohorts. Results vary by institutional context.</p>
     </div>
   </div>
 
@@ -696,7 +696,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-  <!---------------------  SURVEY ----------------------------->
+  <!---------------------  ENCUESTA ----------------------------->
 
 
   
@@ -709,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </p>
 
     <div id="encuestaOK" class="formPanel" style="display:block; max-width:520px;">
-      <p id="schoolWelcome" style="margin:0 0 12px 0;">Estado de sesión: Not authenticated.</p>
+      <p id="schoolWelcome" style="margin:0 0 12px 0;">Session status: Not authenticated.</p>
 
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
         <button id="btnIngresarEncuesta" class="btnPrimary" type="button">Enter the survey</button>
@@ -760,7 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div id="qOptions"></div>
 
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-        <button id="btnQPrev" class="btnSecondary" type="button">Anterior</button>
+        <button id="btnQPrev" class="btnSecondary" type="button">Previous</button>
         <button id="btnQNext" class="btnPrimary" type="button">Siguiente</button>
       </div>
 
@@ -770,7 +770,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-  <!---------------------  RESULTS ----------------------------->
+  <!---------------------  RESULTADOS ----------------------------->
 
   
 <section id="resultados">
@@ -783,13 +783,13 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <div style="font-size:12px; color:#7a9aaa; border-left:1.5px solid #2a3f52; padding:8px 12px; margin-bottom:20px; line-height:1.6;">
-      Only surveys approved by the TECH4ZERO team appear in results.
+      Solo las encuestas aprobadas por el equipo TECH4ZERO aparecen en resultados.
     </div>
 
-    <div style="font-size:11px; font-weight:600; letter-spacing:1px; color:#5a7a8a; text-transform:uppercase; margin-bottom:14px;">Digital survey</div>
+    <div style="font-size:11px; font-weight:600; letter-spacing:1px; color:#5a7a8a; text-transform:uppercase; margin-bottom:14px;">Encuesta digital</div>
 
     <button id="btnMostrarResultados" class="btnPrimary" type="button" style="width:100%; margin-bottom:10px;">
-      View approved results
+      Ver resultados aprobados
     </button>
 
     <button id="btnSolicitarAnalisis" class="btnSecondary" type="button" style="width:100%;">
@@ -800,22 +800,22 @@ document.addEventListener('DOMContentLoaded', function() {
     <hr style="border:none; border-top:0.5px solid #2a3f52; margin:22px 0;">
 
     <div style="border:1px solid #D6A21C; border-radius:10px; padding:18px; margin-top:4px;">
-      <div style="font-size:11px; font-weight:700; letter-spacing:1px; color:#D6A21C; text-transform:uppercase; margin-bottom:4px;">Paper survey</div>
-      <div style="font-size:12px; color:#5a7a8a; margin-bottom:14px;">Download the template, complete the responses and upload the file.</div>
+      <div style="font-size:11px; font-weight:700; letter-spacing:1px; color:#D6A21C; text-transform:uppercase; margin-bottom:4px;">Encuesta en papel</div>
+      <div style="font-size:12px; color:#5a7a8a; margin-bottom:14px;">Descarga la plantilla, completa las respuestas y sube el archivo.</div>
 
       <a id="btnDescargaSecundaria" href="#" download
          style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:#0f1923;">
-        ⬇ Middle / High School template
+        ⬇ Plantilla Secundaria / Preparatoria
       </a>
 
       <a id="btnDescargaPrimaria" href="#" download
          style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:#0f1923;">
-        ⬇ Elementary template
+        ⬇ Plantilla Primaria
       </a>
 
       <label id="btnSubirCSV"
          style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:0; cursor:pointer; background:#0f1923;">
-        📂 Upload CSV file with responses
+        📂 Subir archivo CSV con respuestas
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
       </label>
 
@@ -870,25 +870,25 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 
-  <!---------------------  TEAM ----------------------------->
+  <!---------------------  EQUIPO ----------------------------->
 
 <section id="equipo">
-  <h2>Nuestro Equipo</h2>
-  <div class="card"><p>Equipo interdisciplinario de especialistas en educación, psicología y tecnología comprometidos con comunidades escolares seguras.</p></div>
+  <h2>Our Team</h2>
+  <div class="card"><p>An interdisciplinary team of specialists in education, psychology and technology committed to safe school communities.</p></div>
   <div class="card" style="margin-top:18px;">
     <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px;">
 
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
         <img src="../Marcos.png" alt="Foto Integrante 2" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Marcos Miranda</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Doctor en Educacion</div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Marcos convierte ambientes escolares desafiantes en espacios de pertenencia, respeto y alto rendimiento. Su enfoque único combina ciencia, equidad y liderazgo para generar cambios reales y duraderos en la cultura escolar.</p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Doctor of Education</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Marcos transforms challenging school environments into spaces of belonging, respect and high performance. His unique approach combines science, equity and leadership to generate real and lasting change in school culture.</p>
       </div>
 
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
         <img src="../Rodyfoto77.png" alt="Foto Integrante 1" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Rodolfo Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Psicologia de la Educacion - Profesor de Historia y Geografía.</div>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master's in Educational Psychology — History and Geography Teacher.</div>
         <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Rodolfo enseña habilidades socioemocionales en el mundo educativo. Ha sido invitado por la ciudad de Neuss, en Alemania, para liderar el programa Die Welt Erziehung Und Die Neuerung (Educación e Innovación Mundial) y ha implementado exitosamente el programa Tech4Zero en Chile, México, Costa Rica, República Dominicana y Estados Unidos.</p>
       </div>
       
@@ -902,8 +902,8 @@ document.addEventListener('DOMContentLoaded', function() {
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
         <img src="../Lesterfoto55.png" alt="Foto Integrante 3" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Lester Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Ingenieria en Computacion</div>
-        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Consultor senior en datos, inteligencia artificial y tecnología, modernizando y asegurando sistemas de misión crítica en los sectores de educación, salud y minería. Experto en interacción humano-tecnologíca en entornos de alto riesgo.</p>
+        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master's in Computer Engineering</div>
+        <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Senior consultant in data, artificial intelligence and technology, modernizing and securing mission-critical systems in education, healthcare and mining. Expert in human-technology interaction in high-risk environments.</p>
       </div>
 
 
@@ -919,8 +919,8 @@ document.addEventListener('DOMContentLoaded', function() {
       <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(14,28,40,0.85) 0%, rgba(14,28,40,0.2) 60%, transparent 100%);"></div>
       <div style="position:absolute; bottom:0; left:0; padding:28px 32px;">
         <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:14px;"></div>
-        <div style="font-family:'Open Sans',sans-serif; font-size:22px; font-weight:600; color:#fff; margin-bottom:6px;">Expertos en Educación, psicología e ingeniería — trabajando juntos para transformar escuelas.</div>
-        <div style="font-size:16px; color:#a9c0d3; line-height:1.6;">EL TEAM TECH4ZERO.</div>
+        <div style="font-family:'Open Sans',sans-serif; font-size:22px; font-weight:600; color:#fff; margin-bottom:6px;">Experts in education, psychology and engineering — working together to transform schools.</div>
+        <div style="font-size:16px; color:#a9c0d3; line-height:1.6;">THE TECH4ZERO TEAM.</div>
       </div>
     
     </div>
@@ -928,10 +928,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 
-  <!---------------------  CONTACT ----------------------------->
+  <!---------------------  CONTACTO ----------------------------->
   
 <section id="contacto">
-  <h2>Contáctenos</h2>
+  <h2>Contact Us</h2>
 
   <div class="card">
     <!--
@@ -976,7 +976,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
         <span style="position:absolute; bottom:-10px; right:-4px; font-size:80px; opacity:0.28; pointer-events:none; user-select:none;">MX</span>
        <!-- <div style="font-size:22px; margin-bottom:6px;">🇲🇽</div> -->
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Ciudad de México</div>
+        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Mexico City</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           Sor Juana Ines de la Cruz 248 A
           Agricultura, <br>
@@ -1030,8 +1030,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <div>
             <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:16px;">
             </div>
-            <p style="font-family:'Playfair Display',serif; font-size:18px; line-height:1.7; color:#ffffff; margin:0 0 16px 0; font-style:italic;">"No necesitas tener todo claro antes de escribirnos. Cuéntanos qué está pasando en tu                        escuela y juntos encontramos el camino."</p>
-            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;">— Unete a nuestra comunidad!
+            <p style="font-family:'Playfair Display',serif; font-size:18px; line-height:1.7; color:#ffffff; margin:0 0 16px 0; font-style:italic;">"You don't need to have everything figured out before reaching out. Tell us what's happening in your school and together we'll find the way."</p>
+            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;">— Join our community!
             </div>
           </div>
         </div>
@@ -1051,7 +1051,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <section id="inversion">
 
 <style>
-  /* ── INVESTMENT PAGE STYLES ── */
+  /* ── INVERSIÓN PAGE STYLES ── */
   .inv-hero {
     position: relative;
     background: linear-gradient(180deg, #0f1d27 0%, #16222D 100%);
@@ -1309,9 +1309,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="inv-hero">
   <div class="inv-hero-glow"></div>
   <div class="inv-hero-inner">
-    <div class="inv-eyebrow">💡 Inversión por institución</div>
-    <h1 class="inv-hero-h1" style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,50px);font-weight:600;line-height:1.2;margin-bottom:18px;color:#fff;">Un diagnóstico completo.<br><em style="color:#D6A21C;font-style:normal;">Un plan listo para actuar.</em></h1>
-    <p>Pago único por proyecto. Sin suscripción, sin sorpresas. En 48 horas sabes exactamente lo que está pasando en tu escuela — y cómo resolverlo.</p>
+    <div class="inv-eyebrow">💡 Investment per institution</div>
+    <h1 class="inv-hero-h1" style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,50px);font-weight:600;line-height:1.2;margin-bottom:18px;color:#fff;">A complete diagnosis.<br><em style="color:#D6A21C;font-style:normal;">A plan ready to act on.</em></h1>
+    <p>One-time payment per project. No subscription, no surprises. In 48 hours you know exactly what is happening in your school — and how to fix it.</p>
     <div class="inv-hero-anchor">
       Precios desde <span>USD $1190</span> · Resultados en 48 horas
     </div>
@@ -1320,31 +1320,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- TRUST BAR -->
 <div class="inv-trust-bar">
-  ✅ &nbsp;+300 escuelas evaluadas &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;México · Chile · Costa Rica · Rep. Dominicana · EE.UU. &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Alineado con UNESCO y ESSA
+  ✅ &nbsp;+300 schools assessed &nbsp;&nbsp;|&nbsp;&nbsp; 🌎 &nbsp;Mexico · Chile · Costa Rica · Dominican Rep. · USA &nbsp;&nbsp;|&nbsp;&nbsp; 📋 &nbsp;Aligned with UNESCO and ESSA
 </div>
 
 <!-- PLANES -->
 <div class="inv-section">
-  <div class="inv-plans-label">Elige el plan que mejor describe lo que necesitas</div>
+  <div class="inv-plans-label">Choose the plan that best fits your needs</div>
 
   <div class="inv-plans-grid">
 
     <!-- PLAN VER -->
     <div class="inv-plan-card">
-      <div class="inv-plan-size">Tú actúas</div>
+      <div class="inv-plan-size">You act</div>
       <div class="inv-plan-name">VER</div>
-      <div class="inv-plan-students">Conoce la realidad de tu escuela</div>
+      <div class="inv-plan-students">Understand the reality of your school</div>
       <div class="inv-plan-price-wrap">
         <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
         <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
         <span class="inv-plan-price">1190</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period">one-time payment · per project</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span>Encuesta anónima para estudiantes</li>
         <li><span class="inv-check">✓</span>Diagnóstico de clima escolar</li>
-        <li><span class="inv-check">✓</span>Entrega en 48 horas</li>
+        <li><span class="inv-check">✓</span>Delivery in 48 hours</li>
         <li><span class="inv-cross">✗</span>Sin recomendaciones técnicas</li>
         <li><span class="inv-cross">✗</span>Sin detección de señales tempranas</li>
         <li><span class="inv-cross">✗</span>Sin apoyo técnico</li>
@@ -1353,103 +1353,103 @@ document.addEventListener('DOMContentLoaded', function() {
 
         
       </ul>
-      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Solicitar información →</a>
+      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Request information →</a>
     </div>
 
     <!-- PLAN ENTENDER — FEATURED -->
     <div class="inv-plan-card">
-      <div class="inv-plan-size">Nosotros te guiamos</div> 
+      <div class="inv-plan-size">We guide you</div> 
       <div class="inv-plan-name">ENTENDER</div>
-      <div class="inv-featured-badge">⭐ Cupos limitados</div>
+      <div class="inv-featured-badge">⭐ Limited spots</div>
      <!-- <div class="inv-plan-students">Sabe qué pasa y cómo reaccionar</div>  -->      
       <div class="inv-plan-price-wrap">
         <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
         <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
         <span class="inv-plan-price">1590</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period">one-time payment · per project</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span>Encuesta anónima para estudiantes</li>
-        <li><span class="inv-check">✓</span>Diagnóstico completo de clima escolar</li>
-        <li><span class="inv-check">✓</span>Detección de señales tempranas por IA</li>
+        <li><span class="inv-check">✓</span>Complete school climate diagnosis</li>
+        <li><span class="inv-check">✓</span>AI-powered early warning detection</li>
         <li><span class="inv-check">✓</span>Recomendaciones técnicas personalizadas para tu establecimiento</li>
         <li><span class="inv-check">✓</span>2 horas con un experto que le explica a tu equipo de convivencia los pasos a seguir</li>
-        <li><span class="inv-check">✓</span>Entrega en 48 horas</li>  
+        <li><span class="inv-check">✓</span>Delivery in 48 hours</li>  
       </ul>
-      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Agendar diagnóstico →</a>
+      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Schedule a diagnosis →</a>
     </div>
 
     <!-- PLAN TRANSFORMAR -->
     <div class="inv-plan-card">
-      <div class="inv-plan-size">Nosotros te acompañamos</div>
+      <div class="inv-plan-size">We accompany you</div>
       <div class="inv-plan-name">TRANSFORMAR</div>
-      <div class="inv-plan-students">Cambia el clima de tu escuela de raíz</div>
+      <div class="inv-plan-students">Transform your school climate from the root</div>
       <div class="inv-plan-price-wrap">
         <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
         <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
         <span class="inv-plan-price">2590</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period">one-time payment · per project</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span><strong style="color:#fff;">2 evaluaciones para medir evolución en el tiempo</strong> </li>
-        <li><span class="inv-check">✓</span>Plan de acción personalizado</li>
-        <li><span class="inv-check">✓</span>Análisis comparativo entre ambas evaluaciones</li>
-        <li><span class="inv-check">✓</span>Entrega en 48 horas</li>
-        <li><span class="inv-check">✓</span>Detección de señales tempranas por IA</li>
+        <li><span class="inv-check">✓</span>Personalized action plan</li>
+        <li><span class="inv-check">✓</span>Comparative analysis between both assessments</li>
+        <li><span class="inv-check">✓</span>Delivery in 48 hours</li>
+        <li><span class="inv-check">✓</span>AI-powered early warning detection</li>
         <br><br><br><br><br>
       </ul>
-      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Solicitar información →</a>
+      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Request information →</a>
     </div>
 
   </div>
 
   <!-- TODO INCLUIDO -->
   <div class="inv-included-section">
-    <div class="inv-included-title">En todos los planes incluye</div>
-    <div class="inv-included-sub">Sin importar el plan que elijas, cada diagnóstico TECH4ZERO viene con las mismas garantías de calidad y metodología.</div>
+    <div class="inv-included-title">All plans include</div>
+    <div class="inv-included-sub">Regardless of the plan you choose, every TECH4ZERO diagnosis comes with the same quality and methodology guarantees.</div>
     <div class="inv-included-grid">
       <div class="inv-included-item">
         <div class="inv-included-icon">🔒</div>
         <div class="inv-included-text">
-          <strong>Encuesta 100% anónima</strong>
-          <span>Confidencialidad garantizada para estudiantes y docentes. Nadie puede ser identificado.</span>
+          <strong>100% anonymous survey</strong>
+          <span>Guaranteed confidentiality for students and teachers. No one can be identified.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">🤖</div>
         <div class="inv-included-text">
-          <strong>IA + experto humano</strong>
-          <span>Los datos los procesa nuestra IA. Las conclusiones las firma un profesional de nuestro equipo.</span>
+          <strong>AI + human expert</strong>
+          <span>Our AI processes the data. The conclusions are signed by a professional from our team.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">⚡</div>
         <div class="inv-included-text">
-          <strong>Resultados en 48 horas</strong>
-          <span>Desde que se completa la encuesta hasta que recibes el informe, no más de dos días hábiles.</span>
+          <strong>Results in 48 hours</strong>
+          <span>From survey completion to report delivery, no more than two business days.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">📋</div>
         <div class="inv-included-text">
-          <strong>Alineado UNESCO y ESSA</strong>
-          <span>Metodología validada internacionalmente. Documentación que respalda gestión preventiva.</span>
+          <strong>Aligned with UNESCO and ESSA</strong>
+          <span>Internationally validated methodology. Documentation that supports preventive management.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">🗺️</div>
         <div class="inv-included-text">
           <strong>Recomendaciones concretas para implementar</strong>
-          <span>No un informe genérico. Un plan diseñado específicamente para la realidad de tu escuela.</span>
+          <span>Not a generic report. A plan designed specifically for the reality of your school.</span>
         </div>
       </div>
       <div class="inv-included-item">
         <div class="inv-included-icon">📱</div>
         <div class="inv-included-text">
-          <strong>Compatible con cualquier dispositivo</strong>
-          <span>La encuesta funciona en celular, tablet o computadora. Sin apps, sin instalaciones.</span>
+          <strong>Compatible with any device</strong>
+          <span>The survey works on phone, tablet or computer. No apps, no installations.</span>
         </div>
       </div>
     </div>
@@ -1457,48 +1457,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <!-- FAQ -->
   <div class="inv-faq-section">
-    <div class="inv-faq-title">Preguntas frecuentes</div>
+    <div class="inv-faq-title">Frequently asked questions</div>
     <div class="inv-faq-grid">
       <div class="inv-faq-item">
-        <div class="inv-faq-q">¿El pago es único o recurrente?</div>
-        <div class="inv-faq-a">Pago único por proyecto. No hay suscripción mensual ni cobros ocultos. Contratas un diagnóstico completo y eso incluye todo el proceso de principio a fin.</div>
+        <div class="inv-faq-q">Is the payment one-time or recurring?</div>
+        <div class="inv-faq-a">One-time payment per project. No monthly subscription or hidden charges. You contract a complete diagnosis including the entire process from start to finish.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">¿Qué pasa si quiero repetir el diagnóstico el siguiente año?</div>
-        <div class="inv-faq-a">Puedes contratar un nuevo diagnóstico cuando lo necesites. Muchas escuelas lo hacen anualmente para medir la evolución del clima. Las escuelas recurrentes reciben un descuento del 15%.</div>
+        <div class="inv-faq-q">What if I want to repeat the diagnosis next year?</div>
+        <div class="inv-faq-a">You can contract a new diagnosis whenever you need it. Many schools do it annually to measure climate evolution. Returning schools receive a 15% discount.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">¿En cuánto tiempo se completa la encuesta?</div>
-        <div class="inv-faq-a">La encuesta toma entre 8 y 12 minutos por estudiante. Puede completarse desde cualquier dispositivo, en horario escolar o desde el hogar. Típicamente se completa en 3–5 días hábiles.</div>
+        <div class="inv-faq-q">How long does the survey take to complete?</div>
+        <div class="inv-faq-a">The survey takes 8 to 12 minutes per student. It can be completed from any device, during school hours or from home. Typically completed in 3–5 business days.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">¿Qué tan seguros están los datos de mis estudiantes?</div>
-        <div class="inv-faq-a">Los datos son propiedad exclusiva de la institución. Jamás son utilizados para publicidad ni compartidos con terceros. Las respuestas son completamente anónimas — nadie puede ser identificado individualmente.</div>
+        <div class="inv-faq-q">How secure is my students' data?</div>
+        <div class="inv-faq-a">The data is the exclusive property of the institution. It is never used for advertising or shared with third parties. Responses are completely anonymous — no one can be individually identified.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">¿Puedo financiarlo con el presupuesto escolar?</div>
-        <div class="inv-faq-a">Sí. El diagnóstico TECH4ZERO puede financiarse con fondos de convivencia escolar, presupuestos de dirección o de orientación. En Chile también puede financiarse con recursos SEP.</div>
+        <div class="inv-faq-q">Can I fund it with the school budget?</div>
+        <div class="inv-faq-a">Yes. The TECH4ZERO diagnosis can be funded through school climate funds, administrative or counseling budgets. In Chile it can also be funded with SEP resources.</div>
       </div>
       <div class="inv-faq-item">
-        <div class="inv-faq-q">¿Trabajan con distritos escolares o solo instituciones individuales?</div>
-        <div class="inv-faq-a">Trabajamos con ambos. Para distritos o redes de colegios tenemos propuestas especiales con precio consolidado. Contáctanos para recibir una propuesta personalizada.</div>
+        <div class="inv-faq-q">Do you work with school districts or only individual institutions?</div>
+        <div class="inv-faq-a">We work with both. For districts or school networks we have special proposals with consolidated pricing. Contact us for a personalized proposal.</div>
       </div>
     </div>
   </div>
 
   <!-- BOTTOM CTA -->
   <div class="inv-bottom-cta">
-    <h2>¿No sabes qué plan elegir?</h2>
-    <p>Cuéntanos el tamaño de tu institución y te enviamos una propuesta en menos de 24 horas. Sin compromiso.</p>
+    <h2>Not sure which plan to choose?</h2>
+    <p>Tell us the size of your institution and we will send you a proposal in less than 24 hours. No commitment required.</p>
     <div class="inv-bottom-cta-btns">
-      <button class="inv-btn-gold" onclick="showTab('contacto')">Solicitar propuesta personalizada →</button>
-      <button class="inv-btn-ghost" onclick="showTab('programa')">Ver el diagnóstico en acción</button>
+      <button class="inv-btn-gold" onclick="showTab('contacto')">Request a personalized proposal →</button>
+      <button class="inv-btn-ghost" onclick="showTab('programa')">See the diagnosis in action</button>
     </div>
   </div>
 
   <div class="inv-disclaimer">
-    Precios en dólares americanos (USD). Impuestos locales pueden aplicar según el país.<br>
-    Datos consolidados de cohortes 2023–2025. Resultados varían según contexto institucional.
+    Prices in US dollars (USD). Local taxes may apply depending on the country.<br>
+    Consolidated data from 2023–2025 cohorts. Results vary by institutional context.
   </div>
 
 </div>
@@ -1506,12 +1506,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
   
-  <!---------------------  TESTIMONIALS ----------------------------->
+  <!---------------------  TESTIMONIOS ----------------------------->
 
 <section id="testimonios">
 
 <style>
-  /* ── TESTIMONIALS ── */
+  /* ── TESTIMONIOS ── */
   .testi-hero { position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; padding:80px 20px 60px; background:linear-gradient(180deg,#0a1520 0%,#16222D 100%); text-align:center; overflow:hidden; }
   .testi-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(214,162,28,0.06) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
   .testi-hero-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; }
@@ -1571,9 +1571,9 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Hero header -->
   <div class="testi-hero">
     <div class="testi-hero-inner">
-      <div class="testi-eyebrow">⭐ Voces de nuestra comunidad</div>
-      <h2>Lo que dicen quienes ya lo vivieron</h2>
-      <p>Directores, coordinadores y docentes que transformaron su institución con TECH4ZERO.</p>
+      <div class="testi-eyebrow">⭐ Voices from our community</div>
+      <h2>What those who lived it say</h2>
+      <p>Principals, coordinators and teachers who transformed their institution with TECH4ZERO.</p>
     </div>
   </div>
 
@@ -1609,7 +1609,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <!-- <span class="testi-flag">🇨🇱</span> -->
       <div class="testi-card-body">
-        <p class="testi-quote">"Por primera vez tuvimos un mapa real de la situacion de nuestra escuela. Y nos apoyaron en la solución"</p>
+        <p class="testi-quote">"For the first time we had a real map of our school's situation. And they supported us in finding the solution."</p>
         <div class="testi-divider"></div>
         <div class="testi-author">
           <img src="https://flagcdn.com/32x24/us.png" alt="USA" style="width:32px; border-radius:4px; margin-right:4px;">
@@ -1630,14 +1630,14 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <!-- <span class="testi-flag">🇨🇷</span>  -->
       <div class="testi-card-body">
-        <p class="testi-quote">"Esto nos da esperanza de lograr la paz que tanto necesitamos en nuestro hermoso pais. Gracias!!"</p>
+        <p class="testi-quote">"This gives us hope of achieving the peace our beautiful country so desperately needs. Thank you!!"</p>
         <div class="testi-divider"></div>
         <div class="testi-author">
           <img src="https://flagcdn.com/32x24/do.png" alt="Republica Dominicana" style="width:32px; border-radius:4px; margin-right:4px;">
           <div>
             <div class="testi-name">Jose Luis Alcantara</div>
-            <div class="testi-role">Psicólogo Escolar</div>
-            <div class="testi-institution">Director Centro Educativo SJP · Santo Domingo, Republica Dominicana</div>
+            <div class="testi-role">School Psychologist</div>
+            <div class="testi-institution">Director Centro Educativo SJP · Santo Domingo, Dominican Republic</div>
           </div>
         </div>
       </div>
@@ -1651,7 +1651,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <span class="testi-flag">🇨🇷</span>
       <div class="testi-card-body">
-        <p class="testi-quote">"Nuestros profesores por fin cuentan con la herramienta correcta gracias a Tech4Zero."</p>
+        <p class="testi-quote">"Our teachers finally have the right tool thanks to Tech4Zero."</p>
         <div class="testi-divider"></div>
         <div class="testi-author">
           <img src="https://flagcdn.com/32x24/cl.png" alt="Chile" style="width:32px; border-radius:4px; margin-right:4px;">
@@ -1967,7 +1967,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
       <br>
       <div class="quiz-btn-row">
-        <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Close</button>
+        <button class="quiz-btn-secondary" onclick="closeQuiz()"  type="button" style="flex:1;">Cerrar</button>
         <button class="quiz-btn-primary"   onclick="startQuiz()"  type="button" style="flex:1;">↺ Reiniciar</button>
       </div>
     </div>
@@ -2251,7 +2251,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     var btn = document.getElementById('quizBtnPDF');
     btn.disabled    = true;
-    btn.textContent = 'Enviando...';
+    btn.textContent = 'Sending...';
     try {
       var info = quizGetLevelInfo(quizFinalScore);
       var res  = await fetch('/api/quiz-lead', {
@@ -2270,7 +2270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  /* Close al click en overlay */
+  /* Cerrar al click en overlay */
   document.getElementById('quizModal').addEventListener('click', function(e) {
     if (e.target === this) window.closeQuiz();
   });
@@ -2314,7 +2314,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <span class="finish-stat-label">completed</span>
       </div>
     </div>
-    <button class="finish-close-btn" id="finishCloseBtn" type="button">¡Gracias! Close →</button>
+    <button class="finish-close-btn" id="finishCloseBtn" type="button">Thank you! Close →</button>
   </div>
 </div>
 
@@ -2359,7 +2359,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Nav -->
     <div class="survey-modal-nav">
-      <button id="btnSurveyModalPrev" class="btnSecondary" type="button">← Previous</button>
+      <button id="btnSurveyModalPrev" class="btnSecondary" type="button">← Anterior</button>
       <button id="btnSurveyModalNext" class="btnPrimary"   type="button">Siguiente →</button>
     </div>
 
@@ -2379,7 +2379,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <span class="pause-reminder-star">⭐</span>
       <span>Recuerda responde solo sobre lo que pasó en los <strong>últimos DOS MESES</strong>.</span>
     </div>
-    <button class="pause-continue-btn" id="pauseContinueBtn" type="button">Continuar →</button>
+    <button class="pause-continue-btn" id="pauseContinueBtn" type="button">Continue →</button>
   </div>
 </div>
 
@@ -2387,7 +2387,7 @@ document.addEventListener('DOMContentLoaded', function() {
   © 2025 TECH4ZERO – EDUCATION+AI
 </footer>
 
-<!-- MODAL GLOBAL: USER ACCESS -->
+<!-- MODAL GLOBAL: ACCESO USUARIOS -->
 <div id="globalModal" class="modalOverlay">
   <div class="modalBox">
     <div class="modalHeader">
@@ -2398,8 +2398,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="modalSessionOn" style="display:none;">
       <div class="statusMsg statusOk" id="modalSessionText"></div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-        <button id="btnCloseSesion" class="btnSecondary" type="button">Log out</button>
-        <button id="btnCloseModal1" class="btnPrimary" type="button">Close</button>
+        <button id="btnCerrarSesion" class="btnSecondary" type="button">Log out</button>
+        <button id="btnCerrarModal1" class="btnPrimary" type="button">Cerrar</button>
       </div>
     </div>
 
@@ -2419,7 +2419,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
 <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <button id="btnDoLogin" class="btnPrimary" type="button">Entrar</button>
-          <button id="btnCloseModal2" class="btnSecondary" type="button">Cancel</button>
+          <button id="btnCerrarModal2" class="btnSecondary" type="button">Cancel</button>
         </div>
 
         <div id="globalLoginMsg" class="statusMsg statusErr"></div>
@@ -2431,7 +2431,7 @@ document.addEventListener('DOMContentLoaded', function() {
             font-family:'Open Sans',sans-serif; padding:0;"
             onmouseover="this.style.color='#D6A21C'"
             onmouseout="this.style.color='#a9c0d3'">
-            ¿Olvidaste tu contraseña?
+            Forgot your password?
           </button>
         </div>
 
@@ -2439,7 +2439,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div id="forgotPasswordPanel" style="display:none; margin-top:16px;
              background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px;">
           <div style="font-size:13px; color:#a9c0d3; margin-bottom:10px; line-height:1.5;">
-            Ingresa el nombre de usuario asignado a tu estabelcimiento y te enviaremos instrucciones a tu correo registrado.
+            Enter the username assigned to your institution and we will send instructions to your registered email.
           </div>
           <div class="fieldBlock">
             <label class="fieldLabel" for="forgotUsername">Usuario</label><br/>
@@ -2455,7 +2455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </button>
             <button id="btnCancelForgot" class="btnSecondary" type="button"
               style="font-size:13px; padding:8px 16px;">
-              Cancel
+              Cancelar
             </button>
           </div>
           <div id="forgotMsg" class="statusMsg" style="min-height:16px; margin-top:10px;"></div>
@@ -2467,7 +2467,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
   
-<!-- MODAL: PRIVACIDAD SURVEY -->
+<!-- MODAL: PRIVACIDAD ENCUESTA -->
 <div id="privacyModal" class="modalOverlay">
   <div class="modalBox" style="max-width:580px;">
     <div class="modalHeader">
@@ -2506,10 +2506,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button id="btnPrivacyContinue" class="btnPrimary" type="button" disabled>
-          Continue to the survey
+          Continuar con la encuesta
         </button>
         <button id="btnPrivacyCancel" class="btnSecondary" type="button">
-          Cancel
+          Cancelar
         </button>
       </div>
     </div>
@@ -2564,26 +2564,26 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="selectAnalysisModal" class="modalOverlay">
   <div class="modalBox" style="max-width:700px;">
     <div class="modalHeader">
-      <h3 class="modalTitle">Seleccionar Análisis</h3>
+      <h3 class="modalTitle">Select Analysis</h3>
       <button id="selectAnalysisClose" class="modalClose" type="button">X</button>
     </div>
 
     <div style="padding:8px 0;">
       <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
-        Selecciona el análisis que deseas visualizar:
+        Select the analysis you want to view:
       </p>
 
       <div id="analysesLoading" style="display:none; text-align:center; padding:20px;">
-        <div class="statusMsg statusWarn">Cargando análisis disponibles...</div>
+        <div class="statusMsg statusWarn">Loading available analyses...</div>
       </div>
 
       <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
         <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
           <p style="margin:0; font-size:15px; color:#ffdca8;">
-            No hay análisis aprobados disponibles.
+            No approved analyses available.
           </p>
           <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
-            Solicite un análisis o espere la aprobación.
+            Request an analysis or wait for approval.
           </p>
         </div>
       </div>
@@ -2595,7 +2595,7 @@ document.addEventListener('DOMContentLoaded', function() {
           Ver Análisis Seleccionado
         </button>
         <button id="btnCancelSelectAnalysis" class="btnSecondary" type="button">
-          Cancel
+          Cancelar
         </button>
       </div>
     </div>
@@ -3255,7 +3255,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnSolicitarAnalisis = document.getElementById('btnSolicitarAnalisis');
   const analisisWarnPanel = document.getElementById('analisisWarnPanel');
   const btnAnalisisContinuar = document.getElementById('btnAnalisisContinuar');
-  const btnAnalisisCancel = document.getElementById('btnAnalisisCancel');
+  const btnAnalisisCancelar = document.getElementById('btnAnalisisCancelar');
   const surveyBox = document.getElementById('surveyBox');
   const btnMostrarResultados = document.getElementById('btnMostrarResultados');
 
@@ -3281,11 +3281,6 @@ document.addEventListener('DOMContentLoaded', function() {
       };
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
-    }
-    // Redirect Spanish-only schools to root
-    if (window.sessionState.ok && window.sessionState.language === 'es') {
-      window.location.href = '/';
-      return;
     }
     applySessionToUI();
   }
@@ -3334,8 +3329,8 @@ function setForceChangeMsg(text, type) {
 
     if (schoolWelcome) {
       schoolWelcome.textContent = ok
-        ? `Estado de sesión: Autenticado. Escuela: ${schoolName}`.trim()
-        : 'Estado de sesión: Not authenticated.';
+        ? `Session status: Authenticated. School: ${schoolName}`.trim()
+        : 'Session status: Not authenticated.';
     }
 
     if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = !ok;
@@ -3362,7 +3357,7 @@ var navEnc = document.getElementById('navEncuesta');
     }
 
     // Sync CHOSEN_LANGUAGE — resets when switching accounts
-    CHOSEN_LANGUAGE = 'en';
+    CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
 
     
       
@@ -3373,7 +3368,7 @@ var navEnc = document.getElementById('navEncuesta');
       return;
     }
 
-    CHOSEN_LANGUAGE = 'en';
+    CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
     if (ok && window.sessionState.must_change_password) {
   openForceChangeModal();
     }
@@ -3438,9 +3433,9 @@ if (btnSec) {
   const modalSessionOn = document.getElementById('modalSessionOn');
   const modalSessionOff = document.getElementById('modalSessionOff');
   const modalSessionText = document.getElementById('modalSessionText');
-  const btnCloseSesion = document.getElementById('btnCloseSesion');
-  const btnCloseModal1 = document.getElementById('btnCloseModal1');
-  const btnCloseModal2 = document.getElementById('btnCloseModal2');
+  const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+  const btnCerrarModal1 = document.getElementById('btnCerrarModal1');
+  const btnCerrarModal2 = document.getElementById('btnCerrarModal2');
   const globalUser = document.getElementById('globalUser');
   const globalPass = document.getElementById('globalPass');
   const btnDoLogin = document.getElementById('btnDoLogin');
@@ -3455,7 +3450,7 @@ if (btnSec) {
     if (ok) {
       modalSessionOff.style.display = 'none';
       modalSessionOn.style.display = 'block';
-      modalSessionText.textContent = `Sesión activa. Escuela: ${window.sessionState.school_name || ''}`.trim();
+      modalSessionText.textContent = `Active session. School: ${window.sessionState.school_name || ''}`.trim();
     } else {
       modalSessionOn.style.display = 'none';
       modalSessionOff.style.display = 'block';
@@ -3470,17 +3465,17 @@ if (btnSec) {
 
   btnAccesoUsuarios?.addEventListener('click', openModal);
   modalClose?.addEventListener('click', closeModal);
-  btnCloseModal1?.addEventListener('click', closeModal);
-  btnCloseModal2?.addEventListener('click', closeModal);
+  btnCerrarModal1?.addEventListener('click', closeModal);
+  btnCerrarModal2?.addEventListener('click', closeModal);
   globalModal?.addEventListener('click', (e) => { if (e.target === globalModal) closeModal(); });
 
   btnDoLogin?.addEventListener('click', async () => {
     const u = globalUser?.value?.trim() || '';
     const p = globalPass?.value?.trim() || '';
-    if (!u || !p) { globalLoginMsg.textContent = 'Por favor ingrese usuario y contraseña.'; return; }
+    if (!u || !p) { globalLoginMsg.textContent = 'Please enter your username and password.'; return; }
 
     try {
-      globalLoginMsg.textContent = 'Validando...';
+      globalLoginMsg.textContent = 'Validating...';
       const res = await fetch('/api/login', {
         method:'POST', credentials:'include',
         headers:{ 'Content-Type':'application/json' },
@@ -3503,13 +3498,13 @@ if (!res.ok || !data.ok) {
       closeModal();
       await refreshSession();
     } catch (e) {
-      globalLoginMsg.textContent = 'Error de conexión.';
+      globalLoginMsg.textContent = 'Connection error.';
     }
   });
 
     
 
-btnCloseSesion?.addEventListener('click', async () => {
+btnCerrarSesion?.addEventListener('click', async () => {
     await fetch('/api/logout', { method:'POST', credentials:'include' }).catch(() => {});
     closeModal();
     await refreshSession();
@@ -3547,7 +3542,7 @@ btnCloseSesion?.addEventListener('click', async () => {
 
     try {
       btn.disabled          = true;
-      forgotMsg.textContent = 'Enviando...';
+      forgotMsg.textContent = 'Sending...';
       forgotMsg.className   = 'statusMsg statusWarn';
 
       const res  = await fetch('/api/forgot-password', {
@@ -3561,7 +3556,7 @@ btnCloseSesion?.addEventListener('click', async () => {
       forgotMsg.className   = 'statusMsg statusOk';
 
     } catch (e) {
-      forgotMsg.textContent = 'Error de conexión. Intenta de nuevo.';
+      forgotMsg.textContent = 'Connection error. Please try again.';
       forgotMsg.className   = 'statusMsg statusErr';
     } finally {
       btn.disabled = false;
@@ -3618,9 +3613,9 @@ btnCloseSesion?.addEventListener('click', async () => {
   btnPrivacyCancel?.addEventListener('click', closePrivacyModal);
   privacyModal?.addEventListener('click', (e) => { if (e.target === privacyModal) closePrivacyModal(); });
 
-  // === ACCIONES SURVEY ===
+  // === ACCIONES ENCUESTA ===
 
-  // === LANGUAGE SELECTOR ===
+  // === LANGUAGE SELECTOR (for 'both' schools only) ===
   function openLanguageSelector() {
     const m = document.getElementById('languageModal');
     if (m) m.style.display = 'flex';
@@ -3636,10 +3631,7 @@ btnCloseSesion?.addEventListener('click', async () => {
   }
   document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
   document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
-  document.getElementById('btnLangCancel')?.addEventListener('click', () => {
-    closeLanguageSelector();
-    applySessionToUI();
-  });
+  document.getElementById('btnLangCancel')?.addEventListener('click', () => closeLanguageSelector());
   document.getElementById('languageModal')?.addEventListener('click', (e) => {
     if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
   });
@@ -3647,7 +3639,7 @@ btnCloseSesion?.addEventListener('click', async () => {
   btnIngresarEncuesta?.addEventListener('click', async () => {
     if (!window.sessionState.ok) { openModal(); return; }
     const p2 = document.getElementById('analisisWarnPanel');
-    if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
+if (p2) { p2.style.display = 'none'; p2.style.pointerEvents = 'none'; }
     CHOSEN_LANGUAGE = 'en';
     ROUTING_QUESTION = null;
     OPTIONS_CACHE = {};
@@ -3688,7 +3680,7 @@ window.cerrarAnalisisPanel = function() {
         return;
       }
 
-      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTS" para ver el análisis.');
+      alert('Solicitud enviada.\n\nEl sistema realizará el análisis de la encuesta.\nPuedes ir a la pestaña "RESULTADOS" para ver el análisis.');
       window.cerrarAnalisisPanel();
     } catch (e) {
       alert('Error de conexión al solicitar el análisis.\n\n' + (e?.message || String(e)));
@@ -3732,7 +3724,7 @@ window.cerrarAnalisisPanel = function() {
     await loadRoutingQuestion();
     if (!ROUTING_QUESTION) return;
 
-    routingTitle.textContent = 'Pregunta 0 — Información General';
+    routingTitle.textContent = 'Question 0 — General Information';
     routingText.textContent = ROUTING_QUESTION.text;
 
     routingOptions.innerHTML = ROUTING_QUESTION.options.map(o => `
@@ -3750,7 +3742,7 @@ window.cerrarAnalisisPanel = function() {
   btnRoutingNext?.addEventListener('click', async () => {
     const checked = document.querySelector('input[name="routingAnswer"]:checked');
     if (!checked) {
-      routingMsg.textContent = 'Selecciona tu grado para continuar.';
+      routingMsg.textContent = 'Please select your grade to continue.';
       return;
     }
 
@@ -3767,11 +3759,11 @@ window.cerrarAnalisisPanel = function() {
     }
 
     if (!targetSurveyFile) {
-      routingMsg.textContent = 'Grado no reconocido. Contacta al administrador.';
+      routingMsg.textContent = 'Grade not recognized. Contact your administrator.';
       return;
     }
 
-    routingMsg.textContent = 'Cargando encuesta...';
+    routingMsg.textContent = 'Loading survey...';
     btnRoutingNext.disabled = true;
 
     try {
@@ -3838,24 +3830,20 @@ window.cerrarAnalisisPanel = function() {
       // but the survey still proceeds correctly.
 
 
-      // Ensure CHOSEN_LANGUAGE is resolved before rendering questions
-      if (!CHOSEN_LANGUAGE || CHOSEN_LANGUAGE === 'both') {
-        CHOSEN_LANGUAGE = 'en';
-      }
       // Hide routing box
       routingBox.style.display = 'none';
       routingMsg.textContent = '';
       OPTIONS_CACHE = {};
 
-      // For 'both' schools: show language selector; for 'en' schools: go straight to privacy
       if (window.sessionState.language === 'both') {
         openLanguageSelector();
       } else {
+        CHOSEN_LANGUAGE = 'en';
         openPrivacyModal();
       }
 
     } catch (e) {
-      routingMsg.textContent = 'Error de conexión. Intenta de nuevo.';
+      routingMsg.textContent = 'Connection error. Please try again.';
       console.error(e);
     } finally {
       btnRoutingNext.disabled = false;
@@ -3945,9 +3933,9 @@ window.cerrarAnalisisPanel = function() {
     document.getElementById('finishStatQuestions').textContent = totalQuestions || 56;
     if (IS_PRIMARIA) {
       document.querySelector('.finish-trophy').textContent       = '🦸';
-      document.querySelector('.finish-level-badge').innerHTML   = '🌟 ¡MISIÓN CUMPLIDA!';
-      document.querySelector('.finish-headline').innerHTML      = 'You did it!<br><em>¡Eres un verdadero superhéroe!</em>';
-      document.querySelector('.finish-body').innerHTML          = '¡Respondiste todas las preguntas! 🎉<br>Gracias por ayudar a hacer tu escuela mejor. 🌟';
+      document.querySelector('.finish-level-badge').innerHTML   = '🌟 MISSION ACCOMPLISHED!';
+      document.querySelector('.finish-headline').innerHTML      = 'You did it!<br><em>You are a true superhero!</em>';
+      document.querySelector('.finish-body').innerHTML          = 'You answered all the questions! 🎉<br>Thank you for helping make your school better. 🌟';
     } else {
       document.querySelector('.finish-trophy').textContent       = '🏆';
       document.querySelector('.finish-level-badge').innerHTML   = '💎 LEGEND LEVEL UNLOCKED';
@@ -3973,30 +3961,30 @@ window.cerrarAnalisisPanel = function() {
     {
       pct: 0,
       badgeIcon: '',
-      badgeText: 'Bienvenida',
-      headline: 'Estás a punto de hacer algo importante.',
+      badgeText: 'Welcome',
+      headline: 'You are about to do something important.',
       body: 'Esta encuesta es tu voz. No hay respuestas correctas ni incorrectas — solo tu experiencia real.'
     },
     {
       pct: 0.20,
       badgeIcon: '🥈',
-      badgeText: 'Nivel Plata',
-      headline: '¡Ya arrancaste! Llevas el 20% — vas bien.',
+      badgeText: 'Silver Level',
+      headline: 'You started! You\'re 20% done — keep going.',
       body: 'Cada respuesta que das construye un mapa de tu escuela. Información que los adultos necesitan pero que solo tú puedes dar.\n\n🥈 ¡Desbloqueaste el Nivel Plata!'
     },
     {
       pct: 0.55,
       badgeIcon: '🥇',
-      badgeText: 'Nivel Oro',
-      headline: 'Más de la mitad. No cualquiera llega hasta aquí.',
+      badgeText: 'Gold Level',
+      headline: 'More than halfway. Not everyone makes it this far.',
       body: 'Las próximas preguntas son las más importantes de toda la encuesta. Tus respuestas ayudaran a mejorar las cosas en tu escuela.\n\n🥇 ¡Desbloqueaste el Nivel Oro!'
     },
     {
       pct: 0.80,
       badgeIcon: '💎',
-      badgeText: 'Nivel Platino',
+      badgeText: 'Platinum Level',
       headline: 'Falta un poco.',
-      body: 'Ya hiciste la parte difícil. Las últimas preguntas son rápidas. Termina fuerte — tu escuela lo necesita.\n\n💎 ¡Nivel Platino desbloqueado! Ya casi eres una leyenda.'
+      body: 'You did the hard part. The last questions are quick. Finish strong — your school needs it.\n\n💎 Platinum Level unlocked! You are almost a legend.'
     }
   ];
 
@@ -4004,30 +3992,30 @@ window.cerrarAnalisisPanel = function() {
     {
       pct: 0,
       badgeIcon: '🦸',
-      badgeText: '¡Hoy eres un superhéroe!',
-      headline: '¡Hoy eres un superhéroe! 🦸',
-      body: 'Vas a responder preguntas sobre tu escuela.\n\n¡No hay respuestas malas — solo las tuyas!'
+      badgeText: 'Today you are a superhero!',
+      headline: 'Today you are a superhero! 🦸',
+      body: 'You are going to answer questions about your school.\n\nThere are no wrong answers — only yours!'
     },
     {
       pct: 0.20,
       badgeIcon: '⚡',
-      badgeText: '¡Poder desbloqueado!',
-      headline: '⚡ ¡Desbloqueaste tu primer poder!',
-      body: '¡Vas súper bien! Sigue así.'
+      badgeText: 'Power unlocked!',
+      headline: '⚡ You unlocked your first power!',
+      body: 'You are doing great! Keep going.'
     },
     {
       pct: 0.55,
       badgeIcon: '💪',
-      badgeText: '¡Super Fuerza activada!',
-      headline: '💪 ¡Activaste la Super Fuerza!',
-      body: '¡Ya vas por más de la mitad!\n\n¡Eres increíble!'
+      badgeText: 'Super Strength activated!',
+      headline: '💪 You activated Super Strength!',
+      body: 'You are more than halfway there!\n\nYou are incredible!'
     },
     {
       pct: 0.80,
       badgeIcon: '🚀',
-      badgeText: '¡Modo Héroe activado!',
-      headline: '🚀 ¡Modo Héroe activado!',
-      body: '¡Casi terminas!\n\nUn poquito más y eres una leyenda.'
+      badgeText: 'Hero Mode activated!',
+      headline: '🚀 Hero Mode activated!',
+      body: 'Almost done!\n\nA little more and you are a legend.'
     }
   ];
 
@@ -4070,7 +4058,7 @@ window.cerrarAnalisisPanel = function() {
   let QUESTION_ID_MAP = {};
   let IS_PRIMARIA = false;
   let OPTIONS_CACHE = {}; // cleared at start of each new survey session
-  let targetSurveyId = null; // UUID of the survey currently being answered
+  let targetSurveyId = null;
 
   function isDemographicExternalId(ext) {
     return ext === 'zero_general_curso'
@@ -4116,8 +4104,8 @@ window.cerrarAnalisisPanel = function() {
     const isMilestone = MILESTONE_QUESTIONS.has(qNum) || qNum === total;
     document.getElementById('surveyModalCounter').textContent =
       isMilestone
-        ? `Pregunta ${qNum} de ${total}`
-        : `Pregunta ${qNum} de ${total}`;
+        ? `Question ${qNum} of ${total}`
+        : `Question ${qNum} of ${total}`;
     // Bold on milestones
     document.getElementById('surveyModalCounter').style.fontSize = isMilestone ? '13px' : '11px';
   }
@@ -4184,12 +4172,12 @@ window.cerrarAnalisisPanel = function() {
         })();
       }
     } else if (question.type === 'text') {
-      optionsDiv.innerHTML = `<input class="survey-modal-text-input" type="text" id="answerText" placeholder="Escribe tu respuesta" />`;
+      optionsDiv.innerHTML = `<input class="survey-modal-text-input" type="text" id="answerText" placeholder="Write your answer" />`;
     }
 
     document.getElementById('btnSurveyModalPrev').disabled = (currentQuestionIndex === 0);
     document.getElementById('btnSurveyModalNext').textContent =
-      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finalizar ✓' : 'Siguiente →';
+      (currentQuestionIndex === SURVEY.questions.length - 1) ? 'Finish ✓' : 'Next →';
   }
 
   async function saveCurrentAnswerOrStop() {
@@ -4218,9 +4206,9 @@ window.cerrarAnalisisPanel = function() {
     const required = (q.required === undefined) ? true : !!q.required;
     if (required) {
       if (q.type === 'text') {
-        if (!answerText) { document.getElementById('surveyModalMsg').textContent = 'Escribe una respuesta para continuar.'; return false; }
+        if (!answerText) { document.getElementById('surveyModalMsg').textContent = 'Please write a response to continue.'; return false; }
       } else {
-        if (selectedOptionIds.length === 0) { document.getElementById('surveyModalMsg').textContent = 'Selecciona una opción para continuar.'; return false; }
+        if (selectedOptionIds.length === 0) { document.getElementById('surveyModalMsg').textContent = 'Please select an option to continue.'; return false; }
       }
     }
 
@@ -4368,7 +4356,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
   btnPinConfirm?.addEventListener('click', async () => {
     const pin = pinInputs.map(el => el.value).join('');
     if (pin.length < 4) {
-      pinMsg.textContent = 'Ingresa los 4 dígitos.';
+      pinMsg.textContent = 'Enter all 4 digits.';
       return;
     }
 
@@ -4388,7 +4376,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
 
       if (!res.ok || !data.ok) {
         pinInputs.forEach(el => el.classList.add('error'));
-        pinMsg.textContent = data.error || 'PIN incorrecto';
+        pinMsg.textContent = data.error || 'Incorrect PIN';
         pinInputs.forEach(el => { el.value = ''; el.classList.remove('error'); });
         pinInputs[0].focus();
         return;
@@ -4409,7 +4397,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
       applySessionToUI();
 
     } catch (e) {
-      pinMsg.textContent = 'Error de conexión.';
+      pinMsg.textContent = 'Connection error.';
     } finally {
       btnPinConfirm.disabled = false;
     }
@@ -4451,7 +4439,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
 
   btnMPinConfirm?.addEventListener('click', async () => {
     const pin = mpinInputs.map(el => el.value).join('');
-    if (pin.length < 4) { mpinMsg.textContent = 'Ingresa los 4 dígitos.'; return; }
+    if (pin.length < 4) { mpinMsg.textContent = 'Enter all 4 digits.'; return; }
 
     const responseId = window.currentResponseId;
     if (!responseId) { closeModalPinPanel(); document.getElementById('surveyModal').classList.remove('open'); return; }
@@ -4470,7 +4458,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
       if (!res.ok || !data.ok) {
         mpinInputs.forEach(el => { el.value = ''; el.classList.add('error'); });
         setTimeout(() => mpinInputs.forEach(el => el.classList.remove('error')), 600);
-        mpinMsg.textContent = data.error || 'PIN incorrecto';
+        mpinMsg.textContent = data.error || 'Incorrect PIN';
         mpinInputs[0].focus();
         return;
       }
@@ -4491,7 +4479,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
       applySessionToUI();
 
     } catch (e) {
-      mpinMsg.textContent = 'Error de conexión.';
+      mpinMsg.textContent = 'Connection error.';
     } finally {
       btnMPinConfirm.disabled = false;
     }
@@ -4659,7 +4647,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
     await loadCurrent();
   };
 
-  // === CONTACT ===
+  // === CONTACTO ===
   const cNombre = document.getElementById('c_nombre');
   const cEmail  = document.getElementById('c_email');
   const cAsunto = document.getElementById('c_asunto');
@@ -4693,15 +4681,15 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
     const hp = cCompany?.value?.trim() || '';
 
     if (!name || !email || !subject || !message) {
-      setContactoMsg('Por favor completa nombre, email, asunto y mensaje.', 'statusWarn'); return;
+      setContactoMsg('Please complete name, email, subject and message.', 'statusWarn'); return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setContactoMsg('Email inválido. Revisa el formato.', 'statusWarn'); return;
+      setContactoMsg('Invalid email. Please check the format.', 'statusWarn'); return;
     }
 
     try {
       btnEnviarContacto.disabled = true;
-      setContactoMsg('Enviando...', 'statusWarn');
+      setContactoMsg('Sending...', 'statusWarn');
 
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -4717,10 +4705,10 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
         setContactoMsg(`No se pudo enviar (HTTP ${res.status}): ${data.error || data.raw || 'sin detalle'}`, 'statusErr'); return;
       }
 
-      setContactoMsg('Mensaje enviado. ¡Gracias!', 'statusOk');
+      setContactoMsg('Message sent. Thank you!', 'statusOk');
       btnLimpiarContacto?.click();
     } catch (e) {
-      setContactoMsg('Error de conexión al enviar el mensaje.', 'statusErr');
+      setContactoMsg('Connection error sending the message.', 'statusErr');
     } finally {
       btnEnviarContacto.disabled = false;
     }
@@ -4824,7 +4812,7 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
   selectAnalysisModal?.addEventListener('click', (e) => { if (e.target === selectAnalysisModal) closeSelectAnalysisModal(); });
 
   btnViewSelectedAnalysis?.addEventListener('click', async () => {
-    if (!selectedAnalysisData) { alert('Por favor selecciona un análisis'); return; }
+    if (!selectedAnalysisData) { alert('Please select an analysis'); return; }
     try {
       const res  = await fetch('/api/generate-dashboard-token', {
         method: 'POST', credentials: 'include',
@@ -6047,24 +6035,24 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
     </div>
     <div style="padding:24px;">
       <p style="color:#d0e8f0; font-size:14px; line-height:1.7; margin:0 0 16px 0;">
-        Al confirmar, enviarás esta encuesta al equipo TECH4ZERO para su revisión. No podrás agregar nuevas respuestas mientras esté en proceso.
+        By confirming, you will send this survey to the TECH4ZERO team for review. You will not be able to add new responses while it is being processed.
       </p>
       <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
         <div style="display:flex; align-items:center; gap:10px;">
           <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
-          <div style="font-size:13px; color:#b0ccd8;">El equipo TECH4ZERO tiene <strong style="color:#ffffff;">48 horas</strong> para aprobar</div>
+          <div style="font-size:13px; color:#b0ccd8;">The TECH4ZERO team has <strong style="color:#ffffff;">48 hours</strong> to approve</div>
         </div>
         <div style="display:flex; align-items:center; gap:10px;">
           <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
-          <div style="font-size:13px; color:#b0ccd8;">Solo las encuestas aprobadas aparecen en Resultados</div>
+          <div style="font-size:13px; color:#b0ccd8;">Only approved surveys appear in Results</div>
         </div>
         <div style="display:flex; align-items:center; gap:10px;">
           <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
-          <div style="font-size:13px; color:#b0ccd8;">No se podrán agregar nuevas respuestas tras confirmar</div>
+          <div style="font-size:13px; color:#b0ccd8;">No new responses can be added after confirming</div>
         </div>
       </div>
       <div style="display:flex; gap:10px;">
-        <button id="btnAnalisisCancel" class="btnSecondary" type="button" onclick="window.cerrarAnalisisPanel()" style="flex:1; padding:11px; font-size:14px; border-radius:8px;">Cancel</button>
+        <button id="btnAnalisisCancelar" class="btnSecondary" type="button" onclick="window.cerrarAnalisisPanel()" style="flex:1; padding:11px; font-size:14px; border-radius:8px;">Cancel</button>
         <button id="btnAnalisisContinuar" class="btnPrimary" type="button" onclick="window.confirmarAnalisis()" style="flex:1; padding:11px; font-size:14px; font-weight:600; border-radius:8px;">Confirmar</button>
       </div>
     </div>
@@ -6377,16 +6365,16 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
         Esta encuesta está disponible en inglés y español.
       </p>
       <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
-        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
+        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
           <img src="https://flagcdn.com/us.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
           <span>English</span>
         </button>
-        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:all 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
+        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
           <img src="https://flagcdn.com/mx.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
           <span>Español</span>
         </button>
       </div>
-      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancel / Cancel</button>
+      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancel / Cancelar</button>
     </div>
   </div>
 </div>
