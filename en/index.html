@@ -3615,8 +3615,8 @@ btnCerrarSesion?.addEventListener('click', async () => {
   async function startSurveyWithChosenLanguage() {
     OPTIONS_CACHE = {};
 
-    // Load survey file if not yet loaded (deferred from routing for 'both' schools)
-    if (!SURVEY && window.pendingSurveyFile) {
+    // Load survey file now that language is chosen
+    if (window.pendingSurveyFile) {
       const surveyRes = await fetch(window.pendingSurveyFile + '?lang=' + CHOSEN_LANGUAGE, { cache: 'no-store' });
       if (!surveyRes.ok) { alert('Could not load survey file.'); return; }
       SURVEY = await surveyRes.json();
@@ -3842,6 +3842,8 @@ window.cerrarAnalisisPanel = function() {
       // Store the survey file path — will load after language is selected
       window.pendingSurveyFile = targetSurveyFile;
       window.pendingGradeCode = selectedCode;
+      SURVEY = null;
+      QUESTION_ID_MAP = {};
       OPTIONS_CACHE = {};
 
       // Hide routing box
