@@ -209,6 +209,14 @@ const P4_CONSTRUCT_MAP = {
   "p4_mapa_banos_pasillos":      "ecologia_banos",
   "p4_mapa_biblioteca":          "ecologia_biblioteca",
   "p4_mapa_entrada_salida":      "ecologia_entrada",
+
+  // Bienestar escolar (protective, direct-scored)
+  // Measures students' general sense of happiness, belonging and safety at school.
+  // Higher scores = stronger sense of wellbeing → protective factor.
+  // Reference: PISA 2018 Student Well-Being framework (OECD)
+  "p4_bienestar_general":  "bienestar",
+  "p4_bienestar_gusto":    "bienestar",
+  "p4_bienestar_seguridad":"bienestar",
 };
 
 // ── Construct definitions (external_id → construct name) ─────────────────────
@@ -303,6 +311,7 @@ const DISPLAY_NAMES = {
   "normas_grupo":           "Normas del Grupo",
   "respuesta_institucional":"Respuesta Institucional",
   "internivel":             "Clima entre niveles",
+  "bienestar": "Bienestar Escolar",
 };
 
 const FULL_CONSTRUCT_MAP = { ...CONSTRUCT_MAP, ...P4_CONSTRUCT_MAP };
@@ -351,6 +360,7 @@ const CONSTRUCT_TYPE = {
   autoridad_docente:        "protector",
   normas_grupo:             "protector",
   respuesta_institucional:  "protector",
+  bienestar: "protector",
 };
 
 // ── Main handler ──────────────────────────────────────────────────────────────
