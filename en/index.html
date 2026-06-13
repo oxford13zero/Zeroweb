@@ -3349,15 +3349,8 @@ var navEnc = document.getElementById('navEncuesta');
  <!--   ENDS --Este codigo desaparece botones para usuarios no autenticados -------->   
 
       
-// Redirect en/both schools to /en/
-    if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both')
-           && !location.pathname.startsWith('/en')) {
-      window.location.href = '/en/' + location.hash;
-      return;
-    }
-
-    // Sync CHOSEN_LANGUAGE — resets when switching accounts
-    CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
+// Default language for this page is English
+    CHOSEN_LANGUAGE = 'en';
 
     
       
@@ -3368,7 +3361,7 @@ var navEnc = document.getElementById('navEncuesta');
       return;
     }
 
-    CHOSEN_LANGUAGE = ok ? (window.sessionState.language || 'es') : 'es';
+    CHOSEN_LANGUAGE = 'en';
     if (ok && window.sessionState.must_change_password) {
   openForceChangeModal();
     }
