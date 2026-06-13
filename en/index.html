@@ -3603,6 +3603,24 @@ btnCerrarSesion?.addEventListener('click', async () => {
   function openPrivacyModal() {
     if (privacyAccept) privacyAccept.checked = false;
     if (btnPrivacyContinue) btnPrivacyContinue.disabled = true;
+
+    // Switch privacy modal text based on chosen language
+    const isES = (CHOSEN_LANGUAGE === 'es');
+    const titleEl = privacyModal.querySelector('.modalTitle');
+    const continueBtn = document.getElementById('btnPrivacyContinue');
+    const cancelBtn = document.getElementById('btnPrivacyCancel');
+    if (titleEl) titleEl.textContent = isES ? '🔒 Tu privacidad está protegida' : '🔒 Your privacy is protected';
+    if (continueBtn) continueBtn.textContent = isES ? 'Continuar con la encuesta' : 'Continue to the survey';
+    if (cancelBtn) cancelBtn.textContent = isES ? 'Cancelar' : 'Cancel';
+
+    // Switch privacy text paragraphs
+    const paras = privacyModal.querySelectorAll('p');
+    if (paras.length > 0) {
+      paras[0].innerHTML = isES
+        ? '<strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>'
+        : '<strong style="color:#D6A21C;">This survey is 100% anonymous and confidential.</strong>';
+    }
+
     privacyModal.style.display = 'flex';
   }
 
@@ -3615,9 +3633,12 @@ btnCerrarSesion?.addEventListener('click', async () => {
   async function startSurveyWithChosenLanguage() {
     OPTIONS_CACHE = {};
 
-    // Load survey file now that language is chosen
+    // Load survey file now that language is chosen — pick EN or ES file
     if (window.pendingSurveyFile) {
-      const surveyRes = await fetch(window.pendingSurveyFile + '?lang=' + CHOSEN_LANGUAGE, { cache: 'no-store' });
+      const fileToLoad = (CHOSEN_LANGUAGE === 'es' && window.pendingSurveyFileES)
+        ? window.pendingSurveyFileES
+        : window.pendingSurveyFile;
+      const surveyRes = await fetch(fileToLoad + '?lang=' + CHOSEN_LANGUAGE, { cache: 'no-store' });
       if (!surveyRes.ok) { alert('Could not load survey file.'); return; }
       SURVEY = await surveyRes.json();
 
@@ -3659,6 +3680,7 @@ btnCerrarSesion?.addEventListener('click', async () => {
       }
 
       window.pendingSurveyFile = null;
+      window.pendingSurveyFileES = null;
       window.pendingGradeCode = null;
     }
 
@@ -3821,11 +3843,18 @@ window.cerrarAnalisisPanel = function() {
     const selectedCode = checked.value;
     const routingRules = ROUTING_QUESTION.routing_rules;
 
-    // Find which route_key this grade belongs to
+    // Find which route_key this grade belongs to — store both EN and ES files
     let targetSurveyFile = null;
+    let targetSurveyFileES = null;
     for (const [routeKey, config] of Object.entries(routingRules)) {
       if (config.grade_codes.includes(selectedCode)) {
         targetSurveyFile = `/data/${config.survey_file}`;
+        // Derive ES equivalent: EN_PRIMARIA → US_ES_PRIMARIA, EN → US_ES
+        const esFile = config.survey_file
+          .replace('SURVEY_004_EN_PRIMARY', 'SURVEY_004_US_ES_PRIMARIA')
+          .replace('SURVEY_004_EN_PRIMARIA', 'SURVEY_004_US_ES_PRIMARIA')
+          .replace('SURVEY_004_EN', 'SURVEY_004_US_ES');
+        targetSurveyFileES = `/data/${esFile}`;
         break;
       }
     }
@@ -3839,8 +3868,9 @@ window.cerrarAnalisisPanel = function() {
     btnRoutingNext.disabled = true;
 
     try {
-      // Store the survey file path — will load after language is selected
-      window.pendingSurveyFile = targetSurveyFile;
+      // Store both survey file paths — will load correct one after language is selected
+      window.pendingSurveyFile = targetSurveyFile;       // EN file
+      window.pendingSurveyFileES = targetSurveyFileES;   // ES file
       window.pendingGradeCode = selectedCode;
       SURVEY = null;
       QUESTION_ID_MAP = {};
