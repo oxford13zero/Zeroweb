@@ -3623,9 +3623,9 @@ btnCerrarSesion?.addEventListener('click', async () => {
       : 'I have read and understand that this survey is anonymous and confidential';
 
     // Main content box
-    const box = privacyModal.querySelector('.modalBox > div');
-    if (box) {
-      const paras = box.querySelectorAll('p');
+    const paras = privacyModal.querySelectorAll('p');
+
+      
       if (paras[0]) paras[0].innerHTML = isES
         ? '<strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>'
         : '<strong style="color:#D6A21C;">This survey is 100% anonymous and confidential.</strong>';
@@ -3641,7 +3641,6 @@ btnCerrarSesion?.addEventListener('click', async () => {
       if (paras[4]) paras[4].innerHTML = isES
         ? '<em><strong>Gracias por participar</strong></em>'
         : '<em><strong>Thank you for participating</strong></em>';
-    }
 
     privacyModal.style.display = 'flex';
   }
