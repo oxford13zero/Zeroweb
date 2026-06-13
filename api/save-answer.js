@@ -1,5 +1,6 @@
 // /api/save-answer.js
 import { supabaseAdmin } from "./_lib/supabaseAdmin.js";
+import { requireAuth } from "./_lib/auth.js";
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
   // 1) Verificar ownership del response
   const { data: resp, error: respErr } = await supabaseAdmin
     .from("survey_responses")
-    .select("id, status")
+    .select("id, status, school_id")
     .eq("id", responseId)
     .single();
 
@@ -31,6 +32,13 @@ export default async function handler(req, res) {
   }
   if (resp.status === "submitted") {
     return res.status(400).json({ ok: false, error: "RESPONSE_ALREADY_SUBMITTED" });
+  }
+
+  // 1b) Verificar que el response pertenece a la escuela autenticada
+  const auth = await requireAuth(req, res);
+  if (!auth?.ok) return;
+  if (resp.school_id !== auth.school.id) {
+    return res.status(403).json({ ok: false, error: "FORBIDDEN" });
   }
 
   // 2) Upsert question_answers
