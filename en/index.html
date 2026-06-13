@@ -3614,6 +3614,54 @@ btnCerrarSesion?.addEventListener('click', async () => {
 
   async function startSurveyWithChosenLanguage() {
     OPTIONS_CACHE = {};
+
+    // Load survey file if not yet loaded (deferred from routing for 'both' schools)
+    if (!SURVEY && window.pendingSurveyFile) {
+      const surveyRes = await fetch(window.pendingSurveyFile + '?lang=' + CHOSEN_LANGUAGE, { cache: 'no-store' });
+      if (!surveyRes.ok) { alert('Could not load survey file.'); return; }
+      SURVEY = await surveyRes.json();
+
+      targetSurveyId = SURVEY.survey?.survey_uuid;
+      if (!targetSurveyId) { alert('Error: survey_uuid not found.'); return; }
+
+      // Start response
+      const startRes = await fetch('/api/start-response', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ surveyId: targetSurveyId })
+      });
+      const startData = await startRes.json().catch(() => ({}));
+      if (!startData.ok) { alert('Error starting response: ' + (startData.error || 'no detail')); return; }
+      window.currentResponseId = startData.responseId;
+      sessionStorage.setItem('currentResponseId', startData.responseId);
+
+      // Load question map
+      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
+      const mapData = await mapRes.json().catch(() => ({}));
+      if (!mapData.ok) { alert('Could not load question map: ' + (mapData.error || 'no detail')); return; }
+      QUESTION_ID_MAP = mapData.map || {};
+
+      // Save grade answer
+      const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_curso`, { credentials: 'include' });
+      const gradeQData = await gradeQRes.json().catch(() => ({}));
+      if (gradeQData.ok && gradeQData.questionId && window.pendingGradeCode) {
+        await fetch('/api/save-answer', {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            responseId: window.currentResponseId,
+            questionId: gradeQData.questionId,
+            answerText: null,
+            selectedOptionIds: [window.pendingGradeCode],
+            surveyId: targetSurveyId
+          })
+        });
+      }
+
+      window.pendingSurveyFile = null;
+      window.pendingGradeCode = null;
+    }
+
     IS_PRIMARIA = (SURVEY.survey?.description === 'primaria' || SURVEY.survey?.description === 'elementary');
     if (IS_PRIMARIA) { surveyBox?.classList.add('primaria-mode'); }
     else { surveyBox?.classList.remove('primaria-mode'); }
@@ -3791,68 +3839,10 @@ window.cerrarAnalisisPanel = function() {
     btnRoutingNext.disabled = true;
 
     try {
-      // Load the correct survey
-      const surveyRes = await fetch(targetSurveyFile, { cache: 'no-store' });
-      if (!surveyRes.ok) { alert('No se pudo cargar la encuesta'); btnRoutingNext.disabled = false; return; }
-      SURVEY = await surveyRes.json();
+      // Store the survey file path — will load after language is selected
+      window.pendingSurveyFile = targetSurveyFile;
+      window.pendingGradeCode = selectedCode;
       OPTIONS_CACHE = {};
-
-      targetSurveyId = SURVEY.survey?.survey_uuid;
-      if (!targetSurveyId) { alert('Error: survey_uuid no encontrado en el archivo de encuesta.'); btnRoutingNext.disabled = false; return; }
-
-      // Create the response now that we know which survey
-      const startRes = await fetch('/api/start-response', {
-        method: 'POST', credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: targetSurveyId })
-      });
-      const startData = await startRes.json().catch(() => ({}));
-      if (!startData.ok) {
-        alert('Error al iniciar respuesta: ' + (startData.error || 'sin detalle'));
-        btnRoutingNext.disabled = false;
-        return;
-      }
-
-      window.currentResponseId = startData.responseId;
-      sessionStorage.setItem('currentResponseId', startData.responseId);
-
-      // Save the grade answer to this response using the routing question's question_id
-      // We need the DB questionId for zero_general_grado — fetch from questions-map of the selected survey
-      const mapRes = await fetch(`/api/questions-map?surveyId=${encodeURIComponent(targetSurveyId)}`, { credentials: 'include' });
-      const mapData = await mapRes.json().catch(() => ({}));
-      if (!mapData.ok) {
-        alert('No se pudo cargar mapa de preguntas: ' + (mapData.error || 'sin detalle'));
-        btnRoutingNext.disabled = false;
-        return;
-      }
-      QUESTION_ID_MAP = mapData.map || {};
-
-      // Look up the DB id for zero_general_grado by scanning the map for that external_id
-      // The map is { "questionNumber": "dbUUID" } keyed by question number.
-      // Since zero_general_grado is NOT in either survey anymore, we need to get its DB id
-      // via a dedicated endpoint or by passing the external_id directly.
-      // We use a separate lightweight call to resolve it by external_id.
-      const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_curso`, { credentials: 'include' });
-      const gradeQData = await gradeQRes.json().catch(() => ({}));
-
-      if (gradeQData.ok && gradeQData.questionId) {
-        // Save grade answer
-        await fetch('/api/save-answer', {
-          method: 'POST', credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          
-          body: JSON.stringify({
-            responseId: window.currentResponseId,
-            questionId: gradeQData.questionId,
-            answerText: null,
-            selectedOptionIds: [selectedCode],
-            surveyId: targetSurveyId
-          })          
-        });
-      }
-      // Note: if the endpoint doesn't exist yet, the grade answer save is skipped gracefully
-      // but the survey still proceeds correctly.
-
 
       // Hide routing box
       routingBox.style.display = 'none';
