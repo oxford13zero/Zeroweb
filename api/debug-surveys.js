@@ -13,10 +13,10 @@ export default async function handler(req, res) {
 
   // devuelve solo claves principales para no exponer todo
   const rows = (data || []).map(r => ({
-    id: r.id,
-    code: r.code,
-    slug: r.slug,
-    name: r.name,
+    //id: r.id,
+    //code: r.code,
+    //slug: r.slug,
+    //name: r.name,
     title: r.title
   }));
 
