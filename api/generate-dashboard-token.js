@@ -9,6 +9,7 @@
 // Signed with: JWT_SECRET environment variable (already set in Vercel)
 
 import crypto from "crypto";
+import { parse } from "cookie";
 import { requireAuth } from "./_lib/auth.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -45,18 +46,25 @@ export default async function handler(req, res) {
     return res.status(500).json({ ok: false, error: "JWT_SECRET_NOT_CONFIGURED" });
   }
 
-  const auth = await requireAuth(req, res);
-  if (!auth?.ok) return;
-
   const { school_id, analysis_dt, role } = req.body || {};
 
   if (!school_id || !analysis_dt) {
     return res.status(400).json({ ok: false, error: "MISSING_FIELDS" });
   }
 
-  // Verificar que la escuela autenticada es la dueña del token que pide
-  if (role !== "admin" && auth.school.id !== school_id) {
-    return res.status(403).json({ ok: false, error: "FORBIDDEN" });
+  // Accept either admin session or school session
+  const cookies = parse(req.headers.cookie || "");
+  const isAdmin = !!cookies.t4z_admin_session;
+
+  if (!isAdmin) {
+    // Must be authenticated as a school user
+    const auth = await requireAuth(req, res);
+    if (!auth?.ok) return;
+
+    // School users can only generate tokens for their own school
+    if (role !== "admin" && auth.school.id !== school_id) {
+      return res.status(403).json({ ok: false, error: "FORBIDDEN" });
+    }
   }
 
   // Validate role — only school users and admins can generate tokens
