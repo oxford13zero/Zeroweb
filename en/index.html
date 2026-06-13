@@ -3230,7 +3230,36 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </style>
 
-  <script>
+  
+
+<!-- MODAL: LANGUAGE SELECTOR -->
+<div id="languageModal" class="modalOverlay">
+  <div class="modalBox" style="max-width:440px;">
+    <div class="modalHeader">
+      <h3 class="modalTitle">Select language / Selecciona el idioma</h3>
+    </div>
+    <div style="padding:8px 0;">
+      <p style="margin:0 0 20px 0; font-size:14px; color:#a9c0d3; line-height:1.6;">
+        This survey is available in English and Spanish.<br>
+        Esta encuesta está disponible en inglés y español.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
+          <img src="https://flagcdn.com/us.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
+          <span>English</span>
+        </button>
+        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
+          <img src="https://flagcdn.com/mx.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
+          <span>Español</span>
+        </button>
+      </div>
+      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancel / Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
   // === DEBUG ===
   window.onerror = function (msg, src, line, col) {
     alert(`JS ERROR: ${msg}\n${src}:${line}:${col}`);
@@ -3622,11 +3651,13 @@ btnCerrarSesion?.addEventListener('click', async () => {
     closeLanguageSelector();
     openPrivacyModal();
   }
-  document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
-  document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
-  document.getElementById('btnLangCancel')?.addEventListener('click', () => closeLanguageSelector());
-  document.getElementById('languageModal')?.addEventListener('click', (e) => {
-    if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btnLangEn')?.addEventListener('click', () => selectLanguage('en'));
+    document.getElementById('btnLangEs')?.addEventListener('click', () => selectLanguage('es'));
+    document.getElementById('btnLangCancel')?.addEventListener('click', () => closeLanguageSelector());
+    document.getElementById('languageModal')?.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('languageModal')) closeLanguageSelector();
+    });
   });
 
   btnIngresarEncuesta?.addEventListener('click', async () => {
@@ -6345,32 +6376,5 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
   </div>
 </div>
   
-
-<!-- MODAL: LANGUAGE SELECTOR -->
-<div id="languageModal" class="modalOverlay">
-  <div class="modalBox" style="max-width:440px;">
-    <div class="modalHeader">
-      <h3 class="modalTitle">Select language / Selecciona el idioma</h3>
-    </div>
-    <div style="padding:8px 0;">
-      <p style="margin:0 0 20px 0; font-size:14px; color:#a9c0d3; line-height:1.6;">
-        This survey is available in English and Spanish.<br>
-        Esta encuesta está disponible en inglés y español.
-      </p>
-      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
-        <button id="btnLangEn" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
-          <img src="https://flagcdn.com/us.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
-          <span>English</span>
-        </button>
-        <button id="btnLangEs" type="button" style="display:flex; align-items:center; gap:14px; padding:16px 20px; background:rgba(255,255,255,0.04); border:1.5px solid #365468; border-radius:10px; cursor:pointer; font-family:'Open Sans',sans-serif; font-size:16px; color:#fff; font-weight:600; text-align:left; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#D6A21C'" onmouseout="this.style.borderColor='#365468'">
-          <img src="https://flagcdn.com/mx.svg" style="width:32px; height:22px; object-fit:cover; border-radius:3px; flex-shrink:0;">
-          <span>Español</span>
-        </button>
-      </div>
-      <button id="btnLangCancel" class="btnSecondary" type="button" style="width:100%;">Cancel / Cancelar</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
