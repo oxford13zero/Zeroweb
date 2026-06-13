@@ -3692,10 +3692,11 @@ btnCerrarSesion?.addEventListener('click', async () => {
       if (!mapData.ok) { alert('Could not load question map: ' + (mapData.error || 'no detail')); return; }
       QUESTION_ID_MAP = mapData.map || {};
 
-      // Save grade answer
+      // Save grade answer — capture selectedCode locally before any await clears it
+      const selectedCode = window.pendingGradeCode;
       const gradeQRes = await fetch(`/api/question-id-by-external?externalId=zero_general_curso`, { credentials: 'include' });
       const gradeQData = await gradeQRes.json().catch(() => ({}));
-      if (gradeQData.ok && gradeQData.questionId && window.pendingGradeCode) {
+      if (gradeQData.ok && gradeQData.questionId && selectedCode) {
         await fetch('/api/save-answer', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -3703,12 +3704,15 @@ btnCerrarSesion?.addEventListener('click', async () => {
             responseId: window.currentResponseId,
             questionId: gradeQData.questionId,
             answerText: null,
-            selectedOptionIds: [window.pendingGradeCode],
+            selectedOptionIds: [selectedCode],
             surveyId: targetSurveyId
           })
         });
       }
 
+
+
+      
       window.pendingSurveyFile = null;
       window.pendingSurveyFileES = null;
       window.pendingGradeCode = null;
