@@ -336,6 +336,12 @@ const P4_REVERSE_SCORED = new Set([
 // Demographic external IDs → response data field
 const DEMO_MAP = {
   "zero_general_genero_v2":       "genero",
+   // zero_general_genero (sin _v2) es usado por SURVEY_004_US_ES — versión en español
+   // para escuelas de EE.UU. Esta encuesta usa la pregunta de género de survey_001
+  // (Mujer / Hombre / No binario / Transgénero / Prefiero no responder) en vez de
+  // la versión v2 usada por MX, CL y EN. Ambas mapean al mismo campo demográfico
+  // para que el dashboard las procese de manera idéntica.
+  "zero_general_genero":          "genero",
   "zero_general_edad_v2":         "edad",
   "zero_general_curso":           "grado",
   "zero_general_grado":           "grado",
