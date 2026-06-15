@@ -5888,7 +5888,7 @@ renderSchoolsTable(filtered);
       <td style="padding:10px 12px; font-size:13px; border-bottom:1px solid #2a3f52; text-align:center;">
         <span style="color:${minResp > 0 ? '#FAC775' : '#7a9aaa'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
       </td>
-      <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
+      <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center; white-space:nowrap;">
       <button onclick=\"window.openEditSchool('${s.id}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;\">✎ Edit</button>
       <button onclick=\"window.openSchoolDashboard('${s.id}', '${s.name}')\" style=\"background:transparent; border:1px solid #365468; color:#a9c0d3; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-left:6px;\">📊</button>
       </td>
