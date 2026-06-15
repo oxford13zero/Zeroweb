@@ -265,6 +265,8 @@ const CONSTRUCT_MAP = {
   // ── Group norms (zero_* format) ────────────────────────────────────────────
   "zero_normas_reaccion_v2":              "normas_grupo",
   "zero_normas_intervencion_activa_v2":   "normas_grupo",
+  "zero_normas_respeto_solidario":        "normas_grupo",
+  "zero_normas_defensa_digital":          "normas_grupo",
   "zero_normas_defensa_apoyo":            "normas_grupo",
   "zero_normas_defensa_observada":        "normas_grupo",
 
