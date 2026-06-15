@@ -230,6 +230,9 @@ const CONSTRUCT_MAP = {
   "zero_victima_coercion_v2":         "victimizacion",
   "zero_victima_discriminacion_v2":   "victimizacion",
   "zero_victima_acoso_sexual":        "victimizacion",
+  "zero_victima_fisica":             "victimizacion",
+  "zero_victima_verbal":             "victimizacion",
+  "zero_victima_poder":              "victimizacion",
 
   // ── Perpetration (zero_* format) ───────────────────────────────────────────
   "zero_agresor_agresion_fisica_v2":  "perpetracion",
@@ -239,6 +242,8 @@ const CONSTRUCT_MAP = {
   "zero_agresor_amenazas_v2":         "perpetracion",
   "zero_agresor_coercion_v2":         "perpetracion",
   "zero_agresor_discriminacion_v2":   "perpetracion",
+  "zero_agresor_fisica":             "perpetracion",
+  "zero_agresor_verbal":             "perpetracion",
 
   // ── Cybervictimization (zero_* format) ─────────────────────────────────────
   "zero_cybervictima_mensajes":       "cybervictimizacion",
@@ -248,11 +253,15 @@ const CONSTRUCT_MAP = {
   "zero_cybervictima_continua":       "cybervictimizacion",
   "zero_cybervictima_extorsion":      "cybervictimizacion",
   "zero_cybervictima_masivo":         "cybervictimizacion",
+  "zero_cyber_victima_foto":         "cybervictimizacion",
+  "zero_cyber_victima_acoso":        "cybervictimizacion",
 
   // ── Cyberaggression (zero_* format) ────────────────────────────────────────
   "zero_cyberagresor_mensajes":       "cyberagresion",
   "zero_cyberagresor_exclusion":      "cyberagresion",
   "zero_cyberagresor_memes":          "cyberagresion",
+  "zero_cyber_agresor_fotos":        "cyberagresion",
+  "zero_cyber_agresor_grupos":       "cyberagresion",
 
   // ── Teacher / Adult authority (zero_* format) ──────────────────────────────
   "zero_autoridad_normas":            "autoridad_docente",
@@ -262,6 +271,10 @@ const CONSTRUCT_MAP = {
   "zero_autoridad_bienestar":         "autoridad_docente",
   "zero_autoridad_seguimiento":       "autoridad_docente",
   "zero_autoridad_accion_digital":    "autoridad_docente",
+  "zero_autoridad_normas_sala":      "autoridad_docente",
+  "zero_autoridad_detiene":          "autoridad_docente",
+  "zero_autoridad_ayuda_conflicto":  "autoridad_docente",
+  "zero_autoridad_normas_escuela":   "autoridad_docente",
 
   // ── Group norms (zero_* format) ────────────────────────────────────────────
   "zero_normas_reaccion_v2":              "normas_grupo",
@@ -270,6 +283,14 @@ const CONSTRUCT_MAP = {
   "zero_normas_defensa_digital":          "normas_grupo",
   "zero_normas_defensa_apoyo":            "normas_grupo",
   "zero_normas_defensa_observada":        "normas_grupo",
+  "zero_normas_amigos_defienden":    "normas_grupo",
+  "zero_normas_pertenencia":         "normas_grupo",
+  "zero_normas_apoyo_emocional":     "normas_grupo",
+  "zero_normas_trato_carino":        "normas_grupo",
+  "zero_normas_grupo_evita":         "normas_grupo",
+  "zero_normas_apoyo_al_defender":   "normas_grupo",
+  "zero_prosocial_defensor":         "normas_grupo",
+  "zero_prosocial_inclusion":        "normas_grupo",
 
   // ── Institutional response (zero_* format) ─────────────────────────────────
   "zero_institucional_protege":       "respuesta_institucional",
@@ -278,6 +299,13 @@ const CONSTRUCT_MAP = {
   "zero_institucional_acceso_adulto": "respuesta_institucional",
   "zero_institucional_sin_represalia":"respuesta_institucional",
   "zero_institucional_seguimiento":   "respuesta_institucional",
+  "zero_inst_adultos_ayudan":        "respuesta_institucional",
+  "zero_inst_conoce_adulto":         "respuesta_institucional",
+  "zero_inst_sin_represalia":        "respuesta_institucional",
+  "zero_inst_resuelven_hablando":    "respuesta_institucional",
+  "zero_inst_alguien_acudir":        "respuesta_institucional",
+  "zero_inst_cyber_confianza":       "respuesta_institucional",
+  "zero_inst_cyber_educacion":       "respuesta_institucional",
 
   // ── Inter-level / older students (zero_* format) ───────────────────────────
   "zero_internivel_intimidacion":     "internivel",
@@ -285,6 +313,16 @@ const CONSTRUCT_MAP = {
   "zero_internivel_norma":            "internivel",
   "zero_internivel_supervision":      "internivel",
   "zero_internivel_intervencion":     "internivel",
+  "zero_internivel_trato":           "internivel",
+  "zero_mapa_patio":                 "mapa",
+  "zero_mapa_banos":                 "mapa",
+  "zero_mapa_biblioteca":            "mapa",
+  "zero_mapa_entrada_salida":        "mapa",
+  "zero_bienestar_voz":              "bienestar",
+  "zero_bienestar_gusto":            "bienestar",
+  "zero_bienestar_seguridad":        "bienestar",
+  "zero_bienestar_general":          "bienestar",
+  "zero_bienestar_orgullo":          "bienestar",
 
   // ── Ecology spaces (zero_* format) ─────────────────────────────────────────
   "zero_ecologia_patio_v2":           "ecologia_patio",
