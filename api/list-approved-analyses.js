@@ -21,16 +21,24 @@ export default async function handler(req, res) {
 
   try {
     // Parse cookies to get school_id
-    const cookies = parseCookies(req.headers.cookie || "");
-    const school_id = cookies["t4z_session"];
+const cookies = parseCookies(req.headers.cookie || "");
+    const sessionSchoolId = cookies["t4z_session"];
+    const isAdmin = !!cookies["t4z_admin_session"];
 
-    console.log('Cookie school_id:', school_id);
+    // Admin can pass school_id as query param; school users use their session
+    const school_id = (isAdmin && req.query?.school_id)
+      ? req.query.school_id
+      : sessionSchoolId;
+
+    console.log('Cookie school_id:', school_id, '| isAdmin:', isAdmin);
 
     if (!school_id) {
       console.log('❌ No session cookie');
       return res.status(401).json({ ok: false, error: 'No autenticado' });
     }
 
+
+    
     // Initialize Supabase
     const SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
