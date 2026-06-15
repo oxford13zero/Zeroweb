@@ -5607,7 +5607,77 @@ if (toggle) {
         studentsPreparatoria: school.students_preparatoria
       });
     }
+    // ── Dashboard access from Schools list ──
+window.openSchoolDashboard = async function(schoolId, schoolName) {
+  try {
+    const res = await fetch(`/api/list-approved-analyses?school_id=${encodeURIComponent(schoolId)}`, { credentials: 'include' });
+    const data = await res.json().catch(() => ({}));
+    if (!data.ok || !data.analyses?.length) {
+      alert(`No approved analyses for ${schoolName}.`); return;
+    }
+    if (data.analyses.length === 1) {
+      const a = data.analyses[0];
+      const tokenRes = await fetch('/api/generate-dashboard-token', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ school_id: schoolId, analysis_dt: a.analysis_date, role: 'admin' })
+      });
+      const tokenData = await tokenRes.json();
+      if (!tokenData.ok) { alert('Error generating token.'); return; }
+      window.open(`/dashboard/?token=${encodeURIComponent(tokenData.token)}`, '_blank');
+      return;
+    }
+    // Multiple analyses — show picker
+    const picked = await showAnalysisPicker(schoolId, schoolName, data.analyses);
+    if (!picked) return;
+    const tokenRes = await fetch('/api/generate-dashboard-token', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ school_id: schoolId, analysis_dt: picked.analysis_date, role: 'admin' })
+    });
+    const tokenData = await tokenRes.json();
+    if (!tokenData.ok) { alert('Error generating token.'); return; }
+    window.open(`/dashboard/?token=${encodeURIComponent(tokenData.token)}`, '_blank');
+  } catch(e) {
+    alert('Connection error.');
+  }
+};
 
+function showAnalysisPicker(schoolId, schoolName, analyses) {
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    const box = document.createElement('div');
+    box.style.cssText = 'background:#16222D;border:1px solid #365468;border-radius:12px;padding:20px;width:min(460px,95vw);max-height:80vh;overflow-y:auto;';
+    box.innerHTML = `
+      <div style="font-family:'Playfair Display',serif;color:#D6A21C;font-size:18px;margin-bottom:4px;">Select analysis</div>
+      <div style="font-size:13px;color:#a9c0d3;margin-bottom:16px;">${schoolName}</div>
+      <div id="analysisPicker_list">
+        ${analyses.map((a, i) => `
+          <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #365468;border-radius:8px;margin-bottom:8px;cursor:pointer;">
+            <input type="radio" name="ap_radio" value="${i}" ${i===0?'checked':''} style="accent-color:#D6A21C;">
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;">${new Date(a.analysis_date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+              <div style="font-size:11px;color:#a9c0d3;">${a.total_students} students</div>
+            </div>
+            <span style="font-size:10px;padding:2px 8px;background:#b9ffcf;color:#0f1d27;border-radius:4px;font-weight:700;">Approved</span>
+          </label>`).join('')}
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;">
+        <button id="ap_cancel" style="padding:8px 16px;background:transparent;border:1px solid #365468;color:#a9c0d3;border-radius:6px;cursor:pointer;font-size:13px;">Cancel</button>
+        <button id="ap_open" style="padding:8px 16px;background:#D6A21C;border:none;color:#0f1d27;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;">Open dashboard →</button>
+      </div>`;
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    document.getElementById('ap_cancel').onclick = () => { document.body.removeChild(overlay); resolve(null); };
+    document.getElementById('ap_open').onclick = () => {
+      const idx = parseInt(document.querySelector('input[name="ap_radio"]:checked')?.value ?? '0');
+      document.body.removeChild(overlay);
+      resolve(analyses[idx]);
+    };
+    overlay.addEventListener('click', e => { if (e.target === overlay) { document.body.removeChild(overlay); resolve(null); } });
+  });
+}
     // Expose globally so renderSchoolsTable can call it
     window.openEditSchool = function(schoolId) {
       const school = window._schoolsCache?.find(s => s.id === schoolId);
@@ -5819,7 +5889,8 @@ renderSchoolsTable(filtered);
         <span style="color:${minResp > 0 ? '#FAC775' : '#7a9aaa'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
       </td>
       <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
-        <button onclick="window.openEditSchool('${s.id}')" style="background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;">✎ Edit</button>
+      <button onclick=\"window.openEditSchool('${s.id}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;\">✎ Edit</button>
+      <button onclick=\"window.openSchoolDashboard('${s.id}', '${s.name}')\" style=\"background:transparent; border:1px solid #365468; color:#a9c0d3; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-left:6px;\">📊</button>
       </td>
     </tr>`;
   }).join('');
