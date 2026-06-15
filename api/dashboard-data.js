@@ -252,6 +252,7 @@ const CONSTRUCT_MAP = {
   // ── Cyberaggression (zero_* format) ────────────────────────────────────────
   "zero_cyberagresor_mensajes":       "cyberagresion",
   "zero_cyberagresor_exclusion":      "cyberagresion",
+  "zero_cyberagresor_memes":          "cyberagresion",
 
   // ── Teacher / Adult authority (zero_* format) ──────────────────────────────
   "zero_autoridad_normas":            "autoridad_docente",
