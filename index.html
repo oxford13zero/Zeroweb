@@ -5620,7 +5620,7 @@ window.openSchoolDashboard = async function(schoolId, schoolName) {
       const tokenRes = await fetch('/api/generate-dashboard-token', {
         method: 'POST', credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ school_id: schoolId, analysis_dt: a.analysis_date.replace('T', ' ').replace('+00:00', '+00'), role: 'admin' })
+        body: JSON.stringify({ school_id: schoolId, analysis_dt: a.analysis_date.replace('T', ' ').replace('+00:00', '+00'), role: 'school' })
       });
       const tokenData = await tokenRes.json();
       if (!tokenData.ok) { alert('Error generating token.'); return; }
@@ -5633,7 +5633,7 @@ window.openSchoolDashboard = async function(schoolId, schoolName) {
     const tokenRes = await fetch('/api/generate-dashboard-token', {
       method: 'POST', credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ school_id: schoolId, analysis_dt: picked.analysis_date.replace('T', ' ').replace('+00:00', '+00'), role: 'admin' })
+      body: JSON.stringify({ school_id: schoolId, analysis_dt: picked.analysis_date.replace('T', ' ').replace('+00:00', '+00'), role: 'school' })
     });
     const tokenData = await tokenRes.json();
     if (!tokenData.ok) { alert('Error generating token.'); return; }
