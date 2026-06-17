@@ -5329,9 +5329,9 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
     addSchoolClose2?.addEventListener('click', closeAllModals);
     addSchoolClose3?.addEventListener('click', closeAllModals);
     btnCancelAddSchool1?.addEventListener('click', closeAllModals);
-    addSchoolModal1?.addEventListener('click', (e) => { if (e.target === addSchoolModal1) closeAllModals(); });
-    addSchoolModal2?.addEventListener('click', (e) => { if (e.target === addSchoolModal2) closeAllModals(); });
-    addSchoolModal3?.addEventListener('click', (e) => { if (e.target === addSchoolModal3) closeAllModals(); });
+    addSchoolModal1?.addEventListener('mousedown', (e) => { if (e.target === addSchoolModal1) closeAllModals(); });
+    addSchoolModal2?.addEventListener('mousedown', (e) => { if (e.target === addSchoolModal2) closeAllModals(); });
+    addSchoolModal3?.addEventListener('mousedown', (e) => { if (e.target === addSchoolModal3) closeAllModals(); });
 
     btnNextToEnrollment?.addEventListener('click', () => { if (validateStep1()) openModal2(); });
     btnBackToSchoolInfo?.addEventListener('click', backToModal1);
