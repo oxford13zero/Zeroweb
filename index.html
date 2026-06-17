@@ -5628,7 +5628,7 @@ if (toggle) {
     });
     const data = await res.json();
     if (!data.ok) { alert('Error updating survey status.'); return; }
-    loadSchools(); // refresh the list
+    loadSchoolsList(); // refresh the list
   } catch(e) {
     alert('Connection error.');
   }
