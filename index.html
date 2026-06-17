@@ -5861,7 +5861,7 @@ renderSchoolsTable(filtered);
     
    function renderSchoolsTable(schools) {
   if (!schools.length) {
-    schoolsListBody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
+    schoolsListBody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
     return;
   }
   schoolsListBody.innerHTML = schools.map(s => {
@@ -5888,15 +5888,26 @@ renderSchoolsTable(filtered);
       <td style="padding:10px 12px; font-size:13px; border-bottom:1px solid #2a3f52; text-align:center;">
         <span style="color:${minResp > 0 ? '#FAC775' : '#7a9aaa'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
       </td>
-      <td style="padding:10px 12px; font-size:12px; border-bottom:1px solid #2a3f52; text-align:center; white-space:nowrap;">
-        ${s.survey_status ? `<span style="padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; background:${s.survey_status==='closed'?'rgba(185,255,207,0.1)':s.survey_status==='analysis_requested'?'rgba(214,162,28,0.1)':'rgba(169,192,211,0.1)'}; color:${s.survey_status==='closed'?'#b9ffcf':s.survey_status==='analysis_requested'?'#D6A21C':'#a9c0d3'}; border:1px solid ${s.survey_status==='closed'?'rgba(185,255,207,0.3)':s.survey_status==='analysis_requested'?'rgba(214,162,28,0.3)':'rgba(169,192,211,0.2)'}">${s.survey_status==='closed'?'✅ Closed':s.survey_status==='analysis_requested'?'⏳ Requested':'🔵 In Progress'}</span>` : '<span style="color:#4a6070;">—</span>'}
+      
+<td style="padding:10px 12px; font-size:12px; border-bottom:1px solid #2a3f52; text-align:center; white-space:nowrap;">
+        ${!s.survey_status ? '<span style="color:#4a6070;">—</span>' :
+          s.survey_status === 'closed' ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(185,255,207,0.1);border:1px solid rgba(185,255,207,0.3);color:#b9ffcf;">✅ Closed</span>' :
+          s.survey_status === 'under_t4z_review' ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(214,162,28,0.1);border:1px solid rgba(214,162,28,0.3);color:#D6A21C;">⏳ Under T4Z Review</span>' :
+          '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(116,192,252,0.1);border:1px solid rgba(116,192,252,0.3);color:#74c0fc;">🔵 In Progress</span>'
+        }
       </td>
       <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52; text-align:center;">
-        ${s.submitted_count != null ? s.submitted_count : '<span style="color:#4a6070;">—</span>'}
+        ${s.survey_status === 'in_progress' && s.in_progress_count ?
+          `<div style="display:flex;flex-direction:column;gap:2px;align-items:center;">
+            <span style="color:#fff;font-weight:600;">${s.submitted_count || 0} submitted</span>
+            <span style="color:#74c0fc;font-size:11px;">${s.in_progress_count} in progress</span>
+          </div>` :
+          s.submitted_count != null ? `<span style="color:#fff;font-weight:600;">${s.submitted_count}</span>` :
+          '<span style="color:#4a6070;">—</span>'
+        }
       </td>
-      <td style="padding:10px 12px; font-size:12px; color:#7a9aaa; border-bottom:1px solid #2a3f52; text-align:center;">
-        ${s.latest_survey_date ? new Date(s.latest_survey_date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '<span style="color:#4a6070;">—</span>'}
-      </td>
+
+      
       <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center; white-space:nowrap;">
       <button onclick=\"window.openEditSchool('${s.id}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;\">✎ Edit</button>
       <button onclick=\"window.openSchoolDashboard('${s.id}', '${s.name}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-left:6px; appearance:none; -webkit-appearance:none;\">📊</button>
