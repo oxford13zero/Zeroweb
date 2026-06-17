@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     // Fetch schools with their encargado in one query
     const { data: schools, error } = await supabaseAdmin
       .from("schools")
-      .select(`
+.select(`
         id,
         name,
         username,
@@ -22,6 +22,7 @@ export default async function handler(req, res) {
         address,
         phone,
         is_active,
+        survey_open,
         students_primaria,
         students_secundaria,
         students_preparatoria,
@@ -131,6 +132,7 @@ export default async function handler(req, res) {
       students_secundaria: s.students_secundaria || 0,
       students_preparatoria: s.students_preparatoria || 0,
       is_active: s.is_active !== false,
+      survey_open: s.survey_open !== false,
       encargado: s.encargado_escolar?.[0] || null,
       submitted_count: statsMap[s.id]?.submitted_count || null,
       in_progress_count: statsMap[s.id]?.in_progress_count || null,
