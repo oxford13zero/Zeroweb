@@ -48,7 +48,7 @@ export default async function handler(req, res) {
  // Fetch latest survey stats per school
     const { data: surveyStats } = await supabaseAdmin
       .from("survey_responses")
-      .select("school_id, status, analysis_requested_dt, analysis_approved, submitted_at")
+      .select("school_id, status, analysis_requested_dt, analysis_approved, submitted_at, started_at")
       .in("school_id", (schools || []).map(s => s.id));
 
     // Group by school + batch (analysis_requested_dt)
@@ -56,17 +56,21 @@ export default async function handler(req, res) {
     for (const r of surveyStats || []) {
       const key = `${r.school_id}__${r.analysis_requested_dt || 'none'}`;
       if (!batchMap[key]) {
-        batchMap[key] = {
+       
+        
+batchMap[key] = {
           school_id: r.school_id,
           analysis_requested_dt: r.analysis_requested_dt,
-          latest_submitted_at: r.submitted_at,
+          latest_started_at: r.started_at,
           is_approved: false,
           submitted_count: 0,
           in_progress_count: 0
         };
       }
       const b = batchMap[key];
-      if (r.submitted_at && r.submitted_at > b.latest_submitted_at) b.latest_submitted_at = r.submitted_at;
+      if (r.started_at && r.started_at > b.latest_started_at) b.latest_started_at = r.started_at;
+
+      
       if (r.analysis_approved) b.is_approved = true;
       if (r.status === 'submitted') b.submitted_count++;
       if (r.status === 'in_progress') b.in_progress_count++;
@@ -76,7 +80,7 @@ export default async function handler(req, res) {
     const statsMap = {};
     for (const batch of Object.values(batchMap)) {
       const sid = batch.school_id;
-      if (!statsMap[sid] || batch.latest_submitted_at > statsMap[sid].latest_submitted_at) {
+      if (!statsMap[sid] || (batch.latest_started_at && (!statsMap[sid].latest_started_at || batch.latest_started_at > statsMap[sid].latest_started_at))) {
         statsMap[sid] = batch;
       }
     }
