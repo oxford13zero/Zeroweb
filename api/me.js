@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
     const { data: school, error } = await supabase
       .from("schools")
-      .select("id, name, country, language, must_change_password")
+      .select("id, name, country, language, must_change_password, survey_open")
       .eq("id", school_id)
       .maybeSingle();
 
@@ -39,7 +39,8 @@ export default async function handler(req, res) {
       school_name: school.name,
       country: school.country || "MX",
       language: school.language || "es",
-      must_change_password: school.must_change_password ?? false
+      must_change_password: school.must_change_password ?? false,
+      survey_open: school.survey_open ?? true
     });
 
   } catch (e) {
