@@ -5615,8 +5615,26 @@ if (toggle) {
         studentsPreparatoria: school.students_preparatoria
       });
     }
+
+    window.toggleSurveyOpen = async function(schoolId, currentState) {
+  const newState = !currentState;
+  const label = newState ? 'open' : 'lock';
+  if (!confirm(`Are you sure you want to ${label} the survey for this school?`)) return;
+  try {
+    const res = await fetch('/api/toggle-survey-open', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ school_id: schoolId, survey_open: newState })
+    });
+    const data = await res.json();
+    if (!data.ok) { alert('Error updating survey status.'); return; }
+    loadSchools(); // refresh the list
+  } catch(e) {
+    alert('Connection error.');
+  }
+};
     // ── Dashboard access from Schools list ──
-window.openSchoolDashboard = async function(schoolId, schoolName) {
+    window.openSchoolDashboard = async function(schoolId, schoolName) {
   try {
     const res = await fetch(`/api/list-approved-analyses?school_id=${encodeURIComponent(schoolId)}`, { credentials: 'include' });
     const data = await res.json().catch(() => ({}));
@@ -5869,7 +5887,7 @@ renderSchoolsTable(filtered);
     
    function renderSchoolsTable(schools) {
   if (!schools.length) {
-    schoolsListBody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
+    schoolsListBody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
     return;
   }
   schoolsListBody.innerHTML = schools.map(s => {
@@ -5910,7 +5928,16 @@ renderSchoolsTable(filtered);
        
       </td>
 
-      
+      <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+          <div onclick="window.toggleSurveyOpen('${s.id}', ${s.survey_open})" 
+               style="position:relative; width:36px; height:20px; cursor:pointer; flex-shrink:0;">
+            <div style="position:absolute; inset:0; border-radius:999px; background:${s.survey_open ? '#27AE60' : '#365468'}; transition:background 0.2s;"></div>
+            <div style="position:absolute; width:14px; height:14px; border-radius:50%; background:#fff; top:3px; left:${s.survey_open ? '19px' : '3px'}; transition:left 0.2s;"></div>
+          </div>
+          <span style="font-size:11px; font-weight:600; color:${s.survey_open ? '#b9ffcf' : '#ff6b6b'};">${s.survey_open ? 'Open' : 'Locked'}</span>
+        </div>
+      </td>
       <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center; white-space:nowrap;">
       <button onclick=\"window.openEditSchool('${s.id}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;\">✎ Edit</button>
       <button onclick=\"window.openSchoolDashboard('${s.id}', '${s.name}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-left:6px; appearance:none; -webkit-appearance:none;\">📊</button>
@@ -6182,6 +6209,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
 <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Min. required</th>
 <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Survey Status</th>
 <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Submitted</th>
+<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Survey Open</th>
 <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Last Survey</th>
 <th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;"></th>
 
