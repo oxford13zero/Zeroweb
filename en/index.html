@@ -3309,14 +3309,18 @@ Our diagnostic tool uses artificial intelligence as support and is validated by 
     try {
       const res = await fetch('/api/me', { credentials:'include' });
       const data = await res.json().catch(() => ({}));
-      window.sessionState = {
+
+      
+window.sessionState = {
         ok: !!data?.ok,
         school_id: data?.school_id || null,
         school_name: data?.school_name || null,
         country: data?.country || 'MX',
         language: data?.language || 'es',
-        must_change_password: data?.must_change_password ?? false  
+        survey_open: data?.survey_open !== false
       };
+
+      
     } catch (e) {
       window.sessionState = { ok:false, school_id:null, school_name:null, country:'MX' };
     }
@@ -3371,7 +3375,11 @@ function setForceChangeMsg(text, type) {
         : 'Session status: Not authenticated.';
     }
 
-    if (btnIngresarEncuesta) btnIngresarEncuesta.disabled = !ok;
+    const surveyOpen = window.sessionState.survey_open !== false;
+    if (btnIngresarEncuesta) {
+      btnIngresarEncuesta.disabled = !ok || !surveyOpen;
+      btnIngresarEncuesta.title = (!ok || !surveyOpen) ? 'Survey currently unavailable' : '';
+    }
     if (btnSolicitarAnalisis) btnSolicitarAnalisis.disabled = !ok;
     if (btnMostrarResultados) btnMostrarResultados.disabled = !ok;
 
