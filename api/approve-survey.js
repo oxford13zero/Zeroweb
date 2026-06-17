@@ -56,7 +56,11 @@ export default async function handler(req, res) {
         error: 'Database error: ' + error.message
       });
     }
-
+// Lock the school survey after approval
+    await supabase
+      .from('schools')
+      .update({ survey_open: false })
+      .eq('id', school_id);
     console.log(`✅ Approved survey for school ${school_id}, analysis ${analysis_dt}`);
 
     return res.json({
