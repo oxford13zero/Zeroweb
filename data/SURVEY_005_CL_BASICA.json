@@ -122,8 +122,25 @@
         }
       ]
     },
-    {
+{
       "number": 5,
+      "question_id": "zero_general_pueblo_originario",
+      "section": "A",
+      "section_name": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text": "¿Perteneces o te sientes parte de algún pueblo indígena u originario (mapuche, aymara, rapa nui, quechua u otro)?",
+      "options": [
+        {"code": "S", "text": "Sí"},
+        {"code": "N", "text": "No"},
+        {"code": "NR", "text": "No sé / Prefiero no responder"}
+      ]
+    },
+    
+    {
+      "number": 6,
       "question_id": "zero_general_comparte_media",
       "section": "A",
       "section_name": "Información General",
@@ -143,8 +160,10 @@
         }
       ]
     },
+
+    
     {
-      "number": 6,
+      "number": 7,
       "question_id": "zero_autoridad_normas_sala",
       "section": "B",
       "section_name": "Autoridad Docente",
@@ -178,7 +197,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 8,
       "question_id": "zero_autoridad_detiene",
       "section": "B",
       "section_name": "Autoridad Docente",
@@ -212,7 +231,7 @@
       ]
     },
     {
-      "number": 8,
+      "number": 9,
       "question_id": "zero_autoridad_ayuda_conflicto",
       "section": "B",
       "section_name": "Autoridad Docente",
@@ -246,7 +265,7 @@
       ]
     },
     {
-      "number": 9,
+      "number": 10,
       "question_id": "zero_autoridad_normas_escuela",
       "section": "B",
       "section_name": "Autoridad Docente",
@@ -280,7 +299,7 @@
       ]
     },
     {
-      "number": 10,
+      "number": 11,
       "question_id": "zero_normas_amigos_defienden",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -314,7 +333,7 @@
       ]
     },
     {
-      "number": 11,
+      "number": 12,
       "question_id": "zero_normas_pertenencia",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -348,7 +367,7 @@
       ]
     },
     {
-      "number": 12,
+      "number": 13,
       "question_id": "zero_normas_apoyo_emocional",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -382,7 +401,7 @@
       ]
     },
     {
-      "number": 13,
+      "number": 14,
       "question_id": "zero_normas_trato_carino",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -416,7 +435,7 @@
       ]
     },
     {
-      "number": 14,
+      "number": 15,
       "question_id": "zero_normas_grupo_evita",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -450,7 +469,7 @@
       ]
     },
     {
-      "number": 15,
+      "number": 16,
       "question_id": "zero_normas_apoyo_al_defender",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -484,7 +503,7 @@
       ]
     },
     {
-      "number": 16,
+      "number": 17,
       "question_id": "zero_inst_adultos_ayudan",
       "section": "D",
       "section_name": "Respuesta Institucional",
@@ -518,7 +537,7 @@
       ]
     },
     {
-      "number": 17,
+      "number": 18,
       "question_id": "zero_inst_conoce_adulto",
       "section": "D",
       "section_name": "Respuesta Institucional",
@@ -552,7 +571,7 @@
       ]
     },
     {
-      "number": 18,
+      "number": 19,
       "question_id": "zero_inst_sin_represalia",
       "section": "D",
       "section_name": "Respuesta Institucional",
@@ -586,7 +605,7 @@
       ]
     },
     {
-      "number": 19,
+      "number": 20,
       "question_id": "zero_inst_resuelven_hablando",
       "section": "D",
       "section_name": "Respuesta Institucional",
@@ -620,7 +639,7 @@
       ]
     },
     {
-      "number": 20,
+      "number": 21,
       "question_id": "zero_inst_alguien_acudir",
       "section": "D",
       "section_name": "Respuesta Institucional",
@@ -654,7 +673,7 @@
       ]
     },
     {
-      "number": 21,
+      "number": 22,
       "question_id": "zero_prosocial_defensor",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -688,7 +707,7 @@
       ]
     },
     {
-      "number": 22,
+      "number": 23,
       "question_id": "zero_prosocial_inclusion",
       "section": "C",
       "section_name": "Normas Grupales",
@@ -722,7 +741,7 @@
       ]
     },
     {
-      "number": 23,
+      "number": 24,
       "question_id": "zero_inst_cyber_confianza",
       "section": "D",
       "section_name": "Respuesta Institucional",
@@ -756,7 +775,7 @@
       ]
     },
     {
-      "number": 24,
+      "number": 25,
       "question_id": "zero_inst_cyber_educacion",
       "section": "D",
       "section_name": "Respuesta Institucional",
@@ -790,7 +809,7 @@
       ]
     },
     {
-      "number": 25,
+      "number": 26,
       "question_id": "zero_internivel_trato",
       "section": "E",
       "section_name": "Violencia Inter-nivel",
@@ -828,7 +847,7 @@
       ]
     },
     {
-      "number": 26,
+      "number": 27,
       "question_id": "zero_mapa_patio",
       "section": "I",
       "section_name": "Ecología del Bullying",
@@ -862,7 +881,7 @@
       ]
     },
     {
-      "number": 27,
+      "number": 28,
       "question_id": "zero_mapa_banos",
       "section": "I",
       "section_name": "Ecología del Bullying",
@@ -896,7 +915,7 @@
       ]
     },
     {
-      "number": 28,
+      "number": 29,
       "question_id": "zero_mapa_biblioteca",
       "section": "I",
       "section_name": "Ecología del Bullying",
@@ -930,7 +949,7 @@
       ]
     },
     {
-      "number": 29,
+      "number": 30,
       "question_id": "zero_mapa_entrada_salida",
       "section": "I",
       "section_name": "Ecología del Bullying",
@@ -964,7 +983,7 @@
       ]
     },
     {
-      "number": 30,
+      "number": 31,
       "question_id": "zero_bienestar_voz",
       "section": "J",
       "section_name": "Bienestar",
@@ -998,7 +1017,7 @@
       ]
     },
     {
-      "number": 31,
+      "number": 32,
       "question_id": "zero_bienestar_gusto",
       "section": "J",
       "section_name": "Bienestar",
@@ -1032,7 +1051,7 @@
       ]
     },
     {
-      "number": 32,
+      "number": 33,
       "question_id": "zero_bienestar_seguridad",
       "section": "J",
       "section_name": "Bienestar",
@@ -1066,7 +1085,7 @@
       ]
     },
     {
-      "number": 33,
+      "number": 34,
       "question_id": "zero_bienestar_general",
       "section": "J",
       "section_name": "Bienestar",
@@ -1100,7 +1119,7 @@
       ]
     },
     {
-      "number": 34,
+      "number": 35,
       "question_id": "zero_bienestar_orgullo",
       "section": "J",
       "section_name": "Bienestar",
@@ -1134,7 +1153,7 @@
       ]
     },
     {
-      "number": 35,
+      "number": 36,
       "question_id": "zero_victima_fisica",
       "section": "F",
       "section_name": "Victimización",
@@ -1168,7 +1187,7 @@
       ]
     },
     {
-      "number": 36,
+      "number": 37,
       "question_id": "zero_victima_verbal",
       "section": "F",
       "section_name": "Victimización",
@@ -1202,7 +1221,7 @@
       ]
     },
     {
-      "number": 37,
+      "number": 38,
       "question_id": "zero_victima_exclusion",
       "section": "F",
       "section_name": "Victimización",
@@ -1236,7 +1255,7 @@
       ]
     },
     {
-      "number": 38,
+      "number": 39,
       "question_id": "zero_victima_amenazas",
       "section": "F",
       "section_name": "Victimización",
@@ -1270,7 +1289,7 @@
       ]
     },
     {
-      "number": 39,
+      "number": 40,
       "question_id": "zero_victima_discriminacion",
       "section": "F",
       "section_name": "Victimización",
@@ -1304,7 +1323,7 @@
       ]
     },
     {
-      "number": 40,
+      "number": 41,
       "question_id": "zero_victima_poder",
       "section": "F",
       "section_name": "Victimización",
@@ -1338,7 +1357,7 @@
       ]
     },
     {
-      "number": 41,
+      "number": 42,
       "question_id": "zero_agresor_fisica",
       "section": "G",
       "section_name": "Perpetración",
@@ -1372,7 +1391,7 @@
       ]
     },
     {
-      "number": 42,
+      "number": 43,
       "question_id": "zero_agresor_verbal",
       "section": "G",
       "section_name": "Perpetración",
@@ -1406,7 +1425,7 @@
       ]
     },
     {
-      "number": 43,
+      "number": 44,
       "question_id": "zero_agresor_exclusion",
       "section": "G",
       "section_name": "Perpetración",
@@ -1440,7 +1459,7 @@
       ]
     },
     {
-      "number": 44,
+      "number": 45,
       "question_id": "zero_general_tiene_celular",
       "section": "A",
       "section_name": "Información General",
@@ -1461,7 +1480,7 @@
       ]
     },
     {
-      "number": 45,
+      "number": 46,
       "question_id": "zero_cyber_victima_mensajes",
       "section": "H",
       "section_name": "Cibervictimización",
@@ -1495,7 +1514,7 @@
       ]
     },
     {
-      "number": 46,
+      "number": 47,
       "question_id": "zero_cyber_victima_foto",
       "section": "H",
       "section_name": "Cibervictimización",
@@ -1529,7 +1548,7 @@
       ]
     },
     {
-      "number": 47,
+      "number": 48,
       "question_id": "zero_cyber_victima_acoso",
       "section": "H",
       "section_name": "Cibervictimización",
@@ -1563,7 +1582,7 @@
       ]
     },
     {
-      "number": 48,
+      "number": 49,
       "question_id": "zero_cyber_agresor_fotos",
       "section": "H",
       "section_name": "Ciberagresión",
@@ -1597,7 +1616,7 @@
       ]
     },
     {
-      "number": 49,
+      "number": 50,
       "question_id": "zero_cyber_agresor_mensajes",
       "section": "H",
       "section_name": "Ciberagresión",
@@ -1631,7 +1650,7 @@
       ]
     },
     {
-      "number": 50,
+      "number": 51,
       "question_id": "zero_cyber_agresor_grupos",
       "section": "H",
       "section_name": "Ciberagresión",
