@@ -81,7 +81,7 @@
       "construct_role": "demographic",
       "scale_type": "categorical",
       "type": "single_choice",
-      "text": "¿Cómo describes tu género?",
+      "text": "¿Con que género te identificas?",
       "options": [
         {
           "code": "F",
@@ -153,7 +153,7 @@
       "scale_type": "frequency_0_4",
       "score_direction": "higher_means_safer",
       "type": "single_choice",
-      "text": "Mi profesora o profesor explica claramente qué está permitido y qué no está permitido en la sala de clases.",
+      "text": "Mi profesora o profesor hace cumplir las normas de manera justa, sin favorecer a unos estudiantes sobre otros.",
       "options": [
         {
           "code": "0",
