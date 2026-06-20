@@ -57,9 +57,11 @@ export default async function handler(req, res) {
     }
   }
 
-  const question_text = effectiveLang === "en"
+const question_text = effectiveLang === "en"
     ? "What grade are you in?"
-    : "¿En qué grado estás?";
+    : country === "CL"
+      ? "¿En qué curso estás?"
+      : "¿En qué grado estás?";
 
   return res.status(200).json({
     ok: true,
