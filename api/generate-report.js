@@ -240,7 +240,8 @@ REGLAS ABSOLUTAS:
 Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo en lenguaje simple (${riskLabel(data.indice_riesgo?.indice)}). Cuántos estudiantes están afectados en las áreas más críticas.
 
 ## 2. Áreas más críticas
-Lista con las 3 áreas de mayor preocupación con datos exactos y nivel de semáforo.
+Lista con TODAS las áreas de riesgo encontradas (no solo 3) con datos exactos y nivel de semáforo. 
+Incluye SIEMPRE victimización, perpetración, cybervictimización y cyberagresión si tienen datos — aunque el porcentaje sea bajo. No omitas ningún indicador [⚠️ RIESGO] aunque sea pequeño.
 Ordena siempre los indicadores [⚠️ RIESGO] primero, de mayor a menor porcentaje.
 Los indicadores [🔵 PERCEPCIÓN] van siempre AL FINAL, después de todos los [⚠️ RIESGO], sin importar su porcentaje.
 
@@ -284,6 +285,8 @@ REGLAS ABSOLUTAS:
 - Cuando menciones un porcentaje, explica qué significa en términos concretos — usa frases como "esto significa que aproximadamente X de cada 10 estudiantes...".
 - No solo reportes los números, interprétalos: explica qué significan para la vida diaria de esos estudiantes.
 - Entre 1000 y 1400 palabras en total.
+- NUNCA omitas cybervictimización ni cyberagresión en la sección 2, aunque los porcentajes sean bajos. 
+  Cada indicador [⚠️ RIESGO] con datos debe aparecer en su propia entrada de lista.
 // DESPUÉS:
 - Usa el formato Markdown con encabezados ##, negritas y listas.
 - En los DATOS DE LA ENCUESTA encontrarás TRES tipos de indicadores:
@@ -304,7 +307,8 @@ REGLAS ABSOLUTAS:
 Párrafo directo con el hallazgo más importante. Menciona el índice de riesgo en lenguaje simple (${riskLabel(data.indice_riesgo?.indice)}). Cuántos estudiantes están afectados en las áreas más críticas.
 
 ## 2. Áreas más críticas
-Lista con las 3 áreas de mayor preocupación con datos exactos y nivel de semáforo.
+Lista con TODAS las áreas de riesgo encontradas (no solo 3) con datos exactos y nivel de semáforo. 
+Incluye SIEMPRE victimización, perpetración, cybervictimización y cyberagresión si tienen datos — aunque el porcentaje sea bajo. No omitas ningún indicador [⚠️ RIESGO] aunque sea pequeño.
 Ordena siempre los indicadores [⚠️ RIESGO] primero, de mayor a menor porcentaje.
 Los indicadores [🔵 PERCEPCIÓN] van siempre AL FINAL, después de todos los [⚠️ RIESGO], sin importar su porcentaje.
 
@@ -350,6 +354,8 @@ REGLAS ABSOLUTAS:
 - Cuando menciones un porcentaje, explica qué significa en términos concretos — usa frases como "esto significa que aproximadamente X de cada 10 estudiantes...".
 - No solo reportes los números, interprétalos: explica qué significan para la vida diaria de esos estudiantes.
 - Entre 1000 y 1400 palabras en total.
+- NUNCA omitas cybervictimización ni cyberagresión en la sección 2, aunque los porcentajes sean bajos. 
+  Cada indicador [⚠️ RIESGO] con datos debe aparecer en su propia entrada de lista.
 // DESPUÉS:
 - Usa el formato Markdown con encabezados ##, negritas y listas.
 - En los DATOS DE LA ENCUESTA encontrarás TRES tipos de indicadores:
