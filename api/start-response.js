@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     if (!auth?.ok) return;
 
     // 2) Input - get surveyId from request body
-    const { surveyId } = req.body || {};
+    const { surveyId, language } = req.body || {};
     const surveyKey = typeof surveyId === "string" ? surveyId.trim() : "";
 
     if (!surveyKey) {
@@ -59,10 +59,11 @@ export default async function handler(req, res) {
     // 4) Crear response
     const { data, error } = await supabaseAdmin
       .from("survey_responses")
-      .insert({
+.insert({
         school_id: auth.school.id,
         survey_id: surveyUuid,
-        status: "in_progress"
+        status: "in_progress",
+        language: language || auth.school.language || 'es'
       })
       .select("id")
       .single();
