@@ -3401,12 +3401,8 @@ var navEnc = document.getElementById('navEncuesta');
 
     
       
-    // Redirect US schools to /us/
-    if (ok && window.sessionState.country === 'US'
-           && !location.pathname.startsWith('/us')) {
-      window.location.href = '/us/' + location.hash;
-      return;
-    }
+    // Already on /US/ — no redirect needed
+    // This page is the US landing page
 
     CHOSEN_LANGUAGE = 'en';
     if (ok && window.sessionState.must_change_password) {
