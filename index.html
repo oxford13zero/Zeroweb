@@ -3369,8 +3369,15 @@ var navEnc = document.getElementById('navEncuesta');
  // ENDS -- Este codigo desaparece botones para usuarios no autenticados 
 
       
-    // Redirect en/both schools to /en/
+    // Redirect US schools to /US/
+    if (ok && window.sessionState.country === 'US'
+           && !location.pathname.startsWith('/US')) {
+      window.location.href = '/US/' + location.hash;
+      return;
+    }
+    // Redirect other English schools to /en/
     if (ok && (window.sessionState.language === 'en' || window.sessionState.language === 'both')
+           && window.sessionState.country !== 'US'
            && !location.pathname.startsWith('/en')) {
       window.location.href = '/en/' + location.hash;
       return;
