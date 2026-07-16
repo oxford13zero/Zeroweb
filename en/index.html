@@ -3688,7 +3688,7 @@ btnCerrarSesion?.addEventListener('click', async () => {
       const startRes = await fetch('/api/start-response', {
         method: 'POST', credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ surveyId: targetSurveyId })
+        body: JSON.stringify({ surveyId: targetSurveyId, language: window.sessionState?.language || 'en' })
       });
       const startData = await startRes.json().catch(() => ({}));
       if (!startData.ok) { alert('Error starting response: ' + (startData.error || 'no detail')); return; }
