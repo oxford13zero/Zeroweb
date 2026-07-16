@@ -2,8 +2,8 @@
   "rewrites": [
     { "source": "/en", "destination": "/en/index.html" },
     { "source": "/en/(.*)", "destination": "/en/index.html" },
-    { "source": "/us", "destination": "/us/index.html" },
-    { "source": "/us/(.*)", "destination": "/us/index.html" },
+    { "source": "/US", "destination": "/US/index.html" },
+    { "source": "/US/(.*)", "destination": "/US/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
