@@ -1,0 +1,2825 @@
+{
+  "survey": {
+    "survey_uuid": "aaaaaaaa-0008-4000-a000-000000000008",
+    "code": "SURVEY_005_US_EL",
+    "title": "School Climate Survey — Elementary (US)",
+    "title_es": "Encuesta de Convivencia Escolar — Primaria (US)",
+    "population": "Elementary students (grades K-8), United States",
+    "population_es": "Estudiantes de Primaria (grados K-8), Estados Unidos",
+    "total_questions": 49,
+    "languages": [
+      "en",
+      "es"
+    ],
+    "country": "US",
+    "version": "5.0",
+    "base_survey": "SURVEY_005_CL_BASICA"
+  },
+  "questions": [
+    {
+      "number": 2,
+      "question_id": "zero_us_edad",
+      "section": "A",
+      "section_name_en": "General Information",
+      "section_name_es": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text_en": "How old are you?",
+      "text_es": "¿Cuántos años tienes?",
+      "options_en": [
+        {
+          "code": "5",
+          "text": "5 years old"
+        },
+        {
+          "code": "6",
+          "text": "6 years old"
+        },
+        {
+          "code": "7",
+          "text": "7 years old"
+        },
+        {
+          "code": "8",
+          "text": "8 years old"
+        },
+        {
+          "code": "9",
+          "text": "9 years old"
+        },
+        {
+          "code": "10",
+          "text": "10 years old"
+        },
+        {
+          "code": "11",
+          "text": "11 years old"
+        },
+        {
+          "code": "12",
+          "text": "12 years old"
+        },
+        {
+          "code": "13",
+          "text": "13 years old"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "5",
+          "text": "5 años"
+        },
+        {
+          "code": "6",
+          "text": "6 años"
+        },
+        {
+          "code": "7",
+          "text": "7 años"
+        },
+        {
+          "code": "8",
+          "text": "8 años"
+        },
+        {
+          "code": "9",
+          "text": "9 años"
+        },
+        {
+          "code": "10",
+          "text": "10 años"
+        },
+        {
+          "code": "11",
+          "text": "11 años"
+        },
+        {
+          "code": "12",
+          "text": "12 años"
+        },
+        {
+          "code": "13",
+          "text": "13 años"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "question_id": "zero_us_genero",
+      "section": "A",
+      "section_name_en": "General Information",
+      "section_name_es": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text_en": "What gender do you identify with?",
+      "text_es": "¿Con qué género te identificas?",
+      "options_en": [
+        {
+          "code": "F",
+          "text": "Girl / Female"
+        },
+        {
+          "code": "M",
+          "text": "Boy / Male"
+        },
+        {
+          "code": "NB",
+          "text": "Non-binary"
+        },
+        {
+          "code": "T",
+          "text": "Transgender"
+        },
+        {
+          "code": "NR",
+          "text": "Prefer not to say"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "F",
+          "text": "Niña / Mujer"
+        },
+        {
+          "code": "M",
+          "text": "Niño / Hombre"
+        },
+        {
+          "code": "NB",
+          "text": "No binario"
+        },
+        {
+          "code": "T",
+          "text": "Transgénero"
+        },
+        {
+          "code": "NR",
+          "text": "Prefiero no responder"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "question_id": "zero_us_primer_anio",
+      "section": "A",
+      "section_name_en": "General Information",
+      "section_name_es": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text_en": "Is this your first year at this school?",
+      "text_es": "¿Es este tu primer año en esta escuela?",
+      "options_en": [
+        {
+          "code": "si",
+          "text": "Yes"
+        },
+        {
+          "code": "no",
+          "text": "No"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "si",
+          "text": "Sí"
+        },
+        {
+          "code": "no",
+          "text": "No"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "question_id": "zero_us_lengua",
+      "section": "A",
+      "section_name_en": "General Information",
+      "section_name_es": "Información General",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text_en": "Does anyone in your home speak a language other than English? (e.g. Spanish, Russian, Somali, Cherokee, Navajo, or another language)",
+      "text_es": "¿En tu hogar se habla alguna lengua distinta al inglés? (por ejemplo: español, ruso, somalí, Cherokee, Navajo u otra)",
+      "options_en": [
+        {
+          "code": "si",
+          "text": "Yes"
+        },
+        {
+          "code": "no",
+          "text": "No"
+        },
+        {
+          "code": "NR",
+          "text": "Prefer not to say"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "si",
+          "text": "Sí"
+        },
+        {
+          "code": "no",
+          "text": "No"
+        },
+        {
+          "code": "NR",
+          "text": "Prefiero no responder"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "question_id": "zero_us_autoridad_normas_sala",
+      "section": "B",
+      "section_name_en": "My Teacher",
+      "section_name_es": "Mi Maestra o Maestro",
+      "construct": "autoridad_docente",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My teacher enforces the classroom rules in a fair way.",
+      "text_es": "Mi maestra o maestro hace cumplir las normas del salón de manera justa.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 7,
+      "question_id": "zero_us_autoridad_detiene",
+      "section": "B",
+      "section_name_en": "My Teacher",
+      "section_name_es": "Mi Maestra o Maestro",
+      "construct": "autoridad_docente",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When someone bothers or hurts a classmate, my teacher stops it right away.",
+      "text_es": "Cuando alguien molesta o lastima a un compañero, mi maestra o maestro lo detiene de inmediato.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 8,
+      "question_id": "zero_us_autoridad_ayuda_conflicto",
+      "section": "B",
+      "section_name_en": "My Teacher",
+      "section_name_es": "Mi Maestra o Maestro",
+      "construct": "autoridad_docente",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My teacher helps me when I have problems with classmates.",
+      "text_es": "Mi maestra o maestro me ayuda cuando tengo problemas con mis compañeros.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 9,
+      "question_id": "zero_us_autoridad_normas_escuela",
+      "section": "B",
+      "section_name_en": "My Teacher",
+      "section_name_es": "Mi Maestra o Maestro",
+      "construct": "autoridad_docente",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "At my school, everyone knows what is allowed and what is not, and the rules are followed.",
+      "text_es": "En mi escuela todos sabemos qué está permitido y qué no, y eso se cumple.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 10,
+      "question_id": "zero_us_normas_amigos_defienden",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I have friends who defend me when someone bothers me.",
+      "text_es": "Tengo amigos o amigas que me defienden cuando alguien me molesta.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 11,
+      "question_id": "zero_us_normas_pertenencia",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When I am in class, I feel like I belong to the group.",
+      "text_es": "Cuando estoy en la clase, me siento parte del grupo.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 12,
+      "question_id": "zero_us_normas_apoyo_emocional",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When I am sad or something bad happens, a classmate supports me.",
+      "text_es": "Cuando estoy triste o me pasa algo malo, algún compañero o compañera me apoya.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 13,
+      "question_id": "zero_us_normas_trato_carino",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "In my class, classmates care about how I feel and treat me with kindness.",
+      "text_es": "En mi clase, los compañeros se preocupan de cómo me siento y me tratan con cariño.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 14,
+      "question_id": "zero_us_normas_grupo_evita",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "In my class, classmates work together so that no one is bullied.",
+      "text_es": "En mi clase, los compañeros se unen para evitar que alguien sea molestado.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 15,
+      "question_id": "zero_us_normas_apoyo_al_defender",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "If I defend someone who is being bullied, my classmates support me.",
+      "text_es": "Si yo defiendo a alguien que está siendo molestado, mis compañeros me apoyan.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 16,
+      "question_id": "zero_us_inst_adultos_ayudan",
+      "section": "D",
+      "section_name_en": "Adults at School",
+      "section_name_es": "Adultos en la Escuela",
+      "construct": "respuesta_institucional",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "If I tell an adult at school that someone is bothering me, they truly help me.",
+      "text_es": "Si le digo a un adulto de mi escuela que alguien me está molestando, me ayuda de verdad.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 17,
+      "question_id": "zero_us_inst_conoce_adulto",
+      "section": "D",
+      "section_name_en": "Adults at School",
+      "section_name_es": "Adultos en la Escuela",
+      "construct": "respuesta_institucional",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "If someone bothers me, I know which adult at school I can ask for help.",
+      "text_es": "Si alguien me molesta, sé a qué adulto de mi escuela puedo pedirle ayuda.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 18,
+      "question_id": "zero_us_inst_sin_represalia",
+      "section": "D",
+      "section_name_en": "Adults at School",
+      "section_name_es": "Adultos en la Escuela",
+      "construct": "respuesta_institucional",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I feel safe asking an adult for help without being afraid of being called a snitch.",
+      "text_es": "Me siento seguro/a de pedir ayuda a un adulto, sin miedo a que me llamen soplón/a.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 19,
+      "question_id": "zero_us_inst_resuelven_hablando",
+      "section": "D",
+      "section_name_en": "Adults at School",
+      "section_name_es": "Adultos en la Escuela",
+      "construct": "respuesta_institucional",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When there are fights or problems between classmates, adults help solve them by talking.",
+      "text_es": "Cuando hay peleas o problemas entre compañeros, los adultos ayudan a resolverlos hablando.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 20,
+      "question_id": "zero_us_inst_alguien_acudir",
+      "section": "D",
+      "section_name_en": "Adults at School",
+      "section_name_es": "Adultos en la Escuela",
+      "construct": "respuesta_institucional",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When I am sad or worried, there is someone at school I can go to.",
+      "text_es": "Cuando estoy triste o preocupado/a, en mi escuela hay alguien a quien puedo acudir.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 21,
+      "question_id": "zero_us_prosocial_defensor",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When I see a classmate being bullied, I defend them or ask an adult for help.",
+      "text_es": "Cuando veo que un compañero está siendo molestado, yo lo defiendo o pido ayuda a un adulto.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 22,
+      "question_id": "zero_us_prosocial_inclusion",
+      "section": "C",
+      "section_name_en": "My Classmates",
+      "section_name_es": "Mis Compañeros",
+      "construct": "normas_grupo",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "During recess or group activities, I invite classmates who are alone to join us.",
+      "text_es": "En el recreo o en trabajos en equipo, invito a jugar o trabajar a compañeros que están solos.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 23,
+      "question_id": "zero_us_inst_cyber_confianza",
+      "section": "D",
+      "section_name_en": "Adults at School",
+      "section_name_es": "Adultos en la Escuela",
+      "construct": "respuesta_institucional",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "If someone bothers me on my phone or online, I am sure an adult at school will truly help me.",
+      "text_es": "Si alguien me molesta por el celular o las redes, estoy seguro/a de que un adulto de la escuela me ayudará de verdad.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 24,
+      "question_id": "zero_us_inst_cyber_educacion",
+      "section": "D",
+      "section_name_en": "Adults at School",
+      "section_name_es": "Adultos en la Escuela",
+      "construct": "respuesta_institucional",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My teacher has talked with the class about how to behave online and on social media.",
+      "text_es": "Mi maestra o maestro ha hablado con el curso sobre cómo comportarse en línea y en redes sociales.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 25,
+      "question_id": "zero_us_internivel_trato",
+      "section": "E",
+      "section_name_en": "School Environment",
+      "section_name_es": "Ambiente Escolar",
+      "construct": "violencia_internivel",
+      "construct_role": "interlevel_violence",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "Older students treat me with respect and let me use the school spaces.",
+      "text_es": "Los alumnos más grandes me tratan con respeto y me dejan usar los espacios de la escuela.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 26,
+      "question_id": "zero_us_mapa_patio",
+      "section": "F",
+      "section_name_en": "Safe Spaces",
+      "section_name_es": "Espacios Seguros",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "During recess and in the playground, adults make sure no one is bullying anyone.",
+      "text_es": "En el recreo y el patio, los adultos cuidan que nadie moleste a nadie.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 27,
+      "question_id": "zero_us_mapa_banos",
+      "section": "F",
+      "section_name_en": "Safe Spaces",
+      "section_name_es": "Espacios Seguros",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "In the school bathrooms and hallways, I feel calm and safe.",
+      "text_es": "En los baños y pasillos de mi escuela, me siento tranquilo/a y sin miedo.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 28,
+      "question_id": "zero_us_mapa_biblioteca",
+      "section": "F",
+      "section_name_en": "Safe Spaces",
+      "section_name_es": "Espacios Seguros",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "In the library, I can be calm without anyone bothering me.",
+      "text_es": "En la biblioteca, puedo estar tranquilo/a sin que nadie me moleste.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 29,
+      "question_id": "zero_us_mapa_entrada_salida",
+      "section": "F",
+      "section_name_en": "Safe Spaces",
+      "section_name_es": "Espacios Seguros",
+      "construct": "mapa",
+      "construct_role": "spatial_mapping",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "At the school entrance and exit, adults make sure everyone is safe.",
+      "text_es": "En la entrada y salida de la escuela, los adultos cuidan que todos estén seguros.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 30,
+      "question_id": "zero_us_bienestar_voz",
+      "section": "G",
+      "section_name_en": "How I Feel",
+      "section_name_es": "Cómo me siento",
+      "construct": "bienestar",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "At my school I can share my opinion and adults listen to me.",
+      "text_es": "En mi escuela puedo dar mi opinión y los adultos la escuchan.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 31,
+      "question_id": "zero_us_bienestar_gusto",
+      "section": "G",
+      "section_name_en": "How I Feel",
+      "section_name_es": "Cómo me siento",
+      "construct": "bienestar",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I enjoy coming to school and being with my classmates.",
+      "text_es": "Me da gusto venir a mi escuela y estar con mis compañeros.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 32,
+      "question_id": "zero_us_bienestar_seguridad",
+      "section": "G",
+      "section_name_en": "How I Feel",
+      "section_name_es": "Cómo me siento",
+      "construct": "bienestar",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When I am at school, I feel safe and calm.",
+      "text_es": "Cuando estoy en mi escuela, me siento seguro/a y tranquilo/a.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 33,
+      "question_id": "zero_us_bienestar_general",
+      "section": "G",
+      "section_name_en": "How I Feel",
+      "section_name_es": "Cómo me siento",
+      "construct": "bienestar",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I feel good about myself and my life at school.",
+      "text_es": "Me siento bien conmigo mismo/a y con mi vida en la escuela.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 34,
+      "question_id": "zero_us_bienestar_orgullo",
+      "section": "G",
+      "section_name_en": "How I Feel",
+      "section_name_es": "Cómo me siento",
+      "construct": "bienestar",
+      "construct_role": "protective_factor",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I feel proud to belong to this school.",
+      "text_es": "Me siento orgulloso/a de pertenecer a esta escuela.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_safer"
+    },
+    {
+      "number": 35,
+      "question_id": "zero_us_victima_fisica",
+      "section": "H",
+      "section_name_en": "What Has Happened to Me",
+      "section_name_es": "Lo que me ha pasado",
+      "construct": "victimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My classmates hit, pushed, or physically hurt me.",
+      "text_es": "Mis compañeros me golpearon, empujaron o hicieron daño físico.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 36,
+      "question_id": "zero_us_victima_verbal",
+      "section": "H",
+      "section_name_en": "What Has Happened to Me",
+      "section_name_es": "Lo que me ha pasado",
+      "construct": "victimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My classmates insulted me, called me names, or made fun of me.",
+      "text_es": "Mis compañeros me insultaron, pusieron apodos o se burlaron de mí.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 37,
+      "question_id": "zero_us_victima_exclusion",
+      "section": "H",
+      "section_name_en": "What Has Happened to Me",
+      "section_name_es": "Lo que me ha pasado",
+      "construct": "victimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My classmates left me out of games or activities on purpose.",
+      "text_es": "Mis compañeros me dejaron fuera de juegos o actividades a propósito.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 38,
+      "question_id": "zero_us_victima_amenazas",
+      "section": "H",
+      "section_name_en": "What Has Happened to Me",
+      "section_name_es": "Lo que me ha pasado",
+      "construct": "victimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My classmates threatened me or made me feel scared.",
+      "text_es": "Mis compañeros me amenazaron o me provocaron miedo.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 39,
+      "question_id": "zero_us_victima_discriminacion",
+      "section": "H",
+      "section_name_en": "What Has Happened to Me",
+      "section_name_es": "Lo que me ha pasado",
+      "construct": "victimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "My classmates bullied me because of my appearance, where I am from, or who I am.",
+      "text_es": "Mis compañeros me molestaron por mi apariencia, de dónde vengo o quién soy.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 40,
+      "question_id": "zero_us_victima_poder",
+      "section": "H",
+      "section_name_en": "What Has Happened to Me",
+      "section_name_es": "Lo que me ha pasado",
+      "construct": "victimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "When someone bothers you, how often is it hard to defend yourself because they are stronger or there are more of them?",
+      "text_es": "Cuando te molestan, ¿qué tan seguido te cuesta defenderte porque son más fuertes o son más?",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 41,
+      "question_id": "zero_us_agresor_fisica",
+      "section": "I",
+      "section_name_en": "What I Have Done",
+      "section_name_es": "Lo que yo he hecho",
+      "construct": "perpetracion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I have hit, pushed, or physically hurt a classmate.",
+      "text_es": "He golpeado, empujado o hecho daño físico a un compañero.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 42,
+      "question_id": "zero_us_agresor_verbal",
+      "section": "I",
+      "section_name_en": "What I Have Done",
+      "section_name_es": "Lo que yo he hecho",
+      "construct": "perpetracion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I have insulted, called names, or said mean things to a classmate.",
+      "text_es": "He insultado, puesto apodos o dicho cosas feas a un compañero.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 43,
+      "question_id": "zero_us_agresor_exclusion",
+      "section": "I",
+      "section_name_en": "What I Have Done",
+      "section_name_es": "Lo que yo he hecho",
+      "construct": "perpetracion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I have left a classmate out of games or groups on purpose.",
+      "text_es": "He dejado fuera de juegos o grupos a un compañero a propósito.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 44,
+      "question_id": "zero_us_tiene_celular",
+      "section": "J",
+      "section_name_en": "Online & Social Media",
+      "section_name_es": "En línea y redes sociales",
+      "construct": "demographic",
+      "construct_role": "demographic",
+      "scale_type": "categorical",
+      "type": "single_choice",
+      "text_en": "Do you have your own phone, or do you use apps like WhatsApp, TikTok, or Instagram?",
+      "text_es": "¿Tienes un celular propio, o usas aplicaciones como WhatsApp, TikTok o Instagram?",
+      "options_en": [
+        {
+          "code": "si",
+          "text": "Yes"
+        },
+        {
+          "code": "no",
+          "text": "No"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "si",
+          "text": "Sí"
+        },
+        {
+          "code": "no",
+          "text": "No"
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "question_id": "zero_us_cyber_victima_mensajes",
+      "section": "J",
+      "section_name_en": "Online & Social Media",
+      "section_name_es": "En línea y redes sociales",
+      "construct": "cybervictimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "Someone sent mean messages about me or told my secrets by phone or online.",
+      "text_es": "Alguien mandó mensajes feos sobre mí o contó secretos míos por teléfono o en línea.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 46,
+      "question_id": "zero_us_cyber_victima_foto",
+      "section": "J",
+      "section_name_en": "Online & Social Media",
+      "section_name_es": "En línea y redes sociales",
+      "construct": "cybervictimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "Someone took a photo or video of me and shared it to make fun of me.",
+      "text_es": "Alguien tomó una foto o video mío y lo compartió para burlarse de mí.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 47,
+      "question_id": "zero_us_cyber_victima_acoso",
+      "section": "J",
+      "section_name_en": "Online & Social Media",
+      "section_name_es": "En línea y redes sociales",
+      "construct": "cybervictimizacion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "A classmate from my school sent me mean messages, threatened me, or left me out of online groups on purpose.",
+      "text_es": "Un compañero de mi escuela me envió mensajes feos, me amenazó o me dejó fuera de grupos en redes a propósito.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 48,
+      "question_id": "zero_us_cyber_agresor_fotos",
+      "section": "J",
+      "section_name_en": "Online & Social Media",
+      "section_name_es": "En línea y redes sociales",
+      "construct": "cyberagresion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I have shared messages, photos, or videos of a classmate to make fun of them or make others laugh at them.",
+      "text_es": "He compartido mensajes, fotos o videos de un compañero para burlarme o que otros se rieran de él/ella.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 49,
+      "question_id": "zero_us_cyber_agresor_mensajes",
+      "section": "J",
+      "section_name_en": "Online & Social Media",
+      "section_name_es": "En línea y redes sociales",
+      "construct": "cyberagresion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I have sent mean messages or made fun of a classmate by phone or online.",
+      "text_es": "He mandado mensajes feos o me he burlado de un compañero por teléfono o en línea.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    },
+    {
+      "number": 50,
+      "question_id": "zero_us_cyber_agresor_grupos",
+      "section": "J",
+      "section_name_en": "Online & Social Media",
+      "section_name_es": "En línea y redes sociales",
+      "construct": "cyberagresion",
+      "construct_role": "risk_indicator",
+      "scale_type": "frequency_0_4",
+      "type": "single_choice",
+      "text_en": "I have created a group or used fake profiles to exclude or bully a classmate online.",
+      "text_es": "He armado un grupo o usado perfiles falsos para excluir o molestar a un compañero en línea.",
+      "options_en": [
+        {
+          "code": "0",
+          "text": "Never"
+        },
+        {
+          "code": "1",
+          "text": "Almost never"
+        },
+        {
+          "code": "2",
+          "text": "Sometimes"
+        },
+        {
+          "code": "3",
+          "text": "Almost always"
+        },
+        {
+          "code": "4",
+          "text": "Always"
+        }
+      ],
+      "options_es": [
+        {
+          "code": "0",
+          "text": "Nunca"
+        },
+        {
+          "code": "1",
+          "text": "Casi nunca"
+        },
+        {
+          "code": "2",
+          "text": "A veces"
+        },
+        {
+          "code": "3",
+          "text": "Casi siempre"
+        },
+        {
+          "code": "4",
+          "text": "Siempre"
+        }
+      ],
+      "score_direction": "higher_means_more_risk"
+    }
+  ]
+}
