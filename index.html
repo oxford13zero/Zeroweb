@@ -9,33 +9,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    body { margin:0; font-family:'Open Sans', Arial, sans-serif; background-color:#1E2F3F; color:#ffffff; }
+    body { margin:0; font-family:'Open Sans', Arial, sans-serif; background-color:#173F6B; color:#ffffff; }
 
-    header { padding:40px 20px; text-align:center; background:linear-gradient(180deg, #1E2F3F, #16222D); }
+    header { padding:40px 20px; text-align:center; background:linear-gradient(180deg, #173F6B, #173F6B); }
     header h1 { font-family:'Playfair Display', serif; font-size:48px; margin:0; }
-    header p { color:#D6A21C; letter-spacing:2px; margin-top:10px; font-size:14px; }
+    header p { color:#FF8C2A; letter-spacing:2px; margin-top:10px; font-size:14px; }
 
-    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#16222D; flex-wrap:wrap; align-items:center; }
-    nav a { background-color:#1E2F3F; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
-    nav a:hover { background-color:#D6A21C; color:#16222D; }
+    nav { display:flex; justify-content:center; gap:15px; padding:15px; background-color:#173F6B; flex-wrap:wrap; align-items:center; }
+    nav a { background-color:#173F6B; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-size:14px; font-weight:600; }
+    nav a:hover { background-color:#FF8C2A; color:#173F6B; }
 
     /* Buttons */
     .btnPrimary {
       padding:10px 16px;
       font-weight:700;
       border-radius:6px;
-      border:1px solid #D6A21C;
+      border:1px solid #FF8C2A;
       cursor:pointer;
-      background:#D6A21C;
-      color:#16222D;
+      background:#FF8C2A;
+      color:#173F6B;
     }
     .btnSecondary {
       padding:10px 16px;
       font-weight:600;
       border-radius:6px;
-      border:1px solid #D6A21C;
+      border:1px solid #FF8C2A;
       background:transparent;
-      color:#D6A21C;
+      color:#FF8C2A;
       cursor:pointer;
     }
     .btnPrimary:disabled, .btnSecondary:disabled {
@@ -50,8 +50,8 @@
       align-items:center;
       gap:12px;
       padding:10px 15px;
-      background:#0f1d27;
-      border-bottom:1px solid #365468;
+      background:#173F6B;
+      border-bottom:1px solid #1E4E80;
       flex-wrap:wrap;
     }
     .sessionBadge {
@@ -59,8 +59,8 @@
       border-radius:999px;
       font-size:13px;
       font-weight:700;
-      border:1px solid #365468;
-      background:#1E2F3F;
+      border:1px solid #1E4E80;
+      background:#173F6B;
     }
     .badgeOk { color:#b9ffcf; }
     .badgeNo { color:#ffdca8; }
@@ -82,20 +82,20 @@
       transform: translateY(0);
     }
 
-    h2 { font-family:'Playfair Display', serif; color:#D6A21C; font-size:32px; margin-top:0; }
+    h2 { font-family:'Playfair Display', serif; color:#FF8C2A; font-size:32px; margin-top:0; }
 
-    .card { background-color:#243A4B; padding:25px; border-radius:8px; margin-top:25px; }
+    .card { background-color:#1E4E80; padding:25px; border-radius:8px; margin-top:25px; }
 
-    footer { text-align:center; padding:30px; font-size:13px; background-color:#16222D; margin-top:50px; }
+    footer { text-align:center; padding:30px; font-size:13px; background-color:#173F6B; margin-top:50px; }
 
     /* Compact panel + stacked inputs */
     .formPanel {
       margin-top: 18px;
-      background: #1E2F3F;
+      background: #173F6B;
       padding: 16px;
       border-radius: 8px;
       max-width: 520px;
-      border: 1px solid #365468;
+      border: 1px solid #1E4E80;
     }
     .fieldBlock { margin-bottom: 14px; }
     .fieldLabel { font-weight:600; display:inline-block; margin-bottom:6px; }
@@ -104,12 +104,12 @@
       max-width:380px;
       padding:8px;
       border-radius:6px;
-      border:1px solid #365468;
-      background:#0f1d27;
+      border:1px solid #1E4E80;
+      background:#173F6B;
       color:#ffffff;
       outline:none;
     }
-    .textInput::placeholder { color:#a9c0d3; }
+    .textInput::placeholder { color:#9CC2E0; }
 
     .statusMsg { margin-top:12px; font-weight:600; min-height:18px; }
     .statusOk { color:#b9ffcf; }
@@ -130,8 +130,8 @@
 }
     .modalBox {
   width:min(620px, 95vw);
-  background:#16222D;
-  border:1px solid #365468;
+  background:#173F6B;
+  border:1px solid #1E4E80;
   border-radius:12px;
   padding:18px;
   box-shadow:0 20px 60px rgba(0,0,0,0.35);
@@ -149,13 +149,13 @@
     }
     .modalTitle {
       font-family:'Playfair Display', serif;
-      color:#D6A21C;
+      color:#FF8C2A;
       font-size:22px;
       margin:0;
     }
     .modalClose {
       background:transparent;
-      border:1px solid #365468;
+      border:1px solid #1E4E80;
       color:#fff;
       border-radius:8px;
       padding:6px 10px;
@@ -212,13 +212,13 @@
     }
 
     .bullets-programa .num{
-      color:#D6A21C;
+      color:#FF8C2A;
       font-weight:800;
       font-size: calc(1em + 1px);
     }
 
     .highlight {
-      color:#D6A21C;
+      color:#FF8C2A;
       font-weight:700;
     }
 
@@ -229,8 +229,8 @@
   right: 20px;
   z-index: 10000;
   background: transparent;
-  color: #7a8e9e;
-  border: 2px solid #7a8e9e;
+  color: #7DA6CC;
+  border: 2px solid #7DA6CC;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -243,8 +243,8 @@
 }
 
 .adminIcon:hover {
-  border-color: #D6A21C;
-  color: #D6A21C;
+  border-color: #FF8C2A;
+  color: #FF8C2A;
   transform: scale(1.1);
 }
 
@@ -268,11 +268,11 @@
 #btnAddSchool,
 #btnListSchools,
 #btnApproveSurvey {
-  background-color: #1E2F3F;
+  background-color: #173F6B;
   color: white;
   padding: 8px 18px;
   border-radius: 20px;
-  border: 1px solid rgba(214, 162, 28, 0.0);
+  border: 1px solid rgba(255, 140, 42, 0.0);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -283,19 +283,19 @@
 #btnAddSchool:hover,
 #btnListSchools:hover,
 #btnApproveSurvey:hover {
-  background-color: #D6A21C;
-  color: #16222D;
+  background-color: #FF8C2A;
+  color: #173F6B;
 }
 
-    .heroSection { position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; padding:100px 20px 80px; text-align:center; overflow:hidden; background:linear-gradient(180deg,#0a1520 0%,#1E2F3F 100%); }
+    .heroSection { position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; padding:100px 20px 80px; text-align:center; overflow:hidden; background:linear-gradient(180deg,#071F3D 0%,#173F6B 100%); }
     .heroSection::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,255,255,0.04) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
     .heroGlow { position:absolute; top:50%; left:50%; transform:translate(-50%,-60%); width:700px; height:500px; background:radial-gradient(ellipse at center,rgba(56,152,255,0.18) 0%,rgba(56,152,255,0.06) 45%,transparent 70%); pointer-events:none; border-radius:50%; }
     .heroContent { position:relative; z-index:1; max-width:820px; margin:0 auto; }
     .heroHeadline { font-family:'Playfair Display',serif; font-size:clamp(32px,5vw,56px); font-weight:600; color:#ffffff; line-height:1.2; margin:0 0 24px 0; letter-spacing:-0.5px; }
     .heroSubheadline { font-size:clamp(15px,2vw,19px); color:#ffffff; line-height:1.7; margin:0 auto 36px; max-width:680px; font-weight:300; }
-    .heroCTA { display:inline-block; background:#D6A21C; color:#16222D; font-size:13px; font-weight:700; padding:9px 22px; border-radius:8px; border:none; cursor:pointer; letter-spacing:0.3px; box-shadow:0 4px 24px rgba(214,162,28,0.35); transition:transform 0.2s,box-shadow 0.2s; }
-    .heroCTA:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(214,162,28,0.5); }
-    .credibilityBar { width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; position:relative; background:#16222D; border-top:1px solid #243A4B; border-bottom:1px solid #243A4B; padding:16px 20px; text-align:center; font-size:14px; color:#a9c0d3; font-weight:600; letter-spacing:0.3px; }
+    .heroCTA { display:inline-block; background:#FF8C2A; color:#173F6B; font-size:13px; font-weight:700; padding:9px 22px; border-radius:8px; border:none; cursor:pointer; letter-spacing:0.3px; box-shadow:0 4px 24px rgba(255,140,42,0.35); transition:transform 0.2s,box-shadow 0.2s; }
+    .heroCTA:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(255,140,42,0.5); }
+    .credibilityBar { width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; position:relative; background:#173F6B; border-top:1px solid #1E4E80; border-bottom:1px solid #1E4E80; padding:16px 20px; text-align:center; font-size:14px; color:#9CC2E0; font-weight:600; letter-spacing:0.3px; }
     .programaSection { width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; position:relative; padding:72px 20px; }
     .programaSection .sectionInner { max-width:960px; margin:0 auto; }
     .programaSection h3 { font-family:'Playfair Display',serif; font-size:clamp(26px,3.5vw,38px); font-weight:600; color:#ffffff; margin:0 0 16px 0; line-height:1.3; }
@@ -304,25 +304,55 @@
     .overlayCard { position:relative; border-radius:14px; overflow:hidden; aspect-ratio:3/4; cursor:default; }
     .overlayCard img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s ease; }
     .overlayCard:hover img { transform:scale(1.05); }
-    .overlayCard .overlayDark { position:absolute; inset:0; background:linear-gradient(to top, rgba(6,14,22,0.97) 0%, rgba(6,14,22,0.72) 50%, rgba(6,14,22,0.25) 100%); transition:background 0.3s; }
-    .overlayCard:hover .overlayDark { background:linear-gradient(to top, rgba(6,14,22,0.99) 0%, rgba(6,14,22,0.82) 55%, rgba(6,14,22,0.35) 100%); }
+    .overlayCard .overlayDark { position:absolute; inset:0; background:linear-gradient(to top, rgba(7,31,61,0.97) 0%, rgba(7,31,61,0.72) 50%, rgba(7,31,61,0.25) 100%); transition:background 0.3s; }
+    .overlayCard:hover .overlayDark { background:linear-gradient(to top, rgba(7,31,61,0.99) 0%, rgba(7,31,61,0.82) 55%, rgba(7,31,61,0.35) 100%); }
     .overlayCard .overlayContent { position:absolute; bottom:0; left:0; right:0; padding:28px 22px; z-index:1; }
     .overlayCard .oIcon { font-size:26px; display:block; margin-bottom:10px; }
-    .overlayCard .oLine { width:30px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:12px; }
+    .overlayCard .oLine { width:30px; height:2px; background:#FF8C2A; border-radius:2px; margin-bottom:12px; }
     .overlayCard .oTitle { font-size:16px; font-weight:700; color:#ffffff; line-height:1.4; margin-bottom:8px; }
-    .overlayCard .oText { font-size:13px; color:#a9c0d3; line-height:1.6; }
-    .overlayCard .oTag { display:inline-block; margin-top:12px; font-size:11px; font-weight:700; color:#D6A21C; border:1px solid rgba(214,162,28,0.4); border-radius:4px; padding:3px 8px; }
+    .overlayCard .oText { font-size:13px; color:#9CC2E0; line-height:1.6; }
+    .overlayCard .oTag { display:inline-block; margin-top:12px; font-size:11px; font-weight:700; color:#FF8C2A; border:1px solid rgba(255,140,42,0.4); border-radius:4px; padding:3px 8px; }
     .statsGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:8px 0 28px; }
-    .statCard { text-align:center; padding:40px 20px; background:rgba(255,255,255,0.03); border:1px solid #243A4B; border-radius:14px; }
-    .statCard .statNumber { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,68px); font-weight:600; color:#D6A21C; line-height:1; margin-bottom:12px; }
-    .statCard .statDesc { font-size:14px; color:#a9c0d3; line-height:1.6; }
-    .statsNote { font-size:12px; color:#4a6070; text-align:center; margin:0; }
+    .statCard { text-align:center; padding:40px 20px; background:rgba(255,255,255,0.03); border:1px solid #1E4E80; border-radius:14px; }
+    .statCard .statNumber { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,68px); font-weight:600; color:#FF8C2A; line-height:1; margin-bottom:12px; }
+    .statCard .statDesc { font-size:14px; color:#9CC2E0; line-height:1.6; }
+    .statsNote { font-size:12px; color:#5B85AC; text-align:center; margin:0; }
     
   </style>
 
   <script>
 
     
+var CL_PRICING = {
+  pequena: { scan: 1450000, copilot: 1690000, full360: 2790000 },
+  mediana: { scan: 1850000, copilot: 2099000, full360: 3290000 },
+  grande:  { scan: 2590000, copilot: 2890000, full360: 4090000 },
+  red:     { scan: null,    copilot: null,    full360: null    }
+};
+
+function selectSchoolSizeCL(size) {
+  document.querySelectorAll('.inv-size-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-size') === size);
+  });
+
+  var data = CL_PRICING[size];
+  ['scan', 'copilot', 'full360'].forEach(function(plan) {
+    var amountEl = document.getElementById('price-' + plan);
+    var labelEl  = document.getElementById('priceLabel-' + plan);
+    var periodEl = document.getElementById('pricePeriod-' + plan);
+    if (!amountEl) return;
+    if (data[plan] === null) {
+      amountEl.textContent = 'Cotización';
+      if (labelEl) labelEl.style.display = 'none';
+      if (periodEl) periodEl.textContent = 'Contáctanos para una cotización personalizada';
+    } else {
+      amountEl.textContent = '$' + data[plan].toLocaleString('es-CL');
+      if (labelEl) labelEl.style.display = 'inline';
+      if (periodEl) periodEl.textContent = 'CLP · pago único · por proyecto';
+    }
+  });
+}
+
 function showTab(tabId) {
   document.querySelectorAll('section').forEach(function(s) {
     s.classList.remove('active');
@@ -347,9 +377,9 @@ function showTab(tabId) {
   document.querySelectorAll('#desktopLinks a, #mobileNav a').forEach(function(a) {
   var onclick = a.getAttribute('onclick') || '';
   var isActive = onclick.indexOf("'" + tabId + "'") !== -1;
-  a.style.color = isActive ? '#D6A21C' : '#a9c0d3';
-  a.style.background = isActive ? 'rgba(214,162,28,0.12)' : 'transparent';
-  a.style.borderLeftColor = isActive ? '#D6A21C' : 'transparent';
+  a.style.color = isActive ? '#FF8C2A' : '#9CC2E0';
+  a.style.background = isActive ? 'rgba(255,140,42,0.12)' : 'transparent';
+  a.style.borderLeftColor = isActive ? '#FF8C2A' : 'transparent';
 });
 }
 
@@ -373,8 +403,8 @@ window.addEventListener('popstate', function(e) {
   nav:not(#siteNav) { display: none !important; }
 
   /* Active tab highlight */
-  .nav-tab-active { color: #D6A21C !important; }
-  #desktopLinks a:visited, #mobileNav a:visited { color: #a9c0d3; }
+  .nav-tab-active { color: #FF8C2A !important; }
+  #desktopLinks a:visited, #mobileNav a:visited { color: #9CC2E0; }
   /* Hamburger responsive */
   @media (max-width: 860px) {
     #desktopLinks { display: none !important; }
@@ -476,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function() {
   position:sticky; top:0; z-index:1000;
   background:rgba(12,22,32,0.97);
   backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(54,84,104,0.5);
+  border-bottom:1px solid rgba(30,78,128,0.5);
   display:flex; align-items:center; justify-content:space-between;
   padding:0 24px; height:62px;
   transition:box-shadow 0.3s;
@@ -484,25 +514,25 @@ document.addEventListener('DOMContentLoaded', function() {
 ">
   <!-- Logo -->
   <div style="font-family:'Playfair Display',serif; font-size:19px; font-weight:600; color:#fff; letter-spacing:0.5px; flex-shrink:0;">
-    TECH4<span style="color:#D6A21C;">ZERO</span>
+    TECH4<span style="color:#FF8C2A;">ZERO</span>
   </div>
 
   <!-- Desktop links -->
   <div id="desktopLinks" style="display:flex; align-items:center; gap:2px; flex-wrap:nowrap;">
-    <a href="#" onclick="showTab('home');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">INICIO</a>
-    <a href="#" onclick="showTab('programa');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">PROGRAMA</a>
-    <a href="#" onclick="showTab('testimonios');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">TESTIMONIOS</a>
-    <a href="#" onclick="showTab('equipo');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">EQUIPO</a>
-    <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">INVERSIÓN</a>
-    <a href="#" onclick="showTab('contacto');return false;" style="color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#a9c0d3';this.style.background='transparent'">CONTACTO</a>
-    <a id="navEncuesta" href="#" onclick="showTab('encuesta');return false;" style="display:none;color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">ENCUESTA</a>
-    <a id="navResultados" href="#" onclick="showTab('resultados');return false;" style="display:none;color:#a9c0d3;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">RESULTADOS</a>
+    <a href="#" onclick="showTab('home');return false;" style="color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#9CC2E0';this.style.background='transparent'">INICIO</a>
+    <a href="#" onclick="showTab('programa');return false;" style="color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#9CC2E0';this.style.background='transparent'">PROGRAMA</a>
+    <a href="#" onclick="showTab('testimonios');return false;" style="color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#9CC2E0';this.style.background='transparent'">TESTIMONIOS</a>
+    <a href="#" onclick="showTab('equipo');return false;" style="color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#9CC2E0';this.style.background='transparent'">EQUIPO</a>
+    <a href="#" onclick="showTab('inversion');return false;" style="color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#9CC2E0';this.style.background='transparent'">INVERSIÓN</a>
+    <a href="#" onclick="showTab('contacto');return false;" style="color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='#9CC2E0';this.style.background='transparent'">CONTACTO</a>
+    <a id="navEncuesta" href="#" onclick="showTab('encuesta');return false;" style="display:none;color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">ENCUESTA</a>
+    <a id="navResultados" href="#" onclick="showTab('resultados');return false;" style="display:none;color:#9CC2E0;text-decoration:none;font-size:13px;font-weight:600;padding:6px 11px;border-radius:6px;white-space:nowrap;">RESULTADOS</a>
   </div>
 
   <!-- Right side -->
   <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
     
-    <div style="display:flex; background:#0f1d27; border:1px solid #365468; border-radius:8px; overflow:hidden; gap:2px; padding:3px;">
+    <div style="display:flex; background:#173F6B; border:1px solid #1E4E80; border-radius:8px; overflow:hidden; gap:2px; padding:3px;">
   <button onclick="window.location.href='/en/'" style="display:flex; align-items:center; justify-content:center; padding:5px 10px; border:none; border-radius:6px; cursor:pointer; background:transparent;">
     <img src="https://flagcdn.com/gb.svg" style="width:26px; height:18px; border-radius:3px; object-fit:cover;" alt="EN">
   </button>
@@ -513,29 +543,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <button id="btnAccesoUsuarios" class="btnPrimary" type="button" onclick="openAccesoUsuarios()" style="padding:7px 16px;font-size:13px;border-radius:6px;white-space:nowrap;">ACCESO USUARIOS</button>
     <div id="adminNavButtons" class="adminNavButtons">
-      <button id="btnAddSchool" type="button" style="background:#1E2F3F;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(214,162,28,0);font-size:13px;font-weight:600;cursor:pointer;">Add School</button>
-      <button id="btnListSchools" type="button" style="background:#1E2F3F;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(214,162,28,0);font-size:13px;font-weight:600;cursor:pointer;">Schools</button>
-      <button id="btnApproveSurvey" type="button" style="background:#1E2F3F;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(214,162,28,0);font-size:13px;font-weight:600;cursor:pointer;">Approve Survey</button>
+      <button id="btnAddSchool" type="button" style="background:#173F6B;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(255,140,42,0);font-size:13px;font-weight:600;cursor:pointer;">Add School</button>
+      <button id="btnListSchools" type="button" style="background:#173F6B;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(255,140,42,0);font-size:13px;font-weight:600;cursor:pointer;">Schools</button>
+      <button id="btnApproveSurvey" type="button" style="background:#173F6B;color:#fff;padding:7px 14px;border-radius:20px;border:1px solid rgba(255,140,42,0);font-size:13px;font-weight:600;cursor:pointer;">Approve Survey</button>
     </div>
     <!-- Hamburger -->
     <button id="navHamburger" type="button" onclick="toggleMobileNav()" aria-label="Menu" style="display:none;flex-direction:column;gap:5px;background:transparent;border:none;cursor:pointer;padding:4px;">
-      <span style="display:block;width:22px;height:2px;background:#a9c0d3;border-radius:2px;transition:all 0.3s;"></span>
-      <span style="display:block;width:22px;height:2px;background:#a9c0d3;border-radius:2px;transition:all 0.3s;"></span>
-      <span style="display:block;width:22px;height:2px;background:#a9c0d3;border-radius:2px;transition:all 0.3s;"></span>
+      <span style="display:block;width:22px;height:2px;background:#9CC2E0;border-radius:2px;transition:all 0.3s;"></span>
+      <span style="display:block;width:22px;height:2px;background:#9CC2E0;border-radius:2px;transition:all 0.3s;"></span>
+      <span style="display:block;width:22px;height:2px;background:#9CC2E0;border-radius:2px;transition:all 0.3s;"></span>
     </button>
   </div>
 </nav>
 
 <!-- Mobile dropdown -->
-<div id="mobileNav" style="display:none;position:sticky;top:62px;z-index:999;background:rgba(8,18,26,0.98);backdrop-filter:blur(16px);border-bottom:1px solid #365468;flex-direction:column;padding:10px 0;">
-  <a href="#" onclick="showTab('home');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;transition:all 0.2s;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">INICIO</a>
-  <a href="#" onclick="showTab('programa');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">PROGRAMA</a>
-  <a href="#" onclick="showTab('testimonios');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">TESTIMONIOS</a>
-  <a href="#" onclick="showTab('equipo');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">EQUIPO</a>
-  <a href="#" onclick="showTab('inversion');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">INVERSIÓN</a>
-  <a href="#" onclick="showTab('contacto');return false;" style="color:#a9c0d3;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#D6A21C';this.style.borderLeftColor='#D6A21C'" onmouseout="this.style.color='#a9c0d3';this.style.borderLeftColor='transparent'">CONTACTO</a>
+<div id="mobileNav" style="display:none;position:sticky;top:62px;z-index:999;background:rgba(7,31,61,0.98);backdrop-filter:blur(16px);border-bottom:1px solid #1E4E80;flex-direction:column;padding:10px 0;">
+  <a href="#" onclick="showTab('home');return false;" style="color:#9CC2E0;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;transition:all 0.2s;border-left:3px solid transparent;" onmouseover="this.style.color='#FF8C2A';this.style.borderLeftColor='#FF8C2A'" onmouseout="this.style.color='#9CC2E0';this.style.borderLeftColor='transparent'">INICIO</a>
+  <a href="#" onclick="showTab('programa');return false;" style="color:#9CC2E0;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#FF8C2A';this.style.borderLeftColor='#FF8C2A'" onmouseout="this.style.color='#9CC2E0';this.style.borderLeftColor='transparent'">PROGRAMA</a>
+  <a href="#" onclick="showTab('testimonios');return false;" style="color:#9CC2E0;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#FF8C2A';this.style.borderLeftColor='#FF8C2A'" onmouseout="this.style.color='#9CC2E0';this.style.borderLeftColor='transparent'">TESTIMONIOS</a>
+  <a href="#" onclick="showTab('equipo');return false;" style="color:#9CC2E0;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#FF8C2A';this.style.borderLeftColor='#FF8C2A'" onmouseout="this.style.color='#9CC2E0';this.style.borderLeftColor='transparent'">EQUIPO</a>
+  <a href="#" onclick="showTab('inversion');return false;" style="color:#9CC2E0;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#FF8C2A';this.style.borderLeftColor='#FF8C2A'" onmouseout="this.style.color='#9CC2E0';this.style.borderLeftColor='transparent'">INVERSIÓN</a>
+  <a href="#" onclick="showTab('contacto');return false;" style="color:#9CC2E0;text-decoration:none;font-size:15px;font-weight:600;padding:12px 24px;display:block;border-left:3px solid transparent;" onmouseover="this.style.color='#FF8C2A';this.style.borderLeftColor='#FF8C2A'" onmouseout="this.style.color='#9CC2E0';this.style.borderLeftColor='transparent'">CONTACTO</a>
   <div style="padding:12px 24px;">
-    <button onclick="openAccesoUsuarios()" style="width:100%;padding:11px;background:#D6A21C;color:#0f1d27;font-weight:700;font-size:14px;border:none;border-radius:8px;cursor:pointer;font-family:'Open Sans',sans-serif;">ACCESO USUARIOS</button>
+    <button onclick="openAccesoUsuarios()" style="width:100%;padding:11px;background:#FF8C2A;color:#173F6B;font-weight:700;font-size:14px;border:none;border-radius:8px;cursor:pointer;font-family:'Open Sans',sans-serif;">ACCESO USUARIOS</button>
   </div>
 </div>
 
@@ -582,7 +612,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <section id="programa">
 
   <!-- SECCIÓN 2 — EL PROBLEMA -->
-  <div class="programaSection" style="background:#0a1520;">
+  <div class="programaSection" style="background:#071F3D;">
     <div class="sectionInner">
       <h3>Un problema generalizado</h3>
       <p class="sectionBody">
@@ -606,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="overlayContent">
             <span class="oIcon">📉</span><div class="oLine"></div>
             <div class="oTitle">Rinden hasta 18 puntos menos en matemáticas y lectura</div>
-            <div class="oText">Los estudiantes afectados. <em style="color:#4a6070;">(Fuente: UNESCO/TERCE, 16 países)</em></div>
+            <div class="oText">Los estudiantes afectados. <em style="color:#5B85AC;">(Fuente: UNESCO/TERCE, 16 países)</em></div>
             <span class="oTag">📊 Impacto académico</span>
           </div>
         </div>
@@ -625,7 +655,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 
   <!-- SECCIÓN 3 — LA SOLUCIÓN -->
-  <div class="programaSection" style="background:#1E2F3F;">
+  <div class="programaSection" style="background:#173F6B;">
     <div class="sectionInner">
       <h3>Te entregamos: el diagnóstico exacto de tu escuela y el plan concreto para actuar.</h3>
       <p class="sectionBody">
@@ -680,7 +710,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 
   <!-- SECCIÓN 4 — RESULTADOS REALES -->
-  <div class="programaSection" style="background:#16222D;">
+  <div class="programaSection" style="background:#173F6B;">
     <div class="sectionInner">
       <h3>Los números hablan por sí solos</h3>
       <div class="statsGrid">
@@ -792,7 +822,7 @@ document.addEventListener('DOMContentLoaded', function() {
       Debe iniciar sesión con <b>ACCESO USUARIOS</b> para ver resultados.
     </div>
 
-    <div style="font-size:12px; color:#7a9aaa; border-left:1.5px solid #2a3f52; padding:8px 12px; margin-bottom:20px; line-height:1.6;">
+    <div style="font-size:12px; color:#7DA6CC; border-left:1.5px solid #2a3f52; padding:8px 12px; margin-bottom:20px; line-height:1.6;">
       Solo las encuestas aprobadas por el equipo TECH4ZERO aparecen en resultados.
     </div>
 
@@ -809,30 +839,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <hr style="border:none; border-top:0.5px solid #2a3f52; margin:22px 0;">
 
-    <div style="border:1px solid #D6A21C; border-radius:10px; padding:18px; margin-top:4px;">
-      <div style="font-size:11px; font-weight:700; letter-spacing:1px; color:#D6A21C; text-transform:uppercase; margin-bottom:4px;">Encuesta en papel</div>
+    <div style="border:1px solid #FF8C2A; border-radius:10px; padding:18px; margin-top:4px;">
+      <div style="font-size:11px; font-weight:700; letter-spacing:1px; color:#FF8C2A; text-transform:uppercase; margin-bottom:4px;">Encuesta en papel</div>
       <div style="font-size:12px; color:#5a7a8a; margin-bottom:14px;">Descarga la plantilla, completa las respuestas y sube el archivo.</div>
 
       <a id="btnDescargaSecundaria" href="#" download
-         style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:#0f1923;">
+         style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#9CC2E0; margin-bottom:8px; text-decoration:none; background:#0f1923;">
         ⬇ Plantilla Secundaria / Preparatoria
       </a>
 
       <a id="btnDescargaPrimaria" href="#" download
-         style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:8px; text-decoration:none; background:#0f1923;">
+         style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#9CC2E0; margin-bottom:8px; text-decoration:none; background:#0f1923;">
         ⬇ Plantilla Primaria
       </a>
 
       <label id="btnSubirCSV"
-         style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#a9c0d3; margin-bottom:0; cursor:pointer; background:#0f1923;">
+         style="display:flex; align-items:center; gap:10px; border:0.5px solid #2a3f52; border-radius:8px; padding:11px 14px; font-size:13px; color:#9CC2E0; margin-bottom:0; cursor:pointer; background:#0f1923;">
         📂 Subir archivo CSV con respuestas
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
       </label>
 
       <div id="csvProgressWrap" style="display:none; margin-top:12px;">
-        <div style="font-size:12px; color:#7a9aaa; margin-bottom:6px;" id="csvProgressLabel">Procesando...</div>
+        <div style="font-size:12px; color:#7DA6CC; margin-bottom:6px;" id="csvProgressLabel">Procesando...</div>
         <div style="background:#0f1923; border:0.5px solid #2a3f52; border-radius:6px; height:8px; overflow:hidden;">
-          <div id="csvProgressBar" style="height:100%; width:0%; background:#D6A21C; border-radius:6px; transition:width 0.3s ease;"></div>
+          <div id="csvProgressBar" style="height:100%; width:0%; background:#FF8C2A; border-radius:6px; transition:width 0.3s ease;"></div>
         </div>
       </div>
     </div>
@@ -888,32 +918,32 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="card" style="margin-top:18px;">
     <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px;">
 
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
-        <img src="Marcos.png" alt="Foto Integrante 2" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:14px;">
+        <img src="Marcos.png" alt="Foto Integrante 2" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #1E4E80; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Marcos Miranda</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Doctor en Educacion</div>
+        <div style="color:#FF8C2A; font-weight:700; font-size:13px; margin-bottom:8px;">Doctor en Educacion</div>
         <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Marcos convierte ambientes escolares desafiantes en espacios de pertenencia, respeto y alto rendimiento. Su enfoque único combina ciencia, equidad y liderazgo para generar cambios reales y duraderos en la cultura escolar.</p>
       </div>
 
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
-        <img src="Rodyfoto77.png" alt="Foto Integrante 1" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:14px;">
+        <img src="Rodyfoto77.png" alt="Foto Integrante 1" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #1E4E80; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Rodolfo Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Psicologia de la Educacion - Profesor de Historia y Geografía.</div>
+        <div style="color:#FF8C2A; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Psicologia de la Educacion - Profesor de Historia y Geografía.</div>
         <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Rodolfo enseña habilidades socioemocionales en el mundo educativo. Ha sido invitado por la ciudad de Neuss, en Alemania, para liderar el programa Die Welt Erziehung Und Die Neuerung (Educación e Innovación Mundial) y ha implementado exitosamente el programa Tech4Zero en Chile, México, Costa Rica, República Dominicana y Estados Unidos.</p>
       </div>
       
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
-        <img src="FotoElizabeth.png" alt="Foto Integrante 4" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:14px;">
+        <img src="FotoElizabeth.png" alt="Foto Integrante 4" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #1E4E80; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Elizabeth Zamudio</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Especialista en Gestión Educativa</div>
+        <div style="color:#FF8C2A; font-weight:700; font-size:13px; margin-bottom:8px;">Especialista en Gestión Educativa</div>
         <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Experta en gestión educativa y Directora de Tech4Zero para México y el Caribe, cuenta con una amplia experiencia en el diseño, coordinación y liderazgo 
           de proyectos educativos orientados al fortalecimiento del clima escolar, el fomento de relaciones escolares positivas y la promoción del bienestar estudiantil.</p>
       </div>
       
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:14px;">
-        <img src="Lesterfoto55.png" alt="Foto Integrante 3" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #365468; margin-bottom:10px;" />
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:14px;">
+        <img src="Lesterfoto55.png" alt="Foto Integrante 3" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; border:1px solid #1E4E80; margin-bottom:10px;" />
         <div style="font-weight:800; font-size:16px; margin-bottom:6px;">Lester Lino</div>
-        <div style="color:#D6A21C; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Ingenieria en Computacion</div>
+        <div style="color:#FF8C2A; font-weight:700; font-size:13px; margin-bottom:8px;">Master en Ingenieria en Computacion</div>
         <p style="margin:0; color:#d9e6f2; font-size:14px; line-height:1.4;">Consultor senior en datos, inteligencia artificial y tecnología, modernizando y asegurando sistemas de misión crítica en los sectores de educación, salud y minería. Experto en interacción humano-tecnologíca en entornos de alto riesgo.</p>
       </div>
 
@@ -927,11 +957,11 @@ document.addEventListener('DOMContentLoaded', function() {
     <div style="border-radius:14px; overflow:hidden; margin-bottom:24px; position:relative;">
       <img src="img/equipo_grupal.jpg" alt="Equipo TECH4ZERO"
            style="width:100%; max-height:500px; object-fit:cover; object-position:center 30%; display:block; filter:brightness(0.9);" />
-      <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(14,28,40,0.85) 0%, rgba(14,28,40,0.2) 60%, transparent 100%);"></div>
+      <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,31,61,0.85) 0%, rgba(7,31,61,0.2) 60%, transparent 100%);"></div>
       <div style="position:absolute; bottom:0; left:0; padding:28px 32px;">
-        <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:14px;"></div>
+        <div style="width:32px; height:2px; background:#FF8C2A; border-radius:2px; margin-bottom:14px;"></div>
         <div style="font-family:'Open Sans',sans-serif; font-size:22px; font-weight:600; color:#fff; margin-bottom:6px;">Expertos en Educación, psicología e ingeniería — trabajando juntos para transformar escuelas.</div>
-        <div style="font-size:16px; color:#a9c0d3; line-height:1.6;">EL EQUIPO TECH4ZERO.</div>
+        <div style="font-size:16px; color:#9CC2E0; line-height:1.6;">EL EQUIPO TECH4ZERO.</div>
       </div>
     
     </div>
@@ -962,10 +992,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <div class="offices-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:24px 0;">
 
-       <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+       <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:16px;">
          <span style="position:absolute; bottom:-10px; right:-4px; font-size:80px; opacity:0.28; pointer-events:none; user-select:none;">🇨🇱</span>
         <!-- <div style="font-size:22px; margin-bottom:6px;">🇨🇱</div> -->
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Viña del Mar, Chile</div>
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:8px;">Viña del Mar, Chile</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           Calle Limache 3421, Edificio  Reitz II<br>
           Viña del Mar, Chile<br>
@@ -973,10 +1003,10 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
       
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:16px;">
         <span style="position:absolute; bottom:-10px; right:-4px; font-size:80px; opacity:0.28; pointer-events:none; user-select:none;">US</span>
         <!-- <div style="font-size:22px; margin-bottom:6px;">🇺🇸</div>   -->
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Portland, Oregon</div>
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:8px;">Portland, Oregon</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           851 SW 6th Ave<br>
           Portland, OR 97204<br>
@@ -984,10 +1014,10 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
 
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:16px;">
         <span style="position:absolute; bottom:-10px; right:-4px; font-size:80px; opacity:0.28; pointer-events:none; user-select:none;">MX</span>
        <!-- <div style="font-size:22px; margin-bottom:6px;">🇲🇽</div> -->
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Ciudad de México</div>
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:8px;">Ciudad de México</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           Sor Juana Ines de la Cruz 248 A
           Agricultura, <br>
@@ -998,9 +1028,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
       <!--
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:10px; padding:16px;">
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:10px; padding:16px;">
         <div style="font-size:22px; margin-bottom:6px;">🇨🇴</div>
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:8px;">Bogotá, Colombia</div>
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:8px;">Bogotá, Colombia</div>
         <div style="font-size:14px; color:#d9e6f2; line-height:1.6;">
           Cra. 7 No. 32-16<br>
           Chapinero, Bogotá<br>
@@ -1035,14 +1065,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <div style="position:relative; flex:1; min-width:200px; align-self:stretch; border-radius:12px; overflow:hidden;">
         <img src="img/contact_picture2.jpg" alt="Madre e hija" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%; filter:grayscale(40%) brightness(0.75);" />
-        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(14,28,40,0.97) 0%, rgba(22,34,45,0.75) 50%, rgba(30,47,63,0.45) 100%);">
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,31,61,0.97) 0%, rgba(23,63,107,0.75) 50%, rgba(23,63,107,0.45) 100%);">
         </div>
         <div style="position:absolute; inset:0; display:flex; align-items:flex-end; z-index:1; padding:28px 26px;">
           <div>
-            <div style="width:32px; height:2px; background:#D6A21C; border-radius:2px; margin-bottom:16px;">
+            <div style="width:32px; height:2px; background:#FF8C2A; border-radius:2px; margin-bottom:16px;">
             </div>
             <p style="font-family:'Playfair Display',serif; font-size:18px; line-height:1.7; color:#ffffff; margin:0 0 16px 0; font-style:italic;">"No necesitas tener todo claro antes de escribirnos. Cuéntanos qué está pasando en tu                        escuela y juntos encontramos el camino."</p>
-            <div style="font-size:13px; color:#D6A21C; font-weight:700; letter-spacing:0.5px;">— Unete a nuestra comunidad!
+            <div style="font-size:13px; color:#FF8C2A; font-weight:700; letter-spacing:0.5px;">— Unete a nuestra comunidad!
             </div>
           </div>
         </div>
@@ -1065,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* ── INVERSIÓN PAGE STYLES ── */
   .inv-hero {
     position: relative;
-    background: linear-gradient(180deg, #0f1d27 0%, #16222D 100%);
+    background: linear-gradient(180deg, #173F6B 0%, #173F6B 100%);
     padding: 80px 20px 64px;
     text-align: center;
     overflow: hidden;
@@ -1075,7 +1105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(214,162,28,0.055) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(255,140,42,0.055) 1px, transparent 1px);
     background-size: 30px 30px;
     pointer-events: none;
   }
@@ -1084,19 +1114,19 @@ document.addEventListener('DOMContentLoaded', function() {
     top: 50%; left: 50%;
     transform: translate(-50%, -65%);
     width: 600px; height: 400px;
-    background: radial-gradient(ellipse, rgba(214,162,28,0.13) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(255,140,42,0.13) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
   .inv-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
   .inv-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(214,162,28,0.1);
-    border: 1px solid rgba(214,162,28,0.3);
+    background: rgba(255,140,42,0.1);
+    border: 1px solid rgba(255,140,42,0.3);
     border-radius: 999px;
     padding: 5px 16px;
     font-size: 11px; font-weight: 700;
-    color: #D6A21C; letter-spacing: 2px; text-transform: uppercase;
+    color: #FF8C2A; letter-spacing: 2px; text-transform: uppercase;
     margin-bottom: 22px;
   }
   .inv-hero h1 {
@@ -1107,40 +1137,54 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-bottom: 18px;
     color: #fff;
   }
-  .inv-hero h1 em { color: #D6A21C; font-style: normal; }
+  .inv-hero h1 em { color: #FF8C2A; font-style: normal; }
   .inv-hero p {
-    font-size: 16px; color: #a9c0d3;
+    font-size: 16px; color: #9CC2E0;
     line-height: 1.75; max-width: 560px;
     margin: 0 auto 36px;
     font-weight: 300;
   }
   .inv-hero-anchor {
     display: inline-flex; align-items: center; gap: 10px;
-    background: rgba(214,162,28,0.08);
-    border: 1px solid rgba(214,162,28,0.35);
+    background: rgba(255,140,42,0.08);
+    border: 1px solid rgba(255,140,42,0.35);
     border-radius: 12px;
     padding: 14px 28px;
-    font-size: 15px; color: #D6A21C; font-weight: 700;
+    font-size: 15px; color: #FF8C2A; font-weight: 700;
   }
   .inv-hero-anchor span { font-size: 22px; font-weight: 900; color: #fff; }
 
   .inv-trust-bar {
-    background: #0f1d27;
-    border-top: 1px solid #243A4B;
-    border-bottom: 1px solid #243A4B;
+    background: #173F6B;
+    border-top: 1px solid #1E4E80;
+    border-bottom: 1px solid #1E4E80;
     padding: 14px 20px;
     text-align: center;
-    font-size: 13px; color: #a9c0d3; font-weight: 600;
+    font-size: 13px; color: #9CC2E0; font-weight: 600;
     width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;
     position: relative;
   }
 
   .inv-section { max-width: 1000px; margin: 0 auto; padding: 64px 20px; }
 
-  .inv-plans-label {
+  .inv-size-selector {
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  margin: 0 auto 32px; max-width: 1000px;
+}
+.inv-size-btn {
+  background: #173F6B; border: 1px solid #1E4E80; color: #9CC2E0;
+  font-family: 'Open Sans', sans-serif; font-size: 13px; font-weight: 600;
+  padding: 10px 20px; border-radius: 999px; cursor: pointer;
+  text-align: center; transition: all 0.2s;
+}
+.inv-size-btn span { display: block; font-size: 11px; font-weight: 400; color: #7DA6CC; margin-top: 2px; }
+.inv-size-btn:hover { border-color: rgba(255,140,42,0.5); }
+.inv-size-btn.active { background: #FF8C2A; border-color: #FF8C2A; color: #3A1B00; }
+.inv-size-btn.active span { color: #5A3200; }
+.inv-plans-label {
     text-align: center;
     font-size: 11px; font-weight: 700; letter-spacing: 2px;
-    text-transform: uppercase; color: #a9c0d3;
+    text-transform: uppercase; color: #9CC2E0;
     margin-bottom: 40px;
   }
   .inv-plans-grid {
@@ -1152,8 +1196,8 @@ document.addEventListener('DOMContentLoaded', function() {
   @media (max-width: 720px) { .inv-plans-grid { grid-template-columns: 1fr; } }
 
   .inv-plan-card {
-    background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
-    border: 1px solid #365468;
+    background: linear-gradient(160deg, #173F6B 0%, #173F6B 100%);
+    border: 1px solid #1E4E80;
     border-radius: 18px;
     padding: 32px 28px;
     position: relative;
@@ -1162,27 +1206,27 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   .inv-plan-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(214,162,28,0.5);
+    border-color: rgba(255,140,42,0.5);
     box-shadow: 0 24px 56px rgba(0,0,0,0.4);
   }
   .inv-plan-card.featured {
-    border-color: #D6A21C;
-    background: linear-gradient(160deg, #1a2a38 0%, #0f1d27 100%);
-    box-shadow: 0 0 0 1px rgba(214,162,28,0.2), 0 20px 60px rgba(0,0,0,0.4);
+    border-color: #FF8C2A;
+    background: linear-gradient(160deg, #1a2a38 0%, #173F6B 100%);
+    box-shadow: 0 0 0 1px rgba(255,140,42,0.2), 0 20px 60px rgba(0,0,0,0.4);
   }
   .inv-plan-card.featured::before {
     content: '';
     position: absolute;
     top: -60px; right: -60px;
     width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(214,162,28,0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,140,42,0.12) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
   .inv-featured-badge {
     display: inline-block;
-    background: #D6A21C;
-    color: #0f1d27;
+    background: #FF8C2A;
+    color: #173F6B;
     font-size: 10px; font-weight: 800;
     letter-spacing: 1.5px; text-transform: uppercase;
     padding: 4px 12px; border-radius: 999px;
@@ -1191,7 +1235,7 @@ document.addEventListener('DOMContentLoaded', function() {
   .inv-plan-size {
     font-size: 11px; font-weight: 700;
     letter-spacing: 1.5px; text-transform: uppercase;
-    color: #a9c0d3; margin-bottom: 10px;
+    color: #9CC2E0; margin-bottom: 10px;
   }
   .inv-plan-name {
     font-family: 'Playfair Display', serif;
@@ -1200,28 +1244,28 @@ document.addEventListener('DOMContentLoaded', function() {
     letter-spacing: 1px;
   }
   .inv-plan-students {
-    font-size: 13px; color: #4a6070;
+    font-size: 13px; color: #5B85AC;
     margin-bottom: 28px;
   }
   .inv-plan-price-wrap { margin-bottom: 8px; }
   .inv-plan-price {
     font-family: 'Playfair Display', serif;
     font-size: 52px; font-weight: 700;
-    color: #D6A21C; line-height: 1;
+    color: #FF8C2A; line-height: 1;
   }
   .inv-plan-price-period {
-    font-size: 13px; color: #4a6070;
+    font-size: 13px; color: #5B85AC;
     margin-bottom: 28px;
   }
   .inv-plan-divider {
     height: 1px;
-    background: linear-gradient(90deg, rgba(214,162,28,0.25), transparent);
+    background: linear-gradient(90deg, rgba(255,140,42,0.25), transparent);
     margin-bottom: 24px;
   }
   .inv-plan-features { list-style: none; margin-bottom: 32px; padding: 0; }
   .inv-plan-features li {
     display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; color: #a9c0d3;
+    font-size: 14px; color: #9CC2E0;
     line-height: 1.5; margin-bottom: 12px;
   }
   .inv-plan-features li .inv-check {
@@ -1243,47 +1287,47 @@ document.addEventListener('DOMContentLoaded', function() {
     font-family: 'Open Sans', sans-serif;
     text-decoration: none;
   }
-  .inv-plan-cta.primary { background: #D6A21C; color: #0f1d27; border: none; }
-  .inv-plan-cta.primary:hover { background: #f0c040; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(214,162,28,0.35); }
-  .inv-plan-cta.secondary { background: transparent; color: #a9c0d3; border: 1px solid #365468; }
-  .inv-plan-cta.secondary:hover { border-color: #D6A21C; color: #D6A21C; }
+  .inv-plan-cta.primary { background: #FF8C2A; color: #173F6B; border: none; }
+  .inv-plan-cta.primary:hover { background: #FFB258; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,140,42,0.35); }
+  .inv-plan-cta.secondary { background: transparent; color: #9CC2E0; border: 1px solid #1E4E80; }
+  .inv-plan-cta.secondary:hover { border-color: #FF8C2A; color: #FF8C2A; }
 
   .inv-included-section {
-    background: #16222D;
+    background: #173F6B;
     border-radius: 18px;
-    border: 1px solid #365468;
+    border: 1px solid #1E4E80;
     padding: 40px;
     margin-top: 8px;
   }
   .inv-included-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 6px; }
-  .inv-included-sub { font-size: 14px; color: #a9c0d3; margin-bottom: 32px; line-height: 1.6; }
+  .inv-included-sub { font-size: 14px; color: #9CC2E0; margin-bottom: 32px; line-height: 1.6; }
   .inv-included-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   @media (max-width: 720px) { .inv-included-grid { grid-template-columns: 1fr; } }
   .inv-included-item { display: flex; gap: 14px; align-items: flex-start; }
   .inv-included-icon {
     width: 40px; height: 40px; flex-shrink: 0;
-    background: rgba(214,162,28,0.08);
-    border: 1px solid rgba(214,162,28,0.2);
+    background: rgba(255,140,42,0.08);
+    border: 1px solid rgba(255,140,42,0.2);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
   }
   .inv-included-text strong { display: block; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-  .inv-included-text span { font-size: 13px; color: #a9c0d3; line-height: 1.5; }
+  .inv-included-text span { font-size: 13px; color: #9CC2E0; line-height: 1.5; }
 
   .inv-faq-section { margin-top: 64px; }
   .inv-faq-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: #fff; margin-bottom: 32px; text-align: center; }
   .inv-faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   @media (max-width: 720px) { .inv-faq-grid { grid-template-columns: 1fr; } }
-  .inv-faq-item { background: #16222D; border: 1px solid #365468; border-radius: 12px; padding: 22px 24px; transition: border-color 0.2s; }
-  .inv-faq-item:hover { border-color: rgba(214,162,28,0.4); }
+  .inv-faq-item { background: #173F6B; border: 1px solid #1E4E80; border-radius: 12px; padding: 22px 24px; transition: border-color 0.2s; }
+  .inv-faq-item:hover { border-color: rgba(255,140,42,0.4); }
   .inv-faq-q { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.4; }
-  .inv-faq-a { font-size: 14px; color: #a9c0d3; line-height: 1.65; }
+  .inv-faq-a { font-size: 14px; color: #9CC2E0; line-height: 1.65; }
 
   .inv-bottom-cta {
     margin-top: 64px;
-    background: linear-gradient(135deg, #0f1d27 0%, #16222D 60%, #162535 100%);
-    border: 1px solid #365468;
+    background: linear-gradient(135deg, #173F6B 0%, #173F6B 60%, #173F6B 100%);
+    border: 1px solid #1E4E80;
     border-radius: 18px;
     padding: 52px 40px;
     text-align: center;
@@ -1296,18 +1340,18 @@ document.addEventListener('DOMContentLoaded', function() {
     top: -80px; left: 50%;
     transform: translateX(-50%);
     width: 500px; height: 300px;
-    background: radial-gradient(ellipse, rgba(214,162,28,0.1) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(255,140,42,0.1) 0%, transparent 70%);
     pointer-events: none;
   }
   .inv-bottom-cta h2 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 3.5vw, 36px); font-weight: 600; color: #fff; margin-bottom: 14px; position: relative; z-index: 1; }
-  .inv-bottom-cta p { font-size: 15px; color: #a9c0d3; max-width: 520px; margin: 0 auto 32px; line-height: 1.7; font-weight: 300; position: relative; z-index: 1; }
+  .inv-bottom-cta p { font-size: 15px; color: #9CC2E0; max-width: 520px; margin: 0 auto 32px; line-height: 1.7; font-weight: 300; position: relative; z-index: 1; }
   .inv-bottom-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
-  .inv-btn-gold { padding: 13px 28px; background: #D6A21C; color: #0f1d27; font-weight: 700; font-size: 14px; border: none; border-radius: 10px; cursor: pointer; font-family: 'Open Sans', sans-serif; transition: all 0.2s; }
-  .inv-btn-gold:hover { background: #f0c040; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(214,162,28,0.4); }
-  .inv-btn-ghost { padding: 13px 28px; background: transparent; color: #a9c0d3; font-weight: 600; font-size: 14px; border: 1px solid #365468; border-radius: 10px; cursor: pointer; font-family: 'Open Sans', sans-serif; transition: all 0.2s; }
-  .inv-btn-ghost:hover { border-color: #D6A21C; color: #D6A21C; }
+  .inv-btn-gold { padding: 13px 28px; background: #FF8C2A; color: #173F6B; font-weight: 700; font-size: 14px; border: none; border-radius: 10px; cursor: pointer; font-family: 'Open Sans', sans-serif; transition: all 0.2s; }
+  .inv-btn-gold:hover { background: #FFB258; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,140,42,0.4); }
+  .inv-btn-ghost { padding: 13px 28px; background: transparent; color: #9CC2E0; font-weight: 600; font-size: 14px; border: 1px solid #1E4E80; border-radius: 10px; cursor: pointer; font-family: 'Open Sans', sans-serif; transition: all 0.2s; }
+  .inv-btn-ghost:hover { border-color: #FF8C2A; color: #FF8C2A; }
 
-  .inv-disclaimer { text-align: center; font-size: 12px; color: #4a6070; margin-top: 48px; line-height: 1.6; }
+  .inv-disclaimer { text-align: center; font-size: 12px; color: #5B85AC; margin-top: 48px; line-height: 1.6; }
 
   @keyframes invFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .inv-plan-card { animation: invFadeUp 0.5s ease both; }
@@ -1321,7 +1365,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="inv-hero-glow"></div>
   <div class="inv-hero-inner">
     <div class="inv-eyebrow">💡 Inversión por institución</div>
-    <h1 class="inv-hero-h1" style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,50px);font-weight:600;line-height:1.2;margin-bottom:18px;color:#fff;">Un diagnóstico completo.<br><em style="color:#D6A21C;font-style:normal;">Un plan listo para actuar.</em></h1>
+    <h1 class="inv-hero-h1" style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,50px);font-weight:600;line-height:1.2;margin-bottom:18px;color:#fff;">Un diagnóstico completo.<br><em style="color:#FF8C2A;font-style:normal;">Un plan listo para actuar.</em></h1>
     <p>Pago único por proyecto. Sin suscripción, sin sorpresas. En 48 horas sabes exactamente lo que está pasando en tu escuela — y cómo resolverlo.</p>
     <div class="inv-hero-anchor">
       Precios desde <span>USD $1190</span> · Resultados en 48 horas
@@ -1338,19 +1382,25 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="inv-section">
   <div class="inv-plans-label">Elige el plan que mejor describe lo que necesitas</div>
 
+  <div class="inv-size-selector">
+    <button class="inv-size-btn" data-size="pequena" onclick="selectSchoolSizeCL('pequena')" type="button">Pequeña<span>hasta 300 estudiantes</span></button>
+    <button class="inv-size-btn active" data-size="mediana" onclick="selectSchoolSizeCL('mediana')" type="button">Mediana<span>301–600 estudiantes</span></button>
+    <button class="inv-size-btn" data-size="grande" onclick="selectSchoolSizeCL('grande')" type="button">Grande<span>601–1.000 estudiantes</span></button>
+    <button class="inv-size-btn" data-size="red" onclick="selectSchoolSizeCL('red')" type="button">Red / DAEM<span>+1.000 estudiantes</span></button>
+  </div>
+
   <div class="inv-plans-grid">
 
-    <!-- PLAN VER -->
+    <!-- PLAN SCAN -->
     <div class="inv-plan-card">
       <div class="inv-plan-size">Tú actúas</div>
-      <div class="inv-plan-name">VER</div>
+      <div class="inv-plan-name">SCAN</div>
       <div class="inv-plan-students">Conoce la realidad de tu escuela</div>
       <div class="inv-plan-price-wrap">
-        <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
-        <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
-        <span class="inv-plan-price">1190</span>
+        <span id="priceLabel-scan" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
+        <span class="inv-plan-price" id="price-scan">$1.850.000</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period" id="pricePeriod-scan">CLP · pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span>Encuesta anónima para estudiantes</li>
@@ -1367,18 +1417,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Solicitar información →</a>
     </div>
 
-    <!-- PLAN ENTENDER — FEATURED -->
+    <!-- PLAN COPILOT — FEATURED -->
     <div class="inv-plan-card">
       <div class="inv-plan-size">Nosotros te guiamos</div> 
-      <div class="inv-plan-name">ENTENDER</div>
-      <div class="inv-featured-badge">⭐ Cupos limitados</div>
+      <div class="inv-plan-name">COPILOT</div>
+      <div class="inv-featured-badge">⭐ La opción que más eligen las escuelas</div>
      <!-- <div class="inv-plan-students">Sabe qué pasa y cómo reaccionar</div>  -->      
       <div class="inv-plan-price-wrap">
-        <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
-        <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
-        <span class="inv-plan-price">1590</span>
+        <span id="priceLabel-copilot" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
+        <span class="inv-plan-price" id="price-copilot">$2.099.000</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period" id="pricePeriod-copilot">CLP · pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span>Encuesta anónima para estudiantes</li>
@@ -1391,17 +1440,16 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Agendar diagnóstico →</a>
     </div>
 
-    <!-- PLAN TRANSFORMAR -->
+    <!-- PLAN FULL 360 -->
     <div class="inv-plan-card">
       <div class="inv-plan-size">Nosotros te acompañamos</div>
-      <div class="inv-plan-name">TRANSFORMAR</div>
+      <div class="inv-plan-name">FULL 360°</div>
       <div class="inv-plan-students">Cambia el clima de tu escuela de raíz</div>
       <div class="inv-plan-price-wrap">
-        <span style="font-size:14px;color:#4a6070;vertical-align:middle;margin-right:4px;">desde</span>
-        <span style="font-size:20px;font-weight:600;color:#a9c0d3;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
-        <span class="inv-plan-price">2590</span>
+        <span id="priceLabel-full360" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
+        <span class="inv-plan-price" id="price-full360">$3.290.000</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period" id="pricePeriod-full360">CLP · pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span><strong style="color:#fff;">2 evaluaciones para medir evolución en el tiempo</strong> </li>
@@ -1523,34 +1571,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style>
   /* ── TESTIMONIOS ── */
-  .testi-hero { position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; padding:80px 20px 60px; background:linear-gradient(180deg,#0a1520 0%,#16222D 100%); text-align:center; overflow:hidden; }
-  .testi-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(214,162,28,0.06) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
+  .testi-hero { position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; padding:80px 20px 60px; background:linear-gradient(180deg,#071F3D 0%,#173F6B 100%); text-align:center; overflow:hidden; }
+  .testi-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(255,140,42,0.06) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
   .testi-hero-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; }
-  .testi-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(214,162,28,0.1); border:1px solid rgba(214,162,28,0.3); border-radius:999px; padding:5px 16px; font-size:11px; font-weight:700; color:#D6A21C; letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+  .testi-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(255,140,42,0.1); border:1px solid rgba(255,140,42,0.3); border-radius:999px; padding:5px 16px; font-size:11px; font-weight:700; color:#FF8C2A; letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
   .testi-hero h2 { font-family:'Playfair Display',serif; font-size:clamp(30px,4.5vw,48px); font-weight:600; color:#fff; margin:0 0 16px 0; line-height:1.2; }
-  .testi-hero p { font-size:16px; color:#a9c0d3; line-height:1.7; margin:0; }
+  .testi-hero p { font-size:16px; color:#9CC2E0; line-height:1.7; margin:0; }
 
   /* Grid 2×2 */
   .testi-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; max-width:960px; margin:48px auto 0; padding:0 20px 60px; }
   @media (max-width:700px) { .testi-grid { grid-template-columns:1fr; } }
 
   /* Card base */
-  .testi-card { background:linear-gradient(160deg,#16222D 0%,#0f1d27 100%); border:1px solid #243A4B; border-radius:16px; padding:32px; position:relative; overflow:hidden; transition:border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
-  .testi-card:hover { border-color:rgba(214,162,28,0.5); transform:translateY(-4px); box-shadow:0 20px 48px rgba(0,0,0,0.4); }
-  .testi-card::before { content:'"'; font-family:'Playfair Display',serif; font-size:120px; line-height:1; color:rgba(214,162,28,0.08); position:absolute; top:-10px; left:20px; pointer-events:none; }
+  .testi-card { background:linear-gradient(160deg,#173F6B 0%,#173F6B 100%); border:1px solid #1E4E80; border-radius:16px; padding:32px; position:relative; overflow:hidden; transition:border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+  .testi-card:hover { border-color:rgba(255,140,42,0.5); transform:translateY(-4px); box-shadow:0 20px 48px rgba(0,0,0,0.4); }
+  .testi-card::before { content:'"'; font-family:'Playfair Display',serif; font-size:120px; line-height:1; color:rgba(255,140,42,0.08); position:absolute; top:-10px; left:20px; pointer-events:none; }
 
   /* Quote text */
   .testi-quote { font-size:15px; color:#d9e6f2; line-height:1.75; margin:0 0 28px 0; position:relative; z-index:1; font-style:italic; }
-  .testi-quote em { color:#D6A21C; font-style:normal; font-weight:600; }
+  .testi-quote em { color:#FF8C2A; font-style:normal; font-weight:600; }
 
   /* Author row */
   .testi-author { display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
-  .testi-avatar { width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid rgba(214,162,28,0.4); flex-shrink:0; background:#243A4B; }
-  .testi-avatar-placeholder { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,#1E2F3F,#243A4B); border:2px solid rgba(214,162,28,0.3); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .testi-avatar { width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,140,42,0.4); flex-shrink:0; background:#1E4E80; }
+  .testi-avatar-placeholder { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,#173F6B,#1E4E80); border:2px solid rgba(255,140,42,0.3); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
   .testi-name { font-weight:700; font-size:14px; color:#fff; margin-bottom:3px; }
-  .testi-role { font-size:12px; color:#D6A21C; font-weight:600; margin-bottom:2px; }
-  .testi-institution { font-size:12px; color:#7a8e9e; }
-  .testi-divider { height:1px; background:linear-gradient(90deg,rgba(214,162,28,0.3),transparent); margin:24px 0; }
+  .testi-role { font-size:12px; color:#FF8C2A; font-weight:600; margin-bottom:2px; }
+  .testi-institution { font-size:12px; color:#7DA6CC; }
+  .testi-divider { height:1px; background:linear-gradient(90deg,rgba(255,140,42,0.3),transparent); margin:24px 0; }
 
   /* Video card variant */
   .testi-card.has-video { padding:0; cursor:pointer; }
@@ -1558,25 +1606,25 @@ document.addEventListener('DOMContentLoaded', function() {
   .testi-card.has-video .testi-thumb img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; filter:brightness(0.8); }
   .testi-card.has-video:hover .testi-thumb img { transform:scale(1.04); filter:brightness(0.65); }
   .testi-play-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
-  .testi-play-circle { width:60px; height:60px; background:rgba(214,162,28,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:transform 0.2s, background 0.2s; box-shadow:0 4px 24px rgba(214,162,28,0.4); }
-  .testi-card.has-video:hover .testi-play-circle { transform:scale(1.1); background:#D6A21C; }
-  .testi-play-arrow { width:0; height:0; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid #16222D; margin-left:4px; }
+  .testi-play-circle { width:60px; height:60px; background:rgba(255,140,42,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:transform 0.2s, background 0.2s; box-shadow:0 4px 24px rgba(255,140,42,0.4); }
+  .testi-card.has-video:hover .testi-play-circle { transform:scale(1.1); background:#FF8C2A; }
+  .testi-play-arrow { width:0; height:0; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid #173F6B; margin-left:4px; }
   .testi-card-body { padding:24px 28px 28px; }
   .testi-card-body .testi-card::before { display:none; }
 
   /* Country flag badge */
   .testi-flag { position:absolute; top:14px; right:14px; font-size:20px; z-index:2; }
-  .testi-card.has-video .testi-flag { top:10px; right:10px; background:rgba(6,14,22,0.7); border-radius:6px; padding:3px 6px; font-size:16px; }
+  .testi-card.has-video .testi-flag { top:10px; right:10px; background:rgba(7,31,61,0.7); border-radius:6px; padding:3px 6px; font-size:16px; }
 
   /* Lightbox */
-  .testi-lightbox { display:none; position:fixed; inset:0; background:rgba(6,14,22,0.96); z-index:29999; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px); }
+  .testi-lightbox { display:none; position:fixed; inset:0; background:rgba(7,31,61,0.96); z-index:29999; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px); }
   .testi-lightbox.open { display:flex; }
   .testi-lightbox-inner { width:min(800px,100%); position:relative; }
   .testi-lightbox-video { position:relative; width:100%; padding-top:56.25%; border-radius:12px; overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,0.7); }
   .testi-lightbox-video iframe { position:absolute; inset:0; width:100%; height:100%; }
-  .testi-lightbox-close { position:absolute; top:-44px; right:0; background:transparent; border:1px solid #365468; color:#a9c0d3; width:36px; height:36px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-  .testi-lightbox-close:hover { border-color:#D6A21C; color:#D6A21C; }
-  .testi-lightbox-caption { text-align:center; margin-top:16px; font-size:14px; color:#a9c0d3; }
+  .testi-lightbox-close { position:absolute; top:-44px; right:0; background:transparent; border:1px solid #1E4E80; color:#9CC2E0; width:36px; height:36px; border-radius:8px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+  .testi-lightbox-close:hover { border-color:#FF8C2A; color:#FF8C2A; }
+  .testi-lightbox-caption { text-align:center; margin-top:16px; font-size:14px; color:#9CC2E0; }
 </style>
 
   <!-- Hero header -->
@@ -1635,7 +1683,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
  <!-- TARJETA 3 — Foto persona -->
     <div class="testi-card has-video" style="cursor:default;">
-      <div class="testi-thumb" style="min-height:200px; background:#0f1d27;">
+      <div class="testi-thumb" style="min-height:200px; background:#173F6B;">
         <img src="img/jlalcantara2.png" alt="Jose Luis Alcantara" 
              style="width:100%; height:100%; object-fit:cover; object-position:center 20%;" />
       </div>
@@ -1656,7 +1704,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- TARJETA 4 — Video -->
        <div class="testi-card has-video" style="cursor:default;">
-      <div class="testi-thumb" style="min-height:200px; background:#0f1d27;">
+      <div class="testi-thumb" style="min-height:200px; background:#173F6B;">
         <img src="img/Imagen_013.jpg" alt="Concepcion" 
              style="width:100%; height:100%; object-fit:cover; object-position:center 35%;" />
       </div>
@@ -1715,103 +1763,103 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style>
   /* ── QUIZ MODAL ── */
-  .quiz-modal-overlay { display:none; position:fixed; inset:0; background:rgba(6,14,22,0.92); z-index:19999; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(6px); }
+  .quiz-modal-overlay { display:none; position:fixed; inset:0; background:rgba(7,31,61,0.92); z-index:19999; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(6px); }
   .quiz-modal-overlay.open { display:flex; }
-  .quiz-modal-box { width:min(680px,100%); background:linear-gradient(160deg,#16222D 0%,#0f1d27 100%); border:1px solid #365468; border-radius:20px; overflow-y:auto; max-height:90vh; box-shadow:0 32px 80px rgba(0,0,0,0.6); position:relative; }
-  .quiz-progress-fill { height:4px; background:linear-gradient(90deg,#D6A21C,#f0c040); border-radius:0 4px 4px 0; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); width:0%; }
+  .quiz-modal-box { width:min(680px,100%); background:linear-gradient(160deg,#173F6B 0%,#173F6B 100%); border:1px solid #1E4E80; border-radius:20px; overflow-y:auto; max-height:90vh; box-shadow:0 32px 80px rgba(0,0,0,0.6); position:relative; }
+  .quiz-progress-fill { height:4px; background:linear-gradient(90deg,#FF8C2A,#FFB258); border-radius:0 4px 4px 0; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); width:0%; }
   .quiz-modal-header { padding:24px 28px 0; display:flex; justify-content:space-between; align-items:flex-start; }
   .quiz-modal-brand { display:flex; align-items:center; gap:10px; }
-  .quiz-modal-brand-dot { width:8px; height:8px; background:#D6A21C; border-radius:50%; animation:quizPulse 2s infinite; }
+  .quiz-modal-brand-dot { width:8px; height:8px; background:#FF8C2A; border-radius:50%; animation:quizPulse 2s infinite; }
   @keyframes quizPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
-  .quiz-modal-brand-name { font-size:11px; font-weight:700; letter-spacing:2px; color:#D6A21C; text-transform:uppercase; }
-  .quiz-modal-close { background:transparent; border:1px solid #365468; color:#a9c0d3; width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
-  .quiz-modal-close:hover { border-color:#D6A21C; color:#D6A21C; }
+  .quiz-modal-brand-name { font-size:11px; font-weight:700; letter-spacing:2px; color:#FF8C2A; text-transform:uppercase; }
+  .quiz-modal-close { background:transparent; border:1px solid #1E4E80; color:#9CC2E0; width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+  .quiz-modal-close:hover { border-color:#FF8C2A; color:#FF8C2A; }
   .quiz-screen { display:none; padding:28px 28px 32px; animation:quizFadeIn 0.35s ease; }
   .quiz-screen.active { display:block; }
   @keyframes quizFadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-  .quiz-intro-label { display:inline-flex; align-items:center; gap:6px; background:rgba(214,162,28,0.12); border:1px solid rgba(214,162,28,0.3); border-radius:999px; padding:4px 12px; font-size:11px; font-weight:700; color:#D6A21C; letter-spacing:1px; text-transform:uppercase; margin-bottom:20px; }
+  .quiz-intro-label { display:inline-flex; align-items:center; gap:6px; background:rgba(255,140,42,0.12); border:1px solid rgba(255,140,42,0.3); border-radius:999px; padding:4px 12px; font-size:11px; font-weight:700; color:#FF8C2A; letter-spacing:1px; text-transform:uppercase; margin-bottom:20px; }
   .quiz-intro-title { font-family:'Playfair Display',serif; font-size:clamp(24px,4vw,34px); font-weight:600; line-height:1.25; margin-bottom:16px; color:#fff; }
-  .quiz-intro-title em { color:#D6A21C; font-style:normal; }
-  .quiz-intro-desc { font-size:15px; color:#a9c0d3; line-height:1.7; margin-bottom:28px; max-width:500px; }
+  .quiz-intro-title em { color:#FF8C2A; font-style:normal; }
+  .quiz-intro-desc { font-size:15px; color:#9CC2E0; line-height:1.7; margin-bottom:28px; max-width:500px; }
   .quiz-intro-meta { display:flex; gap:20px; margin-bottom:28px; flex-wrap:wrap; }
-  .quiz-intro-meta-item { display:flex; align-items:center; gap:8px; font-size:13px; color:#a9c0d3; }
-  .quiz-intro-meta-icon { width:28px; height:28px; background:rgba(214,162,28,0.1); border:1px solid rgba(214,162,28,0.25); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; }
-  .quiz-q-counter { font-size:11px; font-weight:700; letter-spacing:2px; color:#D6A21C; text-transform:uppercase; margin-bottom:8px; }
-  .quiz-q-category { display:inline-block; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#a9c0d3; background:rgba(255,255,255,0.05); border-radius:4px; padding:3px 8px; margin-bottom:20px; }
+  .quiz-intro-meta-item { display:flex; align-items:center; gap:8px; font-size:13px; color:#9CC2E0; }
+  .quiz-intro-meta-icon { width:28px; height:28px; background:rgba(255,140,42,0.1); border:1px solid rgba(255,140,42,0.25); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; }
+  .quiz-q-counter { font-size:11px; font-weight:700; letter-spacing:2px; color:#FF8C2A; text-transform:uppercase; margin-bottom:8px; }
+  .quiz-q-category { display:inline-block; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#9CC2E0; background:rgba(255,255,255,0.05); border-radius:4px; padding:3px 8px; margin-bottom:20px; }
   .quiz-q-text { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,24px); font-weight:600; line-height:1.4; color:#fff; margin-bottom:32px; }
   .quiz-q-options { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
-  .quiz-q-option { display:flex; align-items:center; gap:14px; padding:14px 18px; background:rgba(255,255,255,0.03); border:1.5px solid #365468; border-radius:12px; cursor:pointer; transition:all 0.2s; font-size:15px; color:#fff; font-weight:400; }
-  .quiz-q-option:hover { border-color:#D6A21C; background:rgba(214,162,28,0.08); }
-  .quiz-q-option.selected { border-color:#D6A21C; background:rgba(214,162,28,0.12); font-weight:600; }
-  .quiz-q-option-icon { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; background:rgba(255,255,255,0.05); border:1px solid #365468; flex-shrink:0; transition:all 0.2s; }
-  .quiz-q-option.selected .quiz-q-option-icon { background:#D6A21C; border-color:#D6A21C; }
+  .quiz-q-option { display:flex; align-items:center; gap:14px; padding:14px 18px; background:rgba(255,255,255,0.03); border:1.5px solid #1E4E80; border-radius:12px; cursor:pointer; transition:all 0.2s; font-size:15px; color:#fff; font-weight:400; }
+  .quiz-q-option:hover { border-color:#FF8C2A; background:rgba(255,140,42,0.08); }
+  .quiz-q-option.selected { border-color:#FF8C2A; background:rgba(255,140,42,0.12); font-weight:600; }
+  .quiz-q-option-icon { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; background:rgba(255,255,255,0.05); border:1px solid #1E4E80; flex-shrink:0; transition:all 0.2s; }
+  .quiz-q-option.selected .quiz-q-option-icon { background:#FF8C2A; border-color:#FF8C2A; }
   .quiz-q-nav { display:flex; justify-content:space-between; align-items:center; }
   .quiz-q-dots { display:flex; gap:5px; }
-  .quiz-q-dot { width:6px; height:6px; border-radius:50%; background:#365468; transition:all 0.3s; }
-  .quiz-q-dot.done { background:#D6A21C; }
-  .quiz-q-dot.current { background:#D6A21C; width:18px; border-radius:3px; }
-  .quiz-result-header { text-align:center; padding:8px 0 24px; border-bottom:1px solid #365468; margin-bottom:24px; }
+  .quiz-q-dot { width:6px; height:6px; border-radius:50%; background:#1E4E80; transition:all 0.3s; }
+  .quiz-q-dot.done { background:#FF8C2A; }
+  .quiz-q-dot.current { background:#FF8C2A; width:18px; border-radius:3px; }
+  .quiz-result-header { text-align:center; padding:8px 0 24px; border-bottom:1px solid #1E4E80; margin-bottom:24px; }
   .quiz-score-wrap { position:relative; width:140px; height:140px; margin:0 auto 16px; }
   .quiz-score-svg { transform:rotate(-90deg); }
   .quiz-score-track { fill:none; stroke:rgba(255,255,255,0.06); stroke-width:8; }
-  .quiz-score-fill { fill:none; stroke:#D6A21C; stroke-width:8; stroke-linecap:round; stroke-dasharray:345; stroke-dashoffset:345; transition:stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1); filter:drop-shadow(0 0 6px rgba(214,162,28,0.5)); }
+  .quiz-score-fill { fill:none; stroke:#FF8C2A; stroke-width:8; stroke-linecap:round; stroke-dasharray:345; stroke-dashoffset:345; transition:stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1); filter:drop-shadow(0 0 6px rgba(255,140,42,0.5)); }
   .quiz-score-fill.critical { stroke:#ff6b6b; filter:drop-shadow(0 0 6px rgba(255,107,107,0.5)); }
   .quiz-score-fill.low { stroke:#ffa94d; filter:drop-shadow(0 0 6px rgba(255,169,77,0.5)); }
-  .quiz-score-fill.medium { stroke:#D6A21C; }
+  .quiz-score-fill.medium { stroke:#FF8C2A; }
   .quiz-score-fill.high { stroke:#69db7c; filter:drop-shadow(0 0 6px rgba(105,219,124,0.5)); }
   .quiz-score-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .quiz-score-number { font-family:'Playfair Display',serif; font-size:38px; font-weight:700; color:#fff; line-height:1; }
-  .quiz-score-label { font-size:11px; color:#a9c0d3; letter-spacing:1px; text-transform:uppercase; }
+  .quiz-score-label { font-size:11px; color:#9CC2E0; letter-spacing:1px; text-transform:uppercase; }
   .quiz-result-level { font-family:'Playfair Display',serif; font-size:22px; font-weight:600; margin-bottom:8px; }
   .quiz-result-level.critical { color:#ff6b6b; }
   .quiz-result-level.low { color:#ffa94d; }
-  .quiz-result-level.medium { color:#D6A21C; }
+  .quiz-result-level.medium { color:#FF8C2A; }
   .quiz-result-level.high { color:#69db7c; }
-  .quiz-result-subtitle { font-size:14px; color:#a9c0d3; max-width:420px; margin:0 auto; line-height:1.6; }
-  .quiz-findings-title { font-size:11px; font-weight:700; letter-spacing:2px; color:#a9c0d3; text-transform:uppercase; margin-bottom:14px; }
+  .quiz-result-subtitle { font-size:14px; color:#9CC2E0; max-width:420px; margin:0 auto; line-height:1.6; }
+  .quiz-findings-title { font-size:11px; font-weight:700; letter-spacing:2px; color:#9CC2E0; text-transform:uppercase; margin-bottom:14px; }
   .quiz-findings-list { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; max-height:180px; overflow-y:auto; padding-right:6px; } <!-- agrega scroll bar -->
   .quiz-finding-item { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; background:rgba(255,255,255,0.03); border-radius:10px; border-left:3px solid; }
   .quiz-finding-item.danger  { border-color:#ff6b6b; }
   .quiz-finding-item.warning { border-color:#ffa94d; }
-  .quiz-finding-item.info    { border-color:#D6A21C; }
+  .quiz-finding-item.info    { border-color:#FF8C2A; }
   .quiz-finding-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
-  .quiz-finding-text { font-size:14px; color:#a9c0d3; line-height:1.5; }
+  .quiz-finding-text { font-size:14px; color:#9CC2E0; line-height:1.5; }
   .quiz-finding-text strong { color:#fff; display:block; margin-bottom:2px; }
-  .quiz-share-card { background:linear-gradient(135deg,#0a1520 0%,#1E2F3F 60%,#162535 100%); border:1px solid #365468; border-radius:16px; padding:24px; margin-bottom:20px; position:relative; overflow:hidden; }
-  .quiz-share-card::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; background:radial-gradient(circle,rgba(214,162,28,0.12) 0%,transparent 70%); border-radius:50%; }
-  .quiz-share-brand { font-size:10px; font-weight:700; letter-spacing:2.5px; color:#D6A21C; text-transform:uppercase; margin-bottom:14px; opacity:0.8; }
+  .quiz-share-card { background:linear-gradient(135deg,#071F3D 0%,#173F6B 60%,#173F6B 100%); border:1px solid #1E4E80; border-radius:16px; padding:24px; margin-bottom:20px; position:relative; overflow:hidden; }
+  .quiz-share-card::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; background:radial-gradient(circle,rgba(255,140,42,0.12) 0%,transparent 70%); border-radius:50%; }
+  .quiz-share-brand { font-size:10px; font-weight:700; letter-spacing:2.5px; color:#FF8C2A; text-transform:uppercase; margin-bottom:14px; opacity:0.8; }
   .quiz-share-headline { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; color:#fff; margin-bottom:16px; line-height:1.35; }
   .quiz-share-score-row { display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
   .quiz-share-big-num { font-family:'Playfair Display',serif; font-size:52px; font-weight:700; line-height:1; }
   .quiz-share-big-num.critical { color:#ff6b6b; }
   .quiz-share-big-num.low      { color:#ffa94d; }
-  .quiz-share-big-num.medium   { color:#D6A21C; }
+  .quiz-share-big-num.medium   { color:#FF8C2A; }
   .quiz-share-big-num.high     { color:#69db7c; }
-  .quiz-share-score-label { font-size:13px; color:#a9c0d3; line-height:1.5; }
+  .quiz-share-score-label { font-size:13px; color:#9CC2E0; line-height:1.5; }
   .quiz-share-dots { display:flex; gap:5px; margin-top:14px; }
   .quiz-share-dot { flex:1; height:4px; border-radius:2px; background:rgba(255,255,255,0.1); }
-  .quiz-share-dot.filled          { background:#D6A21C; }
+  .quiz-share-dot.filled          { background:#FF8C2A; }
   .quiz-share-dot.filled.critical { background:#ff6b6b; }
   .quiz-share-dot.filled.low      { background:#ffa94d; }
   .quiz-share-dot.filled.high     { background:#69db7c; }
-  .quiz-share-footer { display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:11px; color:#a9c0d3; }
-  .quiz-share-footer-logo { font-weight:700; color:#D6A21C; letter-spacing:1px; }
-  .quiz-email-section { background:rgba(214,162,28,0.06); border:1px solid rgba(214,162,28,0.2); border-radius:12px; padding:18px; margin-bottom:20px; }
+  .quiz-share-footer { display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:11px; color:#9CC2E0; }
+  .quiz-share-footer-logo { font-weight:700; color:#FF8C2A; letter-spacing:1px; }
+  .quiz-email-section { background:rgba(255,140,42,0.06); border:1px solid rgba(255,140,42,0.2); border-radius:12px; padding:18px; margin-bottom:20px; }
   .quiz-email-title { font-size:14px; font-weight:700; color:#fff; margin-bottom:4px; }
-  .quiz-email-desc { font-size:13px; color:#a9c0d3; margin-bottom:14px; line-height:1.5; }
+  .quiz-email-desc { font-size:13px; color:#9CC2E0; margin-bottom:14px; line-height:1.5; }
   .quiz-email-row { display:flex; gap:10px; flex-wrap:wrap; }
-  .quiz-email-input { flex:1; min-width:200px; padding:10px 14px; background:rgba(0,0,0,0.3); border:1px solid #365468; border-radius:8px; color:#fff; font-size:14px; outline:none; transition:border-color 0.2s; }
-  .quiz-email-input:focus { border-color:#D6A21C; }
-  .quiz-email-input::placeholder { color:#4a6070; }
-  .quiz-btn-primary { padding:11px 22px; background:#D6A21C; color:#16222D; font-weight:700; font-size:14px; border:none; border-radius:8px; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:'Open Sans',sans-serif; }
-  .quiz-btn-primary:hover { background:#f0c040; transform:translateY(-1px); }
+  .quiz-email-input { flex:1; min-width:200px; padding:10px 14px; background:rgba(0,0,0,0.3); border:1px solid #1E4E80; border-radius:8px; color:#fff; font-size:14px; outline:none; transition:border-color 0.2s; }
+  .quiz-email-input:focus { border-color:#FF8C2A; }
+  .quiz-email-input::placeholder { color:#5B85AC; }
+  .quiz-btn-primary { padding:11px 22px; background:#FF8C2A; color:#173F6B; font-weight:700; font-size:14px; border:none; border-radius:8px; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:'Open Sans',sans-serif; }
+  .quiz-btn-primary:hover { background:#FFB258; transform:translateY(-1px); }
   .quiz-btn-primary:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
-  .quiz-btn-secondary { padding:11px 22px; background:transparent; color:#a9c0d3; font-weight:600; font-size:14px; border:1px solid #365468; border-radius:8px; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:'Open Sans',sans-serif; }
-  .quiz-btn-secondary:hover { border-color:#D6A21C; color:#D6A21C; }
+  .quiz-btn-secondary { padding:11px 22px; background:transparent; color:#9CC2E0; font-weight:600; font-size:14px; border:1px solid #1E4E80; border-radius:8px; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:'Open Sans',sans-serif; }
+  .quiz-btn-secondary:hover { border-color:#FF8C2A; color:#FF8C2A; }
   .quiz-btn-whatsapp { display:flex; align-items:center; gap:8px; padding:11px 22px; background:#25D366; color:#fff; font-weight:700; font-size:14px; border:none; border-radius:8px; cursor:pointer; transition:all 0.2s; font-family:'Open Sans',sans-serif; }
   .quiz-btn-whatsapp:hover { background:#20bd5a; transform:translateY(-1px); }
   .quiz-btn-row { display:flex; gap:10px; flex-wrap:wrap; }
-  .quiz-divider { height:1px; background:#365468; margin:20px 0; }
+  .quiz-divider { height:1px; background:#1E4E80; margin:20px 0; }
   @media (max-width:480px) {
     .quiz-modal-box { border-radius:16px; }
     .quiz-screen { padding:20px 18px 24px; }
@@ -1949,7 +1997,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <input class="quiz-email-input" type="email" id="quizEmailInput" placeholder="tu@colegio.edu.mx" />
           <button class="quiz-btn-primary" onclick="quizRequestPDF()" type="button" id="quizBtnPDF">Enviar PDF →</button>
         </div>
-        <p style="font-size:11px;color:#4a6070;margin-top:10px;">
+        <p style="font-size:11px;color:#5B85AC;margin-top:10px;">
           🔒 Sin spam. Solo el informe y una llamada de seguimiento si lo deseas.
         </p>
       </div>  -->
@@ -1957,21 +2005,21 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- RECURSO UNESCO  
       <div class="quiz-divider"></div> -->
 
-  <div style="background:rgba(255,255,255,0.03);border:1px solid #365468;border-radius:10px;padding:14px;">
-    <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#D6A21C;text-transform:uppercase;margin-bottom:8px;">
+  <div style="background:rgba(255,255,255,0.03);border:1px solid #1E4E80;border-radius:10px;padding:14px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#FF8C2A;text-transform:uppercase;margin-bottom:8px;">
       📚 Recurso UNESCO recomendado
     </div>
     <div style="font-size:14px;color:#fff;font-weight:600;margin-bottom:4px;line-height:1.4;">
       Más allá de los números: Poner fin a la violencia y el acoso en el ámbito escolar
     </div>
-    <div style="font-size:12px;color:#a9c0d3;margin-bottom:12px;line-height:1.5;">
+    <div style="font-size:12px;color:#9CC2E0;margin-bottom:12px;line-height:1.5;">
       Informe oficial UNESCO. Datos globales sobre prevalencia, impacto académico 
       y estrategias de prevención basadas en evidencia.
     </div>
     <a href="data/378398spa.pdf" 
        target="_blank"
-       style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:transparent;border:1px solid #D6A21C;border-radius:8px;color:#D6A21C;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;"
-       onmouseover="this.style.background='rgba(214,162,28,0.1)'"
+       style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:transparent;border:1px solid #FF8C2A;border-radius:8px;color:#FF8C2A;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;"
+       onmouseover="this.style.background='rgba(255,140,42,0.1)'"
        onmouseout="this.style.background='transparent'">
       ↓ Descargar PDF gratuito
     </a>
@@ -2076,7 +2124,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //    subtitle:'Tu escuela tiene puntos ciegos graves. Sin datos, no puedes prevenir lo que no ves. Esto representa un riesgo real e inmediato para tus estudiantes y tu institución.' };
   //  if (score <= 50) return { level:'Visibilidad Baja',    cls:'low',      color:'#ffa94d',
   //    subtitle:'Tienes algo de control, pero hay áreas significativas que se te escapan. Lo que no estás midiendo no lo puedes mejorar — y alguien está pagando ese costo.' };
-  //  if (score <= 75) return { level:'Visibilidad Media',   cls:'medium',   color:'#D6A21C',
+  //  if (score <= 75) return { level:'Visibilidad Media',   cls:'medium',   color:'#FF8C2A',
   //    subtitle:'Estás por sobre el promedio regional, pero todavía hay brechas importantes. Una intervención focalizada podría marcar una diferencia significativa.' };
   //  return               { level:'Visibilidad Alta',    cls:'high',     color:'#69db7c',
   //    subtitle:'Tu escuela tiene buenas prácticas. TECH4ZERO puede llevar ese nivel al siguiente estándar con datos en tiempo real para toda tu comunidad.' };
@@ -2092,7 +2140,7 @@ document.addEventListener('DOMContentLoaded', function() {
     subtitle:'Ves la superficie de tu escuela, pero la vida real de tus estudiantes ocurre en otro lugar. Estás más cerca de lo que crees — pero la distancia todavía importa.' 
   };
   if (score <= 75) return { 
-    level:'Cerca', cls:'medium', color:'#D6A21C',
+    level:'Cerca', cls:'medium', color:'#FF8C2A',
     subtitle:'Tienes intuición y sensibilidad, pero te faltan los ojos de ellos. Con las herramientas correctas, podrías cerrar esa distancia en semanas.' 
   };
   return { 
@@ -2176,7 +2224,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('quizFindingsList').innerHTML =
         '<div style="text-align:center; padding:20px; color:#69db7c; font-size:15px; line-height:1.6;">'
         + '✅ No se detectaron brechas significativas.<br>'
-        + '<span style="font-size:13px; color:#a9c0d3;">Tu escuela muestra una visibilidad excepcional.</span>'
+        + '<span style="font-size:13px; color:#9CC2E0;">Tu escuela muestra una visibilidad excepcional.</span>'
         + '</div>';
     } else {
       document.getElementById('quizFindingsList').innerHTML = wrong.map(function(f){
@@ -2438,18 +2486,18 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Forgot password link -->
         <div style="margin-top:12px; text-align:right;">
           <button id="btnForgotPassword" type="button" style="background:transparent; border:none;
-            color:#a9c0d3; font-size:13px; cursor:pointer; text-decoration:underline;
+            color:#9CC2E0; font-size:13px; cursor:pointer; text-decoration:underline;
             font-family:'Open Sans',sans-serif; padding:0;"
-            onmouseover="this.style.color='#D6A21C'"
-            onmouseout="this.style.color='#a9c0d3'">
+            onmouseover="this.style.color='#FF8C2A'"
+            onmouseout="this.style.color='#9CC2E0'">
             ¿Olvidaste tu contraseña?
           </button>
         </div>
 
         <!-- Forgot password sub-form (hidden by default) -->
         <div id="forgotPasswordPanel" style="display:none; margin-top:16px;
-             background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px;">
-          <div style="font-size:13px; color:#a9c0d3; margin-bottom:10px; line-height:1.5;">
+             background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:14px;">
+          <div style="font-size:13px; color:#9CC2E0; margin-bottom:10px; line-height:1.5;">
             Ingresa el nombre de usuario asignado a tu estabelcimiento y te enviaremos instrucciones a tu correo registrado.
           </div>
           <div class="fieldBlock">
@@ -2486,9 +2534,9 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <div style="padding:8px 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:16px; margin-bottom:16px;">
         <p style="margin:0 0 12px 0; font-size:15px; line-height:1.6;">
-          <strong style="color:#D6A21C;">Esta encuesta es 100% anónima y confidencial.</strong>
+          <strong style="color:#FF8C2A;">Esta encuesta es 100% anónima y confidencial.</strong>
         </p>
         
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
@@ -2502,13 +2550,13 @@ document.addEventListener('DOMContentLoaded', function() {
         <p style="margin:0 0 10px 0; font-size:14px; line-height:1.5;">
           ✅ Tu sinceridad ayuda a crear una escuela más segura para todos.  
         </p>
-        <p style="margin:12px 0 0 0; font-size:13px; color:#a9c0d3; line-height:1.4;">
+        <p style="margin:12px 0 0 0; font-size:13px; color:#9CC2E0; line-height:1.4;">
           <em><strong>Gracias por participar</strong></em>
         </p>
         
       </div>
 
-      <div style="background:#0f1d27; border:1px solid #365468; border-radius:8px; padding:14px; margin-bottom:16px;">
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:14px; margin-bottom:16px;">
         <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px;">
           <input type="checkbox" id="privacyAccept" style="width:18px; height:18px; cursor:pointer;">
           <span>He leído y entiendo que esta encuesta es anónima y confidencial</span>
@@ -2580,7 +2628,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <div style="padding:8px 0;">
-      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
+      <p style="margin:0 0 16px 0; font-size:14px; color:#9CC2E0;">
         Selecciona el análisis que deseas visualizar:
       </p>
 
@@ -2589,11 +2637,11 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <div id="analysesEmpty" style="display:none; padding:20px; text-align:center;">
-        <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
+        <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:20px;">
           <p style="margin:0; font-size:15px; color:#ffdca8;">
             No hay análisis aprobados disponibles.
           </p>
-          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">
+          <p style="margin:10px 0 0 0; font-size:13px; color:#9CC2E0;">
             Solicite un análisis o espere la aprobación.
           </p>
         </div>
@@ -2615,25 +2663,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style>
 .analysisCard {
-  background: #1E2F3F;
-  border: 2px solid #365468;
+  background: #173F6B;
+  border: 2px solid #1E4E80;
   border-radius: 8px;
   padding: 14px;
   margin-bottom: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.analysisCard:hover { border-color: #D6A21C; background: #243A4B; }
-.analysisCard.selected { border-color: #D6A21C; background: #243A4B; box-shadow: 0 0 0 2px rgba(214, 162, 28, 0.2); }
+.analysisCard:hover { border-color: #FF8C2A; background: #1E4E80; }
+.analysisCard.selected { border-color: #FF8C2A; background: #1E4E80; box-shadow: 0 0 0 2px rgba(255, 140, 42, 0.2); }
 .analysisCard label { display: flex; align-items: start; gap: 12px; cursor: pointer; width: 100%; }
 .analysisCard input[type="radio"] { margin-top: 4px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
 .analysisInfo { flex: 1; }
-.analysisDate { font-size: 16px; font-weight: 700; color: #D6A21C; margin-bottom: 6px; }
-.analysisStats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; }
+.analysisDate { font-size: 16px; font-weight: 700; color: #FF8C2A; margin-bottom: 6px; }
+.analysisStats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #9CC2E0; }
 .analysisStat { display: flex; align-items: center; gap: 4px; }
-.statLabel { color: #7a8e9e; }
+.statLabel { color: #7DA6CC; }
 .statValue { color: #ffffff; font-weight: 600; }
-.statusBadge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: #b9ffcf; color: #0f1d27; }
+.statusBadge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: #b9ffcf; color: #173F6B; }
 </style>  
 
 <!-- MODAL: APPROVE SURVEYS -->
@@ -2645,7 +2693,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <div style="padding:8px 0;">
-      <p style="margin:0 0 16px 0; font-size:14px; color:#a9c0d3;">
+      <p style="margin:0 0 16px 0; font-size:14px; color:#9CC2E0;">
         Review and approve pending surveys:
       </p>
 
@@ -2654,9 +2702,9 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <div id="pendingSurveysEmpty" style="display:none; padding:20px; text-align:center;">
-        <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:20px;">
+        <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:20px;">
           <p style="margin:0; font-size:15px; color:#b9ffcf;">✅ All surveys approved!</p>
-          <p style="margin:10px 0 0 0; font-size:13px; color:#a9c0d3;">No pending surveys at this time.</p>
+          <p style="margin:10px 0 0 0; font-size:13px; color:#9CC2E0;">No pending surveys at this time.</p>
         </div>
       </div>
 
@@ -2685,9 +2733,9 @@ document.addEventListener('DOMContentLoaded', function() {
   line-height: 1.6;
   margin-bottom: 14px !important;
   padding: 10px 14px;
-  background: #16222D;
+  background: #173F6B;
   border-radius: 10px;
-  border: 1px solid #365468;
+  border: 1px solid #1E4E80;
   display: flex !important;
   align-items: center;
   gap: 10px;
@@ -2695,8 +2743,8 @@ document.addEventListener('DOMContentLoaded', function() {
   transition: background 0.15s;
 }
 #surveyBox.primaria-mode #qOptions label:hover {
-  background: #243A4B;
-  border-color: #D6A21C;
+  background: #1E4E80;
+  border-color: #FF8C2A;
 }
 #surveyBox.primaria-mode #qOptions input[type="radio"] {
   width: 22px;
@@ -2718,7 +2766,7 @@ document.addEventListener('DOMContentLoaded', function() {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(6,14,22,0.88);
+  background: rgba(7,31,61,0.88);
   z-index: 18000;
   align-items: center;
   justify-content: center;
@@ -2729,13 +2777,13 @@ document.addEventListener('DOMContentLoaded', function() {
 .survey-modal-box {
   width: min(680px, 95vw);
   max-height: 90vh;
-  background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
-  border: 1px solid rgba(214,162,28,0.5);
+  background: linear-gradient(160deg, #173F6B 0%, #173F6B 100%);
+  border: 1px solid rgba(255,140,42,0.5);
   border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 0 1px rgba(214,162,28,0.15), 0 32px 80px rgba(0,0,0,0.7);
+  box-shadow: 0 0 0 1px rgba(255,140,42,0.15), 0 32px 80px rgba(0,0,0,0.7);
   animation: surveyModalIn 0.35s cubic-bezier(0.4,0,0.2,1);
   position: relative;
 }
@@ -2752,7 +2800,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .survey-modal-progress-fill {
   height: 4px;
-  background: linear-gradient(90deg, #D6A21C, #f0c040);
+  background: linear-gradient(90deg, #FF8C2A, #FFB258);
   border-radius: 0 4px 4px 0;
   width: 0%;
   transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
@@ -2763,8 +2811,8 @@ document.addEventListener('DOMContentLoaded', function() {
   top: 12px;
   right: 14px;
   background: transparent;
-  border: 1px solid #365468;
-  color: #7a8e9e;
+  border: 1px solid #1E4E80;
+  color: #7DA6CC;
   border-radius: 8px;
   width: 32px; height: 32px;
   font-size: 15px;
@@ -2788,7 +2836,7 @@ document.addEventListener('DOMContentLoaded', function() {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #D6A21C;
+  color: #FF8C2A;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
@@ -2810,7 +2858,7 @@ document.addEventListener('DOMContentLoaded', function() {
   gap: 12px;
   padding: 12px 16px;
   background: rgba(255,255,255,0.04);
-  border: 1.5px solid #365468;
+  border: 1.5px solid #1E4E80;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.18s;
@@ -2819,23 +2867,23 @@ document.addEventListener('DOMContentLoaded', function() {
   color: #d9e6f2;
   font-weight: 400;
 }
-.survey-modal-option:hover { border-color: #D6A21C; background: rgba(214,162,28,0.08); color: #fff; }
-.survey-modal-option.selected { border-color: #D6A21C; background: rgba(214,162,28,0.12); font-weight: 600; color: #fff; }
+.survey-modal-option:hover { border-color: #FF8C2A; background: rgba(255,140,42,0.08); color: #fff; }
+.survey-modal-option.selected { border-color: #FF8C2A; background: rgba(255,140,42,0.12); font-weight: 600; color: #fff; }
 .survey-modal-option-icon {
   width: 32px; height: 32px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700;
   background: rgba(255,255,255,0.05);
-  border: 1px solid #365468;
-  color: #a9c0d3;
+  border: 1px solid #1E4E80;
+  color: #9CC2E0;
   flex-shrink: 0;
   transition: all 0.18s;
 }
 .survey-modal-option.selected .survey-modal-option-icon {
-  background: #D6A21C;
-  border-color: #D6A21C;
-  color: #16222D;
+  background: #FF8C2A;
+  border-color: #FF8C2A;
+  color: #173F6B;
 }
 
 /* Larger emoji text in primaria mode */
@@ -2848,7 +2896,7 @@ document.addEventListener('DOMContentLoaded', function() {
   width: 100%;
   padding: 10px 14px;
   background: rgba(255,255,255,0.05);
-  border: 1.5px solid #365468;
+  border: 1.5px solid #1E4E80;
   border-radius: 10px;
   color: #d9e6f2;
   font-size: 15px;
@@ -2856,22 +2904,22 @@ document.addEventListener('DOMContentLoaded', function() {
   transition: border-color 0.2s;
   margin-bottom: 8px;
 }
-.survey-modal-select:focus { border-color: #D6A21C; }
-.survey-modal-select option { background: #16222D; color: #d9e6f2; }
+.survey-modal-select:focus { border-color: #FF8C2A; }
+.survey-modal-select option { background: #173F6B; color: #d9e6f2; }
 
 /* Text input in modal */
 .survey-modal-text-input {
   width: 100%;
   padding: 10px 14px;
   background: rgba(255,255,255,0.05);
-  border: 1.5px solid #365468;
+  border: 1.5px solid #1E4E80;
   border-radius: 10px;
   color: #d9e6f2;
   font-size: 15px;
   outline: none;
   transition: border-color 0.2s;
 }
-.survey-modal-text-input:focus { border-color: #D6A21C; }
+.survey-modal-text-input:focus { border-color: #FF8C2A; }
 
 /* Nav footer */
 .survey-modal-nav {
@@ -2879,7 +2927,7 @@ document.addEventListener('DOMContentLoaded', function() {
   justify-content: space-between;
   align-items: center;
   padding: 14px 28px 18px;
-  border-top: 1px solid rgba(214,162,28,0.15);
+  border-top: 1px solid rgba(255,140,42,0.15);
   background: transparent;
   flex-shrink: 0;
 }
@@ -2908,13 +2956,13 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .survey-modal-pin-panel.open { display: flex; }
 .survey-modal-pin-panel .pin-panel-title { color: #fff; }
-.survey-modal-pin-panel .pin-panel-sub   { color: #a9c0d3; }
+.survey-modal-pin-panel .pin-panel-sub   { color: #9CC2E0; }
 .survey-modal-pin-panel .pin-input {
-  background: #1E2F3F;
-  border: 2px solid #365468;
+  background: #173F6B;
+  border: 2px solid #1E4E80;
   color: #fff;
 }
-.survey-modal-pin-panel .pin-input:focus { border-color: #D6A21C; }
+.survey-modal-pin-panel .pin-input:focus { border-color: #FF8C2A; }
 .survey-modal-pin-panel .pin-msg { color: #ff6b6b; }
 
 /* ── SURVEY EXIT PIN ── */
@@ -2923,8 +2971,8 @@ document.addEventListener('DOMContentLoaded', function() {
   top: 10px;
   right: 10px;
   background: transparent;
-  border: 1px solid #365468;
-  color: #7a8e9e;
+  border: 1px solid #1E4E80;
+  color: #7DA6CC;
   border-radius: 8px;
   width: 32px;
   height: 32px;
@@ -2942,7 +2990,7 @@ document.addEventListener('DOMContentLoaded', function() {
   display: none;
   position: absolute;
   inset: 0;
-  background: rgba(6,14,22,0.97);
+  background: rgba(7,31,61,0.97);
   border-radius: 8px;
   z-index: 20;
   flex-direction: column;
@@ -2960,7 +3008,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .pin-panel-sub {
   font-size: 13px;
-  color: #a9c0d3;
+  color: #9CC2E0;
   margin-bottom: 20px;
 }
 .pin-inputs {
@@ -2974,14 +3022,14 @@ document.addEventListener('DOMContentLoaded', function() {
   text-align: center;
   font-size: 22px;
   font-weight: 700;
-  background: #1E2F3F;
-  border: 2px solid #365468;
+  background: #173F6B;
+  border: 2px solid #1E4E80;
   border-radius: 8px;
   color: #fff;
   outline: none;
   transition: border-color 0.2s;
 }
-.pin-input:focus { border-color: #D6A21C; }
+.pin-input:focus { border-color: #FF8C2A; }
 .pin-input.error { border-color: #ff6b6b; }
 .pin-msg {
   font-size: 13px;
@@ -2997,7 +3045,7 @@ document.addEventListener('DOMContentLoaded', function() {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(6,14,22,0.94);
+  background: rgba(7,31,61,0.94);
   z-index: 19998;
   align-items: center;
   justify-content: center;
@@ -3007,8 +3055,8 @@ document.addEventListener('DOMContentLoaded', function() {
 .pause-overlay.open { display: flex; }
 .pause-box {
   width: min(560px, 95vw);
-  background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
-  border: 1px solid #365468;
+  background: linear-gradient(160deg, #173F6B 0%, #173F6B 100%);
+  border: 1px solid #1E4E80;
   border-radius: 20px;
   padding: 40px 36px 36px;
   text-align: center;
@@ -3023,8 +3071,8 @@ document.addEventListener('DOMContentLoaded', function() {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(214,162,28,0.12);
-  border: 1px solid rgba(214,162,28,0.35);
+  background: rgba(255,140,42,0.12);
+  border: 1px solid rgba(255,140,42,0.35);
   border-radius: 999px;
   padding: 8px 20px;
   margin-bottom: 22px;
@@ -3033,7 +3081,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .pause-badge-text {
   font-size: 13px;
   font-weight: 800;
-  color: #D6A21C;
+  color: #FF8C2A;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
@@ -3047,7 +3095,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .pause-body {
   font-size: 15px;
-  color: #a9c0d3;
+  color: #9CC2E0;
   line-height: 1.7;
   margin-bottom: 24px;
   max-width: 420px;
@@ -3060,7 +3108,7 @@ document.addEventListener('DOMContentLoaded', function() {
   justify-content: center;
   gap: 8px;
   background: rgba(255,255,255,0.04);
-  border: 1px solid #365468;
+  border: 1px solid #1E4E80;
   border-radius: 10px;
   padding: 12px 18px;
   margin-bottom: 28px;
@@ -3072,8 +3120,8 @@ document.addEventListener('DOMContentLoaded', function() {
 .pause-continue-btn {
   display: inline-block;
   padding: 13px 36px;
-  background: #D6A21C;
-  color: #0f1d27;
+  background: #FF8C2A;
+  color: #173F6B;
   font-weight: 700;
   font-size: 15px;
   border: none;
@@ -3081,12 +3129,12 @@ document.addEventListener('DOMContentLoaded', function() {
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
   transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(214,162,28,0.3);
+  box-shadow: 0 4px 20px rgba(255,140,42,0.3);
 }
 .pause-continue-btn:hover {
-  background: #f0c040;
+  background: #FFB258;
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(214,162,28,0.45);
+  box-shadow: 0 8px 28px rgba(255,140,42,0.45);
 }
 
 /* ── SURVEY FINISH MODAL ── */
@@ -3094,7 +3142,7 @@ document.addEventListener('DOMContentLoaded', function() {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(6,14,22,0.96);
+  background: rgba(7,31,61,0.96);
   z-index: 20000;
   align-items: center;
   justify-content: center;
@@ -3105,12 +3153,12 @@ document.addEventListener('DOMContentLoaded', function() {
 .finish-overlay.open { display: flex; }
 .finish-box {
   width: min(580px, 95vw);
-  background: linear-gradient(160deg, #16222D 0%, #0f1d27 100%);
-  border: 1px solid rgba(214,162,28,0.4);
+  background: linear-gradient(160deg, #173F6B 0%, #173F6B 100%);
+  border: 1px solid rgba(255,140,42,0.4);
   border-radius: 24px;
   padding: 48px 36px 40px;
   text-align: center;
-  box-shadow: 0 0 0 1px rgba(214,162,28,0.15), 0 40px 100px rgba(0,0,0,0.7);
+  box-shadow: 0 0 0 1px rgba(255,140,42,0.15), 0 40px 100px rgba(0,0,0,0.7);
   position: relative;
   z-index: 1;
   animation: finishPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
@@ -3133,14 +3181,14 @@ document.addEventListener('DOMContentLoaded', function() {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(90deg, rgba(214,162,28,0.2), rgba(214,162,28,0.08));
-  border: 1px solid rgba(214,162,28,0.5);
+  background: linear-gradient(90deg, rgba(255,140,42,0.2), rgba(255,140,42,0.08));
+  border: 1px solid rgba(255,140,42,0.5);
   border-radius: 999px;
   padding: 7px 20px;
   margin-bottom: 24px;
   font-size: 12px;
   font-weight: 800;
-  color: #D6A21C;
+  color: #FF8C2A;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   animation: finishFadeUp 0.4s ease 0.5s both;
@@ -3154,10 +3202,10 @@ document.addEventListener('DOMContentLoaded', function() {
   margin-bottom: 16px;
   animation: finishFadeUp 0.4s ease 0.6s both;
 }
-.finish-headline em { color: #D6A21C; font-style: normal; }
+.finish-headline em { color: #FF8C2A; font-style: normal; }
 .finish-body {
   font-size: 15px;
-  color: #a9c0d3;
+  color: #9CC2E0;
   line-height: 1.75;
   margin-bottom: 32px;
   max-width: 420px;
@@ -3177,21 +3225,21 @@ document.addEventListener('DOMContentLoaded', function() {
   font-family: 'Playfair Display', serif;
   font-size: 36px;
   font-weight: 700;
-  color: #D6A21C;
+  color: #FF8C2A;
   line-height: 1;
   display: block;
 }
 .finish-stat-label {
   font-size: 12px;
-  color: #7a8e9e;
+  color: #7DA6CC;
   letter-spacing: 0.5px;
   margin-top: 4px;
   display: block;
 }
 .finish-close-btn {
   padding: 14px 44px;
-  background: #D6A21C;
-  color: #0f1d27;
+  background: #FF8C2A;
+  color: #173F6B;
   font-weight: 800;
   font-size: 15px;
   border: none;
@@ -3199,14 +3247,14 @@ document.addEventListener('DOMContentLoaded', function() {
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
   transition: all 0.2s;
-  box-shadow: 0 6px 24px rgba(214,162,28,0.4);
+  box-shadow: 0 6px 24px rgba(255,140,42,0.4);
   animation: finishFadeUp 0.4s ease 0.85s both;
   letter-spacing: 0.3px;
 }
 .finish-close-btn:hover {
-  background: #f0c040;
+  background: #FFB258;
   transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(214,162,28,0.55);
+  box-shadow: 0 10px 32px rgba(255,140,42,0.55);
 }
 @keyframes finishFadeUp {
   from { opacity:0; transform:translateY(16px); }
@@ -3220,11 +3268,11 @@ document.addEventListener('DOMContentLoaded', function() {
   z-index: 19999;
 }
 
-.pendingSurveyCard { background: #1E2F3F; border: 2px solid #365468; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
-.pendingSurveyCard:hover { border-color: #D6A21C; background: #243A4B; }
+.pendingSurveyCard { background: #173F6B; border: 2px solid #1E4E80; border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; }
+.pendingSurveyCard:hover { border-color: #FF8C2A; background: #1E4E80; }
 .surveyHeader { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; gap: 10px; }
-.surveySchoolName { font-size: 18px; font-weight: 700; color: #D6A21C; flex: 1; }
-.surveyMeta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #a9c0d3; margin-bottom: 14px; }
+.surveySchoolName { font-size: 18px; font-weight: 700; color: #FF8C2A; flex: 1; }
+.surveyMeta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #9CC2E0; margin-bottom: 14px; }
 .surveyMetaItem { display: flex; align-items: center; gap: 6px; }
 .surveyActions { display: flex; gap: 8px; flex-wrap: wrap; }
 .btnApprove { background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
@@ -3233,8 +3281,8 @@ document.addEventListener('DOMContentLoaded', function() {
 .btnReject { background: transparent; color: #ff6b6b; border: 1px solid #ff6b6b; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
 .btnReject:hover { background: #ff6b6b; color: white; }
 .btnReject:disabled { opacity: 0.5; cursor: not-allowed; }
-.btnPreview { background: transparent; color: #D6A21C; border: 1px solid #D6A21C; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btnPreview:hover { background: #D6A21C; color: #16222D; }
+.btnPreview { background: transparent; color: #FF8C2A; border: 1px solid #FF8C2A; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btnPreview:hover { background: #FF8C2A; color: #173F6B; }
 
 
 
@@ -3863,7 +3911,7 @@ window.cerrarAnalisisPanel = function() {
     let particles = [];
     let animId = null;
 
-    const COLORS = ['#D6A21C','#f0c040','#ffffff','#a9c0d3','#69db7c','#ff6b6b','#74c0fc'];
+    const COLORS = ['#FF8C2A','#FFB258','#ffffff','#9CC2E0','#69db7c','#ff6b6b','#74c0fc'];
 
     function resize() {
       canvas.width  = window.innerWidth;
@@ -5008,9 +5056,9 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
       card.innerHTML = `
         <div class="surveyHeader"><div class="surveySchoolName">${survey.school_name}</div></div>
         <div class="surveyMeta">
-          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Students:</span><span style="color:#fff; font-weight:600;">${survey.total_students}</span></div>
-          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Requested:</span><span style="color:#fff;">${analysisDate}</span></div>
-          <div class="surveyMetaItem"><span style="color:#7a8e9e;">Range:</span><span style="color:#fff;">${dateRange}</span></div>
+          <div class="surveyMetaItem"><span style="color:#7DA6CC;">Students:</span><span style="color:#fff; font-weight:600;">${survey.total_students}</span></div>
+          <div class="surveyMetaItem"><span style="color:#7DA6CC;">Requested:</span><span style="color:#fff;">${analysisDate}</span></div>
+          <div class="surveyMetaItem"><span style="color:#7DA6CC;">Range:</span><span style="color:#fff;">${dateRange}</span></div>
         </div>
         <div class="surveyActions">
           <button class="btnApprove" data-school="${survey.school_id}" data-analysis="${survey.analysis_date}">Approve</button>
@@ -5175,19 +5223,19 @@ document.getElementById('btnSurveyModalPrev')?.addEventListener('click', () => {
             </div>
           `).join('')}
         </div>
-        <div style="margin-top:14px; border:1px solid #D6A21C; border-radius:8px; overflow:hidden;">
-          <div style="background:#D6A21C; color:#16222D; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px;">Statistically valid</div>
-          <div style="background:#1E2F3F; display:flex; align-items:stretch;">
+        <div style="margin-top:14px; border:1px solid #FF8C2A; border-radius:8px; overflow:hidden;">
+          <div style="background:#FF8C2A; color:#173F6B; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px;">Statistically valid</div>
+          <div style="background:#173F6B; display:flex; align-items:stretch;">
             <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
-              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Total students</div>
+              <div style="font-size:11px; color:#7DA6CC; margin-bottom:4px;">Total students</div>
               <div style="font-size:16px; font-weight:500; color:#fff;" id="enrollTotal">0</div>
             </div>
             <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
-              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Min. responses needed</div>
+              <div style="font-size:11px; color:#7DA6CC; margin-bottom:4px;">Min. responses needed</div>
               <div style="font-size:16px; font-weight:500; color:#fff;" id="enrollMin">0</div>
             </div>
             <div style="flex:1; padding:10px 14px;">
-              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Confidence</div>
+              <div style="font-size:11px; color:#7DA6CC; margin-bottom:4px;">Confidence</div>
               <div style="font-size:16px; font-weight:500; color:#fff;">95% ± 5%</div>
             </div>
           </div>
@@ -5466,14 +5514,14 @@ const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastN
         if (i < activeStep) {
           el.style.background = '#2a5a2a'; el.style.color = '#b9ffcf'; el.textContent = '✓';
         } else if (i === activeStep) {
-          el.style.background = '#D6A21C'; el.style.color = '#16222D'; el.textContent = String(i);
+          el.style.background = '#FF8C2A'; el.style.color = '#173F6B'; el.textContent = String(i);
         } else {
-          el.style.background = '#2a3f52'; el.style.color = '#7a9aaa'; el.textContent = String(i);
+          el.style.background = '#2a3f52'; el.style.color = '#7DA6CC'; el.textContent = String(i);
         }
       });
       document.querySelectorAll('.editStepLabel').forEach(el => {
         const i = parseInt(el.dataset.step);
-        el.style.color = i < activeStep ? '#b9ffcf' : i === activeStep ? '#D6A21C' : '#7a9aaa';
+        el.style.color = i < activeStep ? '#b9ffcf' : i === activeStep ? '#FF8C2A' : '#7DA6CC';
       });
     }
 
@@ -5487,23 +5535,23 @@ const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastN
               <label style="font-size:11px; font-weight:600; display:block; margin-bottom:4px; white-space:nowrap; color:#fff;">${f.label} *</label>
               <input id="${f.id}" class="textInput" type="number" min="0" value="${values?.[f.key] ?? 0}"
                 data-key="${f.key}" style="width:80px;" />
-              <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:#7a9aaa; white-space:nowrap;">enter students</div>
+              <div class="enroll-hint" style="font-size:11px; margin-top:3px; color:#7DA6CC; white-space:nowrap;">enter students</div>
             </div>
           `).join('')}
         </div>
-        <div style="margin-top:14px; border:1px solid #D6A21C; border-radius:8px; overflow:hidden;">
-          <div style="background:#D6A21C; color:#16222D; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px;">Statistically valid</div>
-          <div style="background:#1E2F3F; display:flex; align-items:stretch;">
+        <div style="margin-top:14px; border:1px solid #FF8C2A; border-radius:8px; overflow:hidden;">
+          <div style="background:#FF8C2A; color:#173F6B; font-size:11px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px;">Statistically valid</div>
+          <div style="background:#173F6B; display:flex; align-items:stretch;">
             <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
-              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Total students</div>
+              <div style="font-size:11px; color:#7DA6CC; margin-bottom:4px;">Total students</div>
               <div style="font-size:16px; font-weight:500; color:#fff;" id="editEnrollTotal">0</div>
             </div>
             <div style="flex:1; padding:10px 14px; border-right:0.5px solid #2a3f52;">
-              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Min. responses needed</div>
+              <div style="font-size:11px; color:#7DA6CC; margin-bottom:4px;">Min. responses needed</div>
               <div style="font-size:16px; font-weight:500; color:#fff;" id="editEnrollMin">0</div>
             </div>
             <div style="flex:1; padding:10px 14px;">
-              <div style="font-size:11px; color:#7a9aaa; margin-bottom:4px;">Confidence</div>
+              <div style="font-size:11px; color:#7DA6CC; margin-bottom:4px;">Confidence</div>
               <div style="font-size:16px; font-weight:500; color:#fff;">95% ± 5%</div>
             </div>
           </div>
@@ -5523,7 +5571,7 @@ const finalData = { ...schoolFormData, encFirstName, encPatLastName, encMatLastN
         const hint = inp.parentElement.querySelector('.enroll-hint');
         if (hint) {
           hint.textContent = val > 0 ? `min. ${wilsonMin(val)} required` : 'enter students';
-          hint.style.color = val > 0 ? '#FAC775' : '#7a9aaa';
+          hint.style.color = val > 0 ? '#FAC775' : '#7DA6CC';
         }
       });
       const totalEl = document.getElementById('editEnrollTotal');
@@ -5670,24 +5718,24 @@ function showAnalysisPicker(schoolId, schoolName, analyses) {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';
     const box = document.createElement('div');
-    box.style.cssText = 'background:#16222D;border:1px solid #365468;border-radius:12px;padding:20px;width:min(460px,95vw);max-height:80vh;overflow-y:auto;';
+    box.style.cssText = 'background:#173F6B;border:1px solid #1E4E80;border-radius:12px;padding:20px;width:min(460px,95vw);max-height:80vh;overflow-y:auto;';
     box.innerHTML = `
-      <div style="font-family:'Playfair Display',serif;color:#D6A21C;font-size:18px;margin-bottom:4px;">Select analysis</div>
-      <div style="font-size:13px;color:#a9c0d3;margin-bottom:16px;">${schoolName}</div>
+      <div style="font-family:'Playfair Display',serif;color:#FF8C2A;font-size:18px;margin-bottom:4px;">Select analysis</div>
+      <div style="font-size:13px;color:#9CC2E0;margin-bottom:16px;">${schoolName}</div>
       <div id="analysisPicker_list">
         ${analyses.map((a, i) => `
-          <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #365468;border-radius:8px;margin-bottom:8px;cursor:pointer;">
-            <input type="radio" name="ap_radio" value="${i}" ${i===0?'checked':''} style="accent-color:#D6A21C;">
+          <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #1E4E80;border-radius:8px;margin-bottom:8px;cursor:pointer;">
+            <input type="radio" name="ap_radio" value="${i}" ${i===0?'checked':''} style="accent-color:#FF8C2A;">
             <div style="flex:1;">
               <div style="font-size:13px;font-weight:600;color:#fff;">${new Date(a.analysis_date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
-              <div style="font-size:11px;color:#a9c0d3;">${a.total_students} students</div>
+              <div style="font-size:11px;color:#9CC2E0;">${a.total_students} students</div>
             </div>
-            <span style="font-size:10px;padding:2px 8px;background:#b9ffcf;color:#0f1d27;border-radius:4px;font-weight:700;">Approved</span>
+            <span style="font-size:10px;padding:2px 8px;background:#b9ffcf;color:#173F6B;border-radius:4px;font-weight:700;">Approved</span>
           </label>`).join('')}
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;">
-        <button id="ap_cancel" style="padding:8px 16px;background:transparent;border:1px solid #365468;color:#a9c0d3;border-radius:6px;cursor:pointer;font-size:13px;">Cancel</button>
-        <button id="ap_open" style="padding:8px 16px;background:#D6A21C;border:none;color:#0f1d27;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;">Open dashboard →</button>
+        <button id="ap_cancel" style="padding:8px 16px;background:transparent;border:1px solid #1E4E80;color:#9CC2E0;border-radius:6px;cursor:pointer;font-size:13px;">Cancel</button>
+        <button id="ap_open" style="padding:8px 16px;background:#FF8C2A;border:none;color:#173F6B;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;">Open dashboard →</button>
       </div>`;
     overlay.appendChild(box);
     document.body.appendChild(overlay);
@@ -5883,7 +5931,7 @@ renderSchoolsTable(filtered);
     
    function renderSchoolsTable(schools) {
   if (!schools.length) {
-    schoolsListBody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#7a9aaa; padding:20px;">No schools found</td></tr>';
+    schoolsListBody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#7DA6CC; padding:20px;">No schools found</td></tr>';
     return;
   }
   schoolsListBody.innerHTML = schools.map(s => {
@@ -5898,29 +5946,29 @@ renderSchoolsTable(filtered);
     return `<tr style="opacity:${isActive ? '1' : '0.55'};">
       <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52;">
         ${s.name}<br/>
-        <span style="font-size:11px; color:#7a9aaa;">${encName}</span>
+        <span style="font-size:11px; color:#7DA6CC;">${encName}</span>
       </td>
       <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center;">
         ${badge}
       </td>
-      <td style="padding:10px 12px; font-size:13px; color:#a9c0d3; border-bottom:1px solid #2a3f52; text-align:center;">
-        <span style="background:#1E2F3F; border:1px solid #365468; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:600;">${s.country}</span>
+      <td style="padding:10px 12px; font-size:13px; color:#9CC2E0; border-bottom:1px solid #2a3f52; text-align:center;">
+        <span style="background:#173F6B; border:1px solid #1E4E80; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:600;">${s.country}</span>
       </td>
       <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52; text-align:center;">${total.toLocaleString()}</td>
       <td style="padding:10px 12px; font-size:13px; border-bottom:1px solid #2a3f52; text-align:center;">
-        <span style="color:${minResp > 0 ? '#FAC775' : '#7a9aaa'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
+        <span style="color:${minResp > 0 ? '#FAC775' : '#7DA6CC'}; font-weight:600;">${minResp > 0 ? minResp.toLocaleString() : '—'}</span>
       </td>
       
 <td style="padding:10px 12px; font-size:12px; border-bottom:1px solid #2a3f52; text-align:center; white-space:nowrap;">
-        ${!s.survey_status ? '<span style="color:#4a6070;">—</span>' :
+        ${!s.survey_status ? '<span style="color:#5B85AC;">—</span>' :
           s.survey_status === 'closed' ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(185,255,207,0.1);border:1px solid rgba(185,255,207,0.3);color:#b9ffcf;">✅ Closed</span>' :
-          s.survey_status === 'under_t4z_review' ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(214,162,28,0.1);border:1px solid rgba(214,162,28,0.3);color:#D6A21C;">⏳ Under T4Z Review</span>' :
+          s.survey_status === 'under_t4z_review' ? '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(255,140,42,0.1);border:1px solid rgba(255,140,42,0.3);color:#FF8C2A;">⏳ Under T4Z Review</span>' :
           '<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(116,192,252,0.1);border:1px solid rgba(116,192,252,0.3);color:#74c0fc;">🔵 In Progress</span>'
         }
       </td>
       <td style="padding:10px 12px; font-size:13px; color:#fff; border-bottom:1px solid #2a3f52; text-align:center;">
         
-      ${s.submitted_count != null ? `<span style="color:#fff;font-weight:600;">${s.submitted_count}</span>` : '<span style="color:#4a6070;">—</span>'}
+      ${s.submitted_count != null ? `<span style="color:#fff;font-weight:600;">${s.submitted_count}</span>` : '<span style="color:#5B85AC;">—</span>'}
        
       </td>
 
@@ -5928,15 +5976,15 @@ renderSchoolsTable(filtered);
         <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
           <div onclick="window.toggleSurveyOpen('${s.id}', ${s.survey_open})" 
                style="position:relative; width:36px; height:20px; cursor:pointer; flex-shrink:0;">
-            <div style="position:absolute; inset:0; border-radius:999px; background:${s.survey_open ? '#27AE60' : '#365468'}; transition:background 0.2s;"></div>
+            <div style="position:absolute; inset:0; border-radius:999px; background:${s.survey_open ? '#27AE60' : '#1E4E80'}; transition:background 0.2s;"></div>
             <div style="position:absolute; width:14px; height:14px; border-radius:50%; background:#fff; top:3px; left:${s.survey_open ? '19px' : '3px'}; transition:left 0.2s;"></div>
           </div>
           <span style="font-size:11px; font-weight:600; color:${s.survey_open ? '#b9ffcf' : '#ff6b6b'};">${s.survey_open ? 'Open' : 'Locked'}</span>
         </div>
       </td>
       <td style="padding:10px 12px; border-bottom:1px solid #2a3f52; text-align:center; white-space:nowrap;">
-      <button onclick=\"window.openEditSchool('${s.id}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;\">✎ Edit</button>
-      <button onclick=\"window.openSchoolDashboard('${s.id}', '${s.name}')\" style=\"background:transparent; border:1px solid #D6A21C; color:#D6A21C; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-left:6px; appearance:none; -webkit-appearance:none;\">📊</button>
+      <button onclick=\"window.openEditSchool('${s.id}')\" style=\"background:transparent; border:1px solid #FF8C2A; color:#FF8C2A; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer;\">✎ Edit</button>
+      <button onclick=\"window.openSchoolDashboard('${s.id}', '${s.name}')\" style=\"background:transparent; border:1px solid #FF8C2A; color:#FF8C2A; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-left:6px; appearance:none; -webkit-appearance:none;\">📊</button>
       </td>
     </tr>`;
   }).join('');
@@ -6013,8 +6061,8 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
       <button id="addSchoolClose1" class="modalClose" type="button">X</button>
     </div>
     <div style="padding:8px 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:12px;">School Information</div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addSchoolName">School Name *</label><br />
           <input id="addSchoolName" class="textInput" type="text" placeholder="e.g., Escuela Primaria Benito Juárez" style="width:100%; max-width:100%;" />
@@ -6063,8 +6111,8 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
       <button id="addSchoolClose2" class="modalClose" type="button">X</button>
     </div>
     <div style="padding:8px 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:12px;">Student Enrollment</div>
         <div id="enrollmentFields" style="display:flex; flex-direction:column; gap:12px;">
           <!-- Filled dynamically based on country selected in step 1 -->
         </div>
@@ -6086,8 +6134,8 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
       <button id="addSchoolClose3" class="modalClose" type="button">X</button>
     </div>
     <div style="padding:8px 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin-bottom:16px;">
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:12px;">Encargado Escolar</div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="addEncFirstName">First Name *</label><br />
           <input id="addEncFirstName" class="textInput" type="text" placeholder="e.g., María" style="width:100%; max-width:100%;" />
@@ -6119,8 +6167,8 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
         <div class="fieldBlock" style="margin-top:14px;">
           <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
             <input type="checkbox" id="chkSendWelcomeEmail" checked
-              style="width:16px; height:16px; cursor:pointer; accent-color:#D6A21C;" />
-            <span style="font-size:13px; color:#a9c0d3; line-height:1.5;">
+              style="width:16px; height:16px; cursor:pointer; accent-color:#FF8C2A;" />
+            <span style="font-size:13px; color:#9CC2E0; line-height:1.5;">
               Enviar email al encargado con toda la información necesaria
             </span>
           </label>
@@ -6141,7 +6189,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
 
 <div id="analisisWarnPanel" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; pointer-events:none;">
   <div style="background:#0f1923; border-radius:12px; max-width:420px; width:90%; border:0.5px solid #1e3040; overflow:hidden;">
-    <div style="background:#D6A21C; padding:20px 24px; display:flex; align-items:center; gap:12px;">
+    <div style="background:#FF8C2A; padding:20px 24px; display:flex; align-items:center; gap:12px;">
       <div style="font-size:22px;">📋</div>
       <div>
         <div style="color:#0a1218; font-size:16px; font-weight:600;">Solicitar revisión</div>
@@ -6154,15 +6202,15 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
       </p>
       <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
         <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="width:8px; height:8px; border-radius:50%; background:#FF8C2A; flex-shrink:0;"></div>
           <div style="font-size:13px; color:#b0ccd8;">El equipo TECH4ZERO tiene <strong style="color:#ffffff;">48 horas</strong> para aprobar</div>
         </div>
         <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="width:8px; height:8px; border-radius:50%; background:#FF8C2A; flex-shrink:0;"></div>
           <div style="font-size:13px; color:#b0ccd8;">Solo las encuestas aprobadas aparecen en Resultados</div>
         </div>
         <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:8px; height:8px; border-radius:50%; background:#D6A21C; flex-shrink:0;"></div>
+          <div style="width:8px; height:8px; border-radius:50%; background:#FF8C2A; flex-shrink:0;"></div>
           <div style="font-size:13px; color:#b0ccd8;">No se podrán agregar nuevas respuestas tras confirmar</div>
         </div>
       </div>
@@ -6196,18 +6244,18 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
       <div style="overflow-x:auto; overflow-y:auto; flex:1; min-height:0;">
         <table style="width:100%; border-collapse:collapse;">
           <thead style="position:sticky; top:0; z-index:1;">
-            <tr style="background:#1E2F3F;">
+            <tr style="background:#173F6B;">
               
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:left; border-bottom:1px solid #365468;">Name / Encargado</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Estado</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Country</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Students</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Min. required</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Survey Status</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Submitted</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Survey Open</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;">Last Survey</th>
-<th style="padding:10px 12px; font-size:12px; color:#7a9aaa; font-weight:600; text-align:center; border-bottom:1px solid #365468;"></th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:left; border-bottom:1px solid #1E4E80;">Name / Encargado</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Estado</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Country</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Students</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Min. required</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Survey Status</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Submitted</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Survey Open</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;">Last Survey</th>
+<th style="padding:10px 12px; font-size:12px; color:#7DA6CC; font-weight:600; text-align:center; border-bottom:1px solid #1E4E80;"></th>
 
               
             </tr>
@@ -6229,23 +6277,23 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
     <!-- Step bar -->
     <div style="display:flex; align-items:center; padding:10px 18px; gap:0; border-bottom:1px solid #2a3f52;">
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#D6A21C; color:#16222D; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
-        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#D6A21C;">School info</span>
+        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#FF8C2A; color:#173F6B; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
+        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#FF8C2A;">School info</span>
       </div>
       <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
-        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#7a9aaa;">Enrollment</span>
+        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7DA6CC; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
+        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#7DA6CC;">Enrollment</span>
       </div>
       <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
-        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#7a9aaa;">Encargado</span>
+        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7DA6CC; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
+        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#7DA6CC;">Encargado</span>
       </div>
     </div>
     <div style="padding:8px 0 0 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin:0 18px 16px;">
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">School Information</div>
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:16px; margin:0 18px 16px;">
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:12px;">School Information</div>
         <div class="fieldBlock">
           <label class="fieldLabel" for="editSchoolName">School Name *</label><br />
           <input id="editSchoolName" class="textInput" type="text" style="width:100%; max-width:100%;" />
@@ -6261,7 +6309,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
           </div>
           <div class="fieldBlock" style="flex:1;">
             <label class="fieldLabel">Country</label><br />
-            <div style="padding:8px 10px; background:#0a141c; border:1px dashed #365468; border-radius:6px; font-size:14px; color:#7a9aaa;">
+            <div style="padding:8px 10px; background:#0a141c; border:1px dashed #1E4E80; border-radius:6px; font-size:14px; color:#7DA6CC;">
               <span id="editSchoolCountryDisplay">—</span>
               <span style="font-size:11px; color:#4a6a7a; margin-left:6px;">(not editable)</span>
             </div>
@@ -6270,7 +6318,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
         <div style="display:flex; gap:12px; margin-top:10px;">
           <div class="fieldBlock" style="flex:1;">
             <label class="fieldLabel">Username</label><br />
-            <div style="padding:8px 10px; background:#0a141c; border:1px dashed #365468; border-radius:6px; font-size:14px; color:#7a9aaa;">
+            <div style="padding:8px 10px; background:#0a141c; border:1px dashed #1E4E80; border-radius:6px; font-size:14px; color:#7DA6CC;">
               <span id="editSchoolUsernameDisplay">—</span>
               <span style="font-size:11px; color:#4a6a7a; margin-left:6px;">(not editable)</span>
             </div>
@@ -6326,23 +6374,23 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
     <!-- Step bar (JS updates .editStepNum/.editStepLabel across all modals) -->
     <div style="display:flex; align-items:center; padding:10px 18px; gap:0; border-bottom:1px solid #2a3f52;">
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
-        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#7a9aaa;">School info</span>
+        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7DA6CC; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
+        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#7DA6CC;">School info</span>
       </div>
       <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#D6A21C; color:#16222D; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
-        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#D6A21C;">Enrollment</span>
+        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#FF8C2A; color:#173F6B; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
+        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#FF8C2A;">Enrollment</span>
       </div>
       <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
-        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#7a9aaa;">Encargado</span>
+        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7DA6CC; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
+        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#7DA6CC;">Encargado</span>
       </div>
     </div>
     <div style="padding:8px 0 0 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin:0 18px 16px;">
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Student Enrollment</div>
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:16px; margin:0 18px 16px;">
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:12px;">Student Enrollment</div>
         <div id="editEnrollmentFields" style="display:flex; flex-direction:column; gap:12px;">
           <!-- Filled dynamically based on school country -->
         </div>
@@ -6366,23 +6414,23 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
     <!-- Step bar -->
     <div style="display:flex; align-items:center; padding:10px 18px; gap:0; border-bottom:1px solid #2a3f52;">
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
-        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#7a9aaa;">School info</span>
+        <div class="editStepNum" data-step="1" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7DA6CC; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</div>
+        <span class="editStepLabel" data-step="1" style="font-size:12px; font-weight:600; color:#7DA6CC;">School info</span>
       </div>
       <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7a9aaa; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
-        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#7a9aaa;">Enrollment</span>
+        <div class="editStepNum" data-step="2" style="width:22px; height:22px; border-radius:50%; background:#2a3f52; color:#7DA6CC; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</div>
+        <span class="editStepLabel" data-step="2" style="font-size:12px; font-weight:600; color:#7DA6CC;">Enrollment</span>
       </div>
       <div style="flex:1; height:1px; background:#2a3f52; margin:0 8px;"></div>
       <div style="display:flex; align-items:center; gap:6px;">
-        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#D6A21C; color:#16222D; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
-        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#D6A21C;">Encargado</span>
+        <div class="editStepNum" data-step="3" style="width:22px; height:22px; border-radius:50%; background:#FF8C2A; color:#173F6B; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">3</div>
+        <span class="editStepLabel" data-step="3" style="font-size:12px; font-weight:600; color:#FF8C2A;">Encargado</span>
       </div>
     </div>
     <div style="padding:8px 0 0 0;">
-      <div style="background:#1E2F3F; border:1px solid #365468; border-radius:8px; padding:16px; margin:0 18px 16px;">
-        <div style="font-weight:700; color:#D6A21C; margin-bottom:12px;">Encargado Escolar</div>
+      <div style="background:#173F6B; border:1px solid #1E4E80; border-radius:8px; padding:16px; margin:0 18px 16px;">
+        <div style="font-weight:700; color:#FF8C2A; margin-bottom:12px;">Encargado Escolar</div>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <div class="fieldBlock" style="flex:1; min-width:140px;">
             <label class="fieldLabel" for="editEncFirstName">First Name *</label><br />
@@ -6428,7 +6476,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
       <h3 class="modalTitle">🔒 Cambia tu contraseña</h3>
     </div>
 
-    <div style="background:#1E2F3F; border:1px solid #D6A21C; border-radius:8px; padding:14px; margin-bottom:18px;">
+    <div style="background:#173F6B; border:1px solid #FF8C2A; border-radius:8px; padding:14px; margin-bottom:18px;">
       <p style="margin:0; font-size:14px; line-height:1.6; color:#ffdca8;">
         Por seguridad, debes establecer una contraseña personal antes de continuar.
         Esta acción es obligatoria y no puede omitirse.
@@ -6473,3 +6521,5 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
   
 </body>
 </html>
+
+
