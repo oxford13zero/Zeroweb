@@ -323,6 +323,36 @@
   <script>
 
     
+var CL_PRICING = {
+  pequena: { scan: 1450000, copilot: 1690000, full360: 2790000 },
+  mediana: { scan: 1850000, copilot: 2099000, full360: 3290000 },
+  grande:  { scan: 2590000, copilot: 2890000, full360: 4090000 },
+  red:     { scan: null,    copilot: null,    full360: null    }
+};
+
+function selectSchoolSizeCL(size) {
+  document.querySelectorAll('.inv-size-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-size') === size);
+  });
+
+  var data = CL_PRICING[size];
+  ['scan', 'copilot', 'full360'].forEach(function(plan) {
+    var amountEl = document.getElementById('price-' + plan);
+    var labelEl  = document.getElementById('priceLabel-' + plan);
+    var periodEl = document.getElementById('pricePeriod-' + plan);
+    if (!amountEl) return;
+    if (data[plan] === null) {
+      amountEl.textContent = 'Cotización';
+      if (labelEl) labelEl.style.display = 'none';
+      if (periodEl) periodEl.textContent = 'Contáctanos para una cotización personalizada';
+    } else {
+      amountEl.textContent = '$' + data[plan].toLocaleString('es-CL');
+      if (labelEl) labelEl.style.display = 'inline';
+      if (periodEl) periodEl.textContent = 'CLP · pago único · por proyecto';
+    }
+  });
+}
+
 function showTab(tabId) {
   document.querySelectorAll('section').forEach(function(s) {
     s.classList.remove('active');
@@ -1137,7 +1167,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   .inv-section { max-width: 1000px; margin: 0 auto; padding: 64px 20px; }
 
-  .inv-plans-label {
+  .inv-size-selector {
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  margin: 0 auto 32px; max-width: 1000px;
+}
+.inv-size-btn {
+  background: #173F6B; border: 1px solid #1E4E80; color: #9CC2E0;
+  font-family: 'Open Sans', sans-serif; font-size: 13px; font-weight: 600;
+  padding: 10px 20px; border-radius: 999px; cursor: pointer;
+  text-align: center; transition: all 0.2s;
+}
+.inv-size-btn span { display: block; font-size: 11px; font-weight: 400; color: #7DA6CC; margin-top: 2px; }
+.inv-size-btn:hover { border-color: rgba(255,140,42,0.5); }
+.inv-size-btn.active { background: #FF8C2A; border-color: #FF8C2A; color: #3A1B00; }
+.inv-size-btn.active span { color: #5A3200; }
+.inv-plans-label {
     text-align: center;
     font-size: 11px; font-weight: 700; letter-spacing: 2px;
     text-transform: uppercase; color: #9CC2E0;
@@ -1338,19 +1382,25 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="inv-section">
   <div class="inv-plans-label">Elige el plan que mejor describe lo que necesitas</div>
 
+  <div class="inv-size-selector">
+    <button class="inv-size-btn" data-size="pequena" onclick="selectSchoolSizeCL('pequena')" type="button">Pequeña<span>hasta 300 estudiantes</span></button>
+    <button class="inv-size-btn active" data-size="mediana" onclick="selectSchoolSizeCL('mediana')" type="button">Mediana<span>301–600 estudiantes</span></button>
+    <button class="inv-size-btn" data-size="grande" onclick="selectSchoolSizeCL('grande')" type="button">Grande<span>601–1.000 estudiantes</span></button>
+    <button class="inv-size-btn" data-size="red" onclick="selectSchoolSizeCL('red')" type="button">Red / DAEM<span>+1.000 estudiantes</span></button>
+  </div>
+
   <div class="inv-plans-grid">
 
-    <!-- PLAN VER -->
+    <!-- PLAN SCAN -->
     <div class="inv-plan-card">
       <div class="inv-plan-size">Tú actúas</div>
-      <div class="inv-plan-name">VER</div>
+      <div class="inv-plan-name">SCAN</div>
       <div class="inv-plan-students">Conoce la realidad de tu escuela</div>
       <div class="inv-plan-price-wrap">
-        <span style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
-        <span style="font-size:20px;font-weight:600;color:#9CC2E0;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
-        <span class="inv-plan-price">1190</span>
+        <span id="priceLabel-scan" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
+        <span class="inv-plan-price" id="price-scan">$1.850.000</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period" id="pricePeriod-scan">CLP · pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span>Encuesta anónima para estudiantes</li>
@@ -1367,18 +1417,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Solicitar información →</a>
     </div>
 
-    <!-- PLAN ENTENDER — FEATURED -->
+    <!-- PLAN COPILOT — FEATURED -->
     <div class="inv-plan-card">
       <div class="inv-plan-size">Nosotros te guiamos</div> 
-      <div class="inv-plan-name">ENTENDER</div>
-      <div class="inv-featured-badge">⭐ Cupos limitados</div>
+      <div class="inv-plan-name">COPILOT</div>
+      <div class="inv-featured-badge">⭐ La opción que más eligen las escuelas</div>
      <!-- <div class="inv-plan-students">Sabe qué pasa y cómo reaccionar</div>  -->      
       <div class="inv-plan-price-wrap">
-        <span style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
-        <span style="font-size:20px;font-weight:600;color:#9CC2E0;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
-        <span class="inv-plan-price">1590</span>
+        <span id="priceLabel-copilot" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
+        <span class="inv-plan-price" id="price-copilot">$2.099.000</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period" id="pricePeriod-copilot">CLP · pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span>Encuesta anónima para estudiantes</li>
@@ -1391,17 +1440,16 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Agendar diagnóstico →</a>
     </div>
 
-    <!-- PLAN TRANSFORMAR -->
+    <!-- PLAN FULL 360 -->
     <div class="inv-plan-card">
       <div class="inv-plan-size">Nosotros te acompañamos</div>
-      <div class="inv-plan-name">TRANSFORMAR</div>
+      <div class="inv-plan-name">FULL 360°</div>
       <div class="inv-plan-students">Cambia el clima de tu escuela de raíz</div>
       <div class="inv-plan-price-wrap">
-        <span style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
-        <span style="font-size:20px;font-weight:600;color:#9CC2E0;vertical-align:top;margin-top:8px;display:inline-block;margin-right:2px;">USD</span>
-        <span class="inv-plan-price">2590</span>
+        <span id="priceLabel-full360" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
+        <span class="inv-plan-price" id="price-full360">$3.290.000</span>
       </div>
-      <div class="inv-plan-price-period">pago único · por proyecto</div>
+      <div class="inv-plan-price-period" id="pricePeriod-full360">CLP · pago único · por proyecto</div>
       <div class="inv-plan-divider"></div>
       <ul class="inv-plan-features">
         <li><span class="inv-check">✓</span><strong style="color:#fff;">2 evaluaciones para medir evolución en el tiempo</strong> </li>
@@ -6473,4 +6521,5 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
   
 </body>
 </html>
+
 
