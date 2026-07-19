@@ -1222,6 +1222,8 @@ document.addEventListener('DOMContentLoaded', function() {
     position: relative;
     overflow: hidden;
     transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
   }
   .inv-plan-card:hover {
     transform: translateY(-6px);
@@ -1242,14 +1244,18 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 50%;
     pointer-events: none;
   }
+  .inv-plan-card.featured { padding-top: 56px; }
   .inv-featured-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
     display: inline-block;
     background: #FF8C2A;
-    color: #173F6B;
+    color: #071F3D;
     font-size: 10px; font-weight: 800;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 4px 12px; border-radius: 999px;
-    margin-bottom: 20px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 16px;
+    width: 80%;
+    text-align: center;
+    line-height: 1.4;
   }
   .inv-plan-size {
     font-size: 11px; font-weight: 700;
@@ -1306,6 +1312,7 @@ document.addEventListener('DOMContentLoaded', function() {
     transition: all 0.2s;
     font-family: 'Open Sans', sans-serif;
     text-decoration: none;
+    margin-top: auto;
   }
   .inv-plan-cta.primary { background: #FF8C2A; color: #173F6B; border: none; }
   .inv-plan-cta.primary:hover { background: #FFB258; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,140,42,0.35); }
@@ -1426,7 +1433,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- PLAN COPILOT — FEATURED -->
-    <div class="inv-plan-card">
+    <div class="inv-plan-card featured">
       <div class="inv-plan-size">El mapa</div> 
       <div class="inv-plan-name">COPILOT</div>
       <div class="inv-featured-badge">⭐ La opción que más eligen las escuelas</div>
@@ -6513,6 +6520,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
   
 </body>
 </html>
+
 
 
 
