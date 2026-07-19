@@ -1230,10 +1230,17 @@ document.addEventListener('DOMContentLoaded', function() {
     border-color: rgba(255,140,42,0.5);
     box-shadow: 0 24px 56px rgba(0,0,0,0.4);
   }
+  .inv-plan-featured-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .inv-plan-featured-wrap .inv-plan-card.featured {
+    flex: 1;
+  }
   .inv-plan-card.featured {
     border-color: #FF8C2A;
     background: linear-gradient(160deg, #1a2a38 0%, #173F6B 100%);
-    box-shadow: 0 0 0 1px rgba(255,140,42,0.2), 0 20px 60px rgba(0,0,0,0.4);
   }
   .inv-plan-card.featured::before {
     content: '';
@@ -1247,6 +1254,7 @@ document.addEventListener('DOMContentLoaded', function() {
   .inv-plan-card.featured { padding-top: 56px; }
   .inv-featured-badge {
     position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    z-index: 2;
     display: inline-block;
     background: #FF8C2A;
     color: #071F3D;
@@ -1433,18 +1441,20 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- PLAN COPILOT — FEATURED -->
-    <div class="inv-plan-card featured">
-      <div class="inv-plan-size">El mapa</div> 
-      <div class="inv-plan-name">COPILOT</div>
+    <div class="inv-plan-featured-wrap">
       <div class="inv-featured-badge">⭐ La opción que más eligen las escuelas</div>
-      <div class="inv-plan-price-wrap">
-        <span id="priceLabel-copilot" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
-        <span class="inv-plan-price" id="price-copilot">$2.099.000</span>
+      <div class="inv-plan-card featured">
+        <div class="inv-plan-size">El mapa</div> 
+        <div class="inv-plan-name">COPILOT</div>
+        <div class="inv-plan-price-wrap">
+          <span id="priceLabel-copilot" style="font-size:14px;color:#5B85AC;vertical-align:middle;margin-right:4px;">desde</span>
+          <span class="inv-plan-price" id="price-copilot">$2.099.000</span>
+        </div>
+        <div class="inv-plan-price-period" id="pricePeriod-copilot">CLP · pago único · por proyecto</div>
+        <div class="inv-plan-divider"></div>
+        <p class="inv-plan-body">Entiende qué está pasando en tu escuela — sin comprometerte con un programa completo. Un diagnóstico completo, seguido de tu Sesión de Claridad: tu equipo se reúne con nuestro experto para convertir los resultados en un plan de acción claro y priorizado.</p>
+        <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Agendar diagnóstico →</a>
       </div>
-      <div class="inv-plan-price-period" id="pricePeriod-copilot">CLP · pago único · por proyecto</div>
-      <div class="inv-plan-divider"></div>
-      <p class="inv-plan-body">Entiende qué está pasando en tu escuela — sin comprometerte con un programa completo. Un diagnóstico completo, seguido de tu Sesión de Claridad: tu equipo se reúne con nuestro experto para convertir los resultados en un plan de acción claro y priorizado.</p>
-      <a href="#" onclick="showTab('contacto'); return false;" class="inv-plan-cta secondary">Agendar diagnóstico →</a>
     </div>
 
     <!-- PLAN FULL 360 -->
@@ -6520,6 +6530,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
   
 </body>
 </html>
+
 
 
 
