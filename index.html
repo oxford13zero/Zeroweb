@@ -295,6 +295,21 @@
     .heroSubheadline { font-size:clamp(15px,2vw,19px); color:#ffffff; line-height:1.7; margin:0 auto 36px; max-width:680px; font-weight:300; }
     .heroCTA { display:inline-block; background:#FF8C2A; color:#173F6B; font-size:13px; font-weight:700; padding:9px 22px; border-radius:8px; border:none; cursor:pointer; letter-spacing:0.3px; box-shadow:0 4px 24px rgba(255,140,42,0.35); transition:transform 0.2s,box-shadow 0.2s; }
     .heroCTA:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(255,140,42,0.5); }
+    .heroCtaWrap { position: relative; display: inline-block; overflow: hidden; border-radius: 8px; }
+    .heroCtaShine {
+      position: absolute; top: 0; left: -75%; width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
+      animation: heroShineSweep 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes heroShineSweep {
+      0% { left: -75%; }
+      12% { left: 130%; }
+      100% { left: 130%; }
+    }
+    .heroCtaMicrotext { margin-top: 14px; font-size: 12px; color: #7DA6CC; text-align: center; }
+    .heroCtaSocial { margin-top: 8px; font-size: 12px; color: #9CC2E0; text-align: center; }
+    .heroCtaSocial .star { color: #FF8C2A; }
     .credibilityBar { width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; position:relative; background:#173F6B; border-top:1px solid #1E4E80; border-bottom:1px solid #1E4E80; padding:16px 20px; text-align:center; font-size:14px; color:#9CC2E0; font-weight:600; letter-spacing:0.3px; }
     .programaSection { width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; position:relative; padding:72px 20px; }
     .programaSection .sectionInner { max-width:960px; margin:0 auto; }
@@ -589,7 +604,11 @@ document.addEventListener('DOMContentLoaded', function() {
         No recibirás un informe estándar.
         Recibirás recomendaciones personalizadas para tu escuela</p><br>
       <!-- CHANGE 1: quiz trigger -->
-      <button class="heroCTA" type="button" onclick="openQuiz()">¿Quieres ver tu escuela con los ojos de tus estudiantes? — Mini evaluación en 2 minutos</button>
+      <div class="heroCtaWrap">
+        <button class="heroCTA" type="button" onclick="openQuiz()">Descubre lo que no estás viendo →<span class="heroCtaShine" aria-hidden="true"></span></button>
+      </div>
+      <div class="heroCtaMicrotext">Sin necesidad de correo · Resultado instantáneo · 2 minutos</div>
+      <div class="heroCtaSocial"><span class="star">★</span> Únete a 300+ escuelas que ya lo hicieron</div>
     </div>
   </div>
 <!-- comentario -->
@@ -6521,6 +6540,7 @@ document.getElementById('schoolActiveToggle')?.addEventListener('change', functi
   
 </body>
 </html>
+
 
 
 
